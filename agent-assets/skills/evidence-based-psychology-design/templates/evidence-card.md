@@ -1,0 +1,64 @@
+# Feature Evidence Card Template
+
+```yaml
+feature_name:
+problem:
+  user_report:
+  observations:
+  inferences:
+  unknowns:
+target_behavior:
+  actor:
+  context:
+  action:
+  frequency:
+  completion_definition:
+behavior_diagnosis:
+  capability:
+  opportunity:
+  motivation:
+  confidence:
+candidate_mechanisms:
+  - mechanism:
+    theory:
+    evidence_level:
+    expected_effect:
+    boundary_conditions:
+    transfer_distance:
+    sources:
+recommended_interaction:
+  trigger:
+  user_choice:
+  ai_response:
+  feedback:
+  adjustment:
+  exit_option:
+autonomy_review:
+  meaningful_choice:
+  ai_overreach:
+  coercive_elements:
+risk_review:
+  shame:
+  anxiety:
+  dependency:
+  overinterpretation:
+  privacy:
+  clinical:
+  accessibility_and_equity:
+measurement:
+  primary_metric:
+  secondary_metrics:
+  guardrail_metrics:
+  qualitative_questions:
+experiment:
+  hypothesis:
+  minimum_test:
+  success_threshold:
+  stop_conditions:
+verdict:
+  status:
+  confidence:
+  required_changes:
+  unresolved_assumptions:
+  next_owner:
+```
