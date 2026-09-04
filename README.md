@@ -7,7 +7,7 @@ AI Life OS（AI 人生管理系统）项目工作区。
 - 当前阶段：Requirements & Design
 - SDLC Gate：G0 已通过；G1 Review Pack 已提交评审
 - 编码状态：尚未开始
-- 当前基线：Roadmap v0.1 + Roadmap Review 决策记录 v0.1 + Amendments 001/002；G1 v0.2 三份文档尚未批准
+- 当前基线：Roadmap v0.1 + Roadmap Review 决策记录 v0.1 + Amendments 001/002/003；G1 v0.3 三份文档尚未批准
 
 ## 远程协作与手机查看
 
@@ -19,7 +19,7 @@ AI Life OS（AI 人生管理系统）项目工作区。
 
 ## 项目目标
 
-构建一个手机优先的响应式 Web 人生管理系统：采用“单人私密体验、支持多个独立用户”的模式。每位用户拥有独立账号和完全隔离的个人数据；系统以 Time、Health、Wealth、Relationship、Purpose 五大人生维度为固定顶层模型，并将健康、主业、副业等阶段关注点多对多映射到五维。系统以个人事实、目标偏离和可追溯的 AI 解释为基础，并通过合法电子书、论文或可信资料提供明确的学者与理论引用。RAG 的主要用途是外部理论依据，不预设为个人知识库。
+构建一个手机优先的响应式 Web 人生管理系统：采用“单人私密体验、支持多个独立用户”的模式。每位用户拥有独立账号和完全隔离的个人数据。系统以 Time、Health、Wealth、Relationship、Purpose 五大人生维度为固定顶层模型，将所有有效行为和事件按方向与影响比例或程度映射到五维，并基于个人事实、目标偏离和可追溯的 AI 解释帮助用户复盘。RAG 主要用于引用合法电子书、论文或可信资料中的学者、理论和来源，不预设为个人知识库。
 
 核心闭环：
 
@@ -57,9 +57,10 @@ Life Blueprint
 - [`docs/09-decisions/Roadmap-Review-Decisions-v0.1.md`](docs/09-decisions/Roadmap-Review-Decisions-v0.1.md)（冲突时优先）
 - [`docs/09-decisions/G0-Amendment-001-User-Scope-v0.1.md`](docs/09-decisions/G0-Amendment-001-User-Scope-v0.1.md)（修订 DEC-001）
 - [`docs/09-decisions/G0-G1-Amendment-002-Life-Dimensions-v0.1.md`](docs/09-decisions/G0-G1-Amendment-002-Life-Dimensions-v0.1.md)（五维与当前关注点分层）
-- [`docs/02-requirements/POC-01-Product-UX-Spec-v0.2.md`](docs/02-requirements/POC-01-Product-UX-Spec-v0.2.md)（In Review）
-- [`docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.2.md`](docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.2.md)（In Review）
-- [`docs/06-testing/POC-01-Test-Acceptance-Spec-v0.2.md`](docs/06-testing/POC-01-Test-Acceptance-Spec-v0.2.md)（In Review）
+- [`docs/09-decisions/G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md`](docs/09-decisions/G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md)（移除临时关注点并采用五维行为影响模型）
+- [`docs/02-requirements/POC-01-Product-UX-Spec-v0.3.md`](docs/02-requirements/POC-01-Product-UX-Spec-v0.3.md)（In Review）
+- [`docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.3.md`](docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.3.md)（In Review）
+- [`docs/06-testing/POC-01-Test-Acceptance-Spec-v0.3.md`](docs/06-testing/POC-01-Test-Acceptance-Spec-v0.3.md)（In Review）
 
 ## 文档约定
 
