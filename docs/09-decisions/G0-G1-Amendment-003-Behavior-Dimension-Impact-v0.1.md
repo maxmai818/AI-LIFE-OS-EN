@@ -3,6 +3,8 @@
 - **状态**：Approved as Product Direction
 - **决策人**：Max
 - **日期**：2026-09-01
+- **补充批准日期**：2026-09-05
+- **补充批准范围**：五维全量评估、`unknown`/`neutral` 分离、非零和、1–5 程度量表、用户确认后进入长期分析
 - **变更类型**：项目背景与领域模型纠正
 - **影响文档**：项目 README、Amendment 002、G1 Review Pack v0.2
 
@@ -20,9 +22,9 @@
    - Purpose（目的/意义）
 2. 不在项目背景、README 或 POC 默认配置中写死健康、主业、副业。
 3. 用户的工作、项目、健康事项、家庭活动、学习、消费、休息等都属于行为、事件、目标或上下文，不是新的顶层维度。
-4. 所有有效行为/事件都应评估其对五大维度的影响，并以比例或影响程度表示。
+4. 所有有效行为/事件都应评估其对五大维度的影响，并以 1–5 的离散程度表示。
 5. 影响需要包含方向、程度、证据、置信度和用户确认状态。
-6. 没有证据支持的维度应为 `unknown` 或明确的中性/零值，不得猜测。
+6. 没有证据支持的维度应为 `unknown`，不得猜测；`neutral` 仅用于有证据表明没有明显影响的情况。
 7. 一个行为可以同时对多个维度产生不同方向和程度的影响。
 8. POC 不生成单一总 Life Score；五维影响只用于分维度观察、趋势和 Review。
 
@@ -47,16 +49,16 @@ BehaviorDimensionImpact × 5
 每个有效行为/事件逻辑上产生一个五维影响向量：
 
 ```text
-Time          direction + degree/proportion + confidence + evidence
-Health        direction + degree/proportion + confidence + evidence
-Wealth        direction + degree/proportion + confidence + evidence
-Relationship  direction + degree/proportion + confidence + evidence
-Purpose       direction + degree/proportion + confidence + evidence
+Time          direction + degree(1–5) + confidence + evidence
+Health        direction + degree(1–5) + confidence + evidence
+Wealth        direction + degree(1–5) + confidence + evidence
+Relationship  direction + degree(1–5) + confidence + evidence
+Purpose       direction + degree(1–5) + confidence + evidence
 ```
 
 方向可为：`positive | negative | mixed | neutral | unknown`。
 
-“比例”是否要求总和为 100%，以及“程度”采用何种量表，留给 G1/G2 Review 决定。初步原则是不把多维影响误当成零和分配：一个行为可以同时强烈影响多个维度。
+POC-01 采用 1–5 离散程度量表：`1` 表示很弱，`2` 表示较弱，`3` 表示中等，`4` 表示较强，`5` 表示很强。方向与程度分开保存；`unknown` 或 `neutral` 的程度为空。五维程度不要求合计为固定总数，因为一个行为可以同时强烈影响多个维度。比例字段不在 POC-01 使用。
 
 ## 5. 示例（仅说明模型，不作为固定业务背景）
 
@@ -90,3 +92,15 @@ Amendment 002 中以下内容被本 Amendment 取代：
 - Review 主要按五大维度组织，不再要求按健康/主业/副业组织。
 - Test Spec 分别验证五维影响方向、程度、证据、置信度和未知处理。
 - 所有文档升级新版本并保留旧版历史。
+
+## 8. 补充批准记录（2026-09-05）
+
+Max 批准以下五项：
+
+1. 所有有效行为逻辑上评估五个维度；无证据维度为 `unknown`。
+2. `unknown` 与 `neutral` 分开保存和展示。
+3. 五维影响不是零和分配，程度不要求合计为固定总数。
+4. POC-01 影响程度采用 1–5 离散等级，不允许用户自定义量表。
+5. AI 只产生候选影响；用户确认或修改后才进入长期分析。
+
+测试语句中的“主业”“副业”等普通自然语言样例可以保留；它们不构成产品维度、默认关注点或固定业务背景。

@@ -186,7 +186,7 @@
 - 可接受的 `item_type`
 - 期望 Life Dimension 候选
 - 每个维度的期望方向
-- 每个维度的期望程度/比例范围或 `unknown`
+- 每个维度的期望 1–5 程度、`neutral` 或 `unknown`；`neutral`/`unknown` 时程度为空
 - 影响证据和置信度
 - 期望时间或允许范围
 - 期望数值和单位
@@ -312,7 +312,7 @@ POC Gate 不允许遗留 Critical。High 是否阻断由 Max 根据风险和可�
 - `item_type`
 - Life Dimension
 - 五维影响方向
-- 五维影响程度/比例
+- 五维影响程度（固定 1–5；POC-01 不使用比例）
 - `unknown` 与 `neutral` 区分
 - Goal Link
 - 时间
@@ -496,7 +496,7 @@ A 的导出包不包含 B 数据或 B 的可识别元数据。
 
 ### UAT-02A：行为跨维度影响
 
-输入“这周项目有进展，但连续三晚熬夜，也减少了陪家人的时间”，确认系统可以对行为提出 Purpose/Wealth/Time/Health/Relationship 的方向和程度候选，同时允许 Max 逐项确认、修改或保持未知。
+输入“这周项目有进展，但连续三晚熬夜，也减少了陪家人的时间”，确认系统可以对行为提出 Purpose/Wealth/Time/Health/Relationship 的方向和 1–5 程度候选，同时允许 Max 逐项确认、修改或保持未知。
 
 ### UAT-03：否定和计划
 
@@ -579,6 +579,8 @@ A 的导出包不包含 B 数据或 B 的可识别元数据。
 正式基线时扩展到每个 Must Requirement 对应至少一个测试用例。
 
 ## 17. G1 Review 决策项
+
+2026-09-05 已批准五维行为影响规则：全量评估、`unknown`/`neutral` 分离、非零和、固定 1–5 程度量表，以及用户确认后才进入长期分析。测试样例中的“主业”“副业”等普通自然语言可以保留，但不得作为固定产品模型解释。以下其余项目继续 Review。
 
 请 Max 对以下项目标记 `Approve / Revise / Reject`：
 
