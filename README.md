@@ -7,7 +7,7 @@ AI Life OS（AI 人生管理系统）项目工作区。
 - 当前阶段：Requirements & Design
 - SDLC Gate：G0 已通过；G1 Review Pack 已提交评审
 - 编码状态：尚未开始
-- 当前基线：Roadmap v0.1 + Roadmap Review 决策记录 v0.1 + Amendments 001/002/003；G1 v0.3 三份文档尚未批准
+- 当前基线：Roadmap v0.1 + Roadmap Review 决策记录 v0.1 + Amendments 001/002/003 + G1 Decision 004；G1 v0.4 三份文档仍在评审，尚未整体批准
 
 ## 远程协作与手机查看
 
@@ -58,9 +58,11 @@ Life Blueprint
 - [`docs/09-decisions/G0-Amendment-001-User-Scope-v0.1.md`](docs/09-decisions/G0-Amendment-001-User-Scope-v0.1.md)（修订 DEC-001）
 - [`docs/09-decisions/G0-G1-Amendment-002-Life-Dimensions-v0.1.md`](docs/09-decisions/G0-G1-Amendment-002-Life-Dimensions-v0.1.md)（五维与当前关注点分层）
 - [`docs/09-decisions/G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md`](docs/09-decisions/G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md)（移除临时关注点并采用五维行为影响模型）
-- [`docs/02-requirements/POC-01-Product-UX-Spec-v0.3.md`](docs/02-requirements/POC-01-Product-UX-Spec-v0.3.md)（In Review）
-- [`docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.3.md`](docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.3.md)（In Review）
-- [`docs/06-testing/POC-01-Test-Acceptance-Spec-v0.3.md`](docs/06-testing/POC-01-Test-Acceptance-Spec-v0.3.md)（In Review）
+- [`docs/09-decisions/G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`](docs/09-decisions/G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md)（五项影响规则已批准）
+- [`docs/02-requirements/POC-01-Product-UX-Spec-v0.4.md`](docs/02-requirements/POC-01-Product-UX-Spec-v0.4.md)（In Review）
+- [`docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.4.md`](docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.4.md)（In Review）
+- [`docs/06-testing/POC-01-Test-Acceptance-Spec-v0.4.md`](docs/06-testing/POC-01-Test-Acceptance-Spec-v0.4.md)（In Review）
+- [`docs/08-research/G1-v0.4-Independent-Review-v0.1.md`](docs/08-research/G1-v0.4-Independent-Review-v0.1.md)（独立一致性与心理安全审查）
 
 ## 文档约定
 
