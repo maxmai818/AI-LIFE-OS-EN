@@ -20,26 +20,31 @@
 | Amendment 002：五维与当前关注点 | v0.1 | Superseded in part | Governance / Decision | G0/G1 Amendment | `09-decisions/G0-G1-Amendment-002-Life-Dimensions-v0.1.md` |
 | Amendment 003：五维行为影响模型 | v0.1 | Approved | Governance / Decision | G0/G1 Amendment | `09-decisions/G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md` |
 | G1 Decision 004：五维行为影响规则 | v0.1 | Approved | Governance / Decision | G1 Partial Decision | `09-decisions/G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md` |
+| G1 Decision 005：Mixed 影响分别记录正负程度 | v0.1 | Approved | Governance / Decision | G1 Partial Decision | `09-decisions/G1-Decision-005-Mixed-Impact-Degrees-v0.1.md` |
 | POC-01 Product & UX Spec | v0.1 | Superseded | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.1.md` |
 | POC-01 Product & UX Spec | v0.2 | Superseded | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.2.md` |
 | POC-01 Product & UX Spec | v0.3 | Superseded | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.3.md` |
-| POC-01 Product & UX Spec | v0.4 | In Review | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.4.md` |
+| POC-01 Product & UX Spec | v0.4 | Superseded | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.4.md` |
+| POC-01 Product & UX Spec | v0.5 | In Review | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.5.md` |
 | Capture Data + AI Output Contract | v0.1 | Superseded | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.1.md` |
 | Capture Data + AI Output Contract | v0.2 | Superseded | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.2.md` |
 | Capture Data + AI Output Contract | v0.3 | Superseded | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.3.md` |
-| Capture Data + AI Output Contract | v0.4 | In Review | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.4.md` |
+| Capture Data + AI Output Contract | v0.4 | Superseded | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.4.md` |
+| Capture Data + AI Output Contract | v0.5 | In Review | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.5.md` |
 | POC-01 Test & Acceptance Spec | v0.1 | Superseded | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.1.md` |
 | POC-01 Test & Acceptance Spec | v0.2 | Superseded | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.2.md` |
 | POC-01 Test & Acceptance Spec | v0.3 | Superseded | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.3.md` |
-| POC-01 Test & Acceptance Spec | v0.4 | In Review | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.4.md` |
-| G1 v0.4 Independent Review | v0.1 | In Review | Research / Independent Review | G1 | `08-research/G1-v0.4-Independent-Review-v0.1.md` |
+| POC-01 Test & Acceptance Spec | v0.4 | Superseded | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.4.md` |
+| POC-01 Test & Acceptance Spec | v0.5 | In Review | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.5.md` |
+| G1 v0.4 Independent Review | v0.1 | Superseded in part | Research / Independent Review | G1 | `08-research/G1-v0.4-Independent-Review-v0.1.md` |
+| G1 v0.5 Mixed Impact Independent Review | v0.1 | In Review | Research / Independent Review | G1 | `08-research/G1-v0.5-Mixed-Impact-Independent-Review-v0.1.md` |
 
-> Roadmap v0.1 与决策记录冲突时，以已批准的决策记录及 Amendments 为准；Amendment 003 取代 Amendment 002 中将临时关注点固化的部分；G1 Decision 004 批准五维全量评估、固定 1–5 程度、非零和、`unknown`/`neutral` 分离及确认后进入长期分析。这些内容将在 Roadmap v0.2 中合并。
+> Roadmap v0.1 与决策记录冲突时，以已批准的决策记录及 Amendments 为准；Amendment 003 取代 Amendment 002 中将临时关注点固化的部分；G1 Decision 004 批准五维全量评估、固定 1–5 程度、非零和、`unknown`/`neutral` 分离及确认后进入长期分析；G1 Decision 005 批准 `mixed` 分别记录正向与负向 1–5 程度，不计算比例或净值。这些内容将在 Roadmap v0.2 中合并。
 
 ## 当前 G1 Review Pack
 
-1. `02-requirements/POC-01-Product-UX-Spec-v0.4.md`
-2. `04-data-ai/Capture-Data-AI-Output-Contract-v0.4.md`
-3. `06-testing/POC-01-Test-Acceptance-Spec-v0.4.md`
+1. `02-requirements/POC-01-Product-UX-Spec-v0.5.md`
+2. `04-data-ai/Capture-Data-AI-Output-Contract-v0.5.md`
+3. `06-testing/POC-01-Test-Acceptance-Spec-v0.5.md`
 
 三份文档目前均为 `In Review`。只有三份同时获 Max 批准，且阻断意见关闭后，才形成 POC-01 需求与验收基线；当前仍未授权编码。
