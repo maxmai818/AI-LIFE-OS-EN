@@ -7,7 +7,7 @@ AI Life OS（AI 人生管理系统）项目工作区。
 - 当前阶段：Requirements & Design
 - SDLC Gate：G0 已通过；G1 Review Pack 已提交评审
 - 编码状态：尚未开始
-- 当前基线：Roadmap v0.1 + Roadmap Review 决策记录 v0.1 + Amendments 001/002/003 + G1 Decisions 004/005；G1 v0.5 三份文档仍在评审，尚未整体批准
+- 当前基线：Roadmap v0.1 + Roadmap Review 决策记录 v0.1 + Amendments 001/002/003 + G1 Decisions 004/005 + Decision 006 原则记录；G1 v0.6 三份文档仍在评审，尚未整体批准
 
 ## 远程协作与手机查看
 
@@ -29,7 +29,7 @@ Life Blueprint
 → AI 结构化与用户纠正
 → Goal Progress / Deviation
 → Today / Weekly Review
-→ ONE BIG CHANGE
+→ 用户主动 Review 中自主选择零个或一个 ONE BIG CHANGE
 ```
 
 ## 目录
@@ -60,11 +60,17 @@ Life Blueprint
 - [`docs/09-decisions/G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md`](docs/09-decisions/G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md)（移除临时关注点并采用五维行为影响模型）
 - [`docs/09-decisions/G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`](docs/09-decisions/G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md)（五项影响规则已批准）
 - [`docs/09-decisions/G1-Decision-005-Mixed-Impact-Degrees-v0.1.md`](docs/09-decisions/G1-Decision-005-Mixed-Impact-Degrees-v0.1.md)（mixed 正负程度结构已批准）
-- [`docs/02-requirements/POC-01-Product-UX-Spec-v0.5.md`](docs/02-requirements/POC-01-Product-UX-Spec-v0.5.md)（In Review）
-- [`docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.5.md`](docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.5.md)（In Review）
-- [`docs/06-testing/POC-01-Test-Acceptance-Spec-v0.5.md`](docs/06-testing/POC-01-Test-Acceptance-Spec-v0.5.md)（In Review）
+- [`docs/02-requirements/POC-01-Product-UX-Spec-v0.6.md`](docs/02-requirements/POC-01-Product-UX-Spec-v0.6.md)（In Review）
+- [`docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md`](docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md)（In Review）
+- [`docs/06-testing/POC-01-Test-Acceptance-Spec-v0.6.md`](docs/06-testing/POC-01-Test-Acceptance-Spec-v0.6.md)（In Review）
 - [`docs/08-research/G1-v0.4-Independent-Review-v0.1.md`](docs/08-research/G1-v0.4-Independent-Review-v0.1.md)（v0.4 独立一致性与心理安全审查）
 - [`docs/08-research/G1-v0.5-Mixed-Impact-Independent-Review-v0.1.md`](docs/08-research/G1-v0.5-Mixed-Impact-Independent-Review-v0.1.md)（mixed 结构独立复核：PASS）
+
+- [Decision 006：自适应 Review 原则与待审细节](docs/09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md)
+- [v0.6 Delta / 独立评审 Pending](docs/08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md)
+- [Adaptive Review Evidence Card](docs/08-research/Adaptive-Review-Evidence-Card-v0.1.md)（作者建议 EXPERIMENT_ONLY，非独立批准）
+
+POC 仅用户主动打开 Review；无主动提醒/后台监控，无必选教练人格。AI 适应表达而不改目标；零建议、即时纠正/停止、按需解释和可选反馈属于确认原则；字段、策略和保留期限仍待评审。编码未授权，当前仅文档 Draft PR。
 
 ## 文档约定
 

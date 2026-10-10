@@ -1,7 +1,7 @@
 # POC-01 Test & Acceptance Spec v0.5
 
 - **项目**：AI Life OS
-- **文档状态**：In Review — Mixed impact structure approved
+- **文档状态**：Superseded — 后续评审版本 v0.6；历史正文保留，非批准基线
 - **SDLC 阶段**：G1 Requirements / Acceptance
 - **最终验收人**：Max
 - **作者**：Hermes
