@@ -4,10 +4,10 @@ AI Life OS（AI 人生管理系统）项目工作区。
 
 ## 当前状态
 
-- 当前阶段：Requirements & Design
-- SDLC Gate：G0 已通过；G1 Review Pack 已提交评审
-- 编码状态：尚未开始
-- 当前基线：Roadmap v0.1 + Roadmap Review 决策记录 v0.1 + Amendments 001/002/003 + G1 Decisions 004/005 + Decision 006 原则记录；G1 v0.6 三份文档仍在评审，尚未整体批准
+- 当前阶段：Design（G2：设计基线与原型）
+- SDLC Gate：G0、G1 已通过（G1 关闭 2026-10-08，tag `G1-baseline`）；G2 进行中
+- 编码状态：尚未开始（G2 通过前不进入正式实现；POC 探索代码已废弃，见 Decision 007）
+- 当前基线：Roadmap v0.1 + Roadmap Review 决策记录 v0.1 + Amendments 001/002/003 + G1 Decisions 004/005/006/007 + G1 v0.6 三件套（Approved 2026-10-08）+ Max CEO 决策协议 v0.1
 
 ## 远程协作与手机查看
 
@@ -60,17 +60,20 @@ Life Blueprint
 - [`docs/09-decisions/G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md`](docs/09-decisions/G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md)（移除临时关注点并采用五维行为影响模型）
 - [`docs/09-decisions/G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`](docs/09-decisions/G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md)（五项影响规则已批准）
 - [`docs/09-decisions/G1-Decision-005-Mixed-Impact-Degrees-v0.1.md`](docs/09-decisions/G1-Decision-005-Mixed-Impact-Degrees-v0.1.md)（mixed 正负程度结构已批准）
-- [`docs/02-requirements/POC-01-Product-UX-Spec-v0.6.md`](docs/02-requirements/POC-01-Product-UX-Spec-v0.6.md)（In Review）
-- [`docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md`](docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md)（In Review）
-- [`docs/06-testing/POC-01-Test-Acceptance-Spec-v0.6.md`](docs/06-testing/POC-01-Test-Acceptance-Spec-v0.6.md)（In Review）
+- [`docs/02-requirements/POC-01-Product-UX-Spec-v0.6.md`](docs/02-requirements/POC-01-Product-UX-Spec-v0.6.md)（Approved — G1 基线）
+- [`docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md`](docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md)（Approved — G1 基线）
+- [`docs/06-testing/POC-01-Test-Acceptance-Spec-v0.6.md`](docs/06-testing/POC-01-Test-Acceptance-Spec-v0.6.md)（Approved — G1 基线）
 - [`docs/08-research/G1-v0.4-Independent-Review-v0.1.md`](docs/08-research/G1-v0.4-Independent-Review-v0.1.md)（v0.4 独立一致性与心理安全审查）
 - [`docs/08-research/G1-v0.5-Mixed-Impact-Independent-Review-v0.1.md`](docs/08-research/G1-v0.5-Mixed-Impact-Independent-Review-v0.1.md)（mixed 结构独立复核：PASS）
 
 - [Decision 006：自适应 Review 原则与待审细节](docs/09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md)
-- [v0.6 Delta / 独立评审 Pending](docs/08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md)
+- [v0.6 Delta / 评审状态记录](docs/08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md)（G1 关闭时已归档：一致性 PASS，心理安全/隐私 PASS_WITH_CONDITIONS）
 - [Adaptive Review Evidence Card](docs/08-research/Adaptive-Review-Evidence-Card-v0.1.md)（作者建议 EXPERIMENT_ONLY，非独立批准）
+- [`docs/00-governance/G1-Closure-Decision-Packet-v0.1.md`](docs/00-governance/G1-Closure-Decision-Packet-v0.1.md)（G1 关闭决策包：Max 已批准 A 带条件关闭，2026-10-08）
+- [`docs/09-decisions/G1-Decision-007-POC-Exploration-Code-v0.1.md`](docs/09-decisions/G1-Decision-007-POC-Exploration-Code-v0.1.md)（POC 探索代码定性与分支处置）
+- [`docs/00-governance/Max-CEO-Decision-Protocol-v0.1.md`](docs/00-governance/Max-CEO-Decision-Protocol-v0.1.md)（CEO 决策协议：决策分级与一页决策包）
 
-POC 仅用户主动打开 Review；无主动提醒/后台监控，无必选教练人格。AI 适应表达而不改目标；零建议、即时纠正/停止、按需解释和可选反馈属于确认原则；字段、策略和保留期限仍待评审。编码未授权，当前仅文档 Draft PR。
+POC 仅用户主动打开 Review；无主动提醒/后台监控，无必选教练人格。AI 适应表达而不改目标；零建议、即时纠正/停止、按需解释和可选反馈属于确认原则；字段、策略和保留期限移交 G2 设计。G1 已于 2026-10-08 关闭（Max 批准，tag `G1-baseline`）；G2（设计基线与原型）进行中，编码在 G2 通过前不授权。
 
 ## 文档约定
 

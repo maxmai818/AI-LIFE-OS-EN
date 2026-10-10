@@ -1,7 +1,7 @@
 # Capture Data + AI Output Contract v0.6
 
 - **项目**：AI Life OS
-- **文档状态**：In Review — adaptive Review；原则已确认，新增细节待审
+- **文档状态**：Approved — G1 需求基线（Max 2026-10-08，决策包选项 A）
 - **SDLC 阶段**：G1/G2 Requirements & Design
 - **产品批准人**：Max
 - **作者**：Hermes

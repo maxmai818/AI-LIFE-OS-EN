@@ -1,10 +1,10 @@
 # G1 Decision 006：自主、轻量自适应 Review 与反馈
 
-- **状态**：原则确认记录；配套 v0.6 细节 In Review（不是整份 Approved）
+- **状态**：原则确认记录；v0.6 细节已随 G1 关闭（Max 2026-10-08）并入需求基线
 - **产品负责人 / 原则决策人 / 最终批准人**：Max
 - **作者**：Hermes
 - **记录日期**：2026-09-15；不据此推定每次口头确认的日期
-- **Gate**：G1 In Review；编码未授权；仅文档版本化、独立评审与 Draft PR 获授权；不得 merge
+- **Gate**：G1 已于 2026-10-08 关闭（tag `G1-baseline`）；编码在 G2 通过前不授权
 - **来源**：本次委派中提供的 Max 后续讨论摘要及明确“好的，进行下一步”。这是需求来源摘要，不是新增用户行为记录、逐字访谈档案或实验结果。
 - **相关决定**：[Decision 004](G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md)、[Decision 005](G1-Decision-005-Mixed-Impact-Degrees-v0.1.md)
 
