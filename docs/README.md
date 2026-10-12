@@ -43,6 +43,7 @@
 | G1 Closure Decision Packet | v0.1 | 已决策：A 带条件关闭（Max 2026-10-08） | Governance / Decision | G1 | `00-governance/G1-Closure-Decision-Packet-v0.1.md` |
 | G1 Decision 007：POC 探索代码定性 | v0.1 | 已决定（Max 2026-10-08） | Governance / Decision | G1 | `09-decisions/G1-Decision-007-POC-Exploration-Code-v0.1.md` |
 | Max CEO 决策协议 | v0.1 | 生效（Max 2026-10-08） | Governance / Protocol | 全程 | `00-governance/Max-CEO-Decision-Protocol-v0.1.md` |
+| Design Language | v0.1 | Draft（待原型选定后冻结 v1.0） | Design | G2 | `03-design/Design-Language-v0.1.md` |
 | G1 v0.6 Delta & Review Status | v0.1 | 已归档（G1 2026-10-08）；文档一致性 PASS；心理安全 `PASS_WITH_CONDITIONS`；隐私 `PASS_WITH_CONDITIONS` | Research / Review | G1 | `08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md` |
 | G1 心理安全专项审查方案 | v0.1 | In Review；审查方法已定义 | Research / Specialist Review | G1 | `08-research/G1-Psychological-Safety-Review-Plan-v0.1.md` |
 | G1 心理安全专项审查记录（第一轮及 PSR-001 复核） | v0.1 | Complete；`PASS_WITH_CONDITIONS` | Research / Specialist Review | G1 | `08-research/G1-Psychological-Safety-Review-Record-v0.1.md` |

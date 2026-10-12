@@ -5,7 +5,8 @@
 包含：
 
 - `skills/`：项目专用 Skill 源文件
-- `profiles/`：各 Agent 的 `SOUL.md` 角色规则副本
+- `profiles/`：各 Agent 的 `SOUL.md` 角色规则副本（lifeospm / lifeospsych / lifeosdesign / lifeosreview / lifeosdev / lifeosqa）
+- `WORK-LOG.md`：虚拟团队工作记录（谁、做了什么、产出在哪、怎么验证）
 
 不包含：
 
