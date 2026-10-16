@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AI Life OS · 变体 2 对话引导型</title>
+<style>
+  :root{
+    --bg:#F6F2EC;
+    --paper:#FFFFFF;
+    --ink:#2E2B26;
+    --ink-soft:#57524A;
+    --muted:#8C857A;
+    --line:#E7E0D5;
+    --green:#4C6B58;
+    --green-soft:#E6EEE8;
+    --clay:#B4613C;
+    --clay-soft:#F6E7DE;
+    --gold:#A98A3F;
+    --gold-soft:#F5EEDC;
+    --blue:#4A6572;
+    --blue-soft:#E3EBEE;
+    --danger:#A94B3C;
+    --radius:18px;
+    --shadow:0 1px 2px rgba(60,50,35,.06), 0 8px 24px rgba(60,50,35,.06);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:#E9E2D7;
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.65;
+    display:flex;justify-content:center;
+    min-height:100vh;
+  }
+  .phone{
+    width:100%;max-width:420px;min-height:100vh;
+    background:var(--bg);
+    display:flex;flex-direction:column;
+    position:relative;
+    box-shadow:0 0 40px rgba(60,50,35,.18);
+    overflow:hidden;
+  }
+  /* ---------- header ---------- */
+  .app-header{
+    padding:14px 18px 10px;
+    background:rgba(246,242,236,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:20;
+  }
+  .app-header .row{display:flex;align-items:center;justify-content:space-between}
+  .brand{font-size:15px;font-weight:650;letter-spacing:.02em}
+  .brand small{display:block;font-size:11px;font-weight:400;color:var(--muted);letter-spacing:.05em}
+  .privacy-pill{
+    font-size:11px;color:var(--green);background:var(--green-soft);
+    padding:5px 10px;border-radius:999px;display:flex;align-items:center;gap:5px;
+  }
+  .privacy-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+
+  /* ---------- scroll area ---------- */
+  .screen{
+    flex:1;overflow-y:auto;padding:18px 16px 108px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .screen::-webkit-scrollbar{width:0}
+  .hidden{display:none !important}
+
+  /* ---------- chat ---------- */
+  .day-divider{
+    text-align:center;font-size:11px;color:var(--muted);
+    margin:6px 0 18px;letter-spacing:.08em;
+  }
+  .msg{display:flex;margin-bottom:18px;gap:9px;align-items:flex-end}
+  .msg.user{flex-direction:row-reverse}
+  .msg > div{min-width:0}
+  .avatar{
+    width:30px;height:30px;border-radius:50%;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:600;
+  }
+  .msg.ai .avatar{background:var(--green-soft);color:var(--green)}
+  .msg.user .avatar{background:#DED6C7;color:var(--ink-soft)}
+  .bubble{
+    max-width:80%;
+    padding:12px 15px;
+    border-radius:var(--radius);
+    font-size:14.5px;
+    box-shadow:var(--shadow);
+    overflow-wrap:anywhere;
+  }
+  .msg.ai .bubble{
+    background:var(--paper);
+    border-bottom-left-radius:6px;
+    color:var(--ink);
+  }
+  .msg.user .bubble{
+    background:var(--green);
+    color:#F7FAF7;
+    border-bottom-right-radius:6px;
+  }
+  .bubble p{margin:0 0 .55em}
+  .bubble p:last-child{margin-bottom:0}
+  .bubble .soft{color:var(--ink-soft);font-size:13px}
+  .msg.user .bubble .soft{color:#D9E5DC}
+  .bubble.wide{max-width:92%}
+
+  .time-stamp{font-size:10.5px;color:var(--muted);margin-top:5px;padding:0 4px}
+  .msg.user .time-stamp{text-align:right}
+
+  /* typing dots */
+  .typing{display:flex;gap:5px;padding:6px 2px}
+  .typing i{
+    width:7px;height:7px;border-radius:50%;background:#C9C1B3;
+    animation:blink 1.2s infinite ease-in-out;
+  }
+  .typing i:nth-child(2){animation-delay:.18s}
+  .typing i:nth-child(3){animation-delay:.36s}
+  @keyframes blink{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+
+  /* ---------- structured card inside bubble ---------- */
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:14px;
+    margin-top:10px;
+    box-shadow:var(--shadow);
+  }
+  .card-title{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    margin-bottom:2px;
+  }
+  .card-title b{font-size:14.5px}
+  .badge{
+    font-size:10.5px;padding:3px 8px;border-radius:999px;white-space:nowrap;
+    background:#EFEAE1;color:var(--ink-soft);
+  }
+  .badge.pending{background:var(--gold-soft);color:#7C6326}
+  .badge.confirmed{background:var(--green-soft);color:var(--green)}
+  .badge.edited{background:var(--blue-soft);color:var(--blue)}
+  .badge.deleted{background:#F2E2DE;color:var(--danger)}
+  .badge.later{background:#EFEAE1;color:var(--ink-soft)}
+
+  .quote{
+    font-size:12.5px;color:var(--ink-soft);
+    background:#F8F5F0;border-left:3px solid #D8CDB9;
+    padding:8px 11px;border-radius:8px;margin:8px 0;
+  }
+  .quote .tag{
+    display:inline-block;font-size:10px;letter-spacing:.06em;
+    color:var(--muted);margin-bottom:3px;
+  }
+  .meta-line{font-size:12px;color:var(--muted);margin:4px 0}
+  .meta-line b{color:var(--ink-soft);font-weight:600}
+
+  /* impact rows */
+  .impact-list{margin:10px 0 4px;display:flex;flex-direction:column;gap:8px}
+  .impact-row{
+    display:flex;align-items:center;gap:9px;flex-wrap:wrap;row-gap:5px;
+    padding:8px 10px;border-radius:12px;background:#FAF8F4;
+    border:1px solid #EFE9DE;
+  }
+  .impact-row .dim{
+    font-size:12px;width:58px;flex:none;color:var(--ink-soft);font-weight:600;
+  }
+  .impact-row .dim span{display:block;font-size:9.5px;font-weight:400;color:var(--muted);letter-spacing:.05em}
+  .dir-chip{
+    font-size:11px;padding:3px 9px;border-radius:999px;font-weight:600;white-space:nowrap;
+  }
+  .dir-pos{background:var(--green-soft);color:var(--green)}
+  .dir-neg{background:#F2E2DE;color:var(--danger)}
+  .dir-mix{background:var(--gold-soft);color:#7C6326}
+  .dir-neu{background:#EFEAE1;color:var(--ink-soft)}
+  .dir-unk{background:#F1EEEA;color:#9A9287}
+  .degrees{display:flex;gap:3px;align-items:center}
+  .degrees i{
+    width:9px;height:9px;border-radius:50%;background:#E2DBCD;display:inline-block;
+  }
+  .degrees i.on{background:var(--clay)}
+  .degrees i.on.pos{background:var(--green)}
+  .degrees .deg-label{font-size:10px;color:var(--muted);margin-left:4px}
+  .epi{
+    font-size:9.5px;color:var(--muted);margin-left:auto;white-space:nowrap;
+    border:1px solid var(--line);padding:1px 6px;border-radius:999px;
+  }
+
+  /* card actions */
+  .actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+  .btn{
+    border:none;border-radius:999px;padding:8px 15px;font-size:12.5px;
+    font-weight:600;cursor:pointer;font-family:inherit;
+    transition:transform .06s ease, opacity .15s ease;
+  }
+  .btn:active{transform:scale(.96)}
+  .btn-primary{background:var(--green);color:#fff}
+  .btn-ghost{background:#F1EDE5;color:var(--ink-soft)}
+  .btn-line{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .btn-danger{background:transparent;color:var(--danger);border:1px solid #E5C6BF}
+  .btn-done{background:var(--green-soft);color:var(--green);cursor:default}
+
+  /* edit panel */
+  .edit-panel{
+    margin-top:12px;border-top:1px dashed var(--line);padding-top:12px;
+  }
+  .edit-hint{font-size:12px;color:var(--muted);margin:0 0 10px}
+  .edit-row{margin-bottom:12px}
+  .edit-row .lab{font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;display:flex;gap:8px;align-items:center}
+  .seg{display:flex;gap:6px;flex-wrap:wrap}
+  .seg button{
+    border:1px solid var(--line);background:#fff;color:var(--ink-soft);
+    font-size:11.5px;padding:5px 11px;border-radius:999px;cursor:pointer;font-family:inherit;
+  }
+  .seg button.sel{background:var(--green);color:#fff;border-color:var(--green)}
+  .deg-picker{display:flex;gap:6px;margin-top:8px;align-items:center}
+  .deg-picker button{
+    width:30px;height:30px;border-radius:50%;border:1px solid var(--line);
+    background:#fff;color:var(--ink-soft);font-size:12px;cursor:pointer;font-family:inherit;
+  }
+  .deg-picker button.sel{background:var(--clay);color:#fff;border-color:var(--clay)}
+  .deg-picker .lbl{font-size:11px;color:var(--muted);margin-right:2px}
+
+  /* suggestion chips */
+  .suggest-wrap{
+    display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;
+  }
+  .suggest-wrap::-webkit-scrollbar{height:0}
+  .chip{
+    flex:none;background:var(--paper);border:1px solid var(--line);
+    color:var(--ink-soft);font-size:12.5px;padding:8px 14px;border-radius:999px;
+    cursor:pointer;white-space:nowrap;font-family:inherit;box-shadow:var(--shadow);
+  }
+  .chip:active{transform:scale(.96)}
+  .chip.accent{border-color:#CBDACF;color:var(--green);background:#F2F7F3}
+
+  /* composer */
+  .composer{
+    position:sticky;bottom:64px;
+    background:linear-gradient(180deg, rgba(246,242,236,0), var(--bg) 30%);
+    padding:10px 14px 12px;
+    z-index:15;
+  }
+  .composer .box{
+    display:flex;align-items:flex-end;gap:9px;
+    background:var(--paper);border:1px solid var(--line);
+    border-radius:22px;padding:8px 8px 8px 16px;box-shadow:var(--shadow);
+  }
+  .composer textarea{
+    flex:1;border:none;outline:none;resize:none;background:transparent;
+    font-family:inherit;font-size:14.5px;line-height:1.5;color:var(--ink);
+    max-height:96px;padding:6px 0;
+  }
+  .composer textarea::placeholder{color:#B3AB9E}
+  .send-btn{
+    width:38px;height:38px;border-radius:50%;border:none;flex:none;
+    background:var(--green);color:#fff;font-size:16px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .send-btn:disabled{background:#C9CFC9;cursor:default}
+  .composer .note{font-size:10.5px;color:var(--muted);text-align:center;margin-top:7px}
+
+  /* ---------- bottom nav ---------- */
+  .tabbar{
+    position:sticky;bottom:0;z-index:25;
+    display:flex;background:rgba(252,250,247,.96);
+    border-top:1px solid var(--line);
+    padding:8px 0 max(10px, env(safe-area-inset-bottom));
+    backdrop-filter:blur(10px);
+  }
+  .tabbar button{
+    flex:1;background:none;border:none;cursor:pointer;font-family:inherit;
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    color:var(--muted);font-size:10.5px;padding:4px 0;
+  }
+  .tabbar button .ic{font-size:19px;line-height:1}
+  .tabbar button.active{color:var(--green);font-weight:600}
+
+  /* ---------- five dimension screen ---------- */
+  .screen-head{margin:2px 2px 16px}
+  .screen-head h1{font-size:21px;margin:0 0 5px;letter-spacing:.01em}
+  .screen-head p{margin:0;font-size:13px;color:var(--muted);line-height:1.6}
+  .note-card{
+    background:var(--gold-soft);border-radius:14px;padding:11px 13px;
+    font-size:11.5px;color:#7C6326;margin-bottom:16px;line-height:1.6;
+  }
+  .dim-card{
+    background:var(--paper);border-radius:16px;box-shadow:var(--shadow);
+    margin-bottom:12px;overflow:hidden;border:1px solid var(--line);
+  }
+  .dim-card .head{
+    padding:14px 15px;display:flex;align-items:center;gap:11px;cursor:pointer;
+  }
+  .dim-icon{
+    width:38px;height:38px;border-radius:12px;flex:none;
+    display:flex;align-items:center;justify-content:center;font-size:17px;
+  }
+  .dim-name{flex:1}
+  .dim-name b{font-size:15px;display:block}
+  .dim-name span{font-size:11.5px;color:var(--muted)}
+  .dim-verdict{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .dim-body{padding:0 15px 15px;display:none}
+  .dim-card.open .dim-body{display:block}
+  .dim-card.open .chev{transform:rotate(180deg)}
+  .chev{transition:transform .2s;color:var(--muted);font-size:12px}
+  .evi{
+    font-size:12px;color:var(--ink-soft);background:#FAF8F4;
+    border-radius:10px;padding:9px 11px;margin-top:8px;border:1px solid #EFE9DE;
+  }
+  .evi .src{font-size:10.5px;color:var(--muted);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap}
+  .evi .src span{border:1px solid var(--line);border-radius:999px;padding:1px 7px}
+  .unknown-note{font-size:12px;color:var(--muted);background:#F5F2ED;border-radius:10px;padding:10px 12px;margin-top:8px}
+
+  /* ---------- review screen ---------- */
+  .period-row{display:flex;gap:8px;margin-bottom:16px}
+  .period-row button{
+    flex:1;padding:11px 0;border-radius:14px;border:1px solid var(--line);
+    background:var(--paper);font-family:inherit;font-size:13px;font-weight:600;
+    color:var(--ink-soft);cursor:pointer;
+  }
+  .period-row button.sel{background:var(--green);border-color:var(--green);color:#fff}
+
+  .rev-section{
+    background:var(--paper);border-radius:16px;box-shadow:var(--shadow);
+    padding:15px;margin-bottom:12px;border:1px solid var(--line);
+  }
+  .rev-section h3{
+    margin:0 0 3px;font-size:14px;display:flex;align-items:center;gap:8px;
+  }
+  .rev-section h3 .step{
+    width:20px;height:20px;border-radius:50%;background:var(--green-soft);
+    color:var(--green);font-size:11px;display:flex;align-items:center;justify-content:center;
+  }
+  .kind-tag{font-size:9.5px;letter-spacing:.08em;padding:2px 8px;border-radius:999px;margin-left:auto}
+  .kind-fact{background:var(--green-soft);color:var(--green)}
+  .kind-guess{background:var(--gold-soft);color:#7C6326}
+  .kind-theory{background:var(--blue-soft);color:var(--blue)}
+  .kind-advice{background:var(--clay-soft);color:var(--clay)}
+  .rev-section p{font-size:13px;margin:8px 0 0;color:var(--ink-soft);line-height:1.7}
+  .fact-line{
+    display:flex;gap:9px;align-items:flex-start;font-size:13px;
+    padding:7px 0;border-bottom:1px dashed var(--line);
+  }
+  .fact-line:last-child{border-bottom:none}
+  .fact-line .dot{width:6px;height:6px;border-radius:50%;background:var(--green);margin-top:8px;flex:none}
+  .cite{
+    font-size:10.5px;color:var(--muted);border:1px solid var(--line);
+    padding:1px 7px;border-radius:999px;cursor:pointer;white-space:nowrap;background:#FAF8F4;
+  }
+  .goal-row{
+    background:#FAF8F4;border-radius:12px;padding:11px 12px;margin-top:9px;
+    font-size:12.5px;color:var(--ink-soft);border:1px solid #EFE9DE;
+  }
+  .goal-row b{color:var(--ink);font-size:13px}
+  .tension{color:#7C6326;font-weight:600}
+  .aligned{color:var(--green);font-weight:600}
+  .obc{
+    border:1.5px solid var(--clay);border-radius:16px;padding:15px;
+    background:linear-gradient(180deg,#FBF2EC,#FFF);
+  }
+  .obc h3{margin:0 0 2px;color:var(--clay)}
+  .obc .sub{font-size:11px;color:var(--clay);letter-spacing:.06em;margin-bottom:9px}
+  .obc p{color:var(--ink)}
+  .limit-list{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:var(--ink-soft)}
+  .limit-list li{margin-bottom:5px}
+  .why-box{
+    margin-top:11px;background:#F5F2ED;border-radius:12px;padding:11px 13px;
+    font-size:11.5px;color:var(--ink-soft);line-height:1.7;
+  }
+  .why-box b{color:var(--ink)}
+  .feedback-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
+  .fb{
+    border:1px solid var(--line);background:#fff;color:var(--ink-soft);
+    font-size:12px;padding:7px 13px;border-radius:999px;cursor:pointer;font-family:inherit;
+  }
+  .fb.sel{background:var(--green);border-color:var(--green);color:#fff}
+
+  .quiet-end{
+    text-align:center;font-size:12px;color:var(--muted);
+    padding:18px 20px;background:var(--paper);border-radius:16px;
+    border:1px dashed var(--line);line-height:1.8;
+  }
+
+  /* toast */
+  .toast{
+    position:fixed;left:50%;bottom:150px;transform:translateX(-50%) translateY(10px);
+    background:rgba(46,43,38,.92);color:#fff;font-size:12.5px;
+    padding:9px 18px;border-radius:999px;opacity:0;pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;z-index:60;white-space:nowrap;
+    max-width:86vw;overflow:hidden;text-overflow:ellipsis;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* misc */
+  .divider-soft{height:1px;background:var(--line);margin:16px 2px}
+  .foot-note{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;padding:6px 12px 2px}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <header class="app-header">
+    <div class="row">
+      <div class="brand">AI Life OS<small>变体 2 · 对话引导型</small></div>
+      <div class="privacy-pill"><span class="dot"></span>仅你可见 · 可导出/删除</div>
+    </div>
+  </header>
+
+  <!-- ================= SCREEN 1+2: CHAT (Capture → Confirm) ================= -->
+  <main class="screen" id="screen-chat">
+    <div class="day-divider">— 10 月 9 日 周四 · 今天 —</div>
+
+    <div class="msg ai">
+      <div class="avatar">AI</div>
+      <div>
+        <div class="bubble">
+          <p>晚上好。今天过得怎么样？想到什么说什么就好，我来帮你整理成可以回顾的记录。</p>
+          <p class="soft">语气随你——想让我安静听着、还是帮你拆开看，都可以说。</p>
+        </div>
+        <div class="time-stamp">18:42</div>
+      </div>
+    </div>
+
+    <div class="msg user">
+      <div class="avatar">我</div>
+      <div>
+        <div class="bubble">
+          <p>下班后和妈妈通话 20 分钟，聊了聊她的近况，挺开心的。</p>
+        </div>
+        <div class="time-stamp">18:44</div>
+      </div>
+    </div>
+
+    <div class="msg ai" id="msg-historic">
+      <div class="avatar">AI</div>
+      <div style="flex:1">
+        <div class="bubble wide">
+          <p>收到，我读到一件小事：<b>给妈妈打了 20 分钟电话</b>。下面是我从你的话里整理的，帮忙看一眼对不对。</p>
+          <div class="card" id="card-historic">
+            <div class="card-title">
+              <b>和妈妈通话 20 分钟</b>
+              <span class="badge edited">已修订并确认</span>
+            </div>
+            <div class="meta-line">关联目标：<b>和家人保持固定联系</b>（不必强关联，可去掉）</div>
+            <div class="quote">
+              <div class="tag">原文证据</div>
+              「下班后和妈妈通话 20 分钟，<mark style="background:#F3E7C9;padding:0 2px">聊了聊她的近况，挺开心的</mark>。」
+            </div>
+            <div class="impact-list">
+              <div class="impact-row">
+                <div class="dim">关系<span>RELATIONSHIP</span></div>
+                <span class="dir-chip dir-pos">正向</span>
+                <div class="degrees"><i class="on pos"></i><i class="on pos"></i><i class="on pos"></i><i class="on pos"></i><i></i><span class="deg-label">4 / 5</span></div>
+                <span class="epi">用户认可的判断</span>
+              </div>
+              <div class="impact-row">
+                <div class="dim">心情<span>PURPOSE</span></div>
+                <span class="dir-chip dir-pos">正向</span>
+                <div class="degrees"><i class="on pos"></i><i class="on pos"></i><i></i><i></i><i></i><span class="deg-label">2 / 5</span></div>
+                <span class="epi">AI 推断</span>
+              </div>
+              <div class="impact-row">
+                <div class="dim">财富<span>WEALTH</span></div>
+                <span class="dir-chip dir-unk">未知</span>
+                <div class="degrees"><span class="deg-label" style="margin:0">无证据，不做猜测</span></div>
+                <span class="epi">—</span>
+              </div>
+            </div>
+            <div class="why-box">
+              <b>为什么这样指导：</b>你说「挺开心的」，我把它记为关系上的正向，程度 4 是你后来自己改的（我原本猜 3）。心情那条只是推断，你觉得不对可以直接删掉。
+            </div>
+          </div>
+        </div>
+        <div class="time-stamp">18:44</div>
+      </div>
+    </div>
+
+    <!-- failure exception state -->
+    <div class="msg ai">
+      <div class="avatar">AI</div>
+      <div>
+        <div class="bubble">
+          <p><b>这条记录整理失败了</b>（19:30 ·「明天再说吧」）</p>
+          <p class="soft">原文已经安全保存，没有丢。要我再试一次吗？或者就先只留着原文。</p>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="toast('正在重新整理…（演示）')">重新整理</button>
+            <button class="btn btn-ghost" onclick="toast('已保留原文，跳过整理')">只留原文</button>
+          </div>
+        </div>
+        <div class="time-stamp">19:31</div>
+      </div>
+    </div>
+
+    <div class="day-divider">— 现在 —</div>
+
+    <!-- suggestion chips -->
+    <div class="suggest-wrap" id="suggestWrap">
+      <button class="chip accent" onclick="sendPreset('run')">「跑步 30 分钟，感觉状态不错」</button>
+      <button class="chip" onclick="sendPreset('phone')">「昨晚熬夜刷手机到 1 点」</button>
+      <button class="chip" onclick="sendPreset('work')">「加班到 22:30，赶完了季度方案」</button>
+      <button class="chip" onclick="sendPreset('none')">「今天没什么特别的」</button>
+    </div>
+  </main>
+
+  <!-- composer (only on chat screen) -->
+  <div class="composer" id="composer">
+    <div class="box">
+      <textarea id="captureInput" rows="1" placeholder="随手记：发生了什么、你的感受…"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendFree()" aria-label="发送">↑</button>
+    </div>
+    <div class="note">原文会先完整保存 · AI 只做整理，不改写你的原话</div>
+  </div>
+
+  <!-- ================= SCREEN 3: FIVE DIMENSIONS ================= -->
+  <main class="screen hidden" id="screen-dims">
+    <div class="screen-head">
+      <h1>五维视图</h1>
+      <p>每条行为按方向与 1–5 程度映射到五个维度。只统计<b>你确认过</b>的记录；证据不足的地方就空着。</p>
+    </div>
+    <div class="note-card">
+      这里的 1–5 是你相对自己目标的主观估计，不是体检数值。各维度独立判断，不求和、不排名、不合成总分。点开可以看到依据。
+    </div>
+
+    <div class="dim-card open" onclick="toggleDim(this,event)">
+      <div class="head">
+        <div class="dim-icon" style="background:var(--green-soft)">🏃</div>
+        <div class="dim-name"><b>健康</b><span>Health · 本周 3 条确认记录</span></div>
+        <div class="dim-verdict" style="background:var(--green-soft);color:var(--green)">偏支持</div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="dim-body">
+        <div class="impact-row" style="margin-bottom:2px">
+          <div class="dim">正向<span>DEGREE</span></div>
+          <div class="degrees"><i class="on pos"></i><i class="on pos"></i><i class="on pos"></i><i class="on pos"></i><i></i><span class="deg-label">多数为 3–4</span></div>
+        </div>
+        <div class="evi">
+          「跑步 30 分钟，感觉状态不错」→ 正向 4
+          <div class="src"><span>10-09 跑步记录</span><span>用户自述</span></div>
+        </div>
+        <div class="evi">
+          「昨晚熬夜刷手机到 1 点」→ 混合：放松 正向 1 / 睡眠 负向 3
+          <div class="src"><span>10-09 熬夜记录</span><span>用户自述 · 混合两侧独立记录</span></div>
+        </div>
+        <div class="unknown-note">饮食与体重：本周期没有记录，不做判断。</div>
+      </div>
+    </div>
+
+    <div class="dim-card" onclick="toggleDim(this,event)">
+      <div class="head">
+        <div class="dim-icon" style="background:var(--blue-soft)">⏱</div>
+        <div class="dim-name"><b>时间</b><span>Time · 本周 2 条确认记录</span></div>
+        <div class="dim-verdict" style="background:#F2E2DE;color:var(--danger)">偏消耗</div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="dim-body">
+        <div class="evi">
+          「加班到 22:30，赶完了季度方案」→ 混合：专注产出 正向 2 / 自由时间 负向 4
+          <div class="src"><span>10-09 加班记录</span><span>用户自述 · 混合两侧独立记录</span></div>
+        </div>
+        <div class="evi">
+          「昨晚熬夜刷手机到 1 点」→ 负向 2（挤占睡眠时间）
+          <div class="src"><span>10-09 熬夜记录</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dim-card" onclick="toggleDim(this,event)">
+      <div class="head">
+        <div class="dim-icon" style="background:var(--clay-soft)">💛</div>
+        <div class="dim-name"><b>关系</b><span>Relationship · 本周 2 条确认记录</span></div>
+        <div class="dim-verdict" style="background:var(--green-soft);color:var(--green)">偏支持</div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="dim-body">
+        <div class="evi">
+          「和妈妈通话 20 分钟，聊了聊她的近况」→ 正向 4
+          <div class="src"><span>10-09 通话记录</span><span>用户修订（AI 原始 3）</span></div>
+        </div>
+        <div class="evi">
+          「周五和同事吃了顿饭」→ 正向 2
+          <div class="src"><span>10-04 记录</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dim-card" onclick="toggleDim(this,event)">
+      <div class="head">
+        <div class="dim-icon" style="background:var(--gold-soft)">💰</div>
+        <div class="dim-name"><b>财富</b><span>Wealth · 本周 1 条确认记录</span></div>
+        <div class="dim-verdict" style="background:#EFEAE1;color:var(--ink-soft)">不明朗</div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="dim-body">
+        <div class="evi">
+          「加班到 22:30，赶完了季度方案」→ 正向 2（与季度奖金目标有一点关系，AI 推断）
+          <div class="src"><span>10-09 加班记录</span><span>AI 推断 · 你已认可</span></div>
+        </div>
+        <div class="unknown-note">支出与储蓄：本周期没有记录，无法判断趋势。不猜。</div>
+      </div>
+    </div>
+
+    <div class="dim-card" onclick="toggleDim(this,event)">
+      <div class="head">
+        <div class="dim-icon" style="background:#EDE6F1">🌱</div>
+        <div class="dim-name"><b>目的</b><span>Purpose · 本周 1 条确认记录</span></div>
+        <div class="dim-verdict" style="background:#EFEAE1;color:var(--ink-soft)">记录太少</div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="dim-body">
+        <div class="unknown-note">这周只有一条间接证据，还不够谈「方向感」。可以先不处理，复盘时我也不拿它说事。</div>
+      </div>
+    </div>
+
+    <div class="foot-note">数据来源：仅已确认记录 · AI 候选未计入<br>长按记录可以回到原文证据</div>
+  </main>
+
+  <!-- ================= SCREEN 4: REVIEW ================= -->
+  <main class="screen hidden" id="screen-review">
+    <div class="screen-head">
+      <h1>复盘</h1>
+      <p>只在你打开时开始。整个过程像一次对话——你可以随时说「先到这里」。</p>
+    </div>
+
+    <!-- step 0: choose period -->
+    <div id="rev-step0">
+      <div class="period-row">
+        <button class="sel" onclick="pickPeriod(this,'today')">今日</button>
+        <button onclick="pickPeriod(this,'week')">本周</button>
+        <button onclick="pickPeriod(this,'custom')">自选周期</button>
+      </div>
+      <div class="msg ai">
+        <div class="avatar">AI</div>
+        <div>
+          <div class="bubble">
+            <p>想怎么回顾这周？我可以陪你走完一轮，也可以什么都不说、只给你看事实。</p>
+            <div class="actions">
+              <button class="btn btn-primary" onclick="startReview('guided')">带我走一轮</button>
+              <button class="btn btn-ghost" onclick="startReview('facts')">只看事实</button>
+              <button class="btn btn-line" onclick="startReview('none')">今天不想复盘</button>
+            </div>
+          </div>
+          <div class="time-stamp">20:10</div>
+        </div>
+      </div>
+      <div class="quiet-end">
+        没有提醒、不会催你。上次复盘是 10 月 6 日（本周）。
+      </div>
+    </div>
+
+    <!-- review conversation stream -->
+    <div id="rev-stream" class="hidden"></div>
+  </main>
+
+  <!-- ================= tabbar ================= -->
+  <nav class="tabbar">
+    <button class="active" data-tab="chat" onclick="switchTab('chat',this)">
+      <span class="ic">💬</span><span>对话</span>
+    </button>
+    <button data-tab="dims" onclick="switchTab('dims',this)">
+      <span class="ic">◎</span><span>五维</span>
+    </button>
+    <button data-tab="review" onclick="switchTab('review',this)">
+      <span class="ic">◔</span><span>复盘</span>
+    </button>
+    <button data-tab="me" onclick="switchTab('me',this)">
+      <span class="ic">☰</span><span>我的</span>
+    </button>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+/* ============================================================
+   AI Life OS · 变体 2 对话引导型原型
+   全部状态为前端演示数据，无任何网络请求
+   ============================================================ */
+
+const $ = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+
+/* ---------- toast ---------- */
+let toastTimer = null;
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1900);
+}
+
+/* ---------- tabs ---------- */
+function switchTab(tab, btn){
+  if(tab === 'me'){
+    toast('演示原型：导出 / 删除数据入口在「我的」');
+    return;
+  }
+  $$('.tabbar button').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  $('#screen-chat').classList.toggle('hidden', tab !== 'chat');
+  $('#screen-dims').classList.toggle('hidden', tab !== 'dims');
+  $('#screen-review').classList.toggle('hidden', tab !== 'review');
+  $('#composer').classList.toggle('hidden', tab !== 'chat');
+  const screen = tab === 'chat' ? $('#screen-chat') : tab === 'dims' ? $('#screen-dims') : $('#screen-review');
+  screen.scrollTop = (tab === 'chat') ? screen.scrollHeight : 0;
+}
+
+/* ---------- chat helpers ---------- */
+function scrollChat(){
+  const s = $('#screen-chat');
+  s.scrollTo({ top: s.scrollHeight, behavior: 'smooth' });
+}
+function addUserMsg(text){
+  const now = timeNow();
+  const div = document.createElement('div');
+  div.className = 'msg user';
+  div.innerHTML = `
+    <div class="avatar">我</div>
+    <div>
+      <div class="bubble"><p>${escapeHtml(text)}</p></div>
+      <div class="time-stamp">${now}</div>
+    </div>`;
+  $('#screen-chat').appendChild(div);
+  scrollChat();
+}
+function addAiMsg(html, wide){
+  const now = timeNow();
+  const div = document.createElement('div');
+  div.className = 'msg ai';
+  div.innerHTML = `
+    <div class="avatar">AI</div>
+    <div style="flex:1">
+      <div class="bubble ${wide ? 'wide' : ''}">${html}</div>
+      <div class="time-stamp">${now}</div>
+    </div>`;
+  $('#screen-chat').appendChild(div);
+  scrollChat();
+  return div;
+}
+function showTyping(){
+  return addAiMsg('<div class="typing"><i></i><i></i><i></i></div>');
+}
+function timeNow(){
+  const d = new Date();
+  return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ---------- presets (realistic demo captures) ---------- */
+const PRESETS = {
+  run: {
+    text: '跑步 30 分钟，感觉状态不错',
+    behavior: '跑步 30 分钟',
+    goal: '关联目标：每周运动 3 次（本周第 2 次）',
+    dims: [
+      { name:'健康', en:'HEALTH', dir:'pos', deg:4, epi:'用户自述', note:'「感觉状态不错」是直接依据' },
+      { name:'时间', en:'TIME',   dir:'unk', deg:0, epi:'—', note:'无证据，不做猜测' },
+      { name:'财富', en:'WEALTH', dir:'unk', deg:0, epi:'—', note:'无证据，不做猜测' },
+      { name:'关系', en:'RELATION', dir:'unk', deg:0, epi:'—', note:'无证据，不做猜测' },
+      { name:'目的', en:'PURPOSE', dir:'pos', deg:2, epi:'AI 推断', note:'与「保持活力」方向一致，把握不大' }
+    ],
+    intro: '收到。我把这条拆成了一个行为：<b>跑步 30 分钟</b>。帮忙看一眼我理解得对不对。'
+  },
+  phone: {
+    text: '昨晚熬夜刷手机到 1 点',
+    behavior: '熬夜刷手机（约 2 小时）',
+    goal: '不关联目标',
+    dims: [
+      { name:'健康', en:'HEALTH', dir:'mix', pdeg:1, ndeg:3, epi:'用户自述', note:'混合：放松 正向 1 / 睡眠 负向 3，两侧分别记录、不轧差' },
+      { name:'时间', en:'TIME',   dir:'neg', deg:2, epi:'AI 推断', note:'挤占了睡眠时间' },
+      { name:'财富', en:'WEALTH', dir:'unk', deg:0, epi:'—', note:'无证据，不做猜测' },
+      { name:'关系', en:'RELATION', dir:'unk', deg:0, epi:'—', note:'无证据，不做猜测' },
+      { name:'目的', en:'PURPOSE', dir:'unk', deg:0, epi:'—', note:'无证据，不做猜测' }
+    ],
+    intro: '嗯，我记下来了。这条对健康有两面，我把正反两边分开记，不做加减。'
+  },
+  work: {
+    text: '加班到 22:30，赶完了季度方案',
+    behavior: '加班赶完季度方案',
+    goal: '关联目标：Q4 季度方案落地',
+    dims: [
+      { name:'时间', en:'TIME',   dir:'mix', pdeg:2, ndeg:4, epi:'用户自述', note:'混合：专注产出 正向 2 / 自由时间 负向 4' },
+      { name:'财富', en:'WEALTH', dir:'pos', deg:2, epi:'AI 推断', note:'与季度奖金目标有一点关系，把握不大' },
+      { name:'健康', en:'HEALTH', dir:'unk', deg:0, epi:'—', note:'你没提到身体感受，不猜' },
+      { name:'关系', en:'RELATION', dir:'unk', deg:0, epi:'—', note:'无证据，不做猜测' },
+      { name:'目的', en:'PURPOSE', dir:'unk', deg:0, epi:'—', note:'无证据，不做猜测' }
+    ],
+    intro: '辛苦了。这条对时间有两面，我把「赶完方案」和「没了晚上」分开记。'
+  },
+  none: {
+    text: '今天没什么特别的',
+    behavior: '',
+    goal: '',
+    dims: [],
+    intro: '好，那就这样。平淡的一天也是真实的一天——我只把原文留档，不硬凑出什么结论。',
+    empty: true
+  }
+};
+
+/* generic fallback for free text */
+function buildGeneric(text){
+  return {
+    text,
+    behavior: text.length > 14 ? text.slice(0, 14) + '…' : text,
+    goal: '未关联目标',
+    dims: [
+      { name:'健康', en:'HEALTH', dir:'unk', deg:0, epi:'—', note:'没有足够依据，保持未知' },
+      { name:'时间', en:'TIME',   dir:'unk', deg:0, epi:'—', note:'没有足够依据，保持未知' },
+      { name:'财富', en:'WEALTH', dir:'unk', deg:0, epi:'—', note:'没有足够依据，保持未知' },
+      { name:'关系', en:'RELATION', dir:'unk', deg:0, epi:'—', note:'没有足够依据，保持未知' },
+      { name:'目的', en:'PURPOSE', dir:'unk', deg:0, epi:'—', note:'没有足够依据，保持未知' }
+    ],
+    intro: '我先把原文完整保存了。从这段话里我只能确定一件事：<b>' + escapeHtml(text.length > 14 ? text.slice(0,14)+'…' : text) + '</b>。影响五维的依据还不够，我先都标成「未知」，你随时可以补。'
+  };
+}
+
+/* ---------- render structured card ---------- */
+const DIR_LABEL = { pos:'正向', neg:'负向', mix:'混合', neu:'中性', unk:'未知' };
+function degreesHtml(dir, deg, pdeg, ndeg, mod){
+  if(dir === 'unk' || dir === 'neu'){
+    return '<div class="degrees"><span class="deg-label" style="margin:0">' +
+      (dir === 'unk' ? '无证据，不做猜测' : '明确陈述：无明显影响') + '</span></div>';
+  }
+  if(dir === 'mix'){
+    let h = '<div class="degrees">';
+    h += '<span class="deg-label" style="margin:0 2px 0 0">正</span>';
+    for(let i=1;i<=5;i++) h += `<i class="${i<=pdeg?'on pos':''}"></i>`;
+    h += '<span class="deg-label" style="margin:0 6px 0 3px">'+pdeg+'</span>';
+    h += '<span class="deg-label" style="margin:0 2px 0 0">负</span>';
+    for(let i=1;i<=5;i++) h += `<i class="${i<=ndeg?'on':''}"></i>`;
+    h += '<span class="deg-label" style="margin-left:3px">'+ndeg+'</span></div>';
+    return h;
+  }
+  let h = '<div class="degrees">';
+  for(let i=1;i<=5;i++) h += `<i class="${i<=deg?(dir==='pos'?'on pos':'on'):''}"></i>`;
+  h += `<span class="deg-label">${deg} / 5</span></div>`;
+  return h;
+}
+function cardHtml(data, id){
+  let rows = '';
+  data.dims.forEach((d, idx) => {
+    rows += `
+      <div class="impact-row" data-dim="${idx}">
+        <div class="dim">${d.name}<span>${d.en}</span></div>
+        <span class="dir-chip dir-${d.dir}">${DIR_LABEL[d.dir]}</span>
+        ${degreesHtml(d.dir, d.deg, d.pdeg, d.ndeg)}
+        <span class="epi">${d.epi}</span>
+      </div>`;
+  });
+  return `
+    <div class="card" id="${id}">
+      <div class="card-title">
+        <b>${escapeHtml(data.behavior)}</b>
+        <span class="badge pending">待确认</span>
+      </div>
+      <div class="meta-line">${escapeHtml(data.goal)}</div>
+      <div class="quote">
+        <div class="tag">原文证据（原始 Capture，永不被改写）</div>
+        「${escapeHtml(data.text)}」
+      </div>
+      <div class="impact-list">${rows}</div>
+      <div class="why-box"><b>为什么这样指导：</b>我只根据你原话里的依据做映射；标「AI 推断」的几条只是候选，你确认与否都不会变成客观事实。没依据的维度一律「未知」。</div>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="confirmCard('${id}')">确认</button>
+        <button class="btn btn-ghost" onclick="openEdit('${id}', ${JSON.stringify(data).replace(/"/g,'&quot;')})">修改</button>
+        <button class="btn btn-line" onclick="laterCard('${id}')">稍后处理</button>
+        <button class="btn btn-danger" onclick="deleteCard('${id}')">删除</button>
+      </div>
+    </div>`;
+}
+function emptyCardHtml(data, id){
+  return `
+    <div class="card" id="${id}">
+      <div class="card-title">
+        <b>仅保存原文</b>
+        <span class="badge confirmed">已存档</span>
+      </div>
+      <div class="quote">
+        <div class="tag">原始 Capture</div>
+        「${escapeHtml(data.text)}」
+      </div>
+      <div class="meta-line">没有提取到可确认的事实，也不做影响分析。这不算失败，只是今天没什么要记的。</div>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="toast('已从存档移除（演示）')">删除原文</button>
+        <button class="btn btn-line" onclick="toast('好，就留着原文')">知道了</button>
+      </div>
+    </div>`;
+}
+
+/* ---------- card interactions ---------- */
+function setBadge(card, cls, text){
+  const b = $('.badge', card);
+  b.className = 'badge ' + cls;
+  b.textContent = text;
+}
+function confirmCard(id){
+  const card = document.getElementById(id);
+  if(!card || card.dataset.state === 'deleted') return;
+  card.dataset.state = 'confirmed';
+  setBadge(card, 'confirmed', '已确认 · 参与长期分析');
+  const acts = $('.actions', card);
+  acts.innerHTML = `
+    <button class="btn btn-done" disabled>✓ 已确认</button>
+    <button class="btn btn-line" onclick="openEditFromState('${id}')">还要改</button>
+    <button class="btn btn-danger" onclick="deleteCard('${id}')">删除</button>`;
+  toast('已保存为可信事实（AI 原始值仍可追溯）');
+}
+function laterCard(id){
+  const card = document.getElementById(id);
+  if(!card || card.dataset.state === 'deleted') return;
+  card.dataset.state = 'later';
+  setBadge(card, 'later', '待确认 · 稍后处理');
+  toast('已放回「待确认」，不会催你');
+}
+function deleteCard(id){
+  const card = document.getElementById(id);
+  if(!card) return;
+  if(card.dataset.confirmDelete === '1'){
+    card.dataset.state = 'deleted';
+    setBadge(card, 'deleted', '已删除 · 不进入任何分析');
+    card.style.opacity = '.55';
+    $('.actions', card).innerHTML = `
+      <button class="btn btn-done" disabled>已删除</button>
+      <button class="btn btn-line" onclick="toast('删除不可撤销（演示）')">撤销需在 24 小时内</button>`;
+    toast('已删除。这条不会再出现在复盘里');
+  } else {
+    card.dataset.confirmDelete = '1';
+    toast('再点一次「删除」确认：该条将不进入长期分析');
+  }
+}
+
+/* edit panel: direction + degree per dimension */
+function openEdit(id, data){
+  renderEdit(id, data, JSON.parse(JSON.stringify(data.dims)));
+}
+function openEditFromState(id){
+  const card = document.getElementById(id);
+  const data = card._data || buildGeneric('（已保存的记录）');
+  renderEdit(id, data, JSON.parse(JSON.stringify(data.dims || [])));
+}
+function renderEdit(id, data, draft){
+  const card = document.getElementById(id);
+  card._data = data;
+  card._draft = draft;
+  let old = $('.edit-panel', card);
+  if(old) old.remove();
+  const panel = document.createElement('div');
+  panel.className = 'edit-panel';
+  let html = '<p class="edit-hint">逐项修改方向与程度；不确定就选「未知」。五个「未知」不需要都处理。修改只保存你的版本，AI 原始值保留。</p>';
+  draft.forEach((d, idx) => {
+    html += `
+      <div class="edit-row" data-idx="${idx}">
+        <div class="lab">${d.name} <span class="epi" style="margin-left:auto">AI 原始：${DIR_LABEL[d.dir]}${d.dir==='mix'?'（'+d.pdeg+'/'+d.ndeg+'）':(d.dir==='unk'||d.dir==='neu'?'':' '+d.deg)}</span></div>
+        <div class="seg">
+          ${['pos','neg','mix','neu','unk'].map(k =>
+            `<button class="${d.dir===k?'sel':''}" onclick="editDir(${idx},'${k}',this)">${DIR_LABEL[k]}</button>`).join('')}
+        </div>
+        <div class="deg-picker" data-deg="${idx}">
+          ${degPickerHtml(d)}
+        </div>
+      </div>`;
+  });
+  html += `
+    <div class="actions">
+      <button class="btn btn-primary" onclick="saveEdit('${id}')">保存修订</button>
+      <button class="btn btn-ghost" onclick="cancelEdit('${id}')">取消</button>
+    </div>`;
+  panel.innerHTML = html;
+  card.appendChild(panel);
+  panel.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+function degPickerHtml(d){
+  if(d.dir === 'unk') return '<span class="deg-label" style="margin:0">未知 · 不填程度</span>';
+  if(d.dir === 'neu') return '<span class="deg-label" style="margin:0">中性 · 程度留空</span>';
+  if(d.dir === 'mix'){
+    let h = '<span class="lbl">正</span>';
+    for(let i=1;i<=5;i++) h += `<button class="${d.pdeg===i?'sel':''}" onclick="editDeg(${d._i!==undefined?d._i:''},'pdeg',${i},this)">${i}</button>`;
+    h += '<span class="lbl" style="margin-left:6px">负</span>';
+    for(let i=1;i<=5;i++) h += `<button class="${d.ndeg===i?'sel':''}" onclick="editDeg(${d._i!==undefined?d._i:''},'ndeg',${i},this)">${i}</button>`;
+    return h;
+  }
+  let h = '<span class="lbl">程度</span>';
+  for(let i=1;i<=5;i++) h += `<button class="${d.deg===i?'sel':''}" onclick="editDeg(${d._i!==undefined?d._i:''},'deg',${i},this)">${i}</button>`;
+  return h;
+}
+function editDir(idx, dir, btn){
+  const card = btn.closest('.card');
+  const d = card._draft[idx];
+  d.dir = dir;
+  if(dir === 'pos' && !d.deg) d.deg = 3;
+  if(dir === 'neg' && !d.deg) d.deg = 3;
+  if(dir === 'mix'){ if(!d.pdeg) d.pdeg = 2; if(!d.ndeg) d.ndeg = 2; }
+  $$('.seg button', btn.parentElement).forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  const dp = $(`.deg-picker[data-deg="${idx}"]`, card);
+  dp.innerHTML = degPickerHtml(Object.assign(d, { _i: idx }));
+}
+function editDeg(idx, key, val, btn){
+  const card = btn.closest('.card');
+  const row = btn.closest('.edit-row');
+  const i = row.dataset.idx;
+  card._draft[i][key] = val;
+  $$('button', btn.parentElement).forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+function saveEdit(id){
+  const card = document.getElementById(id);
+  const data = card._data;
+  data.dims = card._draft;
+  const badgeHtml = '已修订 · 你的版本';
+  // rebuild impact rows in place
+  const list = $('.impact-list', card);
+  list.innerHTML = data.dims.map((d, idx) => `
+      <div class="impact-row">
+        <div class="dim">${d.name}<span>${d.en}</span></div>
+        <span class="dir-chip dir-${d.dir}">${DIR_LABEL[d.dir]}</span>
+        ${degreesHtml(d.dir, d.deg, d.pdeg, d.ndeg)}
+        <span class="epi">用户修订值</span>
+      </div>`).join('');
+  setBadge(card, 'edited', badgeHtml);
+  $('.why-box', card).innerHTML = '<b>为什么这样指导：</b>已按你的修订保存。AI 原始值仍保留在修订历史里，可随时对照；确认状态与「是不是客观事实」是两回事。';
+  const acts = $('.actions', card);
+  acts.innerHTML = `
+    <button class="btn btn-primary" onclick="confirmCard('${id}')">确认修订</button>
+    <button class="btn btn-line" onclick="toast('AI 原始值：见修订历史（演示）')">看 AI 原始值</button>
+    <button class="btn btn-danger" onclick="deleteCard('${id}')">删除</button>`;
+  $('.edit-panel', card)?.remove();
+  card.dataset.state = 'edited';
+  toast('修订已保存，再次查看会和你现在看到的一致');
+}
+function cancelEdit(id){
+  const card = document.getElementById(id);
+  $('.edit-panel', card)?.remove();
+  toast('已取消，没有改动');
+}
+
+/* ---------- send flows ---------- */
+function sendPreset(key){
+  const data = PRESETS[key];
+  addUserMsg(data.text);
+  respondWith(data);
+}
+function sendFree(){
+  const input = $('#captureInput');
+  const text = input.value.trim();
+  if(!text){ toast('先写点什么再保存'); return; }
+  input.value = '';
+  input.style.height = 'auto';
+  addUserMsg(text);
+  respondWith(buildGeneric(text));
+}
+function respondWith(data){
+  const typing = showTyping();
+  setTimeout(() => {
+    typing.remove();
+    const id = 'card-' + Date.now();
+    if(data.empty){
+      addAiMsg(`<p>${data.intro}</p>${emptyCardHtml(data, id)}`, true);
+    } else {
+      addAiMsg(`<p>${data.intro}</p>${cardHtml(data, id)}`, true);
+      const card = document.getElementById(id);
+      card._data = data;
+    }
+  }, 850);
+}
+
+/* composer textarea auto-grow */
+$('#captureInput').addEventListener('input', function(){
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 96) + 'px';
+});
+$('#captureInput').addEventListener('keydown', function(e){
+  if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); sendFree(); }
+});
+
+/* ============================================================
+   FIVE DIMENSIONS
+   ============================================================ */
+function toggleDim(card, e){
+  if(e.target.closest('.evi')) { toast('已定位到原始 Capture（演示）'); return; }
+  card.classList.toggle('open');
+}
+
+/* ============================================================
+   REVIEW (guided conversation)
+   ============================================================ */
+function pickPeriod(btn, period){
+  $$('#rev-step0 .period-row button').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  if(period === 'custom') toast('演示中固定为本周（10/06 – 10/09）');
+}
+
+function revMsg(role, html, cls){
+  const stream = $('#rev-stream');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  div.innerHTML = role === 'ai'
+    ? `<div class="avatar">AI</div><div style="flex:1"><div class="bubble wide">${html}</div><div class="time-stamp">${timeNow()}</div></div>`
+    : `<div class="avatar">我</div><div><div class="bubble">${html}</div><div class="time-stamp">${timeNow()}</div></div>`;
+  if(cls) div.classList.add(cls);
+  stream.appendChild(div);
+  setTimeout(() => div.scrollIntoView({ behavior:'smooth', block:'end' }), 30);
+  return div;
+}
+
+function startReview(mode){
+  if(mode === 'none'){
+    $('#rev-step0').classList.add('hidden');
+    const s = $('#rev-stream');
+    s.classList.remove('hidden');
+    revMsg('ai', `<p>好，那今天就先不复盘。</p>
+      <p class="soft">不会留下待办，也不会提醒你。想聊的时候再打开就好。</p>
+      <div class="actions"><button class="btn btn-ghost" onclick="resetReview()">返回</button></div>`);
+    return;
+  }
+  $('#rev-step0').classList.add('hidden');
+  const s = $('#rev-stream');
+  s.classList.remove('hidden');
+
+  revMsg('user', `<p>${mode === 'facts' ? '只给我看事实就行。' : '带我走一轮吧。'}</p>`);
+
+  const typing = revMsg('ai', '<div class="typing"><i></i><i></i><i></i></div>');
+  setTimeout(() => {
+    typing.remove();
+
+    /* 1. 发生了什么（事实） */
+    revMsg('ai', `
+      <p>好。我们慢慢来，一次看一小块。</p>
+      <div class="rev-section">
+        <h3><span class="step">1</span>发生了什么<span class="kind-tag kind-fact">已确认事实</span></h3>
+        <p>本周你确认了 4 条记录，都能点回原文：</p>
+        <div class="fact-line"><span class="dot"></span><span>跑步 30 分钟（第 2 次）</span><span class="cite" onclick="toast('跳转到 10-09 原文 Capture')">证据 ↗</span></div>
+        <div class="fact-line"><span class="dot"></span><span>和妈妈通话 20 分钟</span><span class="cite" onclick="toast('跳转到 10-09 原文 Capture')">证据 ↗</span></div>
+        <div class="fact-line"><span class="dot"></span><span>熬夜刷手机到凌晨 1 点</span><span class="cite" onclick="toast('跳转到 10-09 原文 Capture')">证据 ↗</span></div>
+        <div class="fact-line"><span class="dot"></span><span>加班赶完季度方案</span><span class="cite" onclick="toast('跳转到 10-09 原文 Capture')">证据 ↗</span></div>
+      </div>`);
+
+    if(mode === 'facts'){
+      setTimeout(() => {
+        revMsg('ai', `
+          <p>事实就这些。剩下的部分（推测、理论、建议）这次都跳过。</p>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="obcStep('skip')">好，结束</button>
+            <button class="btn btn-ghost" onclick="resetReview()">再看看</button>
+          </div>`);
+      }, 700);
+      return;
+    }
+
+    /* 2. 进展与偏离 */
+    setTimeout(() => {
+      revMsg('ai', `
+        <div class="rev-section">
+          <h3><span class="step">2</span>进展与偏离<span class="kind-tag kind-fact">可计算</span></h3>
+          <div class="goal-row">
+            <b>目标：每周运动 3 次</b><br>
+            本周记录 2 次 <span class="tension">· 与目标有一点张力</span><br>
+            <span style="color:var(--muted);font-size:11.5px">依据：10-04、10-09 两条已确认运动记录</span>
+          </div>
+          <div class="goal-row">
+            <b>目标：和家人保持固定联系</b><br>
+            本周 1 次通话 <span class="aligned">· 与目标一致</span><br>
+            <span style="color:var(--muted);font-size:11.5px">依据：10-09 通话记录</span>
+          </div>
+          <p class="soft">睡眠没有设目标，我不拿它算进度。</p>
+        </div>`);
+    }, 1600);
+
+    /* 3. 可能的模式（推测） */
+    setTimeout(() => {
+      revMsg('ai', `
+        <div class="rev-section">
+          <h3><span class="step">3</span>可能的模式<span class="kind-tag kind-guess">推测 · 非事实</span></h3>
+          <p>这周有两次「晚上时间被占满」——一次是加班，一次是刷手机，之后第二天的运动都取消了。<b>这只是我的猜测</b>：晚上失控可能是运动计划被打断的原因，也可能只是巧合。</p>
+          <div class="actions">
+            <button class="btn btn-ghost" onclick="toast('好，这个推测撤回')">不太对</button>
+            <button class="btn btn-line" onclick="toast('已记住这个推测（仅本次复盘）')">有点道理</button>
+            <button class="btn btn-line" onclick="toast('推测已跳过')">跳过</button>
+          </div>
+        </div>`);
+    }, 2500);
+
+    /* 4. 理论视角 */
+    setTimeout(() => {
+      revMsg('ai', `
+        <div class="rev-section">
+          <h3><span class="step">4</span>理论视角<span class="kind-tag kind-theory">引用 · 可核验</span></h3>
+          <p>BJ Fogg 的行为模型（《Tiny Habits》，2019）提出：行为 = 动机 × 能力 × 提示。当动机不高时，把动作缩小、把提示做明显，比「更努力」有效。</p>
+          <p class="soft">适用边界：这是关于习惯养成的一般理论，不是对你的诊断。你的实际情况只有你知道。</p>
+          <div class="actions"><button class="btn btn-line" onclick="toast('来源：Fogg, B. J. (2019). Tiny Habits. Houghton Mifflin Harcourt. ISBN 978-0358003328')">查看来源</button></div>
+        </div>`);
+    }, 3400);
+
+    /* 5. ONE BIG CHANGE 询问 */
+    setTimeout(() => {
+      revMsg('ai', `
+        <p>差不多到这里了。这周想做点改变吗？——<b>不想改也完全可以，那就只是回顾</b>。</p>
+        <div class="actions">
+          <button class="btn btn-primary" onclick="obcStep('want')">有一个想改的</button>
+          <button class="btn btn-ghost" onclick="obcStep('skip')">这次只回顾</button>
+          <button class="btn btn-line" onclick="obcStep('skip')">不用建议</button>
+        </div>`);
+    }, 4300);
+  }, 900);
+}
+
+function obcStep(mode){
+  const stream = $('#rev-stream');
+  if(mode === 'skip'){
+    revMsg('user', '<p>这次只回顾就好。</p>');
+    setTimeout(() => {
+      revMsg('ai', `
+        <p>好，那就到这里。这周你记录了 4 条，能一直回头看本身就是一件事。</p>
+        <div class="quiet-end">
+          本次复盘：<b>零建议</b> · 不生成待办 · 不会有后台跟进<br>
+          想看这周的五维汇总，可以到「五维」页慢慢翻。
+        </div>
+        <div class="actions">
+          <button class="btn btn-ghost" onclick="switchTab('dims', document.querySelector('[data-tab=dims]'))">看五维视图</button>
+          <button class="btn btn-line" onclick="resetReview()">结束</button>
+        </div>`);
+    }, 600);
+    return;
+  }
+  revMsg('user', '<p>有一个想改的，说来听听？</p>');
+  setTimeout(() => {
+    revMsg('ai', `
+      <div class="obc">
+        <h3>ONE BIG CHANGE</h3>
+        <div class="sub">零个或一个 · 由你决定</div>
+        <p><b>把每周运动的第一步，缩小到「换上跑鞋出门」。</b></p>
+        <p class="soft">理由摘要：本周运动缺口出现在「晚上被占满」的日子；动机不是问题（你两次都跑得很开心），门槛在启动。这只是候选，不是命令。</p>
+        <div class="actions">
+          <button class="btn btn-primary" onclick="obcResolve('accept')">接受</button>
+          <button class="btn btn-ghost" onclick="obcResolve('edit')">改一改</button>
+          <button class="btn btn-line" onclick="obcResolve('reject')">不要这个</button>
+        </div>
+      </div>
+      <div class="why-box">
+        <b>为什么这样指导：</b>本次采用「温和 + 拆解一步」。依据：当前意愿（你选了想改）、目标版本（每周 3 次，未变）、已确认模式（晚上时间被占满）。直接督促你没有要求，我就没用。
+      </div>`);
+  }, 600);
+}
+
+function obcResolve(action){
+  if(action === 'accept'){
+    revMsg('user', '<p>行，就这个。</p>');
+    setTimeout(() => feedbackStep('已记下：<b>换上跑鞋出门就算完成</b>。不是任务，只是你选的一个小实验。什么时候停都可以。'), 600);
+  } else if(action === 'edit'){
+    revMsg('user', '<p>改一改：换成「晚饭前出门走 15 分钟」行吗？</p>');
+    setTimeout(() => {
+      revMsg('ai', '<p>可以，就按你说的版本记：<b>晚饭前出门走 15 分钟</b>。你的改写会成为正式版本，我的原建议保留在修订记录里。</p>');
+      setTimeout(() => feedbackStep('已按<b>你的版本</b>记录。'), 500);
+    }, 600);
+  } else {
+    revMsg('user', '<p>不要这个，先这样吧。</p>');
+    setTimeout(() => feedbackStep('好，删掉。这轮就是零建议，不会变成隐形待办。'), 600);
+  }
+}
+
+function feedbackStep(closing){
+  revMsg('ai', `
+    <p>${closing}</p>
+    <div class="rev-section">
+      <h3>随口说两句（可跳过）</h3>
+      <div class="feedback-row">
+        <button class="fb" onclick="markFb(this,'准确')">准确</button>
+        <button class="fb" onclick="markFb(this,'不准确')">不准确</button>
+        <button class="fb" onclick="markFb(this,'有帮助')">有帮助</button>
+        <button class="fb" onclick="markFb(this,'没帮助')">没帮助</button>
+        <button class="fb" onclick="markFb(this,'有依据')">有依据</button>
+        <button class="fb" onclick="markFb(this,'无依据')">无依据</button>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="finishReview()">完成</button>
+        <button class="btn btn-line" onclick="toast('反馈未持久化也没关系，可稍后重试')">写点具体的</button>
+      </div>
+    </div>
+    <div class="rev-section">
+      <h3>数据不足<span class="kind-tag kind-guess">限制</span></h3>
+      <ul class="limit-list">
+        <li>睡眠、饮食没有记录，本周无法判断健康趋势。</li>
+        <li>支出数据缺失，财富维度只有 1 条推断，不足以谈「财务状况」。</li>
+        <li>样本只有 4 天，不足以谈长期模式。</li>
+      </ul>
+    </div>`);
+}
+function markFb(btn, label){
+  btn.classList.toggle('sel');
+  toast('反馈已记录（仅本次复盘，不做长期偏好）');
+}
+function finishReview(){
+  revMsg('ai', `
+    <p>复盘完成。谢谢你花这几分钟。</p>
+    <div class="quiet-end">
+      本次指导选择：<b>温和 · 拆解一步</b> · <span style="text-decoration:underline" onclick="toast('理由摘要：当前意愿 + 已确认模式 + 目标版本 v2；无危机信号；未采用直接督促')">为什么这样指导？</span><br>
+      全程可导出 / 删除 · 反馈归你所有
+    </div>
+    <div class="actions">
+      <button class="btn btn-ghost" onclick="resetReview()">回到开始</button>
+      <button class="btn btn-line" onclick="switchTab('chat', document.querySelector('[data-tab=chat]'))">回去记录</button>
+    </div>`);
+}
+function resetReview(){
+  $('#rev-stream').innerHTML = '';
+  $('#rev-stream').classList.add('hidden');
+  $('#rev-step0').classList.remove('hidden');
+  $('#screen-review').scrollTo({ top:0, behavior:'smooth' });
+}
+</script>
+</body>
+</html>

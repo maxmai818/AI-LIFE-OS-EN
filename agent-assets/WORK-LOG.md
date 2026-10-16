@@ -8,7 +8,7 @@
 
 - **2026-10-10 · lifeosdesign（角色化前由并行临时执行者完成）· G2 原型三变体产出**
   - 输入：POC-01 Product & UX Spec v0.6、设计方向三条（信息密度 / 对话引导 / 卡片清单）
-  - 产出：`~/projects/AI-LIFE-OS-g2-prototypes/variant-{1,2,3}/index.html` + 各自 NOTES.md（未入仓，待选定后归档）
+  - 产出：`docs/03-design/prototypes/variant-{1,2,3}/index.html` + 各自 NOTES.md（已入仓，手机经 Pages 目录页访问）
   - 验证：变体 2/3 经 headless Chrome 20+/24 项交互断言通过；变体 1 经 jsdom 20 项断言通过；零外部依赖
   - 状态：⏳ 待 Max 选择（1/2/3 + 圈注），修改由 lifeosdesign 承接（≤2 轮）
 
