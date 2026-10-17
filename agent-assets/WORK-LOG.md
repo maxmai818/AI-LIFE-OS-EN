@@ -4,6 +4,14 @@
 
 ---
 
+## 2026-10-17
+
+- **2026-10-17 · lifeospm · Product Core v0.1（内核/皮肤分层落地）**
+  - 输入：Max 路线选择「内核/皮肤分层 + 自用反馈喂内核」（对话确认）
+  - 产出：`docs/05-technical-architecture/Product-Core-v0.1.md`（价值/逻辑主线、数据结构骨架、INV-01～12 不变量、变更与反馈回流政策）、docs/README 索引与 Design Language 边界声明更新
+  - 验证：内核内容逐条对齐 v0.6 G1 基线（Data Contract DP-001～007、3.x 实体）；`check_repository_safety.py` 通过
+  - 状态：✅ 本 PR（Draft 状态待 Max 批准为 G2 内核基线）
+
 ## 2026-10-10
 
 - **2026-10-10 · lifeosdesign（角色化前由并行临时执行者完成）· G2 原型三变体产出**

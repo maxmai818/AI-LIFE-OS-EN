@@ -4,6 +4,7 @@
 - **状态**：Draft — 由三个 G2 原型的共同风格沉淀；待 Max 选定原型变体后冻结为 v1.0（设计基线）
 - **Owner**：lifeosdesign（维护）；Max（批准与冻结）
 - **规则**：设计任务开场必读；Max 每次圈注/偏好表达后由 lifeosdesign 回写本文件
+- **边界**：本文件管「长什么样」（皮肤层）；「是什么和为什么」见 `docs/05-technical-architecture/Product-Core-v0.1.md`（内核层），皮肤不得自设业务规则
 
 ## 1. 设计定位
 
