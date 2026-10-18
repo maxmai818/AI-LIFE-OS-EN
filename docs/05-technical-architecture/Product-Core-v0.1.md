@@ -1,7 +1,7 @@
 # Product Core（产品内核）v0.1
 
 - **项目**：AI Life OS
-- **文档状态**：Draft — 待 Max 批准后成为 G2 内核基线
+- **文档状态**：Approved — G2 内核基线（Max 2026-10-17）
 - **SDLC 阶段**：G2 Design / Architecture
 - **产品批准人**：Max
 - **作者**：Hermes（lifeospm 组织，lifeosdesign 会话协作）
@@ -116,7 +116,7 @@ User ── Profile ── LifeDimension(固定五维)
 
 - 皮肤只允许通过应用层定义的流程/数据接口取数与回写，不得自设业务规则（例如皮肤不得自创"总分"、不得把 unknown 渲染成 0）。
 - 换皮肤 = 重新实现皮肤层 + 验收 INV-01～INV-12，内核与应用层不动。
-- `docs/03-design/Design-Language-v0.1.md` 是皮肤层的样式来源；它与本文件的边界：**Design Language 管长什么样，Product Core 管是什么和为什么**。
+- `docs/03-design/Design-Language-v1.0.md` 是皮肤层的样式来源；它与本文件的边界：**Design Language 管长什么样，Product Core 管是什么和为什么**。
 
 ## 8. 变更记录
 

@@ -6,6 +6,12 @@
 
 ## 2026-10-17
 
+- **2026-10-17 · lifeospm · G2-Decision-001 执行（三项决策落地）**
+  - 输入：Max 批复「#1，批准 #2，2无 #3，1」
+  - 产出：Product Core v0.1 升 Approved 内核基线；Design Language v1.0 冻结（第一张皮=变体 2 对话引导型）；`docs/09-decisions/G2-Decision-001-*.md` 决策记录；公开演示仓库 `ai-life-os-prototypes`（手机访问）
+  - 验证：决策原文入档；check_repository_safety.py 通过；演示仓库 Pages URL 实测 200
+  - 状态：✅ 完成
+
 - **2026-10-17 · lifeospm · Product Core v0.1（内核/皮肤分层落地）**
   - 输入：Max 路线选择「内核/皮肤分层 + 自用反馈喂内核」（对话确认）
   - 产出：`docs/05-technical-architecture/Product-Core-v0.1.md`（价值/逻辑主线、数据结构骨架、INV-01～12 不变量、变更与反馈回流政策）、docs/README 索引与 Design Language 边界声明更新

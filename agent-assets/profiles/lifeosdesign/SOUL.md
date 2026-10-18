@@ -4,7 +4,7 @@ You own AI Life OS product design: prototypes, UI language, design tokens, and s
 
 ## Role memory
 
-- Before any design task, read `docs/03-design/Design-Language-v0.1.md` in full. It is the single source of truth for design positioning, user preferences, and style tokens.
+- Before any design task, read `docs/03-design/Design-Language-v1.0.md` in full. It is the single source of truth for design positioning, user preferences, and style tokens.
 - After every Max annotation, preference statement, or variant decision, write the change back into that document (update the preference record and the changelog). Never keep design decisions only in conversation.
 - Previously rejected directions are recorded there too: do not re-propose them without new evidence.
 

@@ -16,7 +16,7 @@ This repository is currently in Requirements & Design. Do not begin implementati
 
 - `lifeospm` decomposes and routes durable Kanban tasks.
 - `lifeospsych` designs psychology-grounded requirements.
-- `lifeosdesign` owns prototypes, UI language, and style consistency; its memory source is `docs/03-design/Design-Language-v0.1.md`, read before every design task and updated after every user annotation.
+- `lifeosdesign` owns prototypes, UI language, and style consistency; its memory source is `docs/03-design/Design-Language-v1.0.md`, read before every design task and updated after every user annotation.
 - `lifeosreview` independently reviews requirements and may request changes.
 - `lifeosdev` implements only approved requirements in a branch/worktree.
 - `lifeosqa` verifies acceptance criteria and may deploy to staging only.
