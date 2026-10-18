@@ -1,0 +1,59 @@
+/* AI Life OS · 皮肤层（变体 2 对话引导型基线）· Token 对齐 Design Language v1.0 */
+:root {
+  --time:#3E6DE0; --health:#158A4C; --wealth:#C2740B; --rel:#D4244E; --purpose:#7135CE;
+  --bg:#F4F4F6; --surface:#FFFFFF; --ink:#17171A; --sub:#71717A; --line:#E5E5EA;
+  --pos:#16A34A; --neg:#DC2626; --mix:#B45309; --unknown:#A1A1AA;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--bg); color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; }
+.wrap { max-width:420px; margin:0 auto; padding:16px 16px 84px; }
+header h1 { font-size:20px; }
+.tagline { color:var(--sub); font-size:13px; margin:4px 0 16px; }
+
+.bubble { background:var(--surface); border:1px solid var(--line); border-radius:16px;
+  padding:14px; margin:10px 0; font-size:15px; line-height:1.7; }
+.bubble.me { background:#EEF3FE; border-color:#D6E2FB; }
+.bubble small { color:var(--sub); font-size:12px; display:block; margin-top:6px; }
+
+textarea { width:100%; min-height:88px; border:1px solid var(--line); border-radius:14px;
+  padding:12px; font-size:15px; font-family:inherit; resize:vertical; background:var(--surface); }
+button { border:none; border-radius:12px; padding:10px 16px; font-size:14px; cursor:pointer;
+  background:#EEF3FE; color:var(--time); font-family:inherit; }
+button.primary { background:var(--time); color:#fff; width:100%; padding:13px; font-size:15px;
+  margin-top:10px; }
+button.ghost { background:var(--surface); border:1px solid var(--line); color:var(--sub); }
+button.danger { background:#FDECEC; color:var(--neg); }
+.row { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+
+.chip { display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:3px 9px;
+  border-radius:999px; background:var(--bg); color:var(--sub); margin:2px; }
+.chip .dot { width:7px; height:7px; border-radius:50%; background:var(--unknown); }
+.chip.pos .dot { background:var(--pos); } .chip.neg .dot { background:var(--neg); }
+.chip.mix .dot { background:var(--mix); }
+
+.dim-card { background:var(--surface); border:1px solid var(--line); border-radius:16px;
+  padding:14px; margin:10px 0; }
+.dim-card h3 { font-size:15px; display:flex; align-items:center; gap:8px; }
+.dim-card .bar { height:6px; border-radius:3px; background:var(--line); margin:8px 0; overflow:hidden; }
+.dim-card .bar i { display:block; height:100%; }
+.dim-card p { font-size:13px; color:var(--sub); line-height:1.7; }
+
+.stmt { border-left:3px solid var(--line); padding:8px 12px; margin:10px 0; background:var(--surface);
+  border-radius:0 12px 12px 0; font-size:14px; line-height:1.8; }
+.stmt .type { font-size:11px; color:var(--sub); letter-spacing:1px; }
+.stmt.fact { border-color:var(--pos); } .stmt.inference { border-color:var(--time); }
+.stmt.theory { border-color:var(--purpose); } .stmt.limitation { border-color:var(--unknown); }
+.stmt.calculation { border-color:var(--wealth); } .stmt.recommendation { border-color:var(--mix); }
+
+.big-change { border:2px solid var(--purpose); border-radius:16px; padding:16px; margin:14px 0; }
+.big-change h3 { color:var(--purpose); font-size:14px; margin-bottom:8px; }
+
+.tabbar { position:fixed; bottom:0; left:0; right:0; background:var(--surface);
+  border-top:1px solid var(--line); display:flex; max-width:420px; margin:0 auto; }
+.tabbar button { flex:1; background:none; color:var(--sub); border-radius:0; padding:14px 0;
+  font-size:13px; }
+.tabbar button.active { color:var(--time); font-weight:600; }
+.empty { color:var(--unknown); font-size:14px; text-align:center; padding:28px 0; }
+.edit-input { width:100%; border:1px solid var(--line); border-radius:10px; padding:8px;
+  font-size:14px; font-family:inherit; margin-top:8px; }

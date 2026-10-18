@@ -18,6 +18,11 @@ backups/
 *.sqlite
 *.sqlite3
 *.log
+
+# Python runtime
+__pycache__/
+*.pyc
+.venv/
 logs/
 
 # Dependencies and build outputs

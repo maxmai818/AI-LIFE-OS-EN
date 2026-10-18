@@ -4,7 +4,14 @@
 
 ---
 
-## 2026-10-17
+## 2026-10-17（开发）
+
+- **2026-10-17 · lifeosdev · 第一张皮 v0.1 开发（G2-Decision-002）**
+  - 输入：Max「开始开发」；Product Core v0.1（Approved）+ Design Language v1.0（变体 2 基线）
+  - 产出：`app/` FastAPI+SQLite 应用（Capture→AI 结构化→确认→五维→Review→反馈全闭环）+ 变体 2 对话式皮肤 + `app/tests/` INV 不变量测试 + CI workflow `app-tests.yml`
+  - 验证：pytest 11/11 通过（含 :memory: 跨连接坑修复、create_goal 缺 commit 真 bug 修复）；真实服务器冒烟 10/10（含 INV-03 unknown 生效、INV-06 零建议、INV-02 双值）
+  - 状态：✅ 待 PR 合并
+
 
 - **2026-10-17 · lifeospm · G2-Decision-001 执行（三项决策落地）**
   - 输入：Max 批复「#1，批准 #2，2无 #3，1」

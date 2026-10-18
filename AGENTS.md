@@ -2,7 +2,7 @@
 
 ## Project state
 
-This repository is currently in Requirements & Design. Do not begin implementation until the applicable SDLC gate in `docs/00-governance/AI-Life-OS-SDLC-Roadmap-v0.1.md` is explicitly approved.
+- **Project state**: G2 development is active (gate approved by Max 2026-10-17, G2-Decision-002). Implementation lives in `app/` (first skin v0.1); Product Core invariants (`docs/05-technical-architecture/Product-Core-v0.1.md` INV-01~12) are acceptance criteria for all code changes.
 
 ## Source of truth
 

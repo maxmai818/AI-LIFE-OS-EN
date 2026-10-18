@@ -46,6 +46,8 @@
 | Design Language | v1.0 | Frozen — 设计基线（Max 2026-10-17 选定变体 2 对话引导型） | Design | G2 | `03-design/Design-Language-v1.0.md`（历史：v0.1） |
 | Product Core（产品内核） | v0.1 | Approved — G2 内核基线（Max 2026-10-17） | Architecture / Core | G2 | `05-technical-architecture/Product-Core-v0.1.md` |
 | G2 Decision 001：内核基线批准与设计基线选定 | v0.1 | 已决定（Max 2026-10-17） | Governance / Decision | G2 | `09-decisions/G2-Decision-001-Core-Baseline-and-Design-Baseline-v0.1.md` |
+| G2 Decision 002：开发启动（第一张皮 v0.1） | v0.1 | 已决定（Max 2026-10-17） | Governance / Decision | G2 | `09-decisions/G2-Decision-002-Development-Start-v0.1.md` |
+| 第一张皮 v0.1（应用代码） | v0.1 | 开发中（INV 测试 11/11 + 冒烟 10/10 通过） | Application | G2 | `app/`（见 `app/README.md`） |
 | G2 原型（3 变体） | v0.1 | 待 Max 选择（1/2/3 + 圈注） | Design / Prototype | G2 | `03-design/prototypes/` |
 | G1 v0.6 Delta & Review Status | v0.1 | 已归档（G1 2026-10-08）；文档一致性 PASS；心理安全 `PASS_WITH_CONDITIONS`；隐私 `PASS_WITH_CONDITIONS` | Research / Review | G1 | `08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md` |
 | G1 心理安全专项审查方案 | v0.1 | In Review；审查方法已定义 | Research / Specialist Review | G1 | `08-research/G1-Psychological-Safety-Review-Plan-v0.1.md` |
