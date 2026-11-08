@@ -4,12 +4,26 @@
 
 ---
 
+## 2026-11-09（产品决策）
+
+- **2026-11-09 · lifeospm · G2-Decision-003 产品定位修正案（市场调研后三项裁定）**
+  - 输入：Max 批复「DQ-01: A / DQ-02: A / DQ-03: A」（依据 Market-Research-AI-Life-OS-v0.1）
+  - 产出：`docs/09-decisions/G2-Decision-003-Product-Positioning-Amendment-v0.1.md`（indie 线 $10K–$200K MRR / 中英双语并行 / $8–15 月费 + 年付；5 条定位修正：Review 仪式留存、隐私一级卖点、无诊断红线、12 个月验证里程碑、口碑 niche 不买量；2 项未决 OQ-01/02）
+  - 验证：`scripts/check_repository_safety.py` 通过（80 tracked files）；既有 INV-01～12 与 Product Core v0.1 显式声明不变；关键数字与市场调研 §4/§7 逐项对应
+  - 状态：✅ Max 已批准（2026-11-09 飞书批复「#13和#14都APprove」），随 PR #14 合并
+
+- **2026-11-09 · lifeospm · Design-Language-v1.0.md 归位排查**
+  - 输入：Max「我没动过，也不知道跟 Obsidian 有什么关系，其实不用管 Obsidian」
+  - 产出：恢复 `docs/03-design/Design-Language-v1.0.md`（自 git 恢复），删除 `docs/04-data-ai/` 下逐字节相同的重复副本
+  - 验证：删除前 diff 确认副本与 git HEAD 版本逐字节一致（4152 字节），零信息损失；safety check 恢复通过
+  - 状态：✅ 完成（工作区恢复与 HEAD 一致，无须提交）
+
 ## 2026-11-05（调研）
 
 - **2026-11-05 · lifeospm · AI Life OS 市场调研 v0.1（能不能做 / 赚不赚钱）**
   - 输入：Max「Life OS 项目，我想做个市场调研，能不能做，赚不赚钱」+「要的」（确认固化为 repo 文档）
   - 产出：`docs/08-research/Market-Research-AI-Life-OS-v0.1.md`（结论先行 + 市场口径辨析 + 竞品格局 + 变现经济学 + 监管/风险 + 验证里程碑 + 26 来源附录 + 3 项待决策 DQ-01～03）
-  - 验证：来源 URL 由 grounded-citations 台账机械渲染，估算口径逐条标注，失败案例（Character.AI 破产、Calm/Headspace 萎缩）纳入结论；`scripts/check_repository_safety.py` 报告的唯一问题是工作区既有状态（Design-Language-v1.0.md 被本地移至 04-data-ai、tracked 文件缺失），与本次变更无关，待确认归位
+  - 验证：来源 URL 由 grounded-citations 台账机械渲染，估算口径逐条标注，失败案例（Character.AI 破产、Calm/Headspace 萎缩）纳入结论；`scripts/check_repository_safety.py` 报告的唯一问题是工作区既有状态（Design-Language-v1.0.md 被本地移至 04-data-ai、tracked 文件缺失），与本次变更无关；已排查：系逐字节重复副本，已恢复原位（见 11-09 归位排查条目）
   - 状态：✅ Max 已批准（2026-11-09 飞书批复「#13和#14都APprove」），随 PR #13 合并
 
 ## 2026-10-17（开发）
