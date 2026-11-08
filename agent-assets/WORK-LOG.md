@@ -4,6 +4,14 @@
 
 ---
 
+## 2026-11-05（调研）
+
+- **2026-11-05 · lifeospm · AI Life OS 市场调研 v0.1（能不能做 / 赚不赚钱）**
+  - 输入：Max「Life OS 项目，我想做个市场调研，能不能做，赚不赚钱」+「要的」（确认固化为 repo 文档）
+  - 产出：`docs/08-research/Market-Research-AI-Life-OS-v0.1.md`（结论先行 + 市场口径辨析 + 竞品格局 + 变现经济学 + 监管/风险 + 验证里程碑 + 26 来源附录 + 3 项待决策 DQ-01～03）
+  - 验证：来源 URL 由 grounded-citations 台账机械渲染，估算口径逐条标注，失败案例（Character.AI 破产、Calm/Headspace 萎缩）纳入结论；`scripts/check_repository_safety.py` 报告的唯一问题是工作区既有状态（Design-Language-v1.0.md 被本地移至 04-data-ai、tracked 文件缺失），与本次变更无关，待确认归位
+  - 状态：✅ Max 已批准（2026-11-09 飞书批复「#13和#14都APprove」），随 PR #13 合并
+
 ## 2026-10-17（开发）
 
 - **2026-10-17 · lifeosdev · 第一张皮 v0.1 开发（G2-Decision-002）**
