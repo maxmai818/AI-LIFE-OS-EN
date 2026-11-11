@@ -4,6 +4,13 @@
 
 ---
 
+## 2026-11-09（商业化验证设计）
+
+- 执行人：lifeospm（起草）+ lifeospsych（证据与自主性审查）
+- 工作：`docs/02-requirements/Commercialization-Validation-Design-v0.1.md` — 付费墙形态（反向试用+限流，REJECT 硬墙与打卡 streak）、定价实验（$12/月 / $80/年 + Van Westendorp 三阶段）、留存埋点（事件表+隐私约束+guardrail）；含 Evidence Card（周 Review 仪式，verdict PASS_WITH_CHANGES）
+- 验证：grounded-citations verify 通过（6 来源入台账、1 条原文摘录核验）；引用仅取核实过的内容，Harkin 效应量未核实则不引用
+- 状态：✅ Max 已批准（2026-11-09 飞书批复「批准」），随 PR #15 合并；DQ-04/05 按推荐采纳，未决 OQ-03/04（OQ-04 = lifeosreview 独立复核，创建者不自批）
+
 ## 2026-11-09（产品决策）
 
 - **2026-11-09 · lifeospm · G2-Decision-003 产品定位修正案（市场调研后三项裁定）**
