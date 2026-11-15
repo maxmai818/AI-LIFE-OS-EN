@@ -17,6 +17,7 @@
 - 工作：`docs/02-requirements/Commercialization-Validation-Design-v0.1.md` — 付费墙形态（反向试用+限流，REJECT 硬墙与打卡 streak）、定价实验（$12/月 / $80/年 + Van Westendorp 三阶段）、留存埋点（事件表+隐私约束+guardrail）；含 Evidence Card（周 Review 仪式，verdict PASS_WITH_CHANGES）
 - 验证：grounded-citations verify 通过（6 来源入台账、1 条原文摘录核验）；引用仅取核实过的内容，Harkin 效应量未核实则不引用
 - 状态：✅ Max 已批准（2026-11-12 飞书批复「批准」），随 PR #15 合并；DQ-04/05 按推荐采纳，未决 OQ-03/04（OQ-04 = lifeosreview 独立复核，创建者不自批）
+- 执行人：lifeospm + lifeospsych（整改修订）｜工作：`docs/02-requirements/Commercialization-Validation-Design-v0.2.md` — 逐条关闭独立复核 12 条发现（2 blocking + 5 major + 5 minor），整改对照表见附录 D（High-1 单臂阈值判定+量化停止规则；High-2 目标回 Free 闭环+降级语义对照表+功能人质禁令）｜验证：引用台账 verify、阈值逐项 Level 标注；待 lifeosreview 复核关闭｜状态：✅ 本 PR（Draft，待 Max 批准）
 
 ## 2026-11-09（产品决策）
 
