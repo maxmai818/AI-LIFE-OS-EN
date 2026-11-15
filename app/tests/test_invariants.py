@@ -37,6 +37,28 @@ def test_inv01_raw_text_never_overwritten():
     assert rows["status"] == "processed"
 
 
+def test_inv02b_impact_revise_keeps_dual_value():
+    """影响修订（方向/程度）也必须双值：原值入 user_revisions，不丢。"""
+    cid = mk_capture("跑步 30 分钟")
+    extract(cid)
+    items = client.get(f"/api/captures/{cid}/items").json()["items"]
+    imp = items[0]["impacts"][0]
+    r = client.post(f"/api/impacts/{imp['id']}/revise",
+                    json={"direction": "negative", "degree": 2},
+                    headers={"X-User-Id": "1"})
+    assert r.status_code == 200
+    revs = database.connect().execute(
+        "SELECT field_name, original_value, corrected_value FROM user_revisions"
+        " WHERE target_type='dimension_impact' ORDER BY id").fetchall()
+    fields = {x["field_name"] for x in revs}
+    assert "direction" in fields and "degree" in fields
+    for x in revs:
+        assert x["original_value"] != x["corrected_value"] or x["field_name"] == "degree"
+    it = client.get(f"/api/captures/{cid}/items").json()["items"][0]
+    assert it["status"] == "modified"
+    assert it["impacts"][0]["direction"] == "negative"
+
+
 def test_extract_produces_proposed_items_with_five_dims():
     cid = mk_capture("今天跑步了 30 分钟，晚上和妈妈通电话")
     r = extract(cid)

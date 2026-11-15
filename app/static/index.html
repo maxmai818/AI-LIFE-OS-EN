@@ -1,27 +1,122 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>AI Life OS</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>AI Life OS</h1>
-    <p class="tagline">每天 5 分钟，经营自己的人生</p>
+<div class="phone">
+
+  <header class="app-header">
+    <div class="row">
+      <div class="brand">AI Life OS<small>变体 2 · 对话引导型</small></div>
+      <div class="privacy-pill"><span class="dot"></span>仅你可见 · 可导出/删除</div>
+    </div>
   </header>
 
-  <main id="view"></main>
+  <!-- ================= 对话（记录 → 确认） ================= -->
+  <main class="screen" id="screen-chat">
+    <div class="day-divider" id="chat-top">— 今天 —</div>
+    <div id="chat-stream"></div>
+    <div class="suggest-wrap" id="suggestWrap">
+      <button class="chip accent" onclick="sendPreset('跑步 30 分钟，感觉状态不错')">「跑步 30 分钟，感觉状态不错」</button>
+      <button class="chip" onclick="sendPreset('昨晚熬夜刷手机到 1 点')">「昨晚熬夜刷手机到 1 点」</button>
+      <button class="chip" onclick="sendPreset('加班到 22:30，赶完了季度方案')">「加班到 22:30，赶完了季度方案」</button>
+      <button class="chip" onclick="sendPreset('今天没什么特别的')">「今天没什么特别的」</button>
+    </div>
+  </main>
 
+  <!-- composer -->
+  <div class="composer" id="composer">
+    <div class="box">
+      <textarea id="captureInput" rows="1" placeholder="随手记：发生了什么、你的感受…"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendFree()" aria-label="发送">↑</button>
+    </div>
+    <div class="note">原文会先完整保存 · AI 只做整理，不改写你的原话</div>
+  </div>
+
+  <!-- ================= 五维视图 ================= -->
+  <main class="screen hidden" id="screen-dims">
+    <div class="screen-head">
+      <h1>五维视图</h1>
+      <p>每条行为按方向与 1–5 程度映射到五个维度。只统计<b>你确认过</b>的记录；证据不足的地方就空着。</p>
+    </div>
+    <div class="note-card">
+      这里的 1–5 是你相对自己目标的主观估计，不是体检数值。各维度独立判断，不求和、不排名、不合成总分。点开可以看到依据。
+    </div>
+    <div id="dims-list"></div>
+    <div class="foot-note">数据来源：仅已确认记录 · AI 候选未计入<br>证据条目可点，回到原文</div>
+  </main>
+
+  <!-- ================= 复盘 ================= -->
+  <main class="screen hidden" id="screen-review">
+    <div class="screen-head">
+      <h1>复盘</h1>
+      <p>只在你打开时开始。整个过程像一次对话——你可以随时说「先到这里」。</p>
+    </div>
+    <div id="rev-step0">
+      <div class="period-row">
+        <button onclick="pickPeriod(this,1)">今日</button>
+        <button class="sel" onclick="pickPeriod(this,7)">本周</button>
+      </div>
+      <div class="msg ai">
+        <div class="avatar">AI</div>
+        <div>
+          <div class="bubble">
+            <p>想怎么回顾？我可以陪你走完一轮，也可以什么都不说、只给你看事实。</p>
+            <div class="actions">
+              <button class="btn btn-primary" onclick="startReview('guided')">带我走一轮</button>
+              <button class="btn btn-ghost" onclick="startReview('facts')">只看事实</button>
+              <button class="btn btn-line" onclick="startReview('none')">今天不想复盘</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="quiet-end">
+        没有提醒、不会催你。想看这周的五维汇总，可以到「五维」页慢慢翻。
+      </div>
+    </div>
+    <div id="rev-stream" class="hidden"></div>
+  </main>
+
+  <!-- ================= 我的 ================= -->
+  <main class="screen hidden" id="screen-me">
+    <div class="screen-head">
+      <h1>我的</h1>
+      <p>数据只在这台机器上。原文永不被改写；AI 候选经你确认才进入长期分析。</p>
+    </div>
+    <div class="note-card">
+      导出 / 删除：数据是本机 SQLite 单文件（app/data.db），拷走文件即导出，删除文件即删除全部数据。界面内的导出/删除按钮在后续版本提供。
+    </div>
+    <div class="rev-section">
+      <h3>核心目标<span class="kind-tag kind-fact">最多 3 个</span></h3>
+      <div id="goal-list"></div>
+    </div>
+    <div class="quiet-end">
+      全程无推送、无提醒、无排行。反馈归你所有。
+    </div>
+  </main>
+
+  <!-- ================= tabbar ================= -->
   <nav class="tabbar">
-    <button data-tab="capture" class="active">记录</button>
-    <button data-tab="confirm">确认</button>
-    <button data-tab="dims">五维</button>
-    <button data-tab="review">复盘</button>
+    <button class="active" data-tab="chat" onclick="switchTab('chat',this)">
+      <span class="ic">💬</span><span>对话</span>
+    </button>
+    <button data-tab="dims" onclick="switchTab('dims',this)">
+      <span class="ic">◎</span><span>五维</span>
+    </button>
+    <button data-tab="review" onclick="switchTab('review',this)">
+      <span class="ic">◔</span><span>复盘</span>
+    </button>
+    <button data-tab="me" onclick="switchTab('me',this)">
+      <span class="ic">☰</span><span>我的</span>
+    </button>
   </nav>
+
+  <div class="toast" id="toast"></div>
 </div>
 <script src="app.js"></script>
 </body>

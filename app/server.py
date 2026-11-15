@@ -38,6 +38,14 @@ class ReviseIn(BaseModel):
     corrected_value: str
 
 
+class ImpactReviseIn(BaseModel):
+    direction: Optional[str] = None
+    degree: Optional[int] = None
+    degree_positive: Optional[int] = None
+    degree_negative: Optional[int] = None
+    note: Optional[str] = None
+
+
 class GoalIn(BaseModel):
     title: str
     dimension_keys: list = []
@@ -64,6 +72,16 @@ class StatusIn(BaseModel):
 @app.get("/")
 def index():
     return FileResponse(os.path.join(STATIC, "index.html"))
+
+
+@app.get("/style.css")
+def style_css():
+    return FileResponse(os.path.join(STATIC, "style.css"), media_type="text/css")
+
+
+@app.get("/app.js")
+def app_js():
+    return FileResponse(os.path.join(STATIC, "app.js"), media_type="application/javascript")
 
 
 @app.post("/api/captures")
@@ -149,9 +167,13 @@ def _items_with_impacts(conn, uid, capture_id=None):
         impacts = conn.execute(
             "SELECT * FROM behavior_dimension_impacts WHERE extracted_item_id=? ORDER BY dimension_key",
             (it["id"],)).fetchall()
+        imp_ids = [i["id"] for i in impacts]
+        ph = ",".join("?" * len(imp_ids)) or "-1"
         revs = conn.execute(
-            "SELECT field_name, original_value, corrected_value, corrected_at FROM user_revisions"
-            " WHERE target_type='extracted_item' AND target_id=? ORDER BY id", (it["id"],)).fetchall()
+            "SELECT target_type, field_name, original_value, corrected_value, corrected_at FROM user_revisions"
+            " WHERE (target_type='extracted_item' AND target_id=?)"
+            " OR (target_type='dimension_impact' AND target_id IN (%s)) ORDER BY id" % ph,
+            [it["id"]] + imp_ids).fetchall()
         out.append({**dict(it), "impacts": [dict(i) for i in impacts], "revisions": [dict(r) for r in revs]})
     return out
 
@@ -173,8 +195,9 @@ def pending_items(request: Request):
     out = []
     for it in rows:
         impacts = conn.execute(
-            "SELECT dimension_key, direction, degree, note FROM behavior_dimension_impacts"
-            " WHERE extracted_item_id=? ORDER BY dimension_key", (it["id"],)).fetchall()
+            "SELECT id, dimension_key, direction, degree, degree_positive, degree_negative, note"
+            " FROM behavior_dimension_impacts WHERE extracted_item_id=? ORDER BY dimension_key",
+            (it["id"],)).fetchall()
         out.append({**dict(it), "impacts": [dict(i) for i in impacts]})
     return {"items": out}
 
@@ -234,6 +257,37 @@ def revise_item(item_id: int, body: ReviseIn, request: Request):
                  % body.field_name, (body.corrected_value, item_id))
     conn.commit()
     return {"id": item_id, "status": "modified", "field": body.field_name}
+
+
+@app.post("/api/impacts/{impact_id}/revise")
+def revise_impact(impact_id: int, body: ImpactReviseIn, request: Request):
+    """修订 AI 候选影响的方向/程度（INV-02 双值：原始值存 user_revisions）。"""
+    uid = get_user(request)
+    conn = conn_user(uid)
+    imp = conn.execute("SELECT * FROM behavior_dimension_impacts WHERE id=? AND user_id=?",
+                       (impact_id, uid)).fetchone()
+    if not imp:
+        raise HTTPException(404, "impact not found")
+    updates = {}
+    for f in ("direction", "degree", "degree_positive", "degree_negative", "note"):
+        v = getattr(body, f)
+        if v is not None:
+            updates[f] = v
+    if not updates:
+        raise HTTPException(422, "nothing to revise")
+    if "direction" in updates and updates["direction"] not in (
+            "positive", "negative", "mixed", "neutral", "unknown"):
+        raise HTTPException(422, "bad direction")
+    for f, v in updates.items():
+        conn.execute(
+            "INSERT INTO user_revisions(user_id, target_type, target_id, field_name, original_value,"
+            " corrected_value, corrected_at) VALUES(?,?,?,?,?,?,?)",
+            (uid, "dimension_impact", impact_id, f, str(imp[f]), str(v), database.now_iso()))
+        conn.execute("UPDATE behavior_dimension_impacts SET %s=? WHERE id=?" % f, (v, impact_id))
+    conn.execute("UPDATE extracted_items SET status='modified', needs_confirmation=0 WHERE id=?",
+                 (imp["extracted_item_id"],))
+    conn.commit()
+    return {"id": impact_id, "revised": sorted(updates.keys())}
 
 
 @app.get("/api/dimensions")
