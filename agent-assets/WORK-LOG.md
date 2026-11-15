@@ -4,6 +4,22 @@
 
 ---
 
+## 2026-11-15（复核关闭）
+
+- 执行人：lifeosreview
+- 工作：`docs/08-research/Commercialization-Validation-Independent-Review-v0.1.md` §6 整改核查 — 对商业化验证设计 v0.2 逐条关闭核验 12 条发现（High-1/2、Medium-1～5、Low-1～5），不采信附录 D 整改对照表自称、逐条到 v0.2 正文比对修正标准；含两项专项核验（High-1 单臂阈值式判定自认无对照、不作因果归因；High-2 降级语义表定义目标功能降级后读写语义）
+- 验证：12 条修正标准与 v0.2 §1.4/§2.2/§2.3/§2.4/§4.1–4.5/§5/附录 A/B 落点逐项比对，每条引用确切章节；High-2 与 Product Core v0.1 §3/§4（Goal，Active ≤3）一致性复核
+- 状态：✅ 12/12 CLOSED，结论更新为 `PASS（整改关闭）`；残余条件保留（本记录不批准实施、不代表阶段批准；真实付费/计费接入/埋点上线/G3 启动仍须 Max 明示批准；未解假设只能由 G3 真实用户实验解决）
+- 终审：✅ Max 已批准（2026-11-15 飞书批复「批准」，随 PR #19 合并）；OQ-04 闭环
+
+## 2026-11-15（整改修订与流程勘误）
+
+- 执行人：lifeospm + lifeospsych（整改修订）
+- 工作：`docs/02-requirements/Commercialization-Validation-Design-v0.2.md` — 逐条关闭独立复核 12 条发现（2 blocking + 5 major + 5 minor），整改对照表见附录 D（High-1 单臂阈值判定+量化停止规则；High-2 目标回 Free 闭环+降级语义对照表+功能人质禁令）
+- 验证：grounded-citations `sources.py verify` 通过（勘误后重跑）；阈值逐项 Level 标注；待 lifeosreview 复核关闭
+- 流程勘误（如实记录）：v0.2 提交 `4f9f516` 因共享工作区被并行会话（PR #17 技术架构基线）切至 main 而直接推送 origin/main，违反「未经批准不得合并 main」分支策略；原因=提交前未重查当前分支；处理=已向 Max 披露；**Max 裁定 B（revert 撤掉、重走 PR，2026-11-15 飞书批复）**：4f9f516 已 revert（fa6de0e），v0.2 以干净分支重走 PR；日期误标（11-12→实际 11-15）与引用格式勘误一并纳入重走 PR
+- 状态：✅ Max 已批准（2026-11-15 飞书批复「批准」），随 PR #19 squash 合并；批准范围=商业化验证设计 v0.2 基线 + OQ-04 关闭，实施（付费墙开发/计费接入/埋点上线/G3 启动）仍须 Max 另行明示批准
+
 ## 2026-11-12（独立复核）
 
 - 执行人：lifeosreview
