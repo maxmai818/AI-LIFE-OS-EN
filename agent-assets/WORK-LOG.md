@@ -4,12 +4,19 @@
 
 ---
 
-## 2026-11-09（商业化验证设计）
+## 2026-11-12（独立复核）
+
+- 执行人：lifeosreview
+- 工作：`docs/08-research/Commercialization-Validation-Independent-Review-v0.1.md` — 对商业化验证设计 v0.1 的独立对抗式复核（证据等级/迁移距离、暗黑模式与自主性、指标有效性、隐私一致性、Product Core/INV 兼容性、引用核查、验收可测性），结论 `PASS_WITH_CHANGES`：2 blocking（实验成败不可客观判定、目标追踪入 Pro 触碰核心闭环且降级语义未定义）+ 5 major + 5 minor
+- 验证：grounded-citations `sources.py verify` 对评审对象输出 `citations OK`（6 来源、1 条摘录核验）；抽查 6 条来源真实且主题对应；RevenueCat 基准年份（2026 vs 2025）与 Market-Research 附录 A [17][18] 逐项比对；Product Core v0.1 §3/§4 与 §2.2 付费墙逐条对照；发现均引用确切章节号或 Evidence Card 字段
+- 状态：✅ 本 PR（Draft，待 Max 批准）
+
+## 2026-11-12（商业化验证设计）
 
 - 执行人：lifeospm（起草）+ lifeospsych（证据与自主性审查）
 - 工作：`docs/02-requirements/Commercialization-Validation-Design-v0.1.md` — 付费墙形态（反向试用+限流，REJECT 硬墙与打卡 streak）、定价实验（$12/月 / $80/年 + Van Westendorp 三阶段）、留存埋点（事件表+隐私约束+guardrail）；含 Evidence Card（周 Review 仪式，verdict PASS_WITH_CHANGES）
 - 验证：grounded-citations verify 通过（6 来源入台账、1 条原文摘录核验）；引用仅取核实过的内容，Harkin 效应量未核实则不引用
-- 状态：✅ Max 已批准（2026-11-09 飞书批复「批准」），随 PR #15 合并；DQ-04/05 按推荐采纳，未决 OQ-03/04（OQ-04 = lifeosreview 独立复核，创建者不自批）
+- 状态：✅ Max 已批准（2026-11-12 飞书批复「批准」），随 PR #15 合并；DQ-04/05 按推荐采纳，未决 OQ-03/04（OQ-04 = lifeosreview 独立复核，创建者不自批）
 
 ## 2026-11-09（产品决策）
 
@@ -33,7 +40,14 @@
   - 验证：来源 URL 由 grounded-citations 台账机械渲染，估算口径逐条标注，失败案例（Character.AI 破产、Calm/Headspace 萎缩）纳入结论；`scripts/check_repository_safety.py` 报告的唯一问题是工作区既有状态（Design-Language-v1.0.md 被本地移至 04-data-ai、tracked 文件缺失），与本次变更无关；已排查：系逐字节重复副本，已恢复原位（见 11-09 归位排查条目）
   - 状态：✅ Max 已批准（2026-11-09 飞书批复「#13和#14都APprove」），随 PR #13 合并
 
-## 2026-10-17（开发）
+## 2026-10-17（架构确认）
+
+- **2026-10-17 · lifeospm · 技术架构基线确认（决策包补确认）**
+  - 输入：Max 指出技术架构未先行确认；决策包 A/B/C/D
+  - 产出：Max 回复「A」——SQLite + 原生 JS + Python/FastAPI 基线确认；G2-Decision-002 更新为已确认
+  - 验证：决策原文入档；试用入口已交付（127.0.0.1:8787 / 192.168.50.158:8787）
+  - 状态：✅ 流程教训：架构类基线须先出决策包再实现，此后不再自行默认
+
 
 - **2026-10-17 · lifeosdev · 第一张皮 v0.1 开发（G2-Decision-002）**
   - 输入：Max「开始开发」；Product Core v0.1（Approved）+ Design Language v1.0（变体 2 基线）

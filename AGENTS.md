@@ -22,6 +22,7 @@
 - `lifeosqa` verifies acceptance criteria and may deploy to staging only.
 - Every completed task is recorded in `agent-assets/WORK-LOG.md` (role, task, input, artifact, verification, status).
 - A creator never approves their own work.
+- Technology-stack and architecture baselines require a decision packet confirmed by Max **before** implementation.
 - Production deployment, destructive migrations, new sensitive-data uses, and clinical claims require explicit human approval.
 
 ## Git workflow
