@@ -397,3 +397,20 @@
 /* 修改面板里的原生下拉/输入，贴设计稿输入风格 */
 .edit-row select,.edit-row input{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;background:var(--bg);font-family:inherit}
 .edit-row input{flex:1}
+
+/* ===== 无痛记录 v0.2 交互组件（产品化补充，非设计稿原样式）===== */
+/* 人话总结：AI 按感觉给的结论，优先于硬指标 */
+.human-summary{font-size:15px;line-height:1.6;margin:2px 0 10px}
+/* 折叠的「AI 是怎么拆的」细节区 */
+.details{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}
+.mini-item{margin-bottom:12px;padding-bottom:10px;border-bottom:1px dashed var(--line)}
+.mini-item .impact-row{opacity:.95}
+.mini-item .impact-row:last-of-type{margin-bottom:4px}
+/* 纠错：用说的，不是下拉框 */
+.correct-box{display:flex;gap:8px;margin-top:10px}
+.correct-box input{flex:1;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13.5px;font-family:inherit;background:var(--bg)}
+.correct-box input:focus{outline:none;border-color:var(--violet);background:#fff}
+/* 主操作：对/不对 */
+.actions.big{margin:10px 0 2px}
+.actions.big .btn{padding:11px 18px;font-size:14.5px}
+.badge-row{margin:8px 0}

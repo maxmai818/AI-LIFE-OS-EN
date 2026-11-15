@@ -59,6 +59,29 @@ def test_inv02b_impact_revise_keeps_dual_value():
     assert it["impacts"][0]["direction"] == "negative"
 
 
+def test_correct_by_language_preserves_dual_value():
+    """自然语言纠错：用户说一句「程度没那么强」，AI 修订；原值入 user_revisions（INV-02）。"""
+    cid = mk_capture("今天跑步了 30 分钟")
+    extract(cid)
+    items = client.get(f"/api/captures/{cid}/items").json()["items"]
+    it = items[0]
+    imp = next(i for i in it["impacts"] if i["direction"] != "unknown")
+    before_deg = imp["degree"]
+    r = client.post(f"/api/items/{it['id']}/correct",
+                    json={"feedback": "程度没那么强，低一点"},
+                    headers={"X-User-Id": "1"})
+    assert r.status_code == 200
+    assert r.json()["changed"]  # mock 关键词可解析
+    revs = database.connect().execute(
+        "SELECT field_name, original_value, corrected_value FROM user_revisions"
+        " WHERE target_type='dimension_impact'").fetchall()
+    assert any(x["field_name"] == "degree" for x in revs)
+    it2 = client.get(f"/api/captures/{cid}/items").json()["items"][0]
+    imp2 = next(i for i in it2["impacts"] if i["dimension_key"] == imp["dimension_key"])
+    assert imp2["degree"] == max(1, before_deg - 1)
+    assert it2["status"] == "modified"
+
+
 def test_extract_produces_proposed_items_with_five_dims():
     cid = mk_capture("今天跑步了 30 分钟，晚上和妈妈通电话")
     r = extract(cid)

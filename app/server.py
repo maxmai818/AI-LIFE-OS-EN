@@ -239,6 +239,60 @@ def later_item(item_id: int, request: Request):
     return {"id": item_id, "status": "unresolved"}
 
 
+class CorrectIn(BaseModel):
+    feedback: str
+
+
+@app.post("/api/items/{item_id}/correct")
+def correct_item(item_id: int, body: CorrectIn, request: Request):
+    """自然语言纠错：用户说「哪里不对」，AI 修订；所有原值入 user_revisions（INV-02）。"""
+    uid = get_user(request)
+    conn = conn_user(uid)
+    it = conn.execute("SELECT * FROM extracted_items WHERE id=? AND user_id=?", (item_id, uid)).fetchone()
+    if not it:
+        raise HTTPException(404, "item not found")
+    if it["status"] == "rejected":
+        raise HTTPException(422, "item already deleted")
+    if not body.feedback.strip():
+        raise HTTPException(422, "feedback required")
+    impacts = conn.execute(
+        "SELECT * FROM behavior_dimension_impacts WHERE extracted_item_id=? ORDER BY dimension_key",
+        (item_id,)).fetchall()
+    result = llm.correct(dict(it), [dict(i) for i in impacts], body.feedback.strip())
+    now = database.now_iso()
+    changed = []
+    tv = result.get("text_value")
+    if tv and tv != it["text_value"]:
+        conn.execute(
+            "INSERT INTO user_revisions(user_id, target_type, target_id, field_name, original_value,"
+            " corrected_value, corrected_at) VALUES(?,?,?,?,?,?,?)",
+            (uid, "extracted_item", item_id, "text_value", it["text_value"], tv, now))
+        conn.execute("UPDATE extracted_items SET text_value=? WHERE id=?", (tv, item_id))
+        changed.append("text_value")
+    imp_by_dim = {i["dimension_key"]: i for i in impacts}
+    for u in result.get("impacts") or []:
+        imp = imp_by_dim.get(u.get("dimension_key"))
+        if not imp:
+            continue
+        for f in ("direction", "degree", "degree_positive", "degree_negative", "note"):
+            v = u.get(f)
+            if v is None or v == imp[f]:
+                continue
+            if f == "direction" and v not in ("positive", "negative", "mixed", "neutral", "unknown"):
+                continue
+            conn.execute(
+                "INSERT INTO user_revisions(user_id, target_type, target_id, field_name, original_value,"
+                " corrected_value, corrected_at) VALUES(?,?,?,?,?,?,?)",
+                (uid, "dimension_impact", imp["id"], f, str(imp[f]), str(v), now))
+            conn.execute("UPDATE behavior_dimension_impacts SET %s=? WHERE id=?" % f, (v, imp["id"]))
+            changed.append(f"{u['dimension_key']}.{f}")
+    if not changed:
+        return {"id": item_id, "changed": [], "note": "反馈已记录，但没有可安全修改的部分（不猜）"}
+    conn.execute("UPDATE extracted_items SET status='modified', needs_confirmation=0 WHERE id=?", (item_id,))
+    conn.commit()
+    return {"id": item_id, "changed": changed}
+
+
 @app.post("/api/items/{item_id}/revise")
 def revise_item(item_id: int, body: ReviseIn, request: Request):
     uid = get_user(request)

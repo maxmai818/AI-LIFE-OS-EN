@@ -154,6 +154,67 @@ def extract(raw_text):
     return [_normalize_item(i) for i in (data.get("items") or [])]
 
 
+CORRECT_SYSTEM = (
+    "你是 AI Life OS 的修订助手。用户对一条 AI 整理结果不满意，用自然语言说明哪里不对。"
+    "根据用户反馈修订条目与五维影响（direction ∈ positive|negative|mixed|neutral|unknown，"
+    "程度 1-5 与方向独立；无证据必须 unknown）。只改用户提到的部分，其余不动。"
+    "输出 JSON：{text_value: string|null, impacts: [{dimension_key, direction, degree,"
+    " degree_positive, degree_negative, note}]}（只列有变化的影响）。"
+)
+
+
+def _mock_correct(impacts, feedback):
+    """确定性 mock：按反馈关键词做修订；同样走 INV-03 校验。"""
+    updates = []
+    fb = feedback or ""
+    weaker = re.search(r"没那么(强|高|大)|太高|过了|低一点|小一点|弱一点|没那么夸张", fb)
+    stronger = re.search(r"没那么(低|弱|小)|高一点|大一点|强一点|再高|再多", fb)
+    to_neg = re.search(r"其实.*(累|难受|不好|消耗|负向)|有点(累|难受)|不好|负向|反了", fb)
+    to_pos = re.search(r"其实.*(好|不错|正向|有帮助)|挺好|不错|正向|有帮助", fb)
+    no_change = re.search(r"差不多|没错|对的|就这样|不用改", fb)
+    if no_change:
+        return updates
+    for imp in impacts:
+        chg = {"dimension_key": imp["dimension_key"]}
+        d, deg = imp["direction"], imp["degree"]
+        changed = False
+        if to_neg and d in ("positive", "mixed", "neutral"):
+            chg["direction"], changed = "negative", True
+        elif to_pos and d in ("negative", "mixed", "neutral"):
+            chg["direction"], changed = "positive", True
+        elif to_neg and d == "unknown":
+            chg["direction"], changed = "negative", True
+        elif to_pos and d == "unknown":
+            chg["direction"], changed = "positive", True
+        if deg is not None:
+            if weaker and deg > 1:
+                chg["degree"], changed = deg - 1, True
+            elif stronger and deg < 5:
+                chg["degree"], changed = deg + 1, True
+        if changed:
+            chg["note"] = "用户修订: " + fb[:80]
+            updates.append(chg)
+    return updates
+
+
+def correct(item, impacts, feedback):
+    """按用户自然语言反馈修订。返回 {text_value|None, impacts:[{dimension_key,...}]}。"""
+    if provider_name() == "mock":
+        return {"text_value": None, "impacts": _mock_correct(impacts, feedback)}
+    user = json.dumps({"item": {k: item[k] for k in ("text_value", "item_type")},
+                       "impacts": [dict(i) for i in impacts], "feedback": feedback},
+                      ensure_ascii=False)
+    content = _call_openai_compatible(CORRECT_SYSTEM, user, 800)
+    data = _extract_json(content)
+    updates = []
+    for u in (data.get("impacts") or []):
+        if u.get("dimension_key") in DIMS:
+            updates.append({k: u.get(k) for k in
+                            ("dimension_key", "direction", "degree", "degree_positive",
+                             "degree_negative", "note")})
+    return {"text_value": data.get("text_value"), "impacts": updates}
+
+
 REVIEW_SYSTEM = (
     "你是 AI Life OS 的复盘助手。只基于给定的已确认事实生成复盘段落。"
     "statement_type ∈ fact|calculation|inference|theory|recommendation|limitation，必须分开标注；"

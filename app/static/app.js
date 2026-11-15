@@ -1,6 +1,8 @@
 /* AI Life OS · 应用层前端
-   皮肤 = 变体 2 设计稿（组件类名与 markup 与 prototypes/variant-2 一致）；此文件只把组件接到真 API。
-   INV：原文不可改写；候选经确认才计入；五维无总分；复盘证据分层。 */
+   皮肤 = 变体 2 设计稿；交互 = 无痛记录 v0.2（Max 2026-11-15 反馈）：
+   用户只说人话 + 点「对/不对」；五维方向/程度由 AI 按感觉填，硬指标折叠进细节；
+   纠错用说的（自然语言），不要下拉框。
+   INV：原文不可改写；候选经确认才计入；五维无总分；无证据 unknown。 */
 const API = (p, method = 'GET', body) => fetch(p, {
   method, headers: { 'Content-Type': 'application/json' },
   body: body ? JSON.stringify(body) : undefined,
@@ -22,7 +24,7 @@ const DIR_CLS = { positive: 'dir-pos', negative: 'dir-neg', mixed: 'dir-mix', ne
 const BADGE = {
   proposed: ['pending', '待确认'],
   confirmed: ['confirmed', '已确认 · 参与长期分析'],
-  modified: ['edited', '已修订 · 你的版本'],
+  modified: ['edited', '已按你的话修订'],
   rejected: ['deleted', '已删除 · 不进入分析'],
   unresolved: ['later', '稍后再定'],
 };
@@ -34,7 +36,24 @@ function toast(msg) {
   clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
 }
 
-/* ---------- 度数行（与设计稿 degreesHtml 同构） ---------- */
+/* ---------- 人话总结：AI 按感觉给结论，硬指标藏在细节里 ---------- */
+function humanSummary(items) {
+  const parts = [];
+  for (const it of items) {
+    for (const imp of it.impacts) {
+      if (imp.direction === 'unknown' || imp.direction === 'neutral') continue;
+      const word = { positive: '在加分', negative: '有点消耗', mixed: '利弊都有' }[imp.direction];
+      parts.push(`${DIM_META[imp.dimension_key].name}${word}${imp.degree ? `，约 ${imp.degree} 分` : ''}`);
+    }
+  }
+  const top = [...new Set(parts)].slice(0, 2).join('；');
+  const n = items.length === 1 ? '' : `共 ${items.length} 条。`;
+  return top
+    ? `${n}听下来，主要是${top}。细节我都拆好了，你看一眼对不对就行。`
+    : `${n}听下来没什么需要硬拆成指标的，我就原样记着。`;
+}
+
+/* ---------- 度数行（细节里才出现，与设计稿 degreesHtml 同构） ---------- */
 function degreesHtml(imp) {
   const d = imp.direction;
   if (d === 'unknown') return '<div class="degrees"><span class="deg-label" style="margin:0">无证据，不做猜测</span></div>';
@@ -56,80 +75,93 @@ function degreesHtml(imp) {
   return h;
 }
 
-function epiLabel(it) {
-  return it.status === 'confirmed' ? '用户认可的判断'
-    : it.status === 'modified' ? '你的修订版本'
-    : it.status === 'rejected' ? '—'
-    : 'AI 推断';
-}
-
-/* ================= 对话 ================= */
 function aiMsg(inner, wide) {
   return `<div class="msg ai"><div class="avatar">AI</div><div style="flex:1">
     <div class="bubble${wide ? ' wide' : ''}">${inner}</div></div></div>`;
 }
 
-function impactRowsHtml(it) {
-  return it.impacts.map(imp => `
-    <div class="impact-row">
-      <div class="dim">${DIM_META[imp.dimension_key]?.name || imp.dimension_key}<span>${DIM_META[imp.dimension_key]?.en || ''}</span></div>
-      <span class="dir-chip ${DIR_CLS[imp.direction]}">${DIR_LABEL[imp.direction]}</span>
-      ${degreesHtml(imp)}
-      <span class="epi">${epiLabel(it)}</span>
-    </div>`).join('');
-}
-
-function cardHtml(it, rawText) {
-  const [cls, label] = BADGE[it.status] || BADGE.proposed;
-  if (it.status === 'rejected') {
-    return `<div class="card deleted" id="item-${it.id}">
-      <div class="card-title"><b>${esc(it.text_value)}</b><span class="badge ${cls}">${label}</span></div>
-      <div class="why-box">你标记了「这不是事实 / 不想进入分析」，它已从分析中删除。</div>
-    </div>`;
-  }
-  const editable = ['proposed', 'unresolved'].includes(it.status);
-  const actions = editable ? `
-    <div class="actions">
-      <button class="btn btn-primary" onclick="itemAct(${it.id},'confirm')">确认</button>
-      <button class="btn btn-ghost" onclick="toggleEdit(${it.id})">修改</button>
-      <button class="btn btn-line" onclick="itemAct(${it.id},'later')">稍后</button>
-      <button class="btn btn-danger" data-del="${it.id}" onclick="askDelete(${it.id})">删除</button>
+/* ---------- 一张卡 = 一次记录的整理结果 ---------- */
+function captureCard(c, items) {
+  const anyPending = items.some(it => ['proposed', 'unresolved'].includes(it.status));
+  const mainAct = anyPending ? `
+    <div class="actions big">
+      <button class="btn btn-primary" onclick="confirmAll(${c.id})">对，就是这样</button>
+      <button class="btn btn-ghost" onclick="toggleDetails(${c.id})">不太对</button>
     </div>` : `
-    <div class="actions"><button class="btn btn-ghost" onclick="toggleEdit(${it.id})">修改</button></div>`;
-  return `<div class="card" id="item-${it.id}">
-    <div class="card-title"><b>${esc(it.text_value)}</b><span class="badge ${cls}">${label}</span></div>
-    ${rawText ? `<div class="quote"><div class="tag">原文证据</div>「${esc(rawText)}」</div>` : ''}
-    <div class="impact-list">
-      ${it.impacts.length ? impactRowsHtml(it) : `<div class="why-box">这条记录未被映射到五维（AI 认为证据不足，不猜）。</div>`}
-    </div>
-    <div class="why-box"><b>为什么这样指导：</b>${it.impacts.some(x => x.note) ? esc(it.impacts.find(x => x.note)?.note || '') : '只根据你原话里的依据做映射；没依据的维度一律「未知」。AI 只是候选，你确认与否都不会变成客观事实。'}</div>
-    ${actions}
-    <div class="edit-panel" id="edit-${it.id}" style="display:none">
+    <div class="badge-row"><span class="badge confirmed">已确认 · 参与长期分析</span></div>
+    <div class="actions"><button class="btn btn-line" onclick="toggleDetails(${c.id})">查看 / 修改</button></div>`;
+  const itemRows = items.map(it => {
+    const [cls, label] = BADGE[it.status] || BADGE.proposed;
+    return `<div class="mini-item">
+      <div class="card-title"><b>${esc(it.text_value)}</b><span class="badge ${cls}">${label}</span></div>
       ${it.impacts.map(imp => `
-      <div class="edit-row">
-        <span class="lab">${DIM_META[imp.dimension_key]?.name || imp.dimension_key}</span>
-        <select onchange="reviseImpact(${imp.id},{direction:this.value})">
-          ${Object.keys(DIR_LABEL).map(d => `<option value="${d}" ${imp.direction === d ? 'selected' : ''}>${DIR_LABEL[d]}</option>`).join('')}
-        </select>
-        <select onchange="reviseImpact(${imp.id},{degree:this.value?Number(this.value):null})">
-          <option value="">程度 —</option>
-          ${[1, 2, 3, 4, 5].map(n => `<option ${imp.degree === n ? 'selected' : ''}>${n}</option>`).join('')}
-        </select>
-      </div>`).join('')}
-      <div class="edit-row"><span class="lab">原文描述</span>
-        <input value="${esc(it.text_value)}" onchange="reviseText(${it.id}, this)"></div>
-      <div class="edit-hint">改的是你的版本；AI 原始值保留在修订历史里，随时可对照。</div>
+        <div class="impact-row">
+          <div class="dim">${DIM_META[imp.dimension_key]?.name || imp.dimension_key}<span>${DIM_META[imp.dimension_key]?.en || ''}</span></div>
+          <span class="dir-chip ${DIR_CLS[imp.direction]}">${DIR_LABEL[imp.direction]}</span>
+          ${degreesHtml(imp)}
+        </div>`).join('')}
+      ${it.status !== 'rejected' ? `<div class="actions">
+        <button class="btn btn-line" onclick="itemAct(${it.id},'later')">这条先放着</button>
+        <button class="btn btn-danger" data-del="${it.id}" onclick="askDelete(${it.id})">删除</button>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+  return `<div class="card" id="cap-${c.id}">
+    <div class="human-summary">${esc(humanSummary(items))}</div>
+    <div class="quote"><div class="tag">你的原话</div>「${esc(c.raw_text)}」</div>
+    ${mainAct}
+    <div class="details" id="details-${c.id}" style="display:none">
+      <div class="edit-hint">AI 是这么拆的（硬指标只是参考，不满意就直接说）：</div>
+      ${itemRows}
+      <div class="correct-box">
+        <input placeholder="哪里不对？直接说（例：程度没那么强 / 其实有点累）"
+               onkeydown="if(event.key==='Enter')correctCapture(${c.id},this)">
+        <button class="btn btn-primary" onclick="correctCapture(${c.id}, this.previousElementSibling)">就按我说的改</button>
+      </div>
     </div>
   </div>`;
 }
 
+function toggleDetails(cid) {
+  const e = $('details-' + cid);
+  e.style.display = e.style.display === 'none' ? 'block' : 'none';
+  if (e.style.display === 'block') e.querySelector('.correct-box input')?.focus();
+}
+
+async function confirmAll(cid) {
+  const { items } = await API(`/api/captures/${cid}/items`);
+  for (const it of items) {
+    if (['proposed', 'unresolved'].includes(it.status)) {
+      await API(`/api/items/${it.id}/confirm`, 'POST');
+    }
+  }
+  toast('好了，已确认。你的原话一直都在');
+  loadChat();
+}
+
+async function correctCapture(cid, input) {
+  const fb = input.value.trim();
+  if (!fb) return;
+  input.value = '';
+  const { items } = await API(`/api/captures/${cid}/items`);
+  let changed = 0;
+  for (const it of items) {
+    if (it.status === 'rejected') continue;
+    const r = await API(`/api/items/${it.id}/correct`, 'POST', { feedback: fb });
+    changed += (r.changed || []).length;
+  }
+  toast(changed ? `好，按你说的改了 ${changed} 处（AI 原值保留可对照）` : '反馈记下了；没有可安全修改的部分，我不猜');
+  loadChat();
+}
+
+/* ================= 对话 ================= */
 async function loadChat() {
   const { captures } = await API('/api/captures');
   const stream = $('chat-stream');
   if (!captures.length) {
     stream.dataset.loaded = '';
-    stream.innerHTML = aiMsg(`<p>嗨，今天过得怎么样？随手记一句就好——<b>你的原话会原样保存</b>，AI 只帮你整理成待确认的条目。</p>
-      <p class="soft">先写点什么试试？比如：<i>「今天跑了 30 分钟，感觉状态不错」</i></p>`);
+    stream.innerHTML = aiMsg(`<p>嗨，今天过得怎么样？<b>只管说人话，怎么记录交给 AI。</b></p>
+      <p class="soft">说完看一眼、点个「对」就好——方向、程度这些硬指标不用你操心。</p>`);
     return;
   }
   stream.dataset.loaded = '1';
@@ -140,13 +172,12 @@ async function loadChat() {
     const { items } = await API(`/api/captures/${c.id}/items`);
     if (!items.length) {
       if (c.status === 'saved') {
-        parts.push(aiMsg(`<p>我试着整理，但没找到能安全拆解的内容。<b>原文已完整保存。</b></p>
+        parts.push(aiMsg(`<p>听下来没什么需要拆成指标的，我就原样记着。<b>原文已完整保存。</b></p>
           <div class="actions"><button class="btn btn-line" onclick="runExtract(${c.id})">还是让我试试</button></div>`));
       }
       continue;
     }
-    parts.push(aiMsg(`<p>收到。下面是我从你的话里整理的，<b>AI 只是候选，你确认后才算数。</b></p>` +
-      items.map(it => cardHtml(it, c.raw_text)).join(''), true));
+    parts.push(aiMsg(captureCard(c, items), true));
   }
   stream.innerHTML = parts.join('');
   const sg = $('suggestWrap');
@@ -172,15 +203,15 @@ async function sendText(text) {
     `<div class="msg user"><div class="bubble">${esc(text)}</div><div class="time-stamp">${t}</div></div>`);
   stream.insertAdjacentHTML('beforeend',
     `<div class="msg ai" id="thinking"><div class="avatar">AI</div><div style="flex:1">
-      <div class="bubble"><p class="soft">正在整理你的原话…</p></div></div></div>`);
+      <div class="bubble"><p class="soft">我来整理…</p></div></div></div>`);
   try {
     const { id } = await API('/api/captures', 'POST', { raw_text: text });
     await API(`/api/captures/${id}/extract`, 'POST');
     const { items } = await API(`/api/captures/${id}/items`);
     $('thinking')?.remove();
     const inner = items.length
-      ? `<p>下面是我从你的话里整理的，<b>AI 只是候选，你确认后才算数。</b></p>` + items.map(it => cardHtml(it, text)).join('')
-      : `<p>我没有找到能安全整理的内容。<b>原文已完整保存。</b></p>`;
+      ? captureCard({ id, raw_text: text }, items)
+      : `<p>听下来没什么需要拆成指标的，我就原样记着。<b>原文已完整保存。</b></p>`;
     stream.insertAdjacentHTML('beforeend', aiMsg(inner, true));
     window.scrollTo(0, document.body.scrollHeight);
   } catch (e) {
@@ -196,7 +227,7 @@ async function runExtract(id) {
 
 async function itemAct(id, act) {
   await API(`/api/items/${id}/${act}`, 'POST');
-  toast(act === 'confirm' ? '已确认，进入长期分析' : act === 'later' ? '好，稍后再定' : '已删除');
+  toast(act === 'later' ? '好，这条先放着' : '已删除');
   loadChat();
 }
 
@@ -205,21 +236,6 @@ function askDelete(id) {
   if (btn.dataset.armed) { itemAct(id, 'reject'); return; }
   btn.dataset.armed = '1'; btn.textContent = '再点一下删除';
   setTimeout(() => { if (btn.isConnected) { delete btn.dataset.armed; btn.textContent = '删除'; } }, 2000);
-}
-
-function toggleEdit(id) {
-  const e = $('edit-' + id);
-  e.style.display = e.style.display === 'none' ? 'block' : 'none';
-}
-
-async function reviseText(id, input) {
-  await API(`/api/items/${id}/revise`, 'POST', { field_name: 'text_value', corrected_value: input.value.trim() });
-  toast('已按你的话修订（AI 原值保留可追溯）');
-}
-async function reviseImpact(impactId, patch) {
-  await API(`/api/impacts/${impactId}/revise`, 'POST', patch);
-  toast('已修订影响（原值保留可追溯）');
-  loadChat();
 }
 
 /* ================= 五维 ================= */
@@ -256,7 +272,7 @@ async function loadDims() {
         ${d.evidence.slice(0, 3).map(e => `
         <div class="evi" onclick="event.stopPropagation();toast('来自原文，未改写')">
           「${esc(e.text)}」→ ${DIR_LABEL[e.direction]}${e.degree ? ' ' + e.degree : ''}
-          <div class="src"><span>已确认记录 #${e.item_id}</span><span>用户认可的判断</span></div>
+          <div class="src"><span>已确认记录 #${e.item_id}</span><span>AI 按感觉判断</span></div>
         </div>`).join('')}
         ${d.unknown ? `<div class="why-box">另有 ${d.unknown} 条影响未知（不猜，不填充）。</div>` : ''}
       </div>
