@@ -103,3 +103,14 @@
   - 产出：PR #4/#5/#6 合并、tag `G1-baseline`、tag `archive/poc-exploration-20261008`、实验分支归档删除
   - 验证：CI 全绿；归档 tag 覆盖全部实验历史后才删分支
   - 状态：✅ 完成
+
+## 2026-11-15（皮肤移植 PR #20）
+
+- 日期：2026-11-15
+- 角色：lifeosdesign（视觉搬运）+ lifeosdev（接线）+ lifeosqa（验证）
+- 任务：Max 反馈试用页面"跟三个版本不同、垃圾多"；要求变体 2 皮肤原样移植进产品
+- 输入：docs/03-design/prototypes/variant-2/index.html（1316 行设计稿）；app/static 毛坯版
+- 产出：app/static/style.css = 设计稿 CSS 原样搬运（390 行零改动+2 条注明补充）；index.html/app.js 组件类名与设计稿逐个对齐并接真 API；server.py 新增 /style.css /app.js 路由 + POST /api/impacts/{id}/revise（INV-02 双值）
+- 验证：pytest 12/12；页面资产 200 全通；记录→整理→修订→确认→五维→复盘全链路 curl 冒烟通过；CI 3 项绿
+- 状态：PR #20 已合并 main（205d27a）
+- 教训（重要）：①"没有东西"真根因=静态文件从未挂路由，页面一直是无样式无脚本白纸——此前冒烟只测 API 没测页面资产，验收必须覆盖用户实际打开的东西；②"骨架"指需求主线，皮肤=产品长相必须原样搬，不能只搬交互做毛坯
