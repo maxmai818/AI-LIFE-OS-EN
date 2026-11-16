@@ -99,14 +99,25 @@ def _call_openai_compatible(system, user, max_tokens=1200):
     req = urllib.request.Request(
         base + "/chat/completions", data=body,
         headers={"Content-Type": "application/json", "Authorization": "Bearer " + key})
-    with urllib.request.urlopen(req, timeout=60) as resp:
+    with urllib.request.urlopen(req, timeout=120) as resp:
         data = json.loads(resp.read().decode())
-    return data["choices"][0]["message"]["content"]
+    choice = data["choices"][0]
+    content = choice["message"].get("content") or ""
+    if not content.strip():
+        raise RuntimeError(
+            f"AI 返回为空（finish_reason={choice.get('finish_reason')}，"
+            "推理型模型可能烧完了输出预算），请重试")
+    return content
 
 
 def _extract_json(text):
     m = re.search(r"\{.*\}", text, re.S)
-    return json.loads(m.group(0)) if m else {}
+    if not m:
+        raise RuntimeError("AI 返回内容里没有 JSON，请重试")
+    try:
+        return json.loads(m.group(0))
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f"AI 返回的 JSON 无法解析，请重试（{e}）")
 
 
 def _mock_extract(raw_text):
@@ -149,7 +160,7 @@ def extract(raw_text):
     """返回 items 列表（每个含 5 维 impacts，均带 basis 校验）。"""
     if provider_name() == "mock":
         return _mock_extract(raw_text)
-    content = _call_openai_compatible(EXTRACT_SYSTEM, raw_text)
+    content = _call_openai_compatible(EXTRACT_SYSTEM, raw_text, 4000)
     data = _extract_json(content)
     return [_normalize_item(i) for i in (data.get("items") or [])]
 
@@ -204,7 +215,7 @@ def correct(item, impacts, feedback):
     user = json.dumps({"item": {k: item[k] for k in ("text_value", "item_type")},
                        "impacts": [dict(i) for i in impacts], "feedback": feedback},
                       ensure_ascii=False)
-    content = _call_openai_compatible(CORRECT_SYSTEM, user, 800)
+    content = _call_openai_compatible(CORRECT_SYSTEM, user, 2000)
     data = _extract_json(content)
     updates = []
     for u in (data.get("impacts") or []):
@@ -247,7 +258,7 @@ def generate_review(facts_text, review_type):
                                    "target_dimension_keys": [], "reason": "已确认记录呈正向且无失衡证据",
                                    "expected_effect": "保持稳定", "unknowns": "长期效果未知"}}
     content = _call_openai_compatible(
-        REVIEW_SYSTEM, json.dumps({"review_type": review_type, **facts_text}, ensure_ascii=False), 1600)
+        REVIEW_SYSTEM, json.dumps({"review_type": review_type, **facts_text}, ensure_ascii=False), 3000)
     data = _extract_json(content)
     statements = []
     for s in (data.get("statements") or [])[:20]:

@@ -139,3 +139,11 @@
 - 产出：app/setup-llm.sh（隐藏输入密钥→写 .env 权限 600→连通性实测）；.env.example 模板；start.sh 自动加载 .env
 - 安全：.env 已被 .gitignore 保护；密钥不进聊天/不进 git；本会话凭据一律 [REDACTED]
 - 阻塞：XIAOMI_API_KEY 实际值不在任何可读配置（Hermes auth.json 只存指纹），需 Max 本人跑一次 setup-llm.sh 灌入
+
+## 2026-11-17（真 LLM 接通 · MiMo）
+
+- 角色：lifeosdev + lifeosqa；任务：Max 充值后接通真 LLM 并实测
+- 产出：llm.py 输出预算适配推理型模型（extract 4000/correct 2000/review 3000）；空返回/坏 JSON 从静默改为报错（不再假报"没内容"）；setup-llm.sh 连通性实测通过
+- 验证：真语义冒烟——非示例句式"陪客户聊两小时方案…单子谈下来"→ 跨维混合影响+情绪单列（mock 做不到）；说人话纠错"财富程度低一点、谈单挺耗神"→ degree 4→2+health 转负，原值全部入 user_revisions（INV-02）；一键确认 confirmed；pytest 13/13
+- 状态：生产可用（app/.env 权限 600，.gitignore 保护，密钥不进 git）
+- 教训：推理型模型先烧 reasoning_tokens，max_tokens 按"推理+正文"给预算，否则正文截断为空；AI 失败必须显式报错，静默返回空会被 UI 误读成"无需拆解"
