@@ -147,3 +147,11 @@
 - 验证：真语义冒烟——非示例句式"陪客户聊两小时方案…单子谈下来"→ 跨维混合影响+情绪单列（mock 做不到）；说人话纠错"财富程度低一点、谈单挺耗神"→ degree 4→2+health 转负，原值全部入 user_revisions（INV-02）；一键确认 confirmed；pytest 13/13
 - 状态：生产可用（app/.env 权限 600，.gitignore 保护，密钥不进 git）
 - 教训：推理型模型先烧 reasoning_tokens，max_tokens 按"推理+正文"给预算，否则正文截断为空；AI 失败必须显式报错，静默返回空会被 UI 误读成"无需拆解"
+
+## 2026-11-17（云端部署 · 腾讯 VPS）
+
+- 角色：lifeosdev；任务：Max 明示批准云部署后，把 AI Life OS 部署到腾讯 VPS（[REDACTED-VPS-IP]，Lighthouse [REDACTED-INSTANCE-ID]）
+- 产出：auth.py 登录层（首次访问自设密码、PBKDF2 哈希、HMAC 签名 Cookie、AI_LIFE_OS_AUTH=1 门控，本地/测试默认关闭零影响）；VPS 部署 /opt/lifeos（venv+依赖+自签证书 HTTPS 443 + systemd 常驻 + cron 每日备份留 14 天）
+- 验证：登录层本地 7/7（重定向/401/设密码/带 cookie 200/错密码/对密码/状态文件 600）；pytest 13/13；VPS 外部冒烟见部署记录
+- 安全：密码只存哈希不进聊天；LLM key .env 600 仅在服务器；SSH 仅密钥（password auth 关闭）
+- 教训：Starlette 中间件 call_next 必须 await；request.form() 需 python-multipart，改手解 urlencoded 零依赖

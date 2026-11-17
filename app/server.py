@@ -1,19 +1,74 @@
 """AI Life OS — 应用层（流程编排 + API）。内核不变量 INV-01～12 在此强制执行。"""
 import json
 import os
+import secrets
 import sys
 from datetime import datetime, timedelta, timezone
 
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from typing import Optional
 from pydantic import BaseModel, Field
 
 sys.path.insert(0, os.path.dirname(__file__))
 import db as database
 import llm
+import auth as authmod
 
 app = FastAPI(title="AI Life OS")
+
+# ---- 登录层（仅云端部署时启用：AI_LIFE_OS_AUTH=1）----
+if os.environ.get("AI_LIFE_OS_AUTH") == "1":
+    @app.middleware("http")
+    async def _auth_gate(request: Request, call_next):
+        return await authmod.gate(request, call_next)
+
+
+@app.get("/setup")
+def setup_get():
+    return authmod.setup_page()
+
+
+async def _form_password(request: Request) -> str:
+    """手解 urlencoded 表单，避免引入 python-multipart 依赖。"""
+    from urllib.parse import parse_qs
+    body = (await request.body()).decode("utf-8", "ignore")
+    return (parse_qs(body).get("password") or [""])[0]
+
+
+@app.post("/setup")
+async def setup_post(request: Request):
+    if authmod.is_setup():
+        return RedirectResponse("/", 302)
+    password = await _form_password(request)
+    if len(password) < 6:
+        raise HTTPException(400, "密码至少 6 位")
+    salt = secrets.token_hex(16)
+    state = {"password_hash": f"{salt}${authmod._hash(password, salt)}",
+             "secret": secrets.token_hex(32)}
+    authmod._save(state)
+    return authmod.issue_cookie(RedirectResponse("/", 302), state)
+
+
+@app.get("/login")
+def login_get():
+    return authmod.login_page()
+
+
+@app.post("/login")
+async def login_post(request: Request):
+    state = authmod._load()
+    password = await _form_password(request)
+    if not state.get("password_hash") or not authmod._verify(password, state):
+        return authmod.login_page()
+    return authmod.issue_cookie(RedirectResponse("/", 302), state)
+
+
+@app.get("/logout")
+def logout():
+    response = RedirectResponse("/login", 302)
+    response.delete_cookie(authmod.COOKIE)
+    return response
 STATIC = os.path.join(os.path.dirname(__file__), "static")
 
 
