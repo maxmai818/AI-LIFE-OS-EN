@@ -75,9 +75,20 @@ function degreesHtml(imp) {
   return h;
 }
 
-function aiMsg(inner, wide) {
-  return `<div class="msg ai"><div class="avatar">AI</div><div style="flex:1">
+function aiMsg(inner, wide, cls) {
+  return `<div class="msg ai ${cls || ''}"><div class="avatar">AI</div><div style="flex:1">
     <div class="bubble${wide ? ' wide' : ''}">${inner}</div></div></div>`;
+}
+
+/* ---------- 骨架屏（加载占位，不画伪进度） ---------- */
+function skeletonHtml(n) {
+  return Array.from({ length: n }, () =>
+    `<div class="sk-card"><div class="sk-bar w40"></div><div class="sk-bar w80"></div><div class="sk-bar w60"></div></div>`
+  ).join('');
+}
+
+function scrollBottom() {
+  requestAnimationFrame(() => window.scrollTo(0, document.body.scrollHeight));
 }
 
 /* ---------- 一张卡 = 一次记录的整理结果 ---------- */
@@ -156,8 +167,10 @@ async function correctCapture(cid, input) {
 
 /* ================= 对话 ================= */
 async function loadChat() {
-  const { captures } = await API('/api/captures');
   const stream = $('chat-stream');
+  const first = !stream.dataset.loaded;
+  if (first) stream.innerHTML = skeletonHtml(2); // 首次加载骨架屏
+  const { captures } = await API('/api/captures');
   if (!captures.length) {
     stream.dataset.loaded = '';
     stream.innerHTML = aiMsg(`<p>嗨，今天过得怎么样？<b>只管说人话，怎么记录交给 AI。</b></p>
@@ -189,9 +202,17 @@ async function sendFree() {
   const text = box.value.trim();
   if (!text) return;
   box.value = '';
+  box.style.height = 'auto';
   await sendText(text);
+  box.focus(); // 发完继续记，不收键盘
 }
 function sendPreset(text) { sendText(text); }
+
+function setSendBusy(busy) {
+  const btn = $('sendBtn');
+  btn.disabled = busy;
+  btn.classList.toggle('busy', busy);
+}
 
 async function sendText(text) {
   const stream = $('chat-stream');
@@ -200,10 +221,12 @@ async function sendText(text) {
   const sg = $('suggestWrap'); if (sg) sg.style.display = 'none';
   const t = new Date().toTimeString().slice(0, 5);
   stream.insertAdjacentHTML('beforeend',
-    `<div class="msg user"><div class="bubble">${esc(text)}</div><div class="time-stamp">${t}</div></div>`);
+    `<div class="msg user enter"><div class="bubble">${esc(text)}</div><div class="time-stamp">${t}</div></div>`);
   stream.insertAdjacentHTML('beforeend',
-    `<div class="msg ai" id="thinking"><div class="avatar">AI</div><div style="flex:1">
-      <div class="bubble"><p class="soft">我来整理…</p></div></div></div>`);
+    `<div class="msg ai enter" id="thinking"><div class="avatar">AI</div><div style="flex:1">
+      <div class="bubble"><div class="typing"><i></i><i></i><i></i></div><p class="soft">我来整理…</p></div></div></div>`);
+  setSendBusy(true); // 发送中禁用，防重复发送
+  scrollBottom();
   try {
     const { id } = await API('/api/captures', 'POST', { raw_text: text });
     await API(`/api/captures/${id}/extract`, 'POST');
@@ -212,11 +235,13 @@ async function sendText(text) {
     const inner = items.length
       ? captureCard({ id, raw_text: text }, items)
       : `<p>听下来没什么需要拆成指标的，我就原样记着。<b>原文已完整保存。</b></p>`;
-    stream.insertAdjacentHTML('beforeend', aiMsg(inner, true));
-    window.scrollTo(0, document.body.scrollHeight);
+    stream.insertAdjacentHTML('beforeend', aiMsg(inner, true, 'enter'));
+    scrollBottom();
   } catch (e) {
     $('thinking')?.remove();
     toast('出错了：' + e.message);
+  } finally {
+    setSendBusy(false);
   }
 }
 
@@ -249,6 +274,7 @@ const VERDICT = {
 const DIM_IC = { time: ['◷', 'var(--blue-soft)'], health: ['🏃', 'var(--green-soft)'], wealth: ['¥', '#F3E7C9'], relationship: ['♥', '#F2E2DE'], purpose: ['✦', '#EDE6F6'] };
 
 async function loadDims() {
+  $('dims-list').innerHTML = skeletonHtml(3); // 骨架屏
   const { dimensions, note } = await API('/api/dimensions');
   $('dims-list').innerHTML = dimensions.map(d => {
     const m = DIM_META[d.key];
@@ -415,6 +441,8 @@ function switchTab(tab, btn) {
   document.querySelectorAll('.tabbar button').forEach(b => b.classList.toggle('active', b === btn));
   $('composer').style.display = tab === 'chat' ? '' : 'none';
   if (LOADERS[tab]) LOADERS[tab]();
+  // 记录输入打开即聚焦（引导层打开时不抢焦点）
+  if (tab === 'chat' && $('onboard').classList.contains('hidden')) $('captureInput').focus();
 }
 
 /* 自动伸缩输入框 */
@@ -422,4 +450,58 @@ const box = $('captureInput');
 box.addEventListener('input', () => { box.style.height = 'auto'; box.style.height = Math.min(box.scrollHeight, 120) + 'px'; });
 box.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendFree(); } });
 
+/* ================= 首访一次性引导（可关闭，不再出现） ================= */
+function initOnboard() {
+  const ob = $('onboard');
+  let seen = true;
+  try { seen = localStorage.getItem('lifeos_onboarded') === '1'; } catch (e) { /* 隐私模式等：不打扰 */ }
+  if (seen) return;
+  const ua = navigator.userAgent;
+  const hint = $('a2hsHint');
+  if (/iPhone|iPad|iPod/.test(ua)) {
+    hint.textContent = 'iOS：Safari 底部「分享」按钮 →「添加到主屏幕」。';
+  } else if (/Android/.test(ua)) {
+    hint.textContent = 'Android：浏览器「菜单」→「添加到主屏幕」。';
+  }
+  const close = () => {
+    ob.classList.add('hidden');
+    try { localStorage.setItem('lifeos_onboarded', '1'); } catch (e) {}
+    $('captureInput').focus();
+  };
+  $('onboardGo').addEventListener('click', close);
+  $('onboardSkip').addEventListener('click', close);
+  ob.classList.remove('hidden');
+}
+
+/* ================= 键盘不遮输入框（visualViewport） ================= */
+function initViewport() {
+  const vv = window.visualViewport;
+  if (!vv) return;
+  const sync = () => {
+    const kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+    document.documentElement.style.setProperty('--kb-h', kb + 'px');
+    document.body.classList.toggle('kb-open', kb > 60);
+    if (kb > 60) scrollBottom(); // 键盘弹出后保证输入框可见
+  };
+  vv.addEventListener('resize', sync);
+  vv.addEventListener('scroll', sync);
+  sync();
+}
+
+/* ================= PWA：service worker（注册失败静默容忍） ================= */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      // 自签证书等场景 SW 可能被浏览器拒绝——优雅降级，不影响使用
+    });
+  });
+}
+
+/* ================= 启动 ================= */
+initOnboard();
+initViewport();
 loadChat();
+if ($('onboard').classList.contains('hidden')) {
+  $('captureInput').focus(); // 记录输入打开即聚焦
+  scrollBottom();
+}

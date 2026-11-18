@@ -5,9 +5,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>AI Life OS</title>
+<!-- ===== PWA 外壳（App 体验包） ===== -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#F4F4F6">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="生活本">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<!-- ===== 首访一次性引导（可关闭，不再出现） ===== -->
+<div class="onboard hidden" id="onboard" role="dialog" aria-label="开始使用引导">
+  <div class="onboard-sheet">
+    <div class="onboard-title">3 步开始用<small>约 1 分钟 · 之后每天 5 分钟用完即走</small></div>
+    <ol class="onboard-steps">
+      <li>
+        <span class="step-no">1</span>
+        <div><b>设一个密码</b><p>第一次打开会请你设密码，只此一次。数据只在你的服务器上，仅你可见。</p></div>
+      </li>
+      <li>
+        <span class="step-no">2</span>
+        <div><b>加到主屏幕</b><p id="a2hsHint">iOS：Safari 底部「分享」按钮 →「添加到主屏幕」；Android：浏览器菜单 →「添加到主屏幕」。</p></div>
+      </li>
+      <li>
+        <span class="step-no">3</span>
+        <div><b>随手记一句</b><p>像发消息一样说人话，AI 拆好你看一眼、点「对」就行。</p></div>
+      </li>
+    </ol>
+    <button class="btn btn-primary onboard-go" id="onboardGo">知道了，开始用</button>
+    <button class="onboard-skip" id="onboardSkip">先跳过</button>
+  </div>
+</div>
 <div class="phone">
 
   <header class="app-header">

@@ -139,6 +139,34 @@ def app_js():
     return FileResponse(os.path.join(STATIC, "app.js"), media_type="application/javascript")
 
 
+# ---- PWA 外壳资源（App 体验包）----
+@app.get("/manifest.json")
+def pwa_manifest():
+    return FileResponse(os.path.join(STATIC, "manifest.json"), media_type="application/manifest+json")
+
+
+@app.get("/sw.js")
+def pwa_sw():
+    # scope 限定根路径；no-cache 保证 SW 更新及时
+    return FileResponse(os.path.join(STATIC, "sw.js"), media_type="application/javascript",
+                        headers={"Cache-Control": "no-cache", "Service-Worker-Allowed": "/"})
+
+
+@app.get("/apple-touch-icon.png")
+def pwa_apple_touch_icon():
+    return FileResponse(os.path.join(STATIC, "apple-touch-icon.png"), media_type="image/png")
+
+
+@app.get("/icons/{name}")
+def pwa_icon(name: str):
+    if "/" in name or "\\" in name or not name.endswith(".png"):
+        raise HTTPException(404, "icon not found")
+    path = os.path.join(STATIC, "icons", name)
+    if not os.path.isfile(path):
+        raise HTTPException(404, "icon not found")
+    return FileResponse(path, media_type="image/png")
+
+
 @app.post("/api/captures")
 def create_capture(body: CaptureIn, request: Request):
     uid = get_user(request)

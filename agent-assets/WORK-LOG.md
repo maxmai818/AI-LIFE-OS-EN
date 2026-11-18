@@ -4,6 +4,14 @@
 
 ---
 
+## 2026-11-18（PWA App 体验包）
+
+- 执行人：lifeosdev（lifeosdesign 会签：按 Design-Language v1.0 执行）
+- 工作：现有 Web 应用升级为可「添加到主屏幕」的 PWA「App 体验包」——① manifest.json（display:standalone、中文产品名）② 五维色环图标（`scripts/generate_pwa_icons.py` 零依赖生成 icon-512/192/512-maskable/32 + apple-touch-icon 180，色环取 v1.0 五维 token time/health/wealth/rel/purpose）③ sw.js 壳缓存加速二次打开（API 永不缓存；注册失败静默降级，自签证书场景不影响使用）④ 首访一次性「3 步开始用」引导（设密码→加到主屏→随手记一句；localStorage 标记，可关闭不再出现）⑤ 移动端手感优化：记录框打开即聚焦、发送即时反馈+防重复发送、打字骨架屏、AI 卡片入场动画、「对/不对」44px+ 大按钮、按压反馈、输入框 16px 防 iOS 聚焦缩放、visualViewport 键盘避让。server.py 新增 /manifest.json、/sw.js、/apple-touch-icon.png、/icons/{name} 路由；auth.py 公开路径放行 PWA 资源（无隐私数据）。不新增功能，INV 红线未触碰（内核层零改动）
+- 验证：pytest 13/13 全绿；uvicorn 本地冒烟关键路由全 200、图标路径穿越 404、AI_LIFE_OS_AUTH=1 下 PWA 资源 200/页面 302/API 401；浏览器实测引导只出现一次、关闭后输入框自动聚焦、无 JS 报错
+- 决策：manifest name「生活本 AI Life OS」/ short_name「生活本」（需求方指定；Design-Language 未命名产品，待 Max 确认）；theme-color 与图标底按 v1.0 中性底 #F4F4F6（现行皮肤底 #F6F2EC 与 v1.0 token 存在既有差异，本次不动皮肤）
+- 状态：⏸ Draft PR 待审（feat/pwa-app-experience，不合并、不部署）；真机 iOS/Android 验证（添加主屏、启动画面、键盘避让）为遗留项
+
 ## 2026-11-17（POC-01 v0.7 三件套起草）
 
 - **角色**：lifeospm（需求与产品基线主责）

@@ -23,7 +23,13 @@ COOKIE = "lifeos_session"
 SESSION_DAYS = 30
 _PBKDF2_ITERS = 200_000
 
-PUBLIC_PATHS = {"/setup", "/login", "/style.css", "/app.js"}
+PUBLIC_PATHS = {"/setup", "/login", "/style.css", "/app.js",
+                "/manifest.json", "/sw.js", "/apple-touch-icon.png"}
+
+
+def _is_public(path: str) -> bool:
+    """公开路径：静态壳资源 + PWA 资源（图标/manifest 无隐私数据，主屏添加与 SW 注册需要放行）。"""
+    return path in PUBLIC_PATHS or path.startswith("/icons/")
 
 _PAGE = """<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -117,13 +123,13 @@ async def gate(request: Request, call_next):
     path = request.url.path
 
     if not state.get("password_hash"):
-        if path in ("/setup", "/style.css"):
+        if path in ("/setup", "/style.css") or _is_public(path):
             return await call_next(request)
         if path.startswith("/api/"):
             return unauthorized()
         return RedirectResponse("/setup", 302)
 
-    if path in PUBLIC_PATHS:
+    if _is_public(path):
         return await call_next(request)
 
     if not _session_ok(request, state):
