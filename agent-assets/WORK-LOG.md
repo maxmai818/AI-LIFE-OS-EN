@@ -4,6 +4,13 @@
 
 ---
 
+## 2026-11-17（POC-01 v0.7 三件套起草）
+
+- **角色**：lifeospm（需求与产品基线主责）
+- **内容**：变更清单 1–8（Max 2026-11-17 批复「1-8都按建议」，含待圈注点 ①固化自适应 Review ②无痛记录默认形态 ③6 问观察指标）落实为 POC-01 v0.7 三件套：Product & UX Spec v0.7、Capture Data + AI Output Contract v0.7、Test & Acceptance Spec v0.7（v0.6 三件套留档，`G1-baseline` 不动）。新增：FR-CAP-006/FR-COM-001~003、DP-008/009、CAP-003/004、CAL-001~003、§14.5 行为设计证据口径、受益/负担 6 问观察指标（不设门槛）、§19 验收语义固化（未执行产品测试措辞保留）。
+- **状态**：Max 2026-11-17 飞书批复「批准」，随 PR #29 合并；v0.7 转正需求基线（v0.6 转历史）。文档批准不等于实现/编码授权。
+- **产出**：`docs/02-requirements/POC-01-Product-UX-Spec-v0.7.md`、`docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.7.md`、`docs/06-testing/POC-01-Test-Acceptance-Spec-v0.7.md`
+
 ## 2026-11-17（DQ-006 决策记录）
 
 - 执行人：lifeospm
