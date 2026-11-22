@@ -467,3 +467,9 @@ body.kb-open .phone{transform:translateY(calc(-1 * var(--kb-h, 0px)))}
    任意屏宽 100% 占满；≤420px 手机上视觉与原稿完全一致。 */
 .phone{max-width:none;box-shadow:none;min-height:100dvh}
 .onboard-sheet{max-width:none}
+
+/* ===== 产品化补充 9（2026-11-18 · App 壳：底部四按钮固定）=====
+   Max 反馈：底部按钮要整页下拉才看到。根因：.phone 用 min-height 被内容撑高后
+   整页滚动，.phone 的 overflow:hidden 又令 sticky 失效。改为定高 App 壳：
+   只有 .screen 内部滚动，composer/tabbar 永驻屏幕底部（设计稿原意）。 */
+.phone{height:100dvh}

@@ -1,7 +1,7 @@
 /* AI Life OS · PWA 壳缓存 service worker
    目的：加速二次打开（壳资源离线可用）；API 永不缓存（数据实时、隐私）。
    降级：注册失败（自签证书等场景被浏览器拒绝）由 app.js 静默容忍，不影响使用。 */
-const CACHE = 'lifeos-shell-v1';
+const CACHE = 'lifeos-shell-v2';
 const SHELL = [
   '/',
   '/style.css',
