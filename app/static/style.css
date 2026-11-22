@@ -461,3 +461,9 @@ body.kb-open .phone{transform:translateY(calc(-1 * var(--kb-h, 0px)))}
 .onboard-steps p{margin:2px 0 0;font-size:12.5px;color:var(--ink-soft);line-height:1.65}
 .onboard-go{width:100%;min-height:46px;font-size:15px;margin-top:16px}
 .onboard-skip{width:100%;min-height:44px;background:none;border:none;color:var(--muted);font-size:13px;font-family:inherit;cursor:pointer;margin-top:4px}
+
+/* ===== 产品化补充 8（2026-11-18 · Fold/宽屏 100% 全宽）=====
+   Max 反馈：Fold 7 内屏未占满宽度。不改原稿：解除 .phone / 引导卡 420px 上限，
+   任意屏宽 100% 占满；≤420px 手机上视觉与原稿完全一致。 */
+.phone{max-width:none;box-shadow:none;min-height:100dvh}
+.onboard-sheet{max-width:none}
