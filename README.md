@@ -17,7 +17,7 @@ The three UI style variants below are **live, interactive apps** deployed on my 
 | **Variant 2** *(chosen direction)* | Conversational · Guided | **[https://42.193.174.212/demo/v2/](https://42.193.174.212/demo/v2/)** |
 | **Variant 3** | Card-Stack | **[https://42.193.174.212/demo/v3/](https://42.193.174.212/demo/v3/)** |
 
-All three: [demo picker page](https://42.193.174.212/demo/) · The demos run on shared fictional accounts (anyone can explore them; AI calls are rate-limited; data may reset). HTTPS is self-hosted with a self-signed certificate — accept your browser's one-time warning to continue.
+All three: [demo picker page](https://42.193.174.212/demo/) · The demos run on shared fictional accounts (anyone can explore them; AI calls are rate-limited; data may reset). HTTPS uses a trusted Let's Encrypt certificate (bare-IP, short-lived, auto-renewed) — the links open without warnings.
 
 ---
 
