@@ -1,69 +1,69 @@
 # Capture Data + AI Output Contract v0.6
 
-- **项目**：AI Life OS
-- **文档状态**：Approved — G1 需求基线（Max 2026-10-08，决策包选项 A）
-- **SDLC 阶段**：G1/G2 Requirements & Design
-- **产品批准人**：Max
-- **作者**：Hermes
-- **日期**：2026-09-15
-- **关联需求**：`POC-01-Product-UX-Spec-v0.6.md`
-- **关联决策**：`G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`、`G1-Decision-005-Mixed-Impact-Degrees-v0.1.md`
-- **实现状态**：未开始；本文是逻辑契约，不是代码或数据库迁移
+- **Project**: AI Life OS
+- **Document status**: Approved — G1 requirements baseline (Max 2026-10-08, decision packet option A)
+- **SDLC stage**: G1/G2 Requirements & Design
+- **Product approver**: Max
+- **Author**: Hermes
+- **Date**: 2026-09-15
+- **Related requirement**: `POC-01-Product-UX-Spec-v0.6.md`
+- **Related decisions**: `G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`, `G1-Decision-005-Mixed-Impact-Degrees-v0.1.md`
+- **Implementation status**: Not started; this document is a logical contract, not code or database migrations
 
-- **本次变更**：[Decision 006](../09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md)；[Delta Review](../08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md)
-- **编码授权**：未授权；G1 未整体批准；作者不得自批。
+- **Changes in this version**: [Decision 006](../09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md); [Delta Review](../08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md)
+- **Coding authorization**: Not authorized; G1 is not approved as a whole; the author may not self-approve.
 
 ---
 
-## 1. 目的
+## 1. Purpose
 
-本文定义 Capture 从原始输入、AI 提取、用户修订到 Review 证据的逻辑数据契约，并规定 AI 如何区分事实、推测、理论引用和建议。
+This document defines the logical data contract for Capture from raw input, through AI extraction and user revisions, to Review evidence, and specifies how the AI must distinguish facts, speculation, theory references, and recommendations.
 
-目标是保证：
+The goal is to guarantee:
 
-1. 原始记录不丢失、不被 AI 覆盖。
-2. AI 结果可以核验、纠正和回放。
-3. 确定性计算与生成式解释分离。
-4. 每条 Review 事实能回到个人证据。
-5. 多个独立用户的数据不会混合。
-6. 理论引用可以核验且不压过个人事实。
+1. Raw records are never lost or overwritten by the AI.
+2. AI results can be verified, corrected, and replayed.
+3. Deterministic computation is separated from generative interpretation.
+4. Every Review fact can be traced back to personal evidence.
+5. Data from multiple independent users is never mixed.
+6. Theory references are verifiable and never override personal facts.
 
-## 2. 核心数据原则
+## 2. Core Data Principles
 
-### DP-001：用户所有权
+### DP-001: User ownership
 
-每个用户数据对象必须归属于明确 `user_id`。任何读取、修改、导出、删除和 AI 上下文构建都必须先限定当前用户。
+Every user data object must belong to an explicit `user_id`. Every read, modification, export, deletion, and AI context build must first be scoped to the current user.
 
-### DP-002：原始数据不可覆盖
+### DP-002: Raw data never overwritten
 
-Capture 原始文本独立保存。AI 提取、用户修订和后续重新分析均创建独立版本或记录，不修改原始文本。
+Capture raw text is stored independently. AI extraction, user revisions, and subsequent re-analysis all create separate versions or records and never modify the raw text.
 
-### DP-003：用户确认优先
+### DP-003: User confirmation takes precedence
 
-同一字段存在 AI 值和用户确认值时，计算和 Review 优先使用用户确认值。
+When the same field has both an AI value and a user-confirmed value, computation and Review use the user-confirmed value first.
 
-### DP-004：事实与生成内容分离
+### DP-004: Separation of facts and generated content
 
-结构化事实、确定性计算、AI 推测、理论引用和建议使用不同类型保存和展示。
+Structured facts, deterministic calculations, AI speculation, theory references, and recommendations are stored and displayed as distinct types.
 
-### DP-005：版本可追溯
+### DP-005: Version traceability
 
-每次 AI 处理至少记录：模型供应商、模型标识、Prompt 版本、Schema 版本、处理时间和状态。
+Every AI processing run records at least: model provider, model identifier, Prompt version, Schema version, processing time, and status.
 
-### DP-006：最少数据原则
+### DP-006: Data minimization
 
-只向云端模型发送完成当前任务所需的数据。不得默认发送用户全部历史。
+Send cloud models only the data needed to complete the current task. The user's full history must never be sent by default.
 
-### DP-007：删除可传播
+### DP-007: Deletion propagates
 
-用户删除 Capture 或账户时，需要定义其派生提取、Review 证据和缓存如何删除或失效。
+When a user deletes a Capture or their account, it must be defined how the derived extractions, Review evidence, and caches are deleted or invalidated.
 
-## 3. 概念数据模型
+## 3. Conceptual Data Model
 
 ```text
 User
 ├── Profile
-├── LifeDimension（固定五维）
+├── LifeDimension (fixed Five Life Dimensions)
 ├── Goal
 ├── Capture
 │   ├── ExtractionRun
@@ -80,16 +80,16 @@ User
 
 ### 3.1 User
 
-代表独立私密账号和数据所有者。
+Represents an independent private account and data owner.
 
-最小逻辑字段：
+Minimal logical fields:
 
 - `id`
 - `status`
 - `created_at`
 - `deleted_at`
 
-身份认证方式在 G2 技术设计中决定。POC 即使只开放给 Max，也不得在业务数据中省略所有者概念。
+The authentication method is decided in G2 technical design. Even if the POC is only opened to Max, the owner concept must not be omitted from business data.
 
 ### 3.2 Profile
 
@@ -101,19 +101,19 @@ User
 - `created_at`
 - `updated_at`
 
-时区影响“今天、昨晚、本周”等时间表达的解析。
+Timezone affects the resolution of time expressions such as "today", "last night", and "this week".
 
 ### 3.3 LifeDimension
 
-固定提供五条受控维度定义：
+Provides five fixed controlled dimension definitions:
 
-- `time`：Time（时间）
-- `health`：Health（健康）
-- `wealth`：Wealth（财富）
-- `relationship`：Relationship（关系）
-- `purpose`：Purpose（目的/意义）
+- `time`: Time
+- `health`: Health
+- `wealth`: Wealth
+- `relationship`: Relationship
+- `purpose`: Purpose (meaning)
 
-逻辑字段：
+Logical fields:
 
 - `id`
 - `code`
@@ -123,7 +123,7 @@ User
 - `sort_order`
 - `schema_version`
 
-LifeDimension 是产品固定顶层模型。用户对维度的 Blueprint 内容应保存在用户专属的 Profile/Blueprint 记录中，而不是修改全局维度定义。
+LifeDimension is a fixed top-level model of the product. User-specific Blueprint content about a dimension should be stored in the user's own Profile/Blueprint records, not by modifying the global dimension definitions.
 
 ### 3.4 Goal
 
@@ -133,39 +133,39 @@ LifeDimension 是产品固定顶层模型。用户对维度的 Blueprint 内容�
 - `title`
 - `why`
 - `status`: `active | paused | completed | archived`
-- `metric_definition`（可空）
-- `current_value`（可空）
-- `target_value`（可空）
-- `unit`（可空）
-- `start_date`（可空）
-- `target_date`（可空）
+- `metric_definition` (nullable)
+- `current_value` (nullable)
+- `target_value` (nullable)
+- `unit` (nullable)
+- `start_date` (nullable)
+- `target_date` (nullable)
 - `created_at`
 - `updated_at`
 
-业务规则：Active 核心目标最多三个；不可量化目标允许存在，但不输出伪精确进度。
+Business rules: at most three active core Goals; non-quantifiable goals are allowed, but pseudo-precise progress is not output.
 
 ### 3.5 Capture
 
 - `id`
 - `user_id`
 - `raw_text`
-- `occurred_at_hint`（用户可选）
+- `occurred_at_hint` (optional for the user)
 - `timezone`
-- `source`: POC 固定为 `text`
+- `source`: fixed to `text` for the POC
 - `status`: `saved | processing | needs_confirmation | confirmed | failed | deleted`
 - `created_at`
 - `updated_at`
 - `deleted_at`
 
-规则：
+Rules:
 
-- `raw_text` 保存后不得被 ExtractionRun 覆盖。
-- 若用户主动编辑原始文本，应创建新 Capture 或显式的新版本，不能无痕修改。
-- AI 处理失败时状态为 `failed`，但 Capture 仍存在。
+- Once `raw_text` is saved, it must not be overwritten by an ExtractionRun.
+- If the user deliberately edits the raw text, a new Capture or an explicit new version must be created; silent in-place edits are not allowed.
+- When AI processing fails, the status is `failed`, but the Capture still exists.
 
 ### 3.6 ExtractionRun
 
-代表某个模型对某条 Capture 的一次处理。
+Represents one processing run of one model over one Capture.
 
 - `id`
 - `user_id`
@@ -175,16 +175,16 @@ LifeDimension 是产品固定顶层模型。用户对维度的 Blueprint 内容�
 - `prompt_version`
 - `schema_version`
 - `status`: `queued | running | succeeded | failed`
-- `raw_model_response`（受限存储；是否保存全文待隐私评审）
-- `error_category`（可空）
+- `raw_model_response` (restricted storage; whether the full text is kept is pending privacy review)
+- `error_category` (nullable)
 - `started_at`
 - `completed_at`
 
-重新分析创建新的 ExtractionRun，不覆盖旧 Run。
+Re-analysis creates a new ExtractionRun and never overwrites an old Run.
 
 ### 3.7 ExtractedItem
 
-代表 AI 从 Capture 中提取的一条候选结构化内容。
+Represents one candidate structured entry extracted by the AI from a Capture.
 
 - `id`
 - `user_id`
@@ -205,21 +205,21 @@ LifeDimension 是产品固定顶层模型。用户对维度的 Blueprint 内容�
 - `needs_confirmation`
 - `epistemic_type`: `user_reported_fact | user_reported_impact | ai_inferred_impact | deterministic_calculation`
 - `evidence_span`
-- `evidence_start` / `evidence_end`（如技术实现可稳定提供）
+- `evidence_start` / `evidence_end` (if the technical implementation can provide them reliably)
 - `ai_notes`
 
-#### `item_type` 初始枚举
+#### `item_type` initial enum
 
-- `activity`：做了什么
-- `metric_observation`：可测量事实
-- `goal_progress_event`：与目标进展有关的事件
-- `state_observation`：精力、情绪、主观状态
-- `constraint`：障碍、负担或限制
-- `achievement`：完成或成果
-- `plan`：未来意图；不得当作已发生事实
-- `unknown`：无法可靠分类
+- `activity`: what was done
+- `metric_observation`: measurable fact
+- `goal_progress_event`: event related to goal progress
+- `state_observation`: energy, mood, subjective state
+- `constraint`: obstacle, burden, or limitation
+- `achievement`: completion or result
+- `plan`: future intent; must not be treated as a fact that already happened
+- `unknown`: cannot be reliably classified
 
-#### `status` 初始枚举
+#### `status` initial enum
 
 - `proposed`
 - `confirmed`
@@ -229,55 +229,55 @@ LifeDimension 是产品固定顶层模型。用户对维度的 Blueprint 内容�
 
 ### 3.8 BehaviorDimensionImpact
 
-表示一个已提取行为/事件对一个 LifeDimension 的影响候选。每个有效行为逻辑上评估全部五维；无证据的维度保存为 `unknown`，有证据表明没有明显影响时才保存为 `neutral`。
+Represents a candidate impact of one extracted behavior/event on one LifeDimension. Every valid behavior is logically assessed against all five dimensions; a dimension with no evidence is stored as `unknown`, and it is stored as `neutral` only when evidence shows there is no noticeable impact.
 
 - `id`
 - `user_id`
 - `extracted_item_id`
 - `life_dimension_id`
 - `direction`: `positive | negative | mixed | neutral | unknown`
-- `degree`（可空整数；`positive | negative` 且依据充分时为 1–5；其他方向为空）
-- `positive_degree`（可空整数；仅 `mixed` 使用，依据充分时为 1–5）
-- `negative_degree`（可空整数；仅 `mixed` 使用，依据充分时为 1–5）
+- `degree` (nullable integer; 1–5 when `positive | negative` with sufficient basis; empty for other directions)
+- `positive_degree` (nullable integer; used only for `mixed`; 1–5 when the basis is sufficient)
+- `negative_degree` (nullable integer; used only for `mixed`; 1–5 when the basis is sufficient)
 - `rationale`
 - `evidence_span`
-- `positive_evidence_span`（`mixed` 正向方向依据；`mixed` 时必填，不因 `positive_degree = null` 而省略）
-- `negative_evidence_span`（`mixed` 负向方向依据；`mixed` 时必填，不因 `negative_degree = null` 而省略）
-- `positive_rationale`（`mixed` 正向理由）
-- `negative_rationale`（`mixed` 负向理由）
-- `positive_confidence`（`mixed` 正向置信度）
-- `negative_confidence`（`mixed` 负向置信度）
+- `positive_evidence_span` (basis for the positive direction of `mixed`; required when `mixed`, not omitted just because `positive_degree = null`)
+- `negative_evidence_span` (basis for the negative direction of `mixed`; required when `mixed`, not omitted just because `negative_degree = null`)
+- `positive_rationale` (positive rationale for `mixed`)
+- `negative_rationale` (negative rationale for `mixed`)
+- `positive_confidence` (positive confidence for `mixed`)
+- `negative_confidence` (negative confidence for `mixed`)
 - `positive_status`: `proposed | confirmed | modified | rejected`
 - `negative_status`: `proposed | confirmed | modified | rejected`
 - `assessment_window_start`
 - `assessment_window_end`
-- `blueprint_version_id`（可空；未建立 Blueprint 时为空）
-- `goal_context_version_ids`（可为空数组）
+- `blueprint_version_id` (nullable; empty when no Blueprint has been established)
+- `goal_context_version_ids` (may be an empty array)
 - `scale_anchor_version`
 - `confidence`
 - `status`: `proposed | confirmed | modified | rejected | unknown`
 - `source`: `user | ai | rule`
 - `epistemic_type`: `user_reported_fact | user_reported_impact | ai_inferred_impact | deterministic_calculation`
-- `neutral_evidence_source`（`neutral` 时必填）：`explicit_user_statement | approved_rule`
+- `neutral_evidence_source` (required when `neutral`): `explicit_user_statement | approved_rule`
 - `created_at`
 - `updated_at`
 
-约束：
+Constraints:
 
-- POC-01 使用固定的 `degree` 1–5 离散量表，不允许用户自定义；本版本不定义 `proportion` 字段。
-- 1–5 是相对于当前用户 Blueprint、目标和评估时间窗的有序主观影响估计，不是客观测量值；`1` 很弱、`2` 较弱、`3` 中等、`4` 较强、`5` 很强。
-- `direction = unknown | neutral` 时三个程度字段必须为空；`positive | negative` 使用 `degree`，两个 mixed 专用字段为空。方向有依据但程度依据不足时允许对应程度为 `null` 并标记待确认。
-- `direction = mixed` 时 `degree = null`，分别使用 `positive_degree` 与 `negative_degree`；正负方向必须始终分别有证据、理由、置信度和状态。程度证据不足时对应 degree 可为 `null`，但支持该侧方向成立的证据仍必填。
-- 五维程度独立判断，不要求合计为固定总数，因为多维影响不是零和分配。
-- `unknown` 与 `neutral` 必须区分：前者表示无足够信息，后者表示有证据支持没有显著影响。
-- `neutral` 仅允许来自用户明确陈述或经批准的确定性规则；AI 不得把“原文没有提到”解释为中性。
-- AI 候选在用户确认前不得作为长期确定事实。
-- 只有 `confirmed | modified` 的非 `unknown` 影响可进入长期趋势、维度状态及 Review 事实；`proposed | rejected` 不得参与。
-- `unknown` 可作为数据局限保留，不要求用户确认成非未知值。
-- 用户确认只改变 `status`，不得改变 `epistemic_type`；`ai_inferred_impact` 经确认后仍是“用户认可的 AI 推断”，不是直接观察或已证实因果关系。
-- 程度不得跨维度比较、平均、排名、求差或单独用于生成趋势；趋势必须基于经批准的同维度、同语义、同时间窗规则。
-- `mixed` 的两个程度只可在同一行为、同一维度、同一评估时间窗和相同 Blueprint/Goal/量表锚点版本内表达相对强弱；不得相减、相除、净额化、转成百分比或压缩为单一总体强度。跨行为、跨维度、跨时间窗或上下文版本变化后不得直接比较。
-- 只清空某侧程度表示程度未知，不否定该侧方向，`direction` 仍可为 `mixed`。拒绝某一侧方向时，有效方向转为另一侧的 `positive` 或 `negative`，并将该侧有效程度转入 `degree`；两侧均拒绝时整项状态为 `rejected`，不得进入长期分析。原始 mixed 候选与每次转换保留在 UserRevision 历史中。
+- POC-01 uses a fixed `degree` 1–5 discrete scale; user customization is not allowed; this version does not define a `proportion` field.
+- 1–5 is an ordered subjective impact estimate relative to the user's current Blueprint, goals, and assessment window — not an objective measurement; `1` very weak, `2` weak, `3` moderate, `4` strong, `5` very strong.
+- When `direction = unknown | neutral`, all three degree fields must be empty; `positive | negative` use `degree`, and the two mixed-only fields are empty. When the direction has a basis but degree evidence is insufficient, the corresponding degree may be `null` and marked as pending confirmation.
+- When `direction = mixed`, `degree = null`, with `positive_degree` and `negative_degree` used separately; the positive and negative directions must always each have their own evidence, rationale, confidence, and status. When degree evidence is insufficient, the corresponding degree may be `null`, but evidence supporting that side's direction remains required.
+- The five dimension degrees are judged independently and are not required to sum to a fixed total, because multi-dimensional impact is not a zero-sum allocation.
+- `unknown` and `neutral` must be distinguished: the former means insufficient information, the latter means there is evidence supporting no significant impact.
+- `neutral` may only come from an explicit user statement or an approved deterministic rule; the AI must not interpret "not mentioned in the raw text" as neutral.
+- AI candidates must not be treated as long-term established facts before user confirmation.
+- Only non-`unknown` impacts with `confirmed | modified` may enter long-term trends, dimension state, and Review facts; `proposed | rejected` must not participate.
+- `unknown` may be kept as a data limitation; users are not required to confirm it into a non-unknown value.
+- User confirmation only changes `status`, never `epistemic_type`; even after confirmation, `ai_inferred_impact` remains a "user-endorsed AI inference", not a direct observation or a proven causal relationship.
+- Degrees must not be compared, averaged, ranked, differenced across dimensions, or used alone to generate trends; trends must be based on approved rules with the same dimension, same semantics, and same time window.
+- The two `mixed` degrees may only express relative strength within the same behavior, same dimension, same assessment window, and the same Blueprint/Goal/scale-anchor versions; they must not be subtracted, divided, netted, converted to percentages, or compressed into a single overall intensity. They must not be directly compared across behaviors, dimensions, time windows, or after context version changes.
+- Clearing only one side's degree means that side's degree is unknown; it does not negate that side's direction, and `direction` may still be `mixed`. When one side's direction is rejected, the effective direction becomes the other side's `positive` or `negative`, and that side's effective degree is transferred into `degree`; when both sides are rejected, the whole entry's status is `rejected` and it must not enter long-term analysis. The original mixed candidate and every transition are preserved in the UserRevision history.
 
 ### 3.9 UserRevision
 
@@ -288,11 +288,11 @@ LifeDimension 是产品固定顶层模型。用户对维度的 Blueprint 内容�
 - `original_ai_value`
 - `revised_value`
 - `action`: `confirm | modify | reject`
-- `reason`（可空）
-- `resulting_direction`（方向转换时必填）
+- `reason` (nullable)
+- `resulting_direction` (required on direction transitions)
 - `created_at`
 
-计算使用有效确认版本，而不是直接使用最新 AI 输出。
+Computation uses the effective confirmed version, not the latest AI output directly.
 
 ### 3.10 Review
 
@@ -307,7 +307,7 @@ LifeDimension 是产品固定顶层模型。用户对维度的 Blueprint 内容�
 
 ### 3.11 ReviewStatement
 
-Review 不保存为一个不可分解的长文本；至少在逻辑上拆分为：
+A Review is not stored as one indivisible long text; it is split at least logically into:
 
 - `id`
 - `review_id`
@@ -319,7 +319,7 @@ Review 不保存为一个不可分解的长文本；至少在逻辑上拆分为�
 - `theory_reference_ids`
 - `display_order`
 
-`statement_type`：
+`statement_type`:
 
 - `personal_fact`
 - `deterministic_result`
@@ -336,8 +336,8 @@ Review 不保存为一个不可分解的长文本；至少在逻辑上拆分为�
 - `source_id`
 - `quote_or_summary`
 - `occurred_at`
-- `field_path`（可空）
-- `calculation_version`（计算结果时）
+- `field_path` (nullable)
+- `calculation_version` (when it is a calculation result)
 
 ### 3.13 TheoryReference
 
@@ -348,14 +348,14 @@ Review 不保存为一个不可分解的长文本；至少在逻辑上拆分为�
 - `title`
 - `publisher_or_journal`
 - `publication_date`
-- `locator`: 章节、页码、DOI 或 URL
-- `quoted_text`（合法且必要的短引用，可空）
+- `locator`: chapter, page number, DOI, or URL
+- `quoted_text` (legitimate and necessary short quote, nullable)
 - `paraphrase`
 - `evidence_strength`
 - `limitations`
 - `verified_at`
 
-理论引用不属于某个用户的个人事实，但用户 Review 对它的使用必须可追溯。
+Theory references do not belong to any one user's personal facts, but their use in a user's Review must be traceable.
 
 ### 3.14 Recommendation
 
@@ -366,38 +366,38 @@ Review 不保存为一个不可分解的长文本；至少在逻辑上拆分为�
 - `rationale`
 - `supporting_statement_ids`
 - `status`: `proposed | accepted | modified | rejected`
-- `user_modified_text`（可空）
+- `user_modified_text` (nullable)
 
-每个 Review 允许零个或一个主 Recommendation；无意愿或无需改变时不生成建议。
+Each Review allows zero or one primary Recommendation; no recommendation is generated when there is no willingness or need to change.
 
-## 4. Capture AI 输出契约
+## 4. Capture AI Output Contract
 
-### 4.1 输入边界
+### 4.1 Input boundaries
 
-AI 可接收：
+The AI may receive:
 
-- 当前 Capture 原始文本
-- 用户时区和当前日期
-- 固定五大 Life Dimension 的代码和定义
-- 最多三个 Active Goal 的必要字段
-- 经批准的 Schema 和行为说明
+- The current Capture's raw text
+- The user's timezone and the current date
+- The codes and definitions of the five fixed Life Dimensions
+- The necessary fields of up to three Active Goals
+- The approved Schema and behavioral instructions
 
-默认不得接收：
+By default it must not receive:
 
-- 用户全部历史 Capture
-- 其他用户任何数据
-- 与当前提取无关的敏感资料
-- 未经批准的外部文档内容
+- The user's full Capture history
+- Any other user's data
+- Sensitive material unrelated to the current extraction
+- Unapproved external document content
 
-### 4.2 逻辑输出示例
+### 4.2 Logical output example
 
-用户输入：
+User input:
 
-> 昨晚为了赶完一个项目工作到两点，今天特别累，不过收到了 500 元项目款。
+> Last night I worked until 2 a.m. rushing to finish a project, and today I'm exhausted, but I received 500 yuan in project payment.
 
-同一 Capture 至少包含“工作到两点”“次日疲劳”和“收到项目款”三个事件。示例为控制长度展示前两个；真实输出必须分别建立 ExtractedItem，不能把收入的 Wealth 影响归到熬夜行为上。
+The same Capture contains at least three events: "working until 2 a.m.", "next-day fatigue", and "receiving the project payment". The example shows only the first two to keep it short; real output must create a separate ExtractedItem for each and must not attribute the income's Wealth impact to the late-night behavior.
 
-建议输出（节选）：
+Suggested output (excerpt):
 
 ```json
 {
@@ -406,13 +406,13 @@ AI 可接收：
   "items": [
     {
       "item_type": "activity",
-      "occurred_at": "根据用户时区解析的昨晚",
+      "occurred_at": "last night, resolved in the user's timezone",
       "metric_type": "project_work_late",
       "goal_links": [],
       "confidence": "high",
       "needs_confirmation": true,
       "epistemic_type": "user_reported_fact",
-      "evidence_span": "昨晚为了赶完一个项目工作到两点",
+      "evidence_span": "Last night I worked until 2 a.m. rushing to finish a project",
       "dimension_impacts": [
         {
           "dimension": "time",
@@ -420,8 +420,8 @@ AI 可接收：
           "degree": null,
           "confidence": "medium",
           "epistemic_type": "ai_inferred_impact",
-          "evidence_span": "工作到两点",
-          "rationale": "候选解释：可能消耗夜间可支配或休息时间，程度需用户判断"
+          "evidence_span": "worked until 2 a.m.",
+          "rationale": "Candidate interpretation: may consume discretionary or rest time at night; the degree needs the user's judgment"
         },
         {
           "dimension": "health",
@@ -429,8 +429,8 @@ AI 可接收：
           "degree": null,
           "confidence": "medium",
           "epistemic_type": "ai_inferred_impact",
-          "evidence_span": "工作到两点，今天特别累",
-          "rationale": "候选解释：晚睡与次日疲劳同时出现，但不声称已证实因果"
+          "evidence_span": "worked until 2 a.m., today I'm exhausted",
+          "rationale": "Candidate interpretation: late night and next-day fatigue co-occur, but proven causation is not claimed"
         },
         {
           "dimension": "wealth",
@@ -439,7 +439,7 @@ AI 可接收：
           "confidence": "high",
           "epistemic_type": "ai_inferred_impact",
           "evidence_span": null,
-          "rationale": "该熬夜行为本身没有独立的财富影响证据"
+          "rationale": "The late-night behavior itself has no independent evidence of a Wealth impact"
         },
         {
           "dimension": "relationship",
@@ -448,7 +448,7 @@ AI 可接收：
           "confidence": "high",
           "epistemic_type": "ai_inferred_impact",
           "evidence_span": null,
-          "rationale": "原文没有关系影响证据"
+          "rationale": "The raw text contains no Relationship-impact evidence"
         },
         {
           "dimension": "purpose",
@@ -457,13 +457,13 @@ AI 可接收：
           "confidence": "high",
           "epistemic_type": "ai_inferred_impact",
           "evidence_span": null,
-          "rationale": "未提供项目与用户目标或意义的关系"
+          "rationale": "No relationship between the project and the user's goals or meaning was provided"
         }
       ]
     },
     {
       "item_type": "metric_observation",
-      "occurred_at": "根据用户时区解析的今天",
+      "occurred_at": "today, resolved in the user's timezone",
       "metric_type": "income_received",
       "value": 500,
       "unit": "CNY",
@@ -471,7 +471,7 @@ AI 可接收：
       "confidence": "high",
       "needs_confirmation": true,
       "epistemic_type": "user_reported_fact",
-      "evidence_span": "收到了 500 元项目款",
+      "evidence_span": "received 500 yuan in project payment",
       "dimension_impacts": [
         {
           "dimension": "wealth",
@@ -479,8 +479,8 @@ AI 可接收：
           "degree": null,
           "confidence": "high",
           "epistemic_type": "ai_inferred_impact",
-          "evidence_span": "收到了 500 元项目款",
-          "rationale": "候选解释：已记录收入通常支持财富维度，具体程度需结合用户基线确认"
+          "evidence_span": "received 500 yuan in project payment",
+          "rationale": "Candidate interpretation: recorded income usually supports the Wealth dimension; the specific degree needs confirmation against the user's baseline"
         },
         {
           "dimension": "time",
@@ -489,7 +489,7 @@ AI 可接收：
           "confidence": "high",
           "epistemic_type": "ai_inferred_impact",
           "evidence_span": null,
-          "rationale": "收入事件本身没有时间影响证据"
+          "rationale": "The income event itself has no evidence of a Time impact"
         },
         {
           "dimension": "health",
@@ -498,7 +498,7 @@ AI 可接收：
           "confidence": "high",
           "epistemic_type": "ai_inferred_impact",
           "evidence_span": null,
-          "rationale": "收入事件本身没有健康影响证据"
+          "rationale": "The income event itself has no evidence of a Health impact"
         },
         {
           "dimension": "relationship",
@@ -507,7 +507,7 @@ AI 可接收：
           "confidence": "high",
           "epistemic_type": "ai_inferred_impact",
           "evidence_span": null,
-          "rationale": "原文没有关系影响证据"
+          "rationale": "The raw text contains no Relationship-impact evidence"
         },
         {
           "dimension": "purpose",
@@ -516,329 +516,329 @@ AI 可接收：
           "confidence": "high",
           "epistemic_type": "ai_inferred_impact",
           "evidence_span": null,
-          "rationale": "未提供该收入与用户目标或意义的关系"
+          "rationale": "No relationship between this income and the user's goals or meaning was provided"
         }
       ]
     }
   ],
-  "unresolved": ["疲劳状态应作为独立 ExtractedItem 输出；本节为节选未展开"],
-  "warnings": ["方向可判断但程度证据不足时，degree 保持 null，等待用户选择 1–5 或保留未定"]
+  "unresolved": ["The fatigue state should be output as a separate ExtractedItem; this excerpt does not expand it"],
+  "warnings": ["When the direction can be judged but degree evidence is insufficient, degree stays null, awaiting the user's choice of 1–5 or remaining undecided"]
 }
 ```
 
-说明：真实实现必须输出机器可校验的时间格式，并为 Capture 中每个可区分行为或事件建立独立 ExtractedItem。1–5 程度是用户相对其 Blueprint、目标和时间窗确认的有序主观估计；证据不足时不得为了填满量表而生成数字。五维影响不是零和分配，不要求数值合计为固定总数。
+Note: a real implementation must output machine-validatable time formats and create a separate ExtractedItem for every distinguishable behavior or event in a Capture. The 1–5 degree is an ordered subjective estimate confirmed by the user relative to their Blueprint, goals, and time window; when evidence is insufficient, numbers must not be generated just to fill the scale. Five-dimension impacts are not a zero-sum allocation and are not required to sum to a fixed total.
 
-### 4.3 AI 禁止行为
+### 4.3 AI prohibitions
 
-AI 不得：
+The AI must not:
 
-- 将“计划明天运动”提取为已经运动。
-- 将“没运动”提取为正向运动记录。
-- 将“很累”擅自量化为未经用户定义的精确分数。
-- 推断未出现的收入、体重、疾病或关系事实。
-- 因为用户提到“工作”而自动关联错误目标。
-- 省略不确定性并强行分类。
-- 用理论观点替代 Capture 中不存在的个人事实。
+- Extract "planned to exercise tomorrow" as having already exercised.
+- Extract "did not exercise" as a positive exercise record.
+- Arbitrarily quantify "very tired" into an exact score the user never defined.
+- Infer income, weight, illness, or relationship facts that never appeared.
+- Automatically link to the wrong goal just because the user mentioned "work".
+- Omit uncertainty and force a classification.
+- Substitute theoretical viewpoints for personal facts that do not exist in the Capture.
 
-## 5. 时间、数值和否定规则
+## 5. Time, Numeric Value, and Negation Rules
 
-### 5.1 时间
+### 5.1 Time
 
-- 使用用户时区解释“今天、昨晚、本周”。
-- 保留原始时间表达。
-- 无法确定具体时间时保存范围或不确定状态。
-- 跨午夜表达需要待确认。
-- 不得根据服务器时区替代用户时区。
+- Interpret "today", "last night", and "this week" using the user's timezone.
+- Preserve the original time expression.
+- When the exact time cannot be determined, store a range or an uncertain state.
+- Expressions crossing midnight require pending confirmation.
+- The server timezone must not be substituted for the user's timezone.
 
-### 5.2 数值与单位
+### 5.2 Numeric values and units
 
-- 数值和单位从原文提取并标准化。
-- 保留原始表达，例如“一小时”。
-- 标准化值例如 `60 minute`。
-- 单位不明确时不得猜测。
-- 同一条记录出现修正表达时，以最后明确修正为候选，并提示确认。
+- Extract numeric values and units from the raw text and standardize them.
+- Preserve the original expression, e.g. "one hour".
+- Standardized value, e.g. `60 minute`.
+- Do not guess when the unit is unclear.
+- When a corrective expression appears in the same record, take the last explicit correction as the candidate and prompt for confirmation.
 
-### 5.3 否定和未完成
+### 5.3 Negation and incompleteness
 
-以下语义必须区分：
+The following semantics must be distinguished:
 
-- 做了
-- 没做
-- 想做
-- 计划做
-- 做了一部分
-- 放弃了
-- 不确定是否做过
+- Did it
+- Did not do it
+- Wanted to do it
+- Planned to do it
+- Did part of it
+- Gave up
+- Not sure whether it was done
 
-计划和意图不能进入已完成指标。
+Plans and intentions must not enter completed metrics.
 
-## 6. 确定性计算契约
+## 6. Deterministic Calculation Contract
 
 ### 6.1 Goal Progress
 
-只有当目标具有清晰指标、单位和有效确认数据时才计算。
+Calculate only when the goal has a clear metric, unit, and valid confirmed data.
 
-计算结果必须保存或返回：
+Calculation results must store or return:
 
-- 输入数据引用
-- 公式或规则版本
-- 计算时间
-- 输出值
-- 数据覆盖范围
-- 数据置信状态
+- Input data references
+- Formula or rule version
+- Calculation time
+- Output value
+- Data coverage
+- Data confidence status
 
 ### 6.2 Deviation
 
-Deviation 需要：
+Deviation requires:
 
-- 明确目标
-- 时间范围
-- 计划基线或期望节奏
-- 足够的数据点
+- An explicit goal
+- A time range
+- A planned baseline or expected cadence
+- Enough data points
 
-缺少条件时输出 `insufficient_data`，而不是预测完成日期。
+When conditions are missing, output `insufficient_data` instead of predicting a completion date.
 
-### 6.3 不做总 Life Score
+### 6.3 No overall Life Score
 
-POC-01 不生成单一总分。允许展示：
+POC-01 does not generate a single overall score. Allowed to display:
 
-- 分领域状态
-- 目标进度
-- 趋势
-- 偏离
-- 数据置信度
+- Per-domain status
+- Goal progress
+- Trends
+- Deviation
+- Data confidence
 
-## 7. Review AI 输出契约
+## 7. Review AI Output Contract
 
-### 7.1 生成前上下文
+### 7.1 Context before generation
 
-Review Generator 只接收：
+The Review Generator receives only:
 
-- 当前用户
-- 指定周期
-- 已确认或已修订的有效事实
-- 确定性计算结果
-- 必要的目标信息
-- 经核验的少量 TheoryReference
-- 输出行为规范
-- 本次用户表达、可选反馈与有范围限制的有效模式（按第 14 节 In Review 提案，不自动读取全部历史）
+- The current user
+- The specified period
+- Confirmed or revised valid facts
+- Deterministic calculation results
+- Necessary goal information
+- A small number of verified TheoryReferences
+- Output behavioral specifications
+- This session's user expressions, optional feedback, and scope-limited valid patterns (per the In Review proposal in Section 14; it does not automatically read the full history)
 
-未确认候选必须单独标识，默认不作为事实。
+Unconfirmed candidates must be flagged separately and are not treated as facts by default.
 
-Review 以 `dimension_view` 为主，按 Time、Health、Wealth、Relationship、Purpose 组织同一批证据和行为影响。Goal、Project 或其他上下文可用于过滤和解释，但不得成为固定顶层维度。没有证据的影响输出 `unknown`，不得为展示完整而自动补齐。
+Reviews are organized primarily around `dimension_view`, arranging the same body of evidence and behavior impacts by Time, Health, Wealth, Relationship, and Purpose. Goals, Projects, or other contexts may be used for filtering and interpretation but must not become fixed top-level dimensions. Impacts without evidence are output as `unknown` and must not be auto-filled for display completeness.
 
-影响映射在 Review 中必须保留 `epistemic_type`。AI 推断即使经用户确认，也只能表述为“用户认可的判断”或“基于记录的推测”；除非记录直接陈述或存在批准的确定性计算，否则不得表述为客观事实或因果结论。
+Impact mappings must retain `epistemic_type` in Reviews. Even when confirmed by the user, an AI inference may only be phrased as a "user-endorsed judgment" or "record-based speculation"; unless the record directly states it or an approved deterministic calculation exists, it must not be phrased as an objective fact or causal conclusion.
 
-### 7.2 输出类别
+### 7.2 Output categories
 
 #### A. Personal Fact
 
-格式原则：
+Format principle:
 
-> 你的记录显示……
+> Your records show…
 
-必须有个人 EvidenceReference。
+Must have a personal EvidenceReference.
 
 #### B. Deterministic Result
 
-格式原则：
+Format principle:
 
-> 根据已确认的 X 条记录和规则版本 Y……
+> Based on X confirmed records and rule version Y…
 
-必须有输入与计算版本。
+Must have inputs and calculation version.
 
 #### C. Inference
 
-格式原则：
+Format principle:
 
-> 现有数据提示……可能相关，但不足以证明因果关系。
+> The existing data suggests … may be related, but is insufficient to prove a causal relationship.
 
-必须引用支持事实，并说明不确定性。
+Must cite supporting facts and state the uncertainty.
 
 #### D. Theory Context
 
-格式原则：
+Format principle:
 
-> 某作者/理论提出……这可以作为一种解释视角，但未必完全适用于你的情况。
+> Author/theory X proposes … This can serve as one interpretive perspective, but may not fully apply to your situation.
 
-必须有 TheoryReference 和边界说明。
+Must have a TheoryReference and boundary statement.
 
 #### E. Recommendation
 
-格式原则：
+Format principle:
 
-> 基于上述事实和限制，本周期可以尝试……
+> Based on the above facts and limitations, this period you could try…
 
-必须说明依据，不得冒充事实或理论原话。
+Must state its basis and must not impersonate facts or the original words of a theory.
 
-### 7.3 Review 禁止行为
+### 7.3 Review prohibitions
 
-- 无证据声称用户有某种人格、疾病或动机。
-- 将相关性表述为因果关系。
-- 用名家观点替用户作重大决定。
-- 提供医疗、法律、投资等高风险确定性指令。
-- 隐藏资料不足。
-- 引用无法核验的作者、书名、论文或页码。
-- 一次生成多个同等优先级的“最重要建议”。
+- Claiming without evidence that the user has a certain personality, illness, or motive.
+- Stating correlation as causation.
+- Making major decisions for the user based on famous authorities' views.
+- Providing high-certainty instructions in high-risk domains such as medical, legal, or investment matters.
+- Hiding insufficient data.
+- Citing unverifiable authors, book titles, papers, or page numbers.
+- Generating multiple "most important recommendations" of equal priority at once.
 
-## 8. 理论引用契约
+## 8. Theory Reference Contract
 
-理论引用在 POC-01 只使用少量人工筛选资料，不建设大规模 ingestion。
+Theory references in POC-01 use only a small amount of manually curated material; no large-scale ingestion is built.
 
-每次引用至少包含：
+Each citation must include at least:
 
-1. 作者或学者
-2. 理论名称（如适用）
-3. 资料名称
-4. 章节、页码、DOI 或 URL
-5. 观点是短引用还是 AI 转述
-6. 证据强度或资料类型
-7. 适用边界、争议或不确定性
+1. Author or scholar
+2. Theory name (if applicable)
+3. Material title
+4. Chapter, page number, DOI, or URL
+5. Whether the viewpoint is a short quote or an AI paraphrase
+6. Evidence strength or material type
+7. Applicability boundaries, controversies, or uncertainties
 
-显示顺序：
+Display order:
 
 ```text
-你的记录显示什么
-→ 系统可确定计算什么
-→ 可能如何解释
-→ 哪些理论提供视角
-→ 建议尝试什么
+What your records show
+→ What the system can deterministically calculate
+→ How it might be interpreted
+→ Which theories provide perspectives
+→ What to try as a recommendation
 ```
 
-不得反过来用理论强行解释个人数据。
+Theory must never be used in reverse to force an explanation of personal data.
 
-## 9. 云端 LLM 与隐私要求
+## 9. Cloud LLM and Privacy Requirements
 
-G2 必须决定并记录：
+G2 must decide and record:
 
-- 模型供应商和地区
-- API 数据是否用于训练
-- 请求和响应保留时间
-- 是否支持零保留或企业隐私选项
-- 哪些敏感字段需要移除或替换
-- 错误日志是否包含输入/输出
-- 用户如何撤回 AI 处理同意
-- 更换模型供应商时如何重新评审
+- Model provider and region
+- Whether API data is used for training
+- Request and response retention time
+- Whether zero-retention or enterprise privacy options are supported
+- Which sensitive fields must be removed or replaced
+- Whether error logs include input/output
+- How users withdraw AI-processing consent
+- How re-review happens when switching model providers
 
-POC 默认原则：
+POC default principles:
 
-- 不将其他用户数据放入当前请求。
-- 不发送与任务无关的完整历史。
-- 不在客户端暴露 API 密钥。
-- 不把生产个人数据复制到开发或测试环境。
-- 模拟数据优先用于回归测试。
+- Do not put other users' data into the current request.
+- Do not send full histories unrelated to the task.
+- Do not expose API keys on the client.
+- Do not copy production personal data into development or test environments.
+- Prefer synthetic data for regression testing.
 
-## 10. 多用户隔离契约
+## 10. Multi-User Isolation Contract
 
-朋友私测前必须验证：
+The following must be verified before private testing with friends:
 
-1. 所有核心实体有明确所有者。
-2. 服务端不接受客户端任意指定他人 `user_id`。
-3. 查询默认限定当前认证用户。
-4. Review 上下文构建只包含当前用户记录。
-5. 导出只包含当前用户数据。
-6. 删除只影响当前用户。
-7. 日志、缓存和后台任务携带并校验用户边界。
-8. 理论资料可以共享，但个人引用关系和 Review 仍归属于当前用户。
+1. All core entities have an explicit owner.
+2. The server does not accept a client arbitrarily specifying someone else's `user_id`.
+3. Queries are scoped to the current authenticated user by default.
+4. Review context building includes only the current user's records.
+5. Export includes only the current user's data.
+6. Deletion affects only the current user.
+7. Logs, caches, and background tasks carry and validate user boundaries.
+8. Theory material may be shared, but personal citation relationships and Reviews still belong to the current user.
 
-## 11. Schema 版本与兼容性
+## 11. Schema Version and Compatibility
 
-- Capture 结构保持 `capture-extraction-v0.5`；新增 Review 逻辑契约提议为 `review-guidance-v0.6-proposal`，文档升级不伪造已执行迁移。
-- 字段含义变化必须升级 Schema 版本。
-- Prompt 变化独立升级 Prompt 版本。
-- 模型变化记录模型标识，不等同于 Schema 变化。
-- 旧数据需要保留原版本，不能假装由新版本生成。
-- 是否重跑旧 Capture 必须由明确任务触发，并保留新旧 Run。
+- The Capture structure stays at `capture-extraction-v0.5`; the new Review logical contract is proposed as `review-guidance-v0.6-proposal`; a document upgrade does not fabricate already-executed migrations.
+- Changes in field meaning must bump the Schema version.
+- Prompt changes bump the Prompt version independently.
+- Model changes record the model identifier and are not equivalent to Schema changes.
+- Old data must keep its original version and must not pretend to be generated by a new version.
+- Whether to re-run old Captures must be triggered by an explicit task, keeping both old and new Runs.
 
-## 12. G1/G2 Review 决策项
+## 12. G1/G2 Review Decision Items
 
-2026-09-12，Max 已批准 `G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`。2026-09-13，Max 又批准 `G1-Decision-005-Mixed-Impact-Degrees-v0.1.md`：`mixed` 分别记录正向与负向 1–5 程度、分侧证据与状态，并禁止比例化或净额化；Decision 005 在 mixed 结构上局部取代 Decision 004 的 TBD 条款。以下其余项目继续 Review。
+On 2026-09-12, Max approved `G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`. On 2026-09-13, Max also approved `G1-Decision-005-Mixed-Impact-Degrees-v0.1.md`: `mixed` records positive and negative 1–5 degrees separately, with per-side evidence and status, and prohibits proportioning or netting; Decision 005 partially supersedes the TBD clauses of Decision 004 on the mixed structure. The remaining items below continue under Review.
 
-请 Max 对以下项目标记 `Approve / Revise / Reject`：
+Max: please mark each item below as `Approve / Revise / Reject`:
 
-1. 是否接受“原始 Capture 不允许无痕编辑”；编辑应形成新版本或新记录？
-2. 五大 Life Dimension 是否应固定为受控枚举，而不是用户自由增删？
-3. `item_type` 初始枚举是否覆盖行为与事件场景？
-4. 精力和情绪应使用文字等级、1–5 分，还是由用户自定义？
-5. 是否需要保存云端模型的完整原始响应，还是只保存校验后的结构化结果？
-6. 是否允许用户要求重新分析历史 Capture？
-7. 删除单条 Capture 后，已经生成的历史 Review 应删除、标记证据失效，还是保留快照？
-8. POC 的数据导出应包含哪些内容和格式？
-9. 理论引用是否接受书籍、论文和可信网页三类来源？
-10. 是否要求理论引用必须能打开链接，还是纸质书页码也可接受？
-11. 云端 LLM 可接受的数据保留边界是什么？
-12. 用户是否需要一个“敏感记录不发送给 AI”的选项？
-13. 朋友私测前的多用户隔离条件是否充分？
-14. 还有哪些数据必须在第一版保存，但本文尚未定义？
-15. 已由 Decision 006 关闭：允许零个建议；新指导/反馈字段与生命周期见第 14 节，仍待 Max 评审。
+1. Accept that "raw Captures do not allow silent edits"; edits should form a new version or new record?
+2. Should the Five Life Dimensions be fixed as a controlled enum rather than freely added/removed by users?
+3. Does the initial `item_type` enum cover behavior and event scenarios?
+4. Should energy and mood use verbal levels, a 1–5 scale, or user-defined formats?
+5. Should the cloud model's complete raw response be saved, or only the validated structured results?
+6. Should users be allowed to request re-analysis of historical Captures?
+7. After deleting a single Capture, should already-generated historical Reviews be deleted, marked as invalid evidence, or kept as snapshots?
+8. What content and formats should the POC's data export include?
+9. Should theory references accept three source types: books, papers, and trusted web pages?
+10. Should theory references be required to have a working link, or are print-book page numbers acceptable too?
+11. What data retention boundaries are acceptable for the cloud LLM?
+12. Do users need a "do not send sensitive records to the AI" option?
+13. Are the multi-user isolation conditions sufficient before private testing with friends?
+14. What other data must be saved in the first version but is not yet defined in this document?
+15. Closed by Decision 006: zero recommendations are allowed; the new guidance/feedback fields and lifecycle are in Section 14, still awaiting Max's review.
 
-## 13. 批准条件
+## 13. Approval Conditions
 
-本文中的逻辑字段、AI 类型边界、隐私原则和未决项经 Max Review 后，才可以在后续技术设计中转换为正式 JSON Schema、数据库表和接口契约。本文批准不授权编码。
+Only after the logical fields, AI type boundaries, privacy principles, and open items in this document have been reviewed by Max may they be converted into formal JSON Schemas, database tables, and interface contracts in subsequent technical design. Approval of this document does not authorize coding.
 
 
-## 14. Review 指导、反馈与受限学习契约（In Review 提案）
+## 14. Review Guidance, Feedback, and Restricted Learning Contract (In Review proposal)
 
-本节所有新增字段、枚举、转换和期限供 Max 审阅，**不是已批准实现细节**。依据 [Decision 006](../09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md)；对应 Product FR-COA-001～010 与 Test COA-001～014。P6-02 已在 G1 附条件确认产品原则：仅明确确认的长期模式可跨 Review 使用、一次反馈默认仅当前 Review、用户可查看/纠正/撤销/删除；未确认推断不成为长期依据。字段、检索/保留期限、缓存、备份、物理删除及供应商参数仍移至 G2。Capture、五维和 mixed 契约原样继承，Capture schema 仍为 v0.5；新增逻辑 schema 为 `review-guidance-v0.6-proposal`。
+All new fields, enums, transitions, and deadlines in this section are for Max's review and are **not approved implementation details**. Basis: [Decision 006](../09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md); corresponds to Product FR-COA-001–010 and Test COA-001–014. P6-02 has been conditionally confirmed at G1 as product principles: only explicitly confirmed long-term patterns may be used across Reviews; a single piece of feedback applies only to the current Review by default; users can view/correct/withdraw/delete; unconfirmed inferences never become long-term basis. Fields, retrieval/retention periods, caches, backups, physical deletion, and vendor parameters remain deferred to G2. The Capture, five-dimension, and mixed contracts are inherited unchanged; the Capture schema remains v0.5; the new logical schema is `review-guidance-v0.6-proposal`.
 
-### 14.1 逻辑对象与引用
+### 14.1 Logical objects and references
 
-所有个人对象均有 `id, user_id, created_at, revision_id`；关联对象必须同一认证用户，服务端校验所有权和有效版本。下表是逻辑契约，不要求用户填表。反馈提交、修改、撤回、解释读取等能力仅为假设的逻辑需求；不指定或声称已实现 HTTP endpoints、数据库表或迁移。
+All personal objects have `id, user_id, created_at, revision_id`; associated objects must belong to the same authenticated user, and the server validates ownership and valid versions. The table below is a logical contract and does not require users to fill in a form. Capabilities such as feedback submission, modification, withdrawal, and explanation reads are only hypothetical logical requirements; no HTTP endpoints, database tables, or migrations are specified or claimed to be implemented.
 
-| 对象 | 必要字段 / 条件 | 语义 |
+| Object | Required fields / conditions | Semantics |
 |---|---|---|
-| ReviewGuidance | `review_id, generation_id, status, trigger, selected_guidance, directness, delivered_text, recommendation_ids, evidence_reference_ids, goal_context_version_ids, feedback_revision_ids, pattern_revision_ids, uncertainty, rationale_summary, policy_version, model_id, prompt_version, schema_version, context_manifest, supersedes_id` | 实际展示结果与策略绑定到同一 Review；失败/取消标记而非冒充已展示 |
-| ReviewFeedback | `review_id, target_type, target_id, target_revision_id, feedback_type, agreement, text, scope, status, supersedes_id` | 可指向某条 statement/guidance/recommendation/pattern；先归到所属 Review，再定位对象；事实纠正可链接 Capture 修订，不无痕覆盖原文 |
-| ConfirmedPattern | `content, epistemic_type, evidence_reference_ids, feedback_revision_ids, context_scope, assessment_window, goal_context_version_ids, status, confirmation_reference_id, uncertainty, supersedes_id` | 行为/思维模式假设，不是人格/临床画像；确认依据必须可回到用户明确表达 |
-| ContextManifest | `review_id, owner_id, selected_reference_revisions, purpose, scope, consent_version, retrieval_policy_version, built_at, unavailable_reference_ids` | 保存最少引用/版本与缺失说明；不另外复制整份历史提示词或隐藏思维链 |
+| ReviewGuidance | `review_id, generation_id, status, trigger, selected_guidance, directness, delivered_text, recommendation_ids, evidence_reference_ids, goal_context_version_ids, feedback_revision_ids, pattern_revision_ids, uncertainty, rationale_summary, policy_version, model_id, prompt_version, schema_version, context_manifest, supersedes_id` | The actually displayed result and policy are bound to the same Review; failures/cancellations are marked rather than pretending to have been displayed |
+| ReviewFeedback | `review_id, target_type, target_id, target_revision_id, feedback_type, agreement, text, scope, status, supersedes_id` | Can point to a specific statement/guidance/recommendation/pattern; first attributed to its Review, then located to the object; factual corrections can link to a Capture revision without silently overwriting the original text |
+| ConfirmedPattern | `content, epistemic_type, evidence_reference_ids, feedback_revision_ids, context_scope, assessment_window, goal_context_version_ids, status, confirmation_reference_id, uncertainty, supersedes_id` | A behavior/thinking pattern hypothesis, not a personality/clinical profile; the confirmation basis must trace back to the user's explicit expression |
+| ContextManifest | `review_id, owner_id, selected_reference_revisions, purpose, scope, consent_version, retrieval_policy_version, built_at, unavailable_reference_ids` | Stores minimal references/versions and missing-item notes; does not additionally copy the entire history into prompts or a hidden chain of thought |
 
-`selected_guidance` 提案枚举：`listening | clarification | task_breakdown | direct_accountability | no_intervention`；只记录实际采用的主要方式，若重选则新增 guidance 修订，不覆写旧记录。`direct_accountability` 只有在用户本次 Review 明确请求直接督促时才可被选用；历史反馈、历史偏好或过去接受过直接表达不得单独作为授权。
+`selected_guidance` proposed enum: `listening | clarification | task_breakdown | direct_accountability | no_intervention`; only the primary approach actually adopted is recorded; re-selection adds a new guidance revision instead of overwriting the old record. `direct_accountability` may only be selected when the user explicitly requests direct accountability in this Review; historical feedback, historical preferences, or having accepted direct language in the past must not serve as authorization on their own.
 
-`directness` 提案：`gentle | plain | direct | not_applicable`，不是强度分数或可相加权重；`no_intervention` 使用 `not_applicable` 且建议数组为空。安全流程标记 `status = safety_stopped`，不冒充普通教练模式。`trigger = user_opened_review`；用户可主动重试，后台任务不得新建 Review 指导。
+`directness` proposal: `gentle | plain | direct | not_applicable`, not an intensity score or additive weight; `no_intervention` uses `not_applicable` and an empty recommendation array. Safety flows mark `status = safety_stopped` and do not pretend to be a normal coaching mode. `trigger = user_opened_review`; the user may retry manually; background tasks must not create new Review guidance.
 
-`status` 指导提案：`proposed | displayed | stopped | safety_stopped | failed | superseded | evidence_unavailable`。仅 `displayed` 可描述为已展示；不保存没有实际发生的指导。`uncertainty` 为明确文字/类别（known_limits/insufficient/conflicting），不是伪精确概率；`rationale_summary` 只说明选择依据及限制，不是 raw hidden chain of thought。
+`status` guidance proposal: `proposed | displayed | stopped | safety_stopped | failed | superseded | evidence_unavailable`. Only `displayed` may be described as displayed; guidance that never actually happened is not saved. `uncertainty` is explicit text/category (known_limits/insufficient/conflicting), not a pseudo-precise probability; `rationale_summary` only explains the selection basis and its limits and is not a raw hidden chain of thought.
 
-ReviewGuidance 与 ContextManifest 构成 Review 当时的不可变决策快照：记录实际使用的规则/模型/Prompt 版本与来源修订，而不是只链接会变化的“当前值”。引用指向保留期内可解析的不可变来源修订；仅保留核验所需的最小授权内容，不复制全历史。解释读取使用此已记录快照，不在用户事后询问时重新猜测选择理由。用户查看反馈或模式时，只返回其本人对象的当前有效版本、内容、适用范围、状态和确认依据；`withdrawn | rejected | needs_reconfirmation`、已删除或 `evidence_unavailable` 的对象必须带明示状态，且不得作为有效模式或决策上下文展示。改选、反馈纠正或策略更新新增修订及关联，不回写原指导与当时依据；无当时依据须承认不可核验，不补造。删除/撤回与保留到期仍按 14.4 传播，快照不构成永久保留例外。
+ReviewGuidance and ContextManifest form an immutable decision snapshot at the time of the Review: they record the rule/model/Prompt versions and source revisions actually used, rather than only linking to changeable "current values". References point to immutable source revisions resolvable within the retention period; only the minimal authorized content needed for verification is kept, not the full history. Explanation reads use this recorded snapshot and do not re-guess the selection rationale when the user asks afterwards. When a user views feedback or patterns, only the current valid version, content, scope of applicability, status, and confirmation basis of their own objects are returned; objects in `withdrawn | rejected | needs_reconfirmation`, deleted, or `evidence_unavailable` must carry an explicit status and must not be displayed as valid patterns or decision context. Re-selection, feedback corrections, or policy updates add new revisions and associations; they never rewrite the original guidance and its then-basis; if there was no then-basis, it must be acknowledged as unverifiable rather than fabricated. Deletion/withdrawal and retention expiry still propagate per 14.4; snapshots do not constitute a permanent-retention exception.
 
-### 14.2 反馈分型、立即生效与修订
+### 14.2 Feedback typing, immediate effect, and revision
 
-- `feedback_type`：`factual_correction | interpretation_disagreement | style_feedback | suggestion_acceptance | observed_outcome`。一次消息可拆成多个条目并保留同一来源引用；不明确时标记待澄清，不默默替用户分类成“接受”。
-- `agreement = agree | disagree | null`，自然语言 `text` 可空；但一条可选反馈一旦提交，agreement/text/结构化纠正至少有一种内容。未反馈不创建同意或负反馈。
-- `observed_outcome` 必须带 `outcome_window, evidence_reference_ids, epistemic_type`；用户自报的结果标为自报，不当作客观因果验证。没有结果记录保持 unknown，不推断未行动。
-- `scope` 默认仅当前 Review/目标对象；长期范围必须用户明确确认。风格反馈只调整表达；建议接受不自动更新 Goal，承诺修改须明确用户行为。Review 的 `accepted` 状态仅表示接受该版本，不证明准确或有效。
-- 事实纠正创建 UserRevision；当前解释/风格反馈立即覆盖本次输出的旧依据或表达。停止无需填写原因或先确认长期模式；取消未展示结果，禁止后续输出继续该指导；保存失败则本次仍停止，显式提示未保存，不能宣称跨设备持久化成功。
-- 持久化成功后，同一 Review 重新打开/重试使用有效反馈；停止只在用户主动请求恢复时撤销。不自动把当前停止当作未来所有情境的永久规则。
-- 每次反馈修订保存 `supersedes_id`，有效最新用户修订取代旧值；历史不再进入决策上下文但可依隐私策略查看。并发冲突不以 AI 猜测覆盖，保留冲突并暂停有争议指导，要求用户按需解决。
+- `feedback_type`: `factual_correction | interpretation_disagreement | style_feedback | suggestion_acceptance | observed_outcome`. One message may be split into multiple entries sharing the same source reference; when ambiguous, mark for clarification instead of silently classifying it for the user as "accepted".
+- `agreement = agree | disagree | null`, natural-language `text` may be empty; but once a piece of optional feedback is submitted, at least one of agreement/text/structured correction is present. Not giving feedback does not create agreement or negative feedback.
+- `observed_outcome` must carry `outcome_window, evidence_reference_ids, epistemic_type`; user self-reported outcomes are marked as self-reported and are not treated as objective causal verification. Outcomes with no result record remain unknown; inaction is not inferred.
+- `scope` defaults to the current Review/target object only; long-term scope must be explicitly confirmed by the user. Style feedback only adjusts expression; accepting a recommendation does not automatically update a Goal; committed changes must specify user behavior. The Review's `accepted` status only means accepting that version and does not prove accuracy or effectiveness.
+- Factual corrections create a UserRevision; current interpretation/style feedback immediately supersedes the old basis or wording of this output. Stopping requires no reason and no prior confirmation of a long-term pattern; it cancels undisplayed results and forbids later outputs from continuing that guidance; if saving fails, this session still stops with an explicit notice that it was not saved, and cross-device persistence success must not be claimed.
+- After successful persistence, reopening/retrying the same Review uses the effective feedback; a stop is only lifted when the user actively requests resumption. The current stop is not automatically treated as a permanent rule for all future situations.
+- Each feedback revision stores `supersedes_id`; the latest effective user revision supersedes old values; history no longer enters decision context but can be viewed per the privacy policy. Concurrent conflicts are not overwritten by AI guesses; the conflict is preserved and the disputed guidance paused, with resolution left to the user as needed.
 
-### 14.3 模式的确认与“学习”
+### 14.3 Pattern confirmation and "learning"
 
-1. `proposed`：AI 可在本次 Review 明确提出有依据的情境模式，不能作为长期已知事实被检索。
-2. `confirmed | modified`：用户在自然对话中明确认可模式内容与适用情境（例如“对，只在这种任务里如此”）才可用于后续相关 Review；confirmation_reference_id 指向这段有效反馈。不把泛泛“好”、沉默或接受建议当成模式确认。
-3. `rejected | withdrawn`：立即排除后续检索，不再重复灌输该解释；历史保留服从删除策略，不以可追溯为由永久保存。
-4. `needs_reconfirmation`：目标/情境版本变化、相矛盾证据或期限到期时不得继续当有效长期模式。新判断需要新的明确确认；不自动催促确认。
+1. `proposed`: the AI may explicitly propose an evidence-backed contextual pattern in this Review; it cannot be retrieved as a long-term established fact.
+2. `confirmed | modified`: only when the user explicitly endorses the pattern content and its applicable context in natural conversation (e.g. "Yes, that's right, only in this kind of task") can it be used in subsequent related Reviews; confirmation_reference_id points to that effective feedback. A generic "good", silence, or accepting a recommendation does not count as pattern confirmation.
+3. `rejected | withdrawn`: immediately excluded from subsequent retrieval; the interpretation is not repeatedly pushed; history retention obeys the deletion policy and is not kept forever on traceability grounds.
+4. `needs_reconfirmation`: when goal/context versions change, contradictory evidence appears, or the deadline expires, it must not continue to count as a valid long-term pattern. New judgments need fresh explicit confirmation; confirmation is not automatically prompted.
 
-以上状态为提案。`epistemic_type = ai_inference` 经确认仍保持原类型，并显示“用户认可的推断”；原始自报与推断不得混淆。持久模式不允许跨用户汇总，不包含未经新用途批准的心理健康、人格、疾病等敏感推断。AI 仅受限检索与适应表达，策略更新另行审查。反馈、ConfirmedPattern、ReviewGuidance、接受率、同意率或使用数据不得成为模型训练、微调、在线 RL、跨用户汇总学习或自动策略奖励/权重更新的输入或产物；仅可按已确认的同用户、情境与目的范围用于检索和规则选择。
+The statuses above are proposals. `epistemic_type = ai_inference` keeps its original type even after confirmation and is displayed as "user-endorsed inference"; raw self-reports and inferences must not be conflated. Persistent patterns may not be aggregated across users and must not include sensitive inferences about mental health, personality, illness, etc. that have not been approved for new purposes. The AI only performs restricted retrieval and adaptive expression; policy updates are reviewed separately. Feedback, ConfirmedPattern, ReviewGuidance, acceptance rates, consent rates, or usage data must not become inputs or outputs of model training, fine-tuning, online RL, cross-user aggregated learning, or automatic policy reward/weight updates; they may only be used for retrieval and rule selection within the confirmed same-user, context, and purpose scope.
 
-### 14.3A 无障碍与公平输出边界
+### 14.3A Accessibility and fairness output boundaries
 
-ReviewGuidance、ReviewFeedback 与 ConfirmedPattern 不得以 Capture/反馈长度、记录频率、表达流畅度、量化能力、建议接受率或完成率推断用户的动机、合作度、纪律性、人格特征或适合何种指导。低信息、简短、非量化、间断或辅助性表达均是有效输入形态；系统不得以此收窄 `no_intervention`、只回顾、拒绝、停止、纠正或撤回路径，也不得追加追问作为获得这些路径的条件。此为 G1 输出与交互语义边界；呈现、辅助技术与状态/接口实现留 G2。
+ReviewGuidance, ReviewFeedback, and ConfirmedPattern must not infer the user's motivation, cooperativeness, discipline, personality traits, or what kind of guidance suits them from Capture/feedback length, recording frequency, fluency of expression, ability to quantify, recommendation acceptance rate, or completion rate. Low-information, brief, non-quantified, intermittent, or assistive expressions are all valid input forms; the system must not use them to narrow `no_intervention`, review-only, reject, stop, correct, or withdraw paths, nor add follow-up questions as a condition for obtaining those paths. This is a G1 output and interaction semantic boundary; presentation, assistive technology, and status/interface implementation are left to G2.
 
-### 14.4 最少上下文与保留/删除提案
+### 14.4 Minimal context and retention/deletion proposals
 
-**边界先行**：当前第 9 节供应商/地区/训练用途/保留批准仍未关闭。下列数值只是可讨论的保守上界，不是用户已批准偏好、上线配置或法定承诺；未批准前只用合成数据验证，不接入真实数据。当前 AI 同意不能自动扩展为新敏感推断用途。
+**Boundaries first**: the Section 9 vendor/region/training-use/retention approvals are still open. The values below are only discussable conservative upper bounds, not user-approved preferences, production configuration, or legal commitments; before approval, only synthetic data is used for validation, with no real data connected. Current AI consent cannot be automatically extended to new sensitive inference purposes.
 
-- 检索只在用户主动 Review 发生，限当前用户、所选周期、当前目标版本及必要已确认数据。所选周期之外的个人上下文，提议仅允许最近 30 天、至多 3 条仍有效且情境匹配的已确认模式及至多 5 条对应有效反馈；当次纠正/停止不受该数量上限截断。无匹配不补采其他历史；不足即说明不知道。
-- 模式提议在确认后最多 30 天可用于检索；到期变为 needs_reconfirmation 而非自动永久续期。反馈默认本次范围；只有明确确认跨 Review 适用的反馈才进入上述检索。用户缩小范围/撤回即生效。
-- 原始 Capture 使用已有待审保留政策，不因本次新增“学习”扩大；新增指导、反馈、模式正文及其修订提议最多保存 90 天，或用户更早删除。到期删除正文和派生副本，不无限期保留历史。若 Review 保存更久，已删除指导/反馈仅显示不可用状态，不重建原文；若用户需更长保留，另行评审。
-- 活动上下文缓存仅本次生成使用、最长 1 小时且不跨 Review 复用；终止、撤回或删除更早发生时立即失效。POC 不建立个人向量记忆库；未来索引需另审。
-- 删除 Capture/反馈/模式/Review 或撤回 AI 使用时，首先停止新检索并阻止旧内容继续展示/生成；联动引用、摘要、指导、反馈修订及模式的派生副本。删除应清除可还原个人内容，不能仅断开 ID 而保留 quote/text。Review 的生命周期 status 不变；另设 `evidence_status = available | evidence_unavailable`，相关 Review 的 evidence_status 标记为 evidence_unavailable；只允许用户主动用剩余获许可证据重新生成新版本。
-- 提议活动存储物理清除上界 24 小时；备份最多 30 天过期且期间不可供 AI 或产品读取。恢复备份必须先重放删除标记再开放访问；最小删除标记只含不可还原内容的对象 ID/状态/时间，备份清除后移除。未确认后端/供应商可兑现前不可显示“永久删除完成”。
-- 云端请求不训练模型，供应商保留需有批准的明确上界（POC 提议零保留）；供应商不支持则阻止真实数据处理、另审替代，不默认接受其保留。撤回仅保证停止未来发送，不能谎称已撤回发出的请求；告知供应商清除状态和限制。
-- 导出包含当前用户仍在合法保留期内的指导/反馈/模式、有效与历史版本、证据引用/可访问正文、作用域、策略/模型/Schema 版本及不可用标记，不复活已删除数据。不得含其他用户或 raw hidden chain of thought；理论资料仅按合法授权导出。
+- Retrieval happens only during user-initiated Review, limited to the current user, the selected period, the current goal versions, and necessary confirmed data. For personal context outside the selected period, the proposal allows only the most recent 30 days, at most 3 still-valid context-matching confirmed patterns, and at most 5 corresponding valid feedback entries; corrections/stops in the current session are not truncated by these limits. When there is no match, other history is not fetched; when insufficient, state that it is unknown.
+- Proposed patterns are retrievable for at most 30 days after confirmation; on expiry they become needs_reconfirmation rather than being auto-renewed forever. Feedback is scoped to the current session by default; only feedback explicitly confirmed as cross-Review applies enters the retrieval above. User scope reduction/withdrawal takes effect immediately.
+- Raw Capture uses the existing pending retention policy and is not expanded because of the new "learning" in this version; new guidance, feedback, pattern bodies, and their revisions are proposed to be kept at most 90 days, or until the user deletes them earlier. On expiry, bodies and derived copies are deleted; history is not kept indefinitely. If Reviews are kept longer, deleted guidance/feedback only shows an unavailable status and the original text is not rebuilt; if users need longer retention, a separate review is required.
+- Active context caches are used only for the current generation, at most 1 hour, and never reused across Reviews; they are invalidated immediately when termination, withdrawal, or deletion happens earlier. The POC does not build a personal vector memory store; future indexing needs separate review.
+- When deleting a Capture/feedback/pattern/Review or withdrawing AI use, first stop new retrieval and block old content from continuing to display/generate; cascade to references, summaries, guidance, feedback revisions, and derived copies of patterns. Deletion must clear restorable personal content and must not merely detach IDs while keeping quote/text. The Review's lifecycle status stays unchanged; a separate `evidence_status = available | evidence_unavailable` is introduced, and related Reviews' evidence_status is marked evidence_unavailable; only the user may actively regenerate a new version using remaining permitted evidence.
+- The proposed upper bound for physical purge of active storage is 24 hours; backups expire within at most 30 days and are not readable by AI or the product in the meantime. Restoring a backup must first replay deletion markers before opening access; minimal deletion markers contain only object ID/status/time of non-restorable content and are removed after backup purge. "Deletion complete" must not be displayed until the backend/vendor is confirmed capable of delivering it.
+- Cloud requests do not train models, and vendor retention must have an approved explicit upper bound (the POC proposes zero retention); if the vendor does not support it, real-data processing is blocked and alternatives are reviewed separately — vendor retention is not accepted by default. Withdrawal only guarantees stopping future sends; already-sent requests must not be claimed as withdrawn; the vendor's purge status and limitations must be communicated.
+- Export includes the current user's guidance/feedback/patterns still within lawful retention, valid and historical versions, evidence references/accessible bodies, scope, policy/model/Schema versions, and unavailability markers; it does not resurrect deleted data. It must not contain other users' data or a raw hidden chain of thought; theory material is exported only under lawful authorization.
 
-### 14.5 合成示例（待审逻辑示例，非真实用户数据）
+### 14.5 Synthetic example (pending logical example, not real user data)
 
-此例无目标与长期模式。feedback-demo-1 是用户在 review-demo-1 当次明确“只回顾，不需要建议”的合成反馈，目标类型为 review；反馈已保存且有效；EvidenceReference `evidence-feedback-demo-1` 以 `source_type = feedback` 指向 `feedback-demo-1` 的 `feedback-demo-1-r1` 版本，故写入 references。示例仅展示最小字段投影，未示出通用 ID/时间/修订包装，不冒充完整 JSON Schema。
+This example has no goals and no long-term patterns. feedback-demo-1 is synthetic feedback where the user explicitly said "review only, no recommendations needed" in the review-demo-1 session, with target type review; the feedback is saved and valid; EvidenceReference `evidence-feedback-demo-1` points with `source_type = feedback` to the `feedback-demo-1-r1` version of `feedback-demo-1`, so it is written into references. The example shows only a minimal field projection and does not show the common ID/time/revision wrappers; it does not pretend to be a complete JSON Schema.
 
 ```json
 {
@@ -849,26 +849,26 @@ ReviewGuidance、ReviewFeedback 与 ConfirmedPattern 不得以 Capture/反馈长
   "status": "displayed",
   "selected_guidance": "no_intervention",
   "directness": "not_applicable",
-  "delivered_text": "可以，这次只回顾，不安排改变。",
+  "delivered_text": "Sure, this time we'll just review, with no changes planned.",
   "recommendation_ids": [],
   "evidence_reference_ids": ["evidence-feedback-demo-1"],
   "goal_context_version_ids": [],
   "feedback_revision_ids": ["feedback-demo-1-r1"],
   "pattern_revision_ids": [],
-  "uncertainty": "insufficient: 没有足够历史判断长期模式",
-  "rationale_summary": "用户当次明确无需建议；没有依据建立长期偏好。",
+  "uncertainty": "insufficient: not enough history to judge long-term patterns",
+  "rationale_summary": "The user explicitly needed no recommendations this time; there is no basis for establishing a long-term preference.",
   "policy_version": "adaptive-review-v0.1-proposal",
   "model_id": "synthetic-not-executed",
   "prompt_version": "review-v0.6-proposal"
 }
 ```
 
-本节提议 EvidenceReference 的 `source_type` 增加 `feedback | guidance | pattern | revision`，使用目标 ID 加有效 revision ID；不能把 feedback 当成 Capture 事实。解释按需展示这些来源与局限，理由摘要不披露内部思维链。
+This section proposes adding `feedback | guidance | pattern | revision` to EvidenceReference's `source_type`, using the target ID plus the valid revision ID; feedback must not be treated as a Capture fact. Explanations display these sources and limitations on demand; rationale summaries do not disclose internal chain of thought.
 
-### 14.6 待决与门禁
+### 14.6 Open items and gates
 
-- **D6-01**：P6-02 已在 G1 附条件确认跨 Review 作用域与用户控制原则；14.1～14.3 的字段、状态、有效版本、冲突和模式转换是 G2 设计待决项。
-- **D6-02**：14.4 的检索上界、30/90 天保留提案、24 小时/30 天删除路径及供应商零保留适配性均移至 G2；明确这是新提案，不将默认值冒充授权。
-- **D6-03**：同样四选一：导出和依赖失效方案；若与第 12 节既有删除问题一起决定，须显式记录局部取代，不能默默关闭。
+- **D6-01**: P6-02 has been conditionally confirmed at G1 on cross-Review scope and user-control principles; the fields, statuses, valid versions, conflicts, and pattern transitions in 14.1–14.3 are G2 design open items.
+- **D6-02**: The retrieval upper bounds, 30/90-day retention proposals, 24-hour/30-day deletion paths, and vendor zero-retention suitability in 14.4 are all deferred to G2; it is explicit that these are new proposals and defaults are not passed off as authorizations.
+- **D6-03**: Similarly a four-way choice: export and dependency-invalidation options; if decided together with the existing deletion question in Section 12, the partial supersession must be explicitly recorded, not silently closed.
 
-未决真实数据权限、隐私风险接受人与供应商能力须在 G2 记录（责任归 Max 指定并批准）；此版不执行任何数据收集、迁移或模型训练。
+Open real-data permissions, privacy risk acceptance owners, and vendor capabilities must be recorded at G2 (responsibility assigned and approved by Max); this version performs no data collection, migration, or model training.

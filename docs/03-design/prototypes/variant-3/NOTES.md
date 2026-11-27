@@ -1,12 +1,12 @@
-# 变体 3 · 卡片清单型
+# Variant 3 · Card-List Type
 
-定位：轻量卡片流的 AI Life OS —— 大输入框随手记、AI 结构化为可操作卡片、Review 是一叠可翻阅卡片，每天 5 分钟内用完即走。
+Positioning: an AI Life OS as a lightweight card stream — a large input box for quick capture, AI structuring into actionable cards, and a Review as a stack of flippable cards; usable in under 5 minutes a day and then gone.
 
-## 优点
-1. 记录负担最低：一个大输入框 + 快速标签，无需填表，符合 JTBD-01 低摩擦记录。
-2. 确认像划卡片：每条提取独立卡片（证据片段 + 五维影响 chips），确认/修改/拒绝三键完成，可只保存原文、稍后处理。
-3. Review 轻松有节奏：今日卡 → 周卡 → 理论卡 → 数据不足卡 → ONE BIG CHANGE 卡 → 完成卡，可左右滑动，零建议选项与事实/推测/理论/建议标签齐全。
+## Advantages
+1. Lowest capture burden: one large input box + quick tags, no forms — matches JTBD-01 frictionless capture.
+2. Confirmation feels like swiping cards: each extraction is its own card (evidence snippet + Five Life Dimension impact chips), completed with three buttons — confirm / edit / reject; you can save just the original text and handle it later.
+3. The Review is relaxed and rhythmic: today card → week card → theory card → insufficient-data card → ONE BIG CHANGE card → done card, swipeable left and right, with the zero-suggestion option and the fact / speculation / theory / recommendation labels all in place.
 
-## 取舍 / 风险
-1. 卡片叠隐藏深度：关键上下文（如五维程度含义、证据全貌）藏在翻页与 sheet 中，可能降低可追溯性的感知。
-2. 轻快感与严谨性的张力：手势、圆角、彩色 chips 有锚定与诱导接受风险，需在测试中观察 AI 数值接受偏差与被评判感（NFR-UX-003）。
+## Trade-offs / Risks
+1. The card stack hides depth: key context (such as the meaning of dimension impact degrees, the full picture of the evidence) is tucked into paging and sheets, which may reduce perceived traceability.
+2. Tension between lightness and rigor: gestures, rounded corners, and colored chips carry anchoring and nudge-to-accept risks; testing must watch for AI-value acceptance bias and the feeling of being judged (NFR-UX-003).

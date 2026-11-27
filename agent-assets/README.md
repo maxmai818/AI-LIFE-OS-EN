@@ -1,17 +1,17 @@
 # Agent Assets
 
-这里保存 AI Life OS 多 Agent 团队的可版本化源文件，便于审查、手机查看和在其他机器重建角色。
+This directory stores the versionable source files of the AI Life OS multi-agent team, for review, mobile viewing, and rebuilding roles on other machines.
 
-包含：
+Contains:
 
-- `skills/`：项目专用 Skill 源文件
-- `profiles/`：各 Agent 的 `SOUL.md` 角色规则副本（lifeospm / lifeospsych / lifeosdesign / lifeosreview / lifeosdev / lifeosqa）
-- `WORK-LOG.md`：虚拟团队工作记录（谁、做了什么、产出在哪、怎么验证）
+- `skills/`: project-specific Skill source files
+- `profiles/`: copies of each agent's `SOUL.md` role rules (lifeospm / lifeospsych / lifeosdesign / lifeosreview / lifeosdev / lifeosqa)
+- `WORK-LOG.md`: virtual agent team work log (who, what was done, where the artifacts are, how it was verified)
 
-不包含：
+Does not contain:
 
-- Profile 的 `.env`、`config.yaml`、记忆、会话或认证信息
-- Hermes Kanban 数据库、锁文件和日志
-- 任何真实用户数据
+- Profile `.env`, `config.yaml`, memories, sessions, or authentication information
+- Hermes Kanban database, lock files, and logs
+- Any real user data
 
-运行时 Profile 位于 Hermes 自己的 Profile 目录；此处是可审查的配置源，不是运行状态目录。修改角色规则时，应同步更新运行时文件与本目录，并通过 Pull Request 记录变更。
+Runtime profiles live in Hermes's own profile directory; this is a reviewable configuration source, not a runtime state directory. When role rules change, update both the runtime files and this directory, and record the change through a Pull Request.

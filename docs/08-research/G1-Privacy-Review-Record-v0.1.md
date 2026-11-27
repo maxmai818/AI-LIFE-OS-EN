@@ -1,76 +1,76 @@
-# AI Life OS G1 隐私专项审查记录 v0.1
+# AI Life OS G1 Privacy Specialist Review Record v0.1
 
-- **状态**：Complete（专项 verdict：`PASS_WITH_CONDITIONS`；PRV-001、PRV-002 已由独立复核关闭）
-- **日期**：2026-09-17
-- **阶段**：G1 Requirements / Specialist Review
-- **审查性质**：独立、只读、非法律、合成情境的隐私与数据治理产品边界审查
-- **审查独立性**：非作者审查；未修改、创建、提交或推送仓库文件；未使用真实数据、未调用供应商、未执行产品测试
-- **依据**：[隐私专项审查方案](G1-Privacy-Review-Plan-v0.1.md)
-- **不构成**：法律意见、合规认证、供应商审计、实际删除/隔离证明、真实用户验证、G1 整体批准、G2、编码、合并或发布授权
+- **Status**: Complete (specialist verdict: `PASS_WITH_CONDITIONS`; PRV-001 and PRV-002 closed via independent re-review)
+- **Date**: 2026-09-17
+- **Stage**: G1 Requirements / Specialist Review
+- **Review nature**: independent, read-only, non-legal, synthetic-scenario privacy and data-governance product boundary review
+- **Review independence**: non-author review; no repository files were modified, created, committed, or pushed; no real data used, no vendors called, no product tests executed
+- **Basis**: [Privacy Specialist Review Plan](G1-Privacy-Review-Plan-v0.1.md)
+- **Does not constitute**: legal opinion, compliance certification, vendor audit, proof of actual deletion/isolation, real user validation, overall G1 approval, G2, coding, merge, or release authorization
 
-## 1. 结论
+## 1. Conclusion
 
-**`PASS_WITH_CONDITIONS`。** 首轮审查为 `REVISE`，但 `PRV-001` 和 `PRV-002` 的最小 Product → Data/AI → Test 修订已由非作者独立复核：用户查看路径仅返回本人当前有效版本且失效对象不能复用；训练、微调、在线 RL、跨用户学习与自动权重更新均有直接拒绝 oracle。故两项 G1 文档缺口关闭。认证/授权、真实删除、缓存/备份、跨设备、供应商、训练日志/权重审计、真实数据与真实用户验证仍属 G2/G3 前置，未由此证明已实现。
+**`PASS_WITH_CONDITIONS`.** The first review round was `REVISE`, but the minimal Product → Data/AI → Test revisions for `PRV-001` and `PRV-002` were independently re-reviewed by a non-author: the user view path returns only the user's own current valid versions and invalidated objects cannot be reused; training, fine-tuning, online RL, cross-user learning, and automatic weight updates all have direct rejection oracles. Thus the two G1 document gaps are closed. Authentication/authorization, real deletion, caching/backup, cross-device, vendors, training log/weight auditing, real data, and real user validation remain G2/G3 preconditions and are not proven implemented by this review.
 
-## 2. 清单结果
+## 2. Checklist results
 
-| 项目 | 结论 | 依据与最小缺口 |
+| Item | Conclusion | Basis and minimal gap |
 |---|---|---|
-| 用户控制与透明度 | REVISE | FR-COA-006～008、Data 14.1～14.2、COA-007～011 已覆盖停止、纠正、撤回、删除与保存失败；但“查看既有反馈和已确认模式”的用户路径与失败 oracle 不完整。 |
-| 明确确认与用途限制 | PASS | FR-COA-007、Data 14.2～14.4、COA-008～009：一次“好”、沉默或一次接受不长期化；跨 Review 需明确内容与情境。 |
-| 最少必要上下文与未知 | PASS | Product FR-COA-003/010、Data 14.1/14.4、COA-002/009/014：只限主动 Review、同用户和必要有效内容；不足时不补读全历史。 |
-| 同用户隔离 | PASS | Product FR-COA-008/P6-03、Data 第10节和 14.1/14.3、ISO-001～007、COA-009/011。 |
-| 删除、撤回与派生数据 | PASS（G1 文档语义） | Product FR-COA-004/006/008、Data 14.4、COA-010～011；物理删除、备份、跨设备与供应商兑现仍是 G2/G3 前置。 |
-| 导出与可追溯边界 | PASS | Product FR-DAT-001～004/FR-COA-008、Data 14.4、ISO-004/COA-005/011：当前用户、仍合法保留内容、不得复活删除正文或导出隐藏思维链。 |
-| 模型/供应商用途边界 | REVISE | Product/Data 明确不训练与真实数据前置边界；但 Test 没有直接验证反馈、模式或 Review 不能进入训练、微调、在线 RL、跨用户学习或自动权重更新。 |
-| 诚实性与不确定性 | PASS | Product 14.1、Data 14.4/14.6、Test 第19节/T6：不把提案或静态检查写成技术、供应商、删除或合规已经实现。 |
+| User control and transparency | REVISE | FR-COA-006–008, Data 14.1–14.2, COA-007–011 already cover stop, correct, revoke, delete, and save failure; but the user path and failure oracle for "view existing feedback and confirmed patterns" is incomplete. |
+| Explicit confirmation and purpose limitation | PASS | FR-COA-007, Data 14.2–14.4, COA-008–009: one "good", silence, or one acceptance does not long-termize; cross-Review use requires explicit content and context. |
+| Least necessary context and unknown | PASS | Product FR-COA-003/010, Data 14.1/14.4, COA-002/009/014: limited to active Review, same user, and necessary valid content; no reading full history when evidence is insufficient. |
+| Same-user isolation | PASS | Product FR-COA-008/P6-03, Data Section 10 and 14.1/14.3, ISO-001–007, COA-009/011. |
+| Deletion, revocation, and derived data | PASS (G1 document semantics) | Product FR-COA-004/006/008, Data 14.4, COA-010–011; physical deletion, backup, cross-device, and vendor enforcement remain G2/G3 preconditions. |
+| Export and traceability boundaries | PASS | Product FR-DAT-001–004/FR-COA-008, Data 14.4, ISO-004/COA-005/011: current user, still lawfully retained content; must not resurrect deleted text or export hidden chains of thought. |
+| Model/vendor purpose boundaries | REVISE | Product/Data clearly state no training and real-data preconditions; but Test has no direct verification that feedback, patterns, or Reviews cannot enter training, fine-tuning, online RL, cross-user learning, or automatic weight updates. |
+| Honesty and uncertainty | PASS | Product 14.1, Data 14.4/14.6, Test Section 19/T6: proposals or static checks are not written as technology, vendor, deletion, or compliance already achieved. |
 
-## 3. P6 传播矩阵
+## 3. P6 propagation matrix
 
-| 已确认原则 | Product | Data/AI | Test | 结论 |
+| Confirmed principle | Product | Data/AI | Test | Conclusion |
 |---|---|---|---|---|
-| P6-02：明确确认、有情境范围；一次反馈默认当前 Review；用户可查看/纠正/撤销/删除 | FR-COA-007/008 部分覆盖 | 14.1～14.4 覆盖确认、撤回、到期、删除 | COA-008～011 未直接验证查看与查看后的有效性边界 | REVISE |
-| P6-03：纠正、追溯、不知道、停止/拒绝、不跨用户 | FR-COA-004～006/010 | 第7节、14.1～14.2 | COA-005～007/009/014、ISO-003 | PASS |
-| 受限学习、不授权训练/微调/在线 RL/秘密画像 | FR-COA-007 | 14.3 | 无直接禁止用途 oracle | REVISE |
+| P6-02: explicit confirmation, contextual scope; one feedback item defaults to current Review; user can view/correct/revoke/delete | FR-COA-007/008 partial coverage | 14.1–14.4 cover confirmation, revocation, expiry, deletion | COA-008–011 do not directly verify view and post-view validity boundaries | REVISE |
+| P6-03: correct, trace, don't know, stop/refuse, no cross-user | FR-COA-004–006/010 | Section 7, 14.1–14.2 | COA-005–007/009/014, ISO-003 | PASS |
+| Restricted learning, no training/fine-tuning/online RL/covert profiling authorized | FR-COA-007 | 14.3 | No direct prohibited-use oracle | REVISE |
 
-## 4. 合成情境走查
+## 4. Synthetic scenario walkthrough
 
-| 情境 | 结论 | 文档依据 |
+| Scenario | Conclusion | Document basis |
 |---|---|---|
-| A/B 用户对象混入 | PASS | Data 第10节；COA-009；ISO-001～007 |
-| 一次“好”/沉默/一次接受长期化 | PASS | Data 14.2～14.3；COA-008 |
-| 情境模式的目标变化、撤回或到期 | PASS | Data 14.3；COA-008 |
-| 删除及引用/摘要/缓存/备份恢复 | PASS（G1 语义） | Data 14.4；COA-010 |
-| 撤回 AI 使用且供应商未知 | PASS（边界表达） | Data 14.4；COA-010 |
-| 导出混入已删正文、不可用证据或其他用户 | PASS | Data 14.4；COA-011、ISO-004 |
-| 无记录时尝试读取全历史 | PASS | Product 14.3；Data 14.4；COA-002/009 |
-| 存储失败后用户停止 | PASS | FR-COA-006；Data 14.2；COA-007 |
+| A/B user object mixing | PASS | Data Section 10; COA-009; ISO-001–007 |
+| One "good"/silence/one acceptance long-termizing | PASS | Data 14.2–14.3; COA-008 |
+| Context pattern's goal change, revocation, or expiry | PASS | Data 14.3; COA-008 |
+| Deletion and reference/summary/cache/backup recovery | PASS (G1 semantics) | Data 14.4; COA-010 |
+| Revoking AI use with unknown vendor | PASS (boundary expressed) | Data 14.4; COA-010 |
+| Export mixing in deleted text, unusable evidence, or other users | PASS | Data 14.4; COA-011, ISO-004 |
+| Attempting to read full history with no records | PASS | Product 14.3; Data 14.4; COA-002/009 |
+| User stops after storage failure | PASS | FR-COA-006; Data 14.2; COA-007 |
 
-## 5. 隐私审查发现
+## 5. Privacy review findings
 
-### PRV-001：用户查看权没有完整可验收三联（已关闭）
+### PRV-001: user view right lacks a complete falsifiable triplet (closed)
 
-- **风险**：用户可查看的承诺未被明确定义为仅自己、当前有效版本、内容/范围/状态/确认依据；撤回、删除、过期或证据不可用的对象可能被错误显示为有效或重新使用。
-- **最小修订**：在 Product 明示查看范围；在 Data 定义读取语义与失效状态；在 Test 增加显示/拒绝 oracle 与追溯。
-- **关闭证据**：Product → Data/AI → Test 三联明确且有非作者复核；技术身份鉴权、跨设备和呈现实现留 G2。
+- **Risk**: the promise that users can view was not clearly defined as self-only, current valid versions, content/scope/state/confirmation basis; objects that were revoked, deleted, expired, or whose evidence is unavailable could be wrongly shown as valid or reused.
+- **Minimal revision**: state the view scope explicitly in Product; define read semantics and invalidation states in Data; add display/rejection oracles and traceability in Test.
+- **Closure evidence**: the Product → Data/AI → Test triplet is explicit and re-reviewed by a non-author; technical identity authentication, cross-device, and presentation implementation remain G2.
 
-### PRV-002：不训练/不自动学习缺少直接失败 oracle（已关闭）
+### PRV-002: no-training/no-automatic-learning lacks a direct failure oracle (closed)
 
-- **风险**：现有文字禁区没有直接可失败验收，可能将反馈、确认模式、Review、同意率或使用率偷偷转为训练、微调、在线 RL、跨用户学习或自动策略权重更新。
-- **最小修订**：增加合成用例：尝试上述用途时明确拒绝、不产生训练输入/产物/权重更新，仅允许已确认、有范围的同用户检索与规则选择；与 FR-COA-007 和 Data 14.3 追溯。
-- **关闭证据**：Product → Data/AI → Test 三联明确且有非作者复核；供应商接口、训练日志、权重审计和运行验证留 G2/G3。
+- **Risk**: the existing textual prohibitions have no directly falsifiable acceptance criteria; feedback, confirmed patterns, Reviews, acceptance rates, or usage rates could be silently converted into training, fine-tuning, online RL, cross-user learning, or automatic policy weight updates.
+- **Minimal revision**: add synthetic test cases: explicit rejection on attempts at the above uses, no training inputs/artifacts/weight updates produced, allowing only confirmed, scoped same-user retrieval and rule selection; traceable to FR-COA-007 and Data 14.3.
+- **Closure evidence**: the Product → Data/AI → Test triplet is explicit and re-reviewed by a non-author; vendor interfaces, training logs, weight auditing, and runtime verification remain G2/G3.
 
-## 6. G2/G3 前置（不计为本次 G1 文档失败）
+## 6. G2/G3 preconditions (not counted as G1 document failures in this review)
 
-认证/授权、字段/API/数据库、物理删除、缓存/备份、恢复、跨设备、供应商保留/删除能力、真实数据、真实用户验证、法律适用与风险接受均需 G2/G3 设计和证据。本审查没有验证它们，也不声称它们已实现或失败。
+Authentication/authorization, fields/API/database, physical deletion, caching/backup, recovery, cross-device, vendor retention/deletion capability, real data, real user validation, legal applicability, and risk acceptance all require G2/G3 design and evidence. This review did not verify them and does not claim they are implemented or failed.
 
-## 7. Gate 建议
+## 7. Gate recommendation
 
-在 PRV-001 和 PRV-002 的修订完成并由非作者独立复核后，隐私专项审查以 `PASS_WITH_CONDITIONS` 关闭：修订建立了 G1 文档级查看/有效性与不训练禁区的可失败三联。该结论不表示认证、删除、隔离、供应商或任何技术实现已经验证，也不批准 G1、G2、编码、真实数据、合并或发布。
+After the PRV-001 and PRV-002 revisions are completed and independently re-reviewed by a non-author, the privacy specialist review closes as `PASS_WITH_CONDITIONS`: the revisions establish falsifiable G1 document-level triplets for view/validity and the no-training prohibition. This conclusion does not indicate that authentication, deletion, isolation, vendors, or any technical implementation has been verified, nor does it approve G1, G2, coding, real data, merge, or release.
 
-## 8. PRV-001/002 修订后的独立复核（2026-09-17）
+## 8. Independent re-review after the PRV-001/002 revisions (2026-09-17)
 
-- **方法**：非作者、只读、非法律、合成情境的复核；未改写、创建、提交或推送文件，未使用真实数据、未调用供应商或运行产品。
-- **范围**：核验提交 `6141f5f9b6a6c3fdfd5a0c09cb3b90d07fbe72d3` 的 Product → Data/AI → Test 三联、P6-02/P6-03 一致性、状态边界及六类合成反例。
-- **结果**：`PASS_WITH_CONDITIONS`。`FR-COA-008 → Data 14.1 → COA-016` 关闭 PRV-001；`FR-COA-007 → Data 14.3 → COA-016` 关闭 PRV-002。复核确认同用户查看、失效对象排除、不训练/微调/在线 RL/跨用户学习/自动权重更新拒绝、撤回/过期排除、删除语义和上下文最小化均具 G1 文档级 oracle。
-- **边界**：此为文档语义与可验收性复核，不证明认证、技术隔离、实际删除、缓存/备份、跨设备、供应商行为、训练日志/权重审计或真实用户结果；上述均留 G2/G3。它不构成法律结论或 G1、G2、编码、真实数据、合并、发布批准。
+- **Method**: non-author, read-only, non-legal, synthetic-scenario re-review; no files rewritten, created, committed, or pushed; no real data used, no vendors called, no product run.
+- **Scope**: verified the Product → Data/AI → Test triplet, P6-02/P6-03 consistency, state boundaries, and six classes of synthetic counterexamples in commit `6141f5f9b6a6c3fdfd5a0c09cb3b90d07fbe72d3`.
+- **Result**: `PASS_WITH_CONDITIONS`. `FR-COA-008 → Data 14.1 → COA-016` closes PRV-001; `FR-COA-007 → Data 14.3 → COA-016` closes PRV-002. The re-review confirms same-user viewing, exclusion of invalidated objects, rejection of training/fine-tuning/online RL/cross-user learning/automatic weight updates, revocation/expiry exclusion, deletion semantics, and context minimization all have G1 document-level oracles.
+- **Boundary**: this is a review of document semantics and falsifiability; it proves nothing about authentication, technical isolation, actual deletion, caching/backup, cross-device, vendor behavior, training log/weight auditing, or real user results; all of the above remain G2/G3. It constitutes no legal conclusion and no G1, G2, coding, real data, merge, or release approval.

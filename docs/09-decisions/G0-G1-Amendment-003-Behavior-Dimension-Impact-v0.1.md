@@ -1,37 +1,37 @@
-# G0/G1 Amendment 003：移除临时关注点并采用五维行为影响模型
+# G0/G1 Amendment 003: Remove Temporary Focus Areas and Adopt the Five-Dimension Behavior Impact Model
 
-- **状态**：Approved as Product Direction
-- **决策人**：Max
-- **日期**：2026-09-01
-- **补充批准日期**：2026-09-05
-- **补充批准范围**：五维全量评估、`unknown`/`neutral` 分离、非零和、1–5 程度量表、用户确认后进入长期分析
-- **变更类型**：项目背景与领域模型纠正
-- **影响文档**：项目 README、Amendment 002、G1 Review Pack v0.2
+- **Status**: Approved as Product Direction
+- **Decision maker**: Max
+- **Date**: 2026-09-01
+- **Supplementary approval date**: 2026-09-05
+- **Supplementary approval scope**: full five-dimension assessment, separation of `unknown`/`neutral`, non-zero-sum, 1–5 impact degree scale, entry into long-term analysis only after user confirmation
+- **Change type**: project background and domain model correction
+- **Affected documents**: project README, Amendment 002, G1 Review Pack v0.2
 
-## 1. 背景
+## 1. Background
 
-“健康、主业工作、副业”是立项阶段用于了解 Max 当前情况的临时回答，不是产品固定范围、默认关注点或项目背景。此前将三者写入 README、POC 默认配置和 Current Focus 模型，属于过度固化。
+"Health, primary job, side project" were temporary answers given during project initiation to understand Max's current situation; they are not the product's fixed scope, default focus areas, or project background. Previously writing these three into the README, POC default configuration, and the Current Focus model was over-fixation.
 
-## 2. 正式决定
+## 2. Formal decision
 
-1. 项目固定顶层模型只有五大基本维度：
-   - Time（时间）
-   - Health（健康）
-   - Wealth（财富）
-   - Relationship（关系）
-   - Purpose（目的/意义）
-2. 不在项目背景、README 或 POC 默认配置中写死健康、主业、副业。
-3. 用户的工作、项目、健康事项、家庭活动、学习、消费、休息等都属于行为、事件、目标或上下文，不是新的顶层维度。
-4. 所有有效行为/事件都应评估其对五大维度的影响，并以 1–5 的离散程度表示。
-5. 影响需要包含方向、程度、证据、置信度和用户确认状态。
-6. 没有证据支持的维度应为 `unknown`，不得猜测；`neutral` 仅用于有证据表明没有明显影响的情况。
-7. 一个行为可以同时对多个维度产生不同方向和程度的影响。
-8. POC 不生成单一总 Life Score；五维影响只用于分维度观察、趋势和 Review。
+1. The project's fixed top-level model consists only of the Five Life Dimensions:
+   - Time
+   - Health
+   - Wealth
+   - Relationship
+   - Purpose
+2. Health, primary job, and side project are not hard-coded in the project background, README, or POC default configuration.
+3. The user's work, projects, health matters, family activities, learning, spending, rest, etc. all belong to behaviors, events, goals, or context — they are not new top-level dimensions.
+4. All valid behaviors/events should have their impact on the Five Dimensions assessed, expressed as a discrete degree of 1–5.
+5. Impact must include direction, degree, evidence, confidence, and user confirmation status.
+6. A dimension without supporting evidence should be `unknown` and must not be guessed; `neutral` is only used where evidence shows no significant impact.
+7. A single behavior can simultaneously produce impacts of different directions and degrees across multiple dimensions.
+8. The POC does not generate a single aggregate Life Score; five-dimension impacts are used only for per-dimension observation, trends, and Review.
 
-## 3. 修订后的核心模型
+## 3. Revised core model
 
 ```text
-Life Blueprint（五大维度）
+Life Blueprint (the Five Life Dimensions)
         ↓
 Goal / Project / Context
         ↓
@@ -39,14 +39,14 @@ Behavior / Event / Capture
         ↓
 BehaviorDimensionImpact × 5
         ↓
-按维度的事实、趋势、偏离与 Review
+Per-dimension facts, trends, deviations, and Review
 ```
 
-`CurrentFocus` 可以作为未来可选的用户标签或视图，但不是 POC 必需实体，也不得预置健康、主业、副业。
+`CurrentFocus` may exist in the future as an optional user tag or view, but it is not a required POC entity and must not be pre-populated with health, primary job, or side project.
 
-## 4. 五维影响向量
+## 4. Five-dimension impact vector
 
-每个有效行为/事件逻辑上产生一个五维影响向量：
+Each valid behavior/event logically produces one five-dimension impact vector:
 
 ```text
 Time          direction + degree(1–5) + confidence + evidence
@@ -56,51 +56,51 @@ Relationship  direction + degree(1–5) + confidence + evidence
 Purpose       direction + degree(1–5) + confidence + evidence
 ```
 
-方向可为：`positive | negative | mixed | neutral | unknown`。
+Direction can be: `positive | negative | mixed | neutral | unknown`.
 
-POC-01 采用 1–5 离散程度量表：`1` 表示很弱，`2` 表示较弱，`3` 表示中等，`4` 表示较强，`5` 表示很强。方向与程度分开保存；`unknown` 或 `neutral` 的程度为空。五维程度不要求合计为固定总数，因为一个行为可以同时强烈影响多个维度。比例字段不在 POC-01 使用。
+POC-01 uses a 1–5 discrete degree scale: `1` means very weak, `2` relatively weak, `3` moderate, `4` relatively strong, `5` very strong. Direction and degree are stored separately; degree is empty for `unknown` or `neutral`. The five degrees are not required to sum to a fixed total, because one behavior can strongly impact multiple dimensions at once. Proportion fields are not used in POC-01.
 
-## 5. 示例（仅说明模型，不作为固定业务背景）
+## 5. Example (illustrates the model only; not a fixed business background)
 
-行为：“为了完成一个项目连续熬夜三天，并获得一笔收入。”
+Behavior: "Stayed up late three consecutive nights to finish a project, and received a payment."
 
-可能的候选影响：
+Possible candidate impacts:
 
-- Time：负向或混合——占用休息和自由时间。
-- Health：负向——连续熬夜。
-- Wealth：正向——获得收入。
-- Relationship：未知——没有关系方面证据。
-- Purpose：正向或未知——只有在项目与用户目标/意义有关时才能判断。
+- Time: negative or mixed — consumes rest and free time.
+- Health: negative — consecutive late nights.
+- Wealth: positive — received income.
+- Relationship: unknown — no relationship-related evidence.
+- Purpose: positive or unknown — can only be judged if the project relates to the user's goals/meaning.
 
-以上均为候选，需通过原始证据、用户目标和用户确认确定。
+All of the above are candidates and must be determined through raw evidence, user goals, and user confirmation.
 
-## 6. 对 Amendment 002 的修订
+## 6. Revision to Amendment 002
 
-Amendment 002 中以下内容被本 Amendment 取代：
+The following content in Amendment 002 is superseded by this Amendment:
 
-- “健康、主业、副业是 POC 默认 Current Focus”。
-- “POC 暂不设置比例或程度”的表述。
+- "Health, primary job, and side project are the POC's default Current Focus areas."
+- The wording "the POC sets no proportions or degrees for now".
 
-保留：五大维度固定、行为可跨维度、无证据不得猜测。
+Retained: the Five Dimensions are fixed, behaviors can span dimensions, and no guessing without evidence.
 
-## 7. 对 G1 文档的要求
+## 7. Requirements for G1 documents
 
-- Product & UX Spec 移除三个默认关注点。
-- Data Contract 以 `BehaviorDimensionImpact` 作为行为到五维的核心多对多关系。
-- Capture AI 输出对每个行为提供五维影响候选。
-- Confirm UX 允许用户调整方向和程度。
-- Review 主要按五大维度组织，不再要求按健康/主业/副业组织。
-- Test Spec 分别验证五维影响方向、程度、证据、置信度和未知处理。
-- 所有文档升级新版本并保留旧版历史。
+- The Product & UX Spec removes the three default focus areas.
+- The Data Contract uses `BehaviorDimensionImpact` as the core many-to-many relationship from behavior to the Five Dimensions.
+- Capture AI output provides five-dimension impact candidates for each behavior.
+- The Confirm UX lets users adjust direction and degree.
+- Review is organized primarily by the Five Life Dimensions and no longer requires organization by health/primary job/side project.
+- The Test Spec separately verifies five-dimension impact direction, degree, evidence, confidence, and unknown handling.
+- All documents are upgraded to new versions with the old versions kept in history.
 
-## 8. 补充批准记录（2026-09-05）
+## 8. Supplementary approval record (2026-09-05)
 
-Max 批准以下五项：
+Max approved the following five items:
 
-1. 所有有效行为逻辑上评估五个维度；无证据维度为 `unknown`。
-2. `unknown` 与 `neutral` 分开保存和展示。
-3. 五维影响不是零和分配，程度不要求合计为固定总数。
-4. POC-01 影响程度采用 1–5 离散等级，不允许用户自定义量表。
-5. AI 只产生候选影响；用户确认或修改后才进入长期分析。
+1. All valid behaviors are logically assessed against all five dimensions; dimensions without evidence are `unknown`.
+2. `unknown` and `neutral` are stored and displayed separately.
+3. Five-dimension impacts are not a zero-sum allocation; degrees are not required to sum to a fixed total.
+4. POC-01 impact degrees use 1–5 discrete levels; user-defined scales are not allowed.
+5. AI only produces candidate impacts; they enter long-term analysis only after the user confirms or modifies them.
 
-测试语句中的“主业”“副业”等普通自然语言样例可以保留；它们不构成产品维度、默认关注点或固定业务背景。
+Ordinary natural-language sample phrases in test statements such as "primary job" and "side project" may be retained; they do not constitute product dimensions, default focus areas, or a fixed business background.

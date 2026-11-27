@@ -1,142 +1,142 @@
-# AI Life OS 市场调研报告 v0.1
+# AI Life OS Market Research Report v0.1
 
-**Status:** Draft — 待 Max 批准（批准前不作为 G2/G3 阶段决策依据）
+**Status:** Draft — pending Max's approval (not to be used as a basis for G2/G3 gate decisions before approval)
 **Version:** 0.1 · 2026-11-05
-**Owner:** lifeospm（产品）
-**问题:** AI Life OS（生活记录 + AI 五维评估 + 循证心理学建议）能不能做、赚不赚钱
-**方法:** 三镜头调研（竞品格局 / 市场规模与趋势 / 变现经济学），26 个可查来源，逐句引用见附录 A
-**上一版本:** 无（首版）
+**Owner:** lifeospm (product)
+**Question:** Can AI Life OS (life logging + AI Five Life Dimensions (Time / Health / Wealth / Relationship / Purpose) assessment + evidence-based psychology recommendations) be built, and can it make money?
+**Method:** three-lens research (competitive landscape / market size & trends / monetization economics), 26 verifiable sources, sentence-level citations in Appendix A
+**Previous version:** none (first version)
 
 ---
 
-## 0. 阅读提示
+## 0. Reading notes
 
-- 数字分两种口径：**公司披露/财报**（可信）与**第三方估算**（Appfigures / Sensor Tower / Latka / Business of Apps / 各聚合站，误差可达 2–5 倍，全文标注「估算」）。
-- 分析机构的 TAM（Total Addressable Market，总可服务市场）口径互相矛盾且普遍偏大，全文与「真实消费者支出」（App 商店口径）分开呈现。
+- Figures come in two kinds of basis: **company disclosures/financial reports** (trustworthy) and **third-party estimates** (Appfigures / Sensor Tower / Latka / Business of Apps / aggregators; error can reach 2–5×, tagged "estimate" throughout).
+- Analyst firms' TAM (Total Addressable Market) bases contradict each other and are generally inflated; throughout this report they are presented separately from "real consumer spend" (App-store basis).
 
-## 1. 结论（直答两问）
+## 1. Conclusions (direct answers to both questions)
 
-### 1.1 能不能做？——能，但只能按「小而美」做；不成立的是风险投资式增长生意
+### 1.1 Can it be built? — Yes, but only as "small and beautiful"; what does not hold up is a venture-style growth business
 
-需求侧真实存在：AI 陪伴/教练类 App 2025 上半年收入 $8200 万、全年预计超 $1.2 亿，下载量同比 +88%[1]；心理健康 App 市场 2025 年约 $82 亿、预测 CAGR 17.4%[14]；资本正密集投 AI 生活教练种子轮（如 Tomo $500 万、Bain Capital Ventures 领投）[26]。「生活事件 → 多维影响评估 → 循证心理学建议」的闭环产品没有像样的直接对标玩家（见 §3），私密、单人、本地优先是已被验证的付费卖点（Daylio 靠本地隐私做到约 $10 万/月[3]）。
+Demand-side is real: AI companion/coaching apps earned $82M in H1 2025 with full-year projections over $120M, downloads +88% YoY [1]; the mental health app market is ~$8.2B in 2025 with a projected CAGR of 17.4% [14]; capital is pouring into AI life-coaching seed rounds (e.g. Tomo $5M, led by Bain Capital Ventures) [26]. There is no serious direct comparable for a "life events → multi-dimensional impact assessment → evidence-based psychology recommendations" loop product (see §3); private, single-user, local-first is a payment-validated selling point (Daylio reaches ~$100K/month on local privacy [3]).
 
-### 1.2 赚不赚钱？——B2C 订阅能赚钱养活产品，但赢家通吃、大盘在萎缩
+### 1.2 Can it make money? — B2C subscriptions can make money and sustain the product, but winner-takes-all and the overall market is shrinking
 
-- 品类收入 top 10% 的 App 拿走 89% 的收入[1]；新订阅 App 首年收入 top 5% 为 $8,888，底部 25% 不超过 $19[18]。
-- 头部在缩水：Calm 2025 年约 $2.1 亿、同比 -24%（2022 年峰值 $3.55 亿，估算）[7]；Headspace 2026 年 8 月被 Sword Health 以 $2–3 亿收购（2021 年合并估值 $30 亿）[8]；BetterHelp Q2 2026 收入 $2.126 亿、同比 -12%[25]。
-- indie（独立开发者）路线有真实样板：Heptabase 约 $1.2M ARR、两年做到七位数收入（估算）[11][13]；Daylio 约 $10 万/月[3]；Bearable 约 $9 万/月（估算）[4]。
+- The top 10% of apps by category revenue take 89% of revenue [1]; for new subscription apps, first-year revenue for the top 5% is $8,888, while the bottom 25% do not exceed $19 [18].
+- The leaders are shrinking: Calm at ~$210M in 2025, -24% YoY (2022 peak $355M, estimate) [7]; Headspace was acquired by Sword Health for $200–300M in August 2026 (2021 merger valuation $3B) [8]; BetterHelp Q2 2026 revenue $212.6M, -12% YoY [25].
+- The indie (independent developer) route has real examples: Heptabase ~$1.2M ARR, seven-figure revenue in two years (estimate) [11][13]; Daylio ~$100K/month [3]; Bearable ~$90K/month (estimate) [4].
 
-### 1.3 一句话定位
+### 1.3 One-sentence positioning
 
-**值得做，前提是定位为高价值个人工具（$8–15/月、私密、循证），商业目标定在 $10K–$200K MRR（月经常性收入）的独立产品线，而不是 $100M 大生意。**
+**Worth doing, provided it is positioned as a high-value personal tool ($8–15/month, private, evidence-based), with the business goal set at an independent product line of $10K–$200K MRR (monthly recurring revenue), not a $100M business.**
 
-## 2. 市场：报告口径 vs 真实消费者支出（关键陷阱）
+## 2. Market: analyst-report basis vs real consumer spend (the key trap)
 
-| 口径 | 数字 | 来源 |
+| Basis | Figure | Source |
 |---|---|---|
-| 心理健康 App（分析机构） | $82 亿（2025）→ $409 亿（2035），CAGR 17.4% | GMInsights[14] |
-| AI companion（分析机构） | $368 亿（2025）→ $3180 亿（2033），CAGR 31% | Grand View Research[15] |
-| 习惯追踪 App（分析机构） | $13.2 亿（2026）→ $47 亿（2035），CAGR 15.18% | 360ResearchReports[16] |
-| **AI 陪伴 App 真实消费者支出** | **~$1.2 亿（2025 全年预计）**，337 个活跃 App | Appfigures via TechCrunch[1] |
-| **Wellness App 真实消费者支出** | **$8.48 亿（2025），同比 -6.2%** | Business of Apps[5] |
+| Mental health apps (analyst firm) | $8.2B (2025) → $40.9B (2035), CAGR 17.4% | GMInsights[14] |
+| AI companion (analyst firm) | $36.8B (2025) → $318B (2033), CAGR 31% | Grand View Research[15] |
+| Habit tracking apps (analyst firm) | $1.32B (2026) → $4.7B (2035), CAGR 15.18% | 360ResearchReports[16] |
+| **AI companion apps real consumer spend** | **~$120M (full-year 2025 projected)**, 337 active apps | Appfigures via TechCrunch[1] |
+| **Wellness apps real consumer spend** | **$848M (2025), -6.2% YoY** | Business of Apps[5] |
 
-同一细分市场不同机构口径相差可达一个数量级（习惯追踪类各家从 $2.8 亿到 $130 亿都有）[16]。**结论：别被 TAM 幻觉误导；真实可服务市场是「愿为自我提升订阅付费」的一小撮人，且 wellness 大盘 2025 年是负增长的。**
+Different firms' bases for the same segment can differ by an order of magnitude (habit tracking ranges from $280M to $13B depending on the source) [16]. **Conclusion: don't be misled by the TAM illusion; the real serviceable market is the small group willing to pay a subscription for self-improvement, and the wellness market overall shrank in 2025.**
 
-## 3. 竞品格局与空缺
+## 3. Competitive landscape and gaps
 
-| 品类 | 代表产品（定价） | 现状与信号 |
+| Category | Representative products (pricing) | Status and signals |
 |---|---|---|
-| 量化自我/生活记录 | Exist.io（$6.99/月）[2]、Gyroscope、Welltory | 只做记录 + 数据相关性，无方向评估/心理学干预；都很小（Exist 为该品类先驱仍属小生意）[2] |
-| AI 陪伴/聊天 | Character.AI、Replika | 用时长巨大但变现差、法律风险高。Character.AI 2026-10 申请 Chapter 11 破产，迪士尼 $2000 万接盘 IP[9]；Replika 年收入估算约 $1400 万（2024）[10]。**娱乐陪伴 ≠ 教练** |
-| 习惯/目标/生产力 | Daylio（约 $10 万/月[3]）、Bearable（约 $9 万/月[4]）、Habitica、Sunsama | 单点工具，无跨域整合 |
-| 冥想/心理健康 | Calm（约 $2.1 亿、-24%）[7]、Headspace（约 $1.4 亿，被贱卖）[6][8]、BetterHelp（连续下滑）[25] | 内容库 + 治疗撮合，无个性化生活分析；行业收入 2025 年 -6.2%[5] |
-| AI 生活教练（新兴） | Tomo（$500 万种子）[26] 等 | 2025–2026 密集种子轮，尚无跑通规模化变现者 |
+| Quantified self / life logging | Exist.io ($6.99/month)[2], Gyroscope, Welltory | Recording + data correlation only, no direction assessment/psychological intervention; all small (Exist, the category pioneer, is still a small business)[2] |
+| AI companionship / chat | Character.AI, Replika | Huge engagement time but poor monetization, high legal risk. Character.AI filed for Chapter 11 bankruptcy in 2026-10, with Disney taking over the IP for $20M[9]; Replika annual revenue estimated ~$14M (2024)[10]. **Entertainment companionship ≠ coaching** |
+| Habits/goals/productivity | Daylio (~$100K/month[3]), Bearable (~$90K/month[4]), Habitica, Sunsama | Single-point tools, no cross-domain integration |
+| Meditation/mental health | Calm (~$210M, -24%)[7], Headspace (~$140M, sold cheap)[6][8], BetterHelp (continuous decline)[25] | Content libraries + therapy matching, no personalized life analysis; industry revenue -6.2% in 2025[5] |
+| AI life coaching (emerging) | Tomo ($5M seed)[26] etc. | Dense seed rounds in 2025–2026; no one has proven scaled monetization yet |
 
-**空缺与差异化：**
-1. 「生活事件 → 五维影响评估 → 循证心理学建议」的闭环没有直接对标；
-2. 私密、单人、无社交、本地优先是有付费验证的卖点[3]；
-3. 五维模型（Time/Health/Wealth/Relationship/Purpose）无同构竞品——既是差异化，也意味着市场教育成本自负。
+**Gaps and differentiation:**
+1. The "life events → Five Life Dimensions impact assessment → evidence-based psychology recommendations" loop has no direct comparable;
+2. Private, single-user, no social, local-first is a payment-validated selling point[3];
+3. The Five Life Dimensions model (Time / Health / Wealth / Relationship / Purpose) has no isomorphic competitor — differentiation, but also means bearing the market-education cost yourself.
 
-## 4. 变现经济学（决定赚钱概率的数字）
+## 4. Monetization economics (the numbers that decide profitability)
 
-| 指标 | 基准 | 来源 |
+| Metric | Benchmark | Source |
 |---|---|---|
-| 下载→付费转化 | 12.11%（硬付费墙）vs 2.18%（freemium，35 天口径） | RevenueCat 2025[17] |
-| 留存（品类死穴） | 健康健身类 D30 ≈ 3%[20]；全类中位 D1/D7/D30 = 25%/8%/4%[19] | UXCam / Fitness Refined |
-| LTV/CAC（单位经济） | 目标 ≥3x，CAC 回本 1–3 个月 | 行业基准[21] |
-| AI 推理成本 | 文本为主 $0.09–$2/DAU/月（重度语音最高 ~$18）[22]；功率用户约 $9.4/月（对照 $29 定价占 32%）[23] | Inworld / llmcosts |
-| 定价带 | 同类 $6.99/月（Exist）[2] 至 $20+/月（生产力类）；建议 $8–15/月或 $60–100/年 | — |
+| Download→paid conversion | 12.11% (hard paywall) vs 2.18% (freemium, 35-day basis) | RevenueCat 2025[17] |
+| Retention (the category's killer) | Health & fitness D30 ≈ 3%[20]; all-category median D1/D7/D30 = 25%/8%/4%[19] | UXCam / Fitness Refined |
+| LTV/CAC (unit economics) | Target ≥3x, CAC payback 1–3 months | Industry benchmarks[21] |
+| AI inference cost | Text-heavy $0.09–$2/DAU/month (heavy voice up to ~$18)[22]; power users ~$9.4/month (32% of a $29 price point)[23] | Inworld / llmcosts |
+| Pricing band | Peers $6.99/month (Exist)[2] to $20+/month (productivity); recommend $8–15/month or $60–100/year | — |
 
-- **留存必须按「周/月 Review 仪式」设计**（与 POC 的 Review 环节天然契合），每日打卡式设计基本死于 30 天[19][20]。
-- $10–15/月定价下 AI 成本毛利健康，推理成本不是风险点[22][23]。
-- 硬付费墙转化高但要求极强的首因价值；freemium 转化 2.18% 意味着免费层必须严格限流[17]。
+- **Retention must be designed around a "weekly/monthly Review ritual"** (naturally aligned with the POC's Review step); daily check-in designs basically die by day 30 [19][20].
+- At $10–15/month pricing, AI cost gross margins are healthy; inference cost is not a risk point [22][23].
+- Hard paywalls convert higher but demand extremely strong upfront value; freemium's 2.18% conversion means the free tier must be strictly rate-limited [17].
 
-## 5. 监管与隐私
+## 5. Regulation and privacy
 
-- **FDA 2026 年 1 月更新 General Wellness 指南**：不做疾病诊断/治疗声称的低风险产品不按医疗器械监管[24]。产品必须守住「wellness / 自我反思」边界，绝不做抑郁焦虑诊断——这条决定合规成本一个数量级的差异。
-- 个人生活数据 + 云 LLM 属敏感数据处理（个保法/GDPR）；隐私架构（本地优先、可导出、可删除）应直接做成卖点。
-- Character.AI 的青少年安全诉讼是 AI 陪伴类责任边界的前车之鉴[9]；心理建议需保留人工确认与安全兜底（与既有「AI 候选须经用户确认」不变量一致）。
+- **FDA updated its General Wellness guidance in January 2026**: low-risk products making no disease diagnosis/treatment claims are not regulated as medical devices [24]. The product must hold the "wellness / self-reflection" line and never claim depression/anxiety diagnosis — this line makes an order-of-magnitude difference in compliance cost.
+- Personal life data + cloud LLMs is sensitive data processing (PIPL / GDPR); the privacy architecture (local-first, exportable, deletable) should be made a selling point directly.
+- Character.AI's teen-safety lawsuit is a cautionary tale for AI companionship liability boundaries [9]; psychological advice needs human confirmation and a safety backstop kept in place (consistent with the existing invariant "AI candidates must be confirmed by the user").
 
-## 6. 风险清单
+## 6. Risk list
 
-| # | 风险 | 依据 | 缓解方向 |
+| # | Risk | Basis | Mitigation direction |
 |---|---|---|---|
-| R1 | 留存：D30 约 3% 是品类级死因 | [19][20] | Review 仪式化留存；月度回顾推送 |
-| R2 | 赢家通吃：top 10% = 89% 收入 | [1] | 不买量、口碑 niche；避开大众健身赛道 |
-| R3 | ChatGPT 免费替代 | 产品同质化常识 | 五维结构化数据 + 长期记忆 + 循证引用是护城河 |
-| R4 | 心理建议责任边界 | Character.AI 诉讼[9] | 无诊断声称、用户确认门、危机资源兜底 |
-| R5 | 中国 C 端订阅付费意愿弱于欧美 | 经验判断，未找到可靠定量数据 [unverified] | 双语并行、定价分层；立项后补调研 |
+| R1 | Retention: D30 ~3% is a category-level cause of death | [19][20] | Ritualized Review retention; monthly retrospective push |
+| R2 | Winner-takes-all: top 10% = 89% of revenue | [1] | No paid acquisition, word-of-mouth niche; avoid the mass fitness lane |
+| R3 | ChatGPT as a free substitute | Common-sense product homogenization | Five Life Dimensions structured data + long-term memory + evidence-based citations are the moat |
+| R4 | Liability boundary for psychological advice | Character.AI lawsuit[9] | No diagnostic claims, user-confirmation gate, crisis resources as backstop |
+| R5 | Chinese consumer subscription willingness to pay is weaker than in Europe/US | Judgment from experience; no reliable quantitative data found [unverified] | Bilingual in parallel, tiered pricing; supplement research after kickoff |
 
-## 7. 建议与验证里程碑
+## 7. Recommendations and validation milestones
 
-1. **形态**：premium 独立产品，走 Heptabase 路线[11][13]（小团队、口碑、不烧钱买量；CAC 回本 1–3 个月基准下投放型增长不可行[21]）。
-2. **验证里程碑（可核验）**：上线 12 个月内达成 **$3–5K MRR 且 D30 留存 >10%**（品类中位的 2–3 倍[19][20]）即算方向验证成功；达不到则触发定位复盘。
-3. **产品侧立即可执行的结论**：留存设计以 Review 为核心（本报告 §4）；隐私（本地优先/可删除）升格为一级卖点；全程无诊断声称（§5）。
+1. **Form**: premium standalone product, the Heptabase route[11][13] (small team, word of mouth, no burning cash on paid acquisition; ad-driven growth is unworkable under the 1–3 month CAC payback benchmark[21]).
+2. **Validation milestone (verifiable)**: within 12 months of launch, reaching **$3–5K MRR with D30 retention >10%** (2–3× the category median [19][20]) counts as direction validated; failing to hit it triggers a positioning retrospective.
+3. **Immediately actionable product-side conclusions**: retention design centered on Review (this report §4); privacy (local-first/deletable) elevated to a tier-1 selling point; no diagnostic claims anywhere (§5).
 
-## 8. 待 Max 决策 / 未决项
+## 8. Pending Max decisions / open items
 
-| # | 决策点 | 选项 | 影响 |
+| # | Decision point | Options | Impact |
 |---|---|---|---|
-| DQ-01 | 商业目标口径 | A. indie 线（$10K–$200K MRR）/ B. 风投线（需换打法） | 决定是否做增长预算与团队编制 |
-| DQ-02 | 中国 vs 全球市场优先级 | 双语并行 / 先英文 / 先中文 | R5 缺定量数据，需立项后补付费意愿调研 |
-| DQ-03 | 定价带 | $8–15/月 或 $60–100/年（本报告建议） | 决定付费墙策略（硬墙 vs freemium） |
+| DQ-01 | Business goal basis | A. indie line ($10K–$200K MRR) / B. venture line (needs a different playbook) | Determines whether to budget growth spend and team headcount |
+| DQ-02 | China vs global market priority | Bilingual in parallel / English first / Chinese first | R5 lacks quantitative data; willingness-to-pay research needed after kickoff |
+| DQ-03 | Pricing band | $8–15/month or $60–100/year (this report's recommendation) | Determines paywall strategy (hard wall vs freemium) |
 
 ---
 
-## 附录 A：来源清单
+## Appendix A: Source list
 
-[1] https://techcrunch.com/2025/08/12/ai-companion-apps-on-track-to-pull-in-120m-in-2025 — TechCrunch: AI companion apps $120M 2025（Appfigures 数据）
-[2] https://exist.io — Exist.io 官网定价
-[3] https://tasu.ai/library/daylio — Daylio teardown $100K/mo（估算）
-[4] https://peekly.app/apps/5786f4a2-3f33-43e0-ae3f-114a5f240c4d — Bearable 收入估算（Peekly）
-[5] https://businessofapps.com/data/wellness-app-market — Wellness apps 2025 $848M（-6.2%）
-[6] https://www.businessofapps.com/data/headspace-statistics — Headspace 统计（估算）
-[7] https://whobrands.com/companies/calm — Calm 收入估算
-[8] https://appwinners.eu/guides/calm-vs-headspace-business-case-study — Calm vs Headspace（Sword Health 收购）
-[9] https://cnbc.com/amp/2026/10/13/character-ai-chapter-11-disney-bid.html — Character.AI 破产
-[10] https://whatsthebigdata.com/estimated-revenue-of-ai-girlfriend-apps-statistics — AI 陪伴应用收入估算
-[11] https://getlatka.com/companies/heptabase.com — Heptabase 收入估算（Latka）
+[1] https://techcrunch.com/2025/08/12/ai-companion-apps-on-track-to-pull-in-120m-in-2025 — TechCrunch: AI companion apps $120M 2025 (Appfigures data)
+[2] https://exist.io — Exist.io official pricing
+[3] https://tasu.ai/library/daylio — Daylio teardown $100K/mo (estimate)
+[4] https://peekly.app/apps/5786f4a2-3f33-43e0-ae3f-114a5f240c4d — Bearable revenue estimate (Peekly)
+[5] https://businessofapps.com/data/wellness-app-market — Wellness apps 2025 $848M (-6.2%)
+[6] https://www.businessofapps.com/data/headspace-statistics — Headspace statistics (estimate)
+[7] https://whobrands.com/companies/calm — Calm revenue estimate
+[8] https://appwinners.eu/guides/calm-vs-headspace-business-case-study — Calm vs Headspace (Sword Health acquisition)
+[9] https://cnbc.com/amp/2026/10/13/character-ai-chapter-11-disney-bid.html — Character.AI bankruptcy
+[10] https://whatsthebigdata.com/estimated-revenue-of-ai-girlfriend-apps-statistics — AI companion app revenue estimate
+[11] https://getlatka.com/companies/heptabase.com — Heptabase revenue estimate (Latka)
 [13] https://www.indiehackers.com/post/tech/hitting-a-7-figure-arr-within-two-years-by-focusing-on-quality-and-letting-the-product-speak-for-itself-bHvRpjj7xxXs71R3TR4I — Heptabase 7-figure ARR
-[14] https://gminsights.com/industry-analysis/mental-health-apps-market — 心理健康 App 市场规模
-[15] https://www.grandviewresearch.com/industry-analysis/ai-companion-market-report — AI companion 市场规模
-[16] https://360researchreports.com/market-reports/habit-tracking-app-market-211454 — 习惯追踪 App 市场规模
-[17] https://www.rocketshiphq.com/revenuecat-state-of-subscription-apps-2025-summary — RevenueCat 2025 基准摘要
+[14] https://gminsights.com/industry-analysis/mental-health-apps-market — Mental health app market size
+[15] https://www.grandviewresearch.com/industry-analysis/ai-companion-market-report — AI companion market size
+[16] https://360researchreports.com/market-reports/habit-tracking-app-market-211454 — Habit tracking app market size
+[17] https://www.rocketshiphq.com/revenuecat-state-of-subscription-apps-2025-summary — RevenueCat 2025 benchmark summary
 [18] https://revenuecat.com/pdf/state-of-subscription-apps-2025.pdf — RevenueCat State of Subscription Apps 2025
-[19] https://uxcam.com/blog/mobile-app-retention-benchmarks — App 留存基准
-[20] https://barchart.com/story/news/3807355/fitness-refined-releases-2026-report-on-why-fitness-app-users-quit — Fitness App 留存 3% D30
-[21] https://gtmsauce.com/episodes/2024-12-23-using-subscription-app-benchmarks-to-make-better-growth — LTV/CAC 基准
-[22] https://inworld.ai/resources/unit-economics-of-consumer-ai-apps — 消费 AI 应用单位经济
-[23] https://llmcosts.dev/tools/llm-cost-per-customer-calculator — LLM 每客户成本
+[19] https://uxcam.com/blog/mobile-app-retention-benchmarks — App retention benchmarks
+[20] https://barchart.com/story/news/3807355/fitness-refined-releases-2026-report-on-why-fitness-app-users-quit — Fitness app retention 3% D30
+[21] https://gtmsauce.com/episodes/2024-12-23-using-subscription-app-benchmarks-to-make-better-growth — LTV/CAC benchmarks
+[22] https://inworld.ai/resources/unit-economics-of-consumer-ai-apps — Consumer AI app unit economics
+[23] https://llmcosts.dev/tools/llm-cost-per-customer-calculator — LLM cost per customer
 [24] https://www.fda.gov/regulatory-information/search-fda-guidance-documents/general-wellness-policy-low-risk-devices?source=govdelivery&type=click — FDA General Wellness 2026
 [25] https://s21.q4cdn.com/672268105/files/doc_financials/2026/q2/TDOC-2Q-2026-Earnings-Press-Release.pdf — Teladoc/BetterHelp Q2 2026
-[26] https://citybiz.co/article/866836/tomo-secures-5m-to-advance-ai-based-personal-coaching — Tomo $5M 融资
+[26] https://citybiz.co/article/866836/tomo-secures-5m-to-advance-ai-based-personal-coaching — Tomo $5M funding
 
-（编号沿用调研台账；[12] 为重复条目未引用。）
+(Numbering follows the research ledger; [12] is a duplicate entry and is not cited.)
 
-## 附录 B：数据口径与可信度说明
+## Appendix B: data basis and credibility notes
 
-- **公司披露/财报**：[25]（Teladoc 财报 PDF）、[2][24]（官网/官方文件）。
-- **第三方估算（误差 2–5 倍）**：[3][4][5][6][7][10][11][13][20] 及各聚合站；同指标跨源分歧时已并列呈现（如 Calm：whobrands 估算 $2.1 亿(2025) 与 Latka 估算 $5.96 亿(2024) 相差数倍，本文采用与 Business of Apps 口径一致的 $2.1 亿）。
-- **行业基准报告**：[14][15][16][17][18][19][21][22][23]；引用时注明机构与年份。
-- **未找到可靠定量数据**：中国 C 端订阅付费意愿（R5，标注 [unverified]）；Gyroscope / Welltory 营收。
-- 本报告不构成投资建议；「赚不赚钱」判断基于 2025–2026 公开数据，市场变化快，建议 G3 阶段用真实用户数据替换全部估算口径。
+- **Company disclosures/financial reports**: [25] (Teladoc earnings PDF), [2][24] (official websites/official documents).
+- **Third-party estimates (2–5× error)**: [3][4][5][6][7][10][11][13][20] and various aggregators; where sources disagree on the same metric, both are shown side by side (e.g. Calm: whobrands estimates $210M (2025) vs Latka estimates $596M (2024) — several times apart; this report adopts the $210M consistent with Business of Apps' basis).
+- **Industry benchmark reports**: [14][15][16][17][18][19][21][22][23]; institution and year noted at citation.
+- **No reliable quantitative data found**: Chinese consumer subscription willingness to pay (R5, tagged [unverified]); Gyroscope / Welltory revenue.
+- This report is not investment advice; the "can it make money" judgment is based on 2025–2026 public data; the market changes fast, and it is recommended that all estimate bases be replaced with real user data at the G3 stage.

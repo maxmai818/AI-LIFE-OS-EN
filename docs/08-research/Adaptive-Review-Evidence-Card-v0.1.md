@@ -1,30 +1,30 @@
 # Adaptive Review Evidence Card v0.1
 
-- **状态**：In Review；作者建议 EXPERIMENT_ONLY，非独立批准
-- **作者**：Hermes（行为科学产品分析，不是持证临床身份）
-- **负责人 / 产品批准人**：Max
-- **Gate**：G1；编码未授权；独立心理安全评审 Pending
-- **日期 / 来源重取日期**：2026-09-15
-- **对应**：[Decision 006](../09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md)、[Product v0.6 第 14 节](../02-requirements/POC-01-Product-UX-Spec-v0.6.md)、[Data v0.6 第 14 节](../04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md)、[Test v0.6 第 19 节](../06-testing/POC-01-Test-Acceptance-Spec-v0.6.md)
+- **Status**: In Review; the author recommends EXPERIMENT_ONLY, not an independent approval
+- **Author**: Hermes (behavioral-science product analysis, not a licensed clinical role)
+- **Owner / Product approver**: Max
+- **Gate**: G1; coding not authorized; independent psychological safety review Pending
+- **Date / source re-fetch date**: 2026-09-15
+- **Corresponds to**: [Decision 006](../09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md), [Product v0.6 Section 14](../02-requirements/POC-01-Product-UX-Spec-v0.6.md), [Data v0.6 Section 14](../04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md), [Test v0.6 Section 19](../06-testing/POC-01-Test-Acceptance-Spec-v0.6.md)
 
-## 1. 建议与证据边界
+## 1. Proposal and evidence boundaries
 
-只在用户主动打开 Review 时试验轻量、可拒绝的情境指导，保留不干预路径。优先检验自主性、纠错成本和负担，不能把信任、打开次数或接受率视为有效性。指导算法、字段和保留期限全部是待审产品设计，不是以下论文验证的参数。
+Only when the user actively opens the Review will we trial lightweight, dismissible contextual guidance, preserving a no-intervention path. Prioritize testing autonomy, correction cost, and burden; trust, open counts, or acceptance rates must not be treated as effectiveness. The guidance algorithm, fields, and retention periods are all product design pending review — not parameters validated by the papers below.
 
-Sheeran 等的 SDT 健康行为 RCT 元分析报告显著但较小的健康行为改变效应；这是健康干预证据，不是 AI 教练、自适应策略或 Max 个人有效性的直接证明。[1]
+Sheeran et al.'s SDT meta-analysis of health-behavior RCTs reports a significant but small effect on health behavior change; this is health-intervention evidence, not direct proof of effectiveness for AI coaching, adaptive strategies, or Max personally. [1]
 
-JITAI 文献将随个人内部与情境状态变化调整支持类型/数量/时间作为设计概念；本产品仅借鉴情境匹配，不因此获得传感器、主动触达或后台监控授权。[2]
+The JITAI literature treats adapting the type/amount/timing of support to within-person and contextual state as a design concept; this product borrows only contextual matching, and thereby obtains no authorization for sensors, proactive outreach, or background monitoring. [2]
 
-COM-B 框架把能力、机会和动机并列为行为条件；据此提出“先核查限制、不预设懒惰”的设计假设，但框架本身没有验证本产品的指导选择器。[3]
+The COM-B framework places capability, opportunity, and motivation side by side as behavior conditions; from this we propose the design hypothesis "check constraints first, do not presume laziness", but the framework itself does not validate this product's guidance selector. [3]
 
-### 来源强度与迁移距离
+### Source strength and transfer distance
 
-| 来源 / 机制 | 源证据级别 | 人群/场景与结果 | 限制与产品迁移 |
+| Source / mechanism | Source level of evidence | Population/scenario and outcome | Limitations and product transfer |
 |---|---|---|---|
-| SDT / 自主支持 | A（元分析） | 健康行为 RCT；总体效应小 [1] | 非本产品用户；本次读到仓库摘要而非完整元分析，不能推出 AI 个体收益；迁移远，交互仍 E |
-| JITAI / 情境匹配 | C（理论与设计框架） | 移动健康的动态支持概念 [2] | 非 AI Life OS 随机对照结果；不借此声称主动介入有效；本次支持方式策略仍 E |
-| COM-B / 障碍澄清、任务拆解 | C（框架） | 行为干预设计中的能力/机会/动机模型 [3] | 不是个人诊断工具；日记稀疏，推断可错；对 Review 的应用仍 E |
-| 自适应指导改善信任/触点/真实结果 | E（未验证产品假设） | 尚无本产品结果 | 同意可能是礼貌/迎合，接受不是实施，相关不是因果；可失败且应允许停止 |
+| SDT / autonomy support | A (meta-analysis) | Health-behavior RCTs; overall effect small [1] | Not this product's users; this reading covered the repository abstract rather than the full meta-analysis, so no individual AI benefit can be inferred; transfer far, interaction still E |
+| JITAI / contextual matching | C (theory and design framework) | Dynamic support concept in mobile health [2] | Not randomized controlled results from AI Life OS; do not use this to claim proactive intervention is effective; this support-mode strategy still E |
+| COM-B / constraint clarification, task decomposition | C (framework) | Capability/opportunity/motivation model in behavior intervention design [3] | Not an individual diagnostic tool; diaries are sparse, inferences can be wrong; application to Review still E |
+| Adaptive guidance improving trust/touchpoints/real outcomes | E (unvalidated product hypothesis) | No results from this product yet | Agreement may be politeness/acquiescence; acceptance is not implementation; correlation is not causation; may fail and must allow stopping |
 
 ## 2. Evidence Card
 
@@ -40,101 +40,101 @@ product:
   business_goal: evaluate user benefit, not compliance or dependency
   release_scope: documentation proposal; no implementation or release
 problem:
-  user_report: 用户希望轻量情境适应，不要必选人格；允许零建议和自然反馈
-  observations: 只有需求讨论摘要和仓库文档；无真实产品行为或效力数据
-  inferences: 情境匹配与可纠错解释可能减少不合时宜建议；尚未验证
-  unknowns: 哪种支持对何种情境有效、负担、误解率、长期影响、隐私可兑现性
+  user_report: users want lightweight contextual adaptation, no mandatory personality; allow zero suggestions and natural feedback
+  observations: only requirement discussion summaries and repository docs; no real product behavior or efficacy data
+  inferences: contextual matching and correctable explanations may reduce ill-timed suggestions; not yet validated
+  unknowns: which support works for which context, burden, misinterpretation rate, long-term impact, privacy deliverability
 feature:
-  proposed_solution: 用户打开 Review 后按受限证据选择支持方式；直接督促仅在用户本次明确请求时可选；保存实际指导及可选反馈
+  proposed_solution: after the user opens Review, select support mode by restricted evidence; direct pushing only selectable when the user explicitly requests it this session; save actual guidance and optional feedback
   trigger: user-opened Review only
   data_collected: proposed guidance, typed optional feedback, confirmed scoped patterns and provenance
   prohibited_designs: proactive surveillance, mandatory ratings, shame, failure-count escalation, online RL
-  expected_outcome: 自主理解或自选下一步，允许不改变
+  expected_outcome: autonomous understanding or a self-chosen next step; no change allowed
 
 target_behavior:
-  actor: 当前用户
-  context: 主动打开一个周期的 Review
-  action: 自主选择仅回顾或一个下一步，可按需理解依据或纠正
-  frequency: 每次主动 Review；不设必达次数、不主动催促
-  completion_definition: 自主结束或保留一个用户选择的步骤；不是必须行动或同意 AI
+  actor: the current user
+  context: actively opening a cycle's Review
+  action: autonomously choose review-only or one next step; understand the basis or correct it on demand
+  frequency: every active Review; no mandatory count, no proactive prompting
+  completion_definition: ending autonomously or keeping one user-chosen step; not a must-act or agreement with the AI
 behavior_diagnosis:
-  capability: 任务是否过大、理解或精力限制未知；只按明确自报和记录提出假设
-  opportunity: 时间、照护、资源等限制待核验；不归因为动机不足
-  motivation: 当次改变意愿由用户表达，不凭缺失日志推断
+  capability: whether the task is too large, comprehension or energy constraints unknown; hypotheses only from explicit self-reports and records
+  opportunity: time, caregiving, resource constraints pending verification; not attributed to insufficient motivation
+  motivation: expressed by the user for that session; not inferred from missing logs
   confidence: low until context and user confirmation; no clinical diagnosis
 candidate_mechanisms:
-  - mechanism: 倾听、澄清、零建议保留自主
+  - mechanism: listening, clarification, zero-suggestion preservation of autonomy
     theory: SDT autonomy-support translation
     evidence_level: source A; product application E
-    expected_effect: 可能减少评判感和不必要负担
-    boundary_conditions: 用户不想改变或意图含糊时；不强行以自主之名追问
+    expected_effect: may reduce feeling judged and unnecessary burden
+    boundary_conditions: when the user does not want change or intent is ambiguous; do not press in the name of autonomy
     transfer_distance: far; health trials are not AI coaching validation
     sources: source-1
-  - mechanism: 识别能力/机会限制后提议一个可逆步骤
+  - mechanism: after identifying capability/opportunity constraints, propose one reversible step
     theory: COM-B diagnostic framing
     evidence_level: source C; product application E
-    expected_effect: 可能改善步骤与实际约束的匹配
-    boundary_conditions: 用户明确想行动且证据支持；不得把限制解释为懒惰
+    expected_effect: may improve matching of steps to actual constraints
+    boundary_conditions: only when the user clearly wants action and evidence supports it; constraints must not be read as laziness
     transfer_distance: far; framework is not an individual selector trial
     sources: source-3
-  - mechanism: 版本化情境策略选择支持方式与直接程度
+  - mechanism: versioned contextual strategy selects support mode and directness
     theory: JITAI contextual adaptation design reference
     evidence_level: source C; product application E
-    expected_effect: 可能减少不合时宜表达
-    boundary_conditions: 仅用户主动 Review 且本次明确请求直接督促；历史反馈/偏好不得单独授权；不使用传感器或主动提醒
+    expected_effect: may reduce ill-timed expression
+    boundary_conditions: only user-opened Review and an explicit request this session for direct pushing; historical feedback/preferences alone never authorize; no sensors or proactive reminders
     transfer_distance: far; timing adaptation narrowed to a user-opened session
     sources: source-2
 recommended_interaction:
-  trigger: 用户打开 Review
-  user_choice: 零或一个改变；反馈可跳过；无需先选人格
-  ai_response: 五维证据先行；按证据选择倾听/澄清/拆解/不干预，只有用户本次明确请求时才可直接督促
-  feedback: 区分事实纠正、解释分歧、风格、接受、实际结果；可修订
-  adjustment: 当前纠正立即生效；长期模式另需明确范围确认
-  exit_option: 随时停止；不追问、不后台跟进
+  trigger: user opens Review
+  user_choice: zero or one change; feedback skippable; no personality pre-selection required
+  ai_response: Five Life Dimensions (Time / Health / Wealth / Relationship / Purpose) evidence first; select listen/clarify/decompose/no-intervene by evidence; direct pushing only when explicitly requested this session
+  feedback: distinguish factual correction, explanation disagreement, style, acceptance, actual outcome; revisable
+  adjustment: current corrections take effect immediately; longer-term patterns need separate explicit scope confirmation
+  exit_option: stop anytime; no follow-up probing, no background follow-up
 
 autonomy_review:
-  meaningful_choice: 不改变、不同意、撤回和退出均是完整路径
-  ai_overreach: 不改用户目标承诺；确认不将推断变成事实
-  coercive_elements: 禁止羞耻、威胁、失败次数加压、同意率优化
+  meaningful_choice: not changing, disagreeing, withdrawing, and exiting are all complete paths
+  ai_overreach: do not alter user goal commitments; confirmations must not turn inference into fact
+  coercive_elements: shame, threats, failure-count pressure, and acceptance-rate optimization are prohibited
 risk_review:
-  shame: 以情境和障碍表达；测试自责与被评判感，出现不可接受负担即停
-  anxiety: 不显示压力阶梯、不催促记录；缺失不等于失败
-  dependency: 不优化接触频次或依赖，不替代现实判断与支持；增长不证明效益
-  overinterpretation: 未确认模式不入长期检索，范围/版本变化重新确认
-  privacy: 有界保留/删除/派生副本失效待审；供应商未批仅合成数据
-  clinical: 停止普通指导；另行批准安全协议，无协议则 CLINICAL_REVIEW
-  accessibility_and_equity: 允许跳过/自由文本/零建议，不将资源或表达差异归因为懒惰
+  shame: express via context and constraints; test self-blame and feeling judged; stop on unacceptable burden
+  anxiety: no pressure ladders, no nagging to record; missing data is not failure
+  dependency: do not optimize contact frequency or dependency; do not replace real-world judgment and support; growth does not prove benefit
+  overinterpretation: unconfirmed patterns do not enter long-term retrieval; scope/version changes require re-confirmation
+  privacy: bounded retention/deletion/derived-copy invalidation pending review; vendors unapproved, synthetic data only
+  clinical: stop ordinary coaching; a separate safety protocol must be approved, otherwise CLINICAL_REVIEW
+  accessibility_and_equity: allow skipping/free text/zero suggestions; resource or expression differences must not be attributed to laziness
 measurement:
-  primary_metric: 自主理解或自主选择的可观察完成情况，报告缺失而非强制评分
-  secondary_metrics: 可选帮助程度、能力感、负担、纠错成本、可追溯性、实际结果单独记录
-  guardrail_metrics: 压力、自责、羞耻、依赖、错误推断、停止失效、隐私事件
-  qualitative_questions: 为什么这种指导合适或不合适？能否选择不改变？解释增加理解还是负担？
+  primary_metric: observable completion of autonomous understanding or autonomous choice; report missing data rather than forced ratings
+  secondary_metrics: optional helpfulness, sense of competence, burden, correction cost, traceability, actual outcomes recorded separately
+  guardrail_metrics: stress, self-blame, shame, dependency, wrong inferences, stop failures, privacy incidents
+  qualitative_questions: Why was this guidance appropriate or not? Could you choose not to change? Did the explanation add understanding or burden?
 experiment:
-  hypothesis: 情境化支持可能优于同样尊重自主的非自适应 Review，且不恶化自主感与负担
-  minimum_test: 先逐条走查 COA-001至014；获 G1/G2与隐私许可后提议两周至少两次主动Review观察
-  success_threshold: 安全硬约束零违例；用户认为更有帮助且不恶化自主/负担；效力阈值需另批
-  stop_conditions: 用户要求停止、不可接受负担、隐私/自主越界、无协议的临床危机场景
+  hypothesis: contextualized support may outperform a non-adaptive Review that is equally autonomy-respecting, without worsening autonomy or burden
+  minimum_test: first walk through COA-001 through 014 one by one; after G1/G2 and privacy clearance, propose a two-week observation with at least two active Reviews
+  success_threshold: zero violations of hard safety constraints; user judges it more helpful without worsening autonomy/burden; efficacy thresholds need separate approval
+  stop_conditions: user asks to stop, unacceptable burden, privacy/autonomy overreach, clinical crisis scenario without a protocol
 verdict:
   status: EXPERIMENT_ONLY
   confidence: low for product efficacy; principled safety constraints do not establish benefit
   required_changes: independent consistency and psychology/privacy review; Max approval of detailed proposals
-  unresolved_assumptions: 选择策略有效性、长期模式泛化风险、数值期限、供应商保留、实验阈值
+  unresolved_assumptions: selector strategy effectiveness, long-term pattern generalization risk, numeric durations, vendor retention, experiment thresholds
   next_owner: Max specifies independent reviewer; creator cannot approve
 ```
 
-## 3. 五类反证走查计划（未执行实验）
+## 3. Five counter-example walkthrough plan (no experiment run)
 
-1. 自主目标：步骤帮助不能变成 AI 新承诺。
-2. 原因不明的拖延：澄清/不干预不能变成懒惰标签。
-3. 家庭或社会压力目标：不替用户决定人生方向，不强迫服从外部目标。
-4. 反复未完成伴自责：不按次数升级压力，检查能力/机会约束。
-5. 可能临床或危机语言：停止普通指导，未批准协议时阻断真实试用。
+1. Autonomous goal: a helpful step must not become a new AI commitment.
+2. Procrastination of unknown cause: clarify/no-intervene must not become a laziness label.
+3. Family or social pressure goals: do not decide life direction for the user, do not force compliance with external goals.
+4. Repeated incompletion with self-blame: do not escalate pressure by count; check capability/opportunity constraints.
+5. Possible clinical or crisis language: stop ordinary coaching; block real trials when no protocol is approved.
 
-对应 COA-003/004/013。任何一例安全失败，都不能被高接受率抵销。此卡由作者编写，独立审查 Pending，不属于已运行研究或 PASS 结论。
+Corresponds to COA-003/004/013. In any single safety failure, high acceptance rates cannot offset it. This card was written by the author; independent review is Pending; it does not belong to a run study or a PASS conclusion.
 
-## 4. 检索与证据限制
+## 4. Retrieval and evidence limitations
 
-SDT 页面首次 web_extract 成功取得摘要；后续重取仅部分内容，直接 HTTP 返回 403。保留首次成功摘要的精确证据摘录，不声称读过全文。PMC 后续摘要提取过窄，改用直接 HTTP 获取全文并核对相应段落。以下 Sources 由任务独立 citation ledger 生成；每个引用附经文本匹配的短摘录。所有产品设计推论均标为提案/假设。
+The SDT page's first web_extract successfully obtained the abstract; subsequent re-fetches returned only partial content, and direct HTTP returned 403. The exact evidence excerpt from the first successful abstract is retained; no claim of reading the full text is made. Later PMC abstract extraction was too narrow, so direct HTTP was used to obtain the full text and verify the corresponding passages. The Sources below were generated by the task's independent citation ledger; each citation is accompanied by a short excerpt verified by text matching. All product design inferences are labeled proposal/hypothesis.
 
 ## Sources
 
@@ -142,6 +142,6 @@ SDT 页面首次 web_extract 成功取得摘要；后续重取仅部分内容，
       -  University of Birmingham
     > "Conclusion: The present review indicates that SDT interventions have a significant but small effect on health behavior change and suggests several directions for future research."
 [2] https://pmc.ncbi.nlm.nih.gov/articles/PMC5364076 — Just-in-Time Adaptive Interventions (JITAIs) in Mobile Health: Key Components and Design Principles for Ongoing Health Behavior Support - PMC
-    > "The just-in-time adaptive intervention (JITAI) is an intervention design aiming to provide the right type/amount of support, at the right time, by adapting to an individual’s changing internal and contextual state."
+    > "The just-in-time adaptive intervention (JITAI) is an intervention design aiming to provide the right type/amount of support, at the right time, by adapting to an individual's changing internal and contextual state."
 [3] https://pmc.ncbi.nlm.nih.gov/articles/PMC3096582 — The behaviour change wheel: A new method for characterising and designing behaviour change interventions - PMC
     > "At the centre of a proposed new framework is a 'behaviour system' involving three essential conditions: capability, opportunity, and motivation (what we term the 'COM-B system')."

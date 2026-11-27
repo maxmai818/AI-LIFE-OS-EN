@@ -1,36 +1,36 @@
-# G1 Decision 005：Mixed 影响分别记录正负程度
+# G1 Decision 005: Mixed Impacts Record Positive and Negative Degrees Separately
 
-- **状态**：Approved
-- **决策人**：Max
-- **批准日期**：2026-09-13
-- **记录日期**：2026-09-13
-- **适用范围**：POC-01 G1 产品需求、数据/AI 契约与测试验收
-- **来源**：Max 选择方案 A，并说明分别记录可以更细致地复盘同一维度上的正向与负向影响；即使方向同为 `mixed`，行为时长等证据也可能使两侧程度不同。
-- **关联决策**：`G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`
-- **优先级与局部取代**：本决定取代 Decision 004 第 28、74、84、104 行所表达的“`mixed` 程度结构待决/TBD”条款；Decision 004 的其他已批准规则继续有效。两份 Approved 记录冲突时，仅在 `mixed` 程度结构上以本决定为准。
-- **批准边界**：本记录只批准 `mixed` 的程度结构，不批准 G1 整体，也不授权编码。
+- **Status**: Approved
+- **Decision maker**: Max
+- **Approval date**: 2026-09-13
+- **Record date**: 2026-09-13
+- **Scope**: POC-01 G1 product requirements, data/AI contracts, and test acceptance
+- **Source**: Max chose Option A, explaining that recording separately allows a more granular review of positive and negative impacts on the same dimension; even when the direction is `mixed`, evidence such as behavior duration may make the two degrees differ.
+- **Related decision**: `G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`
+- **Priority and partial supersession**: this decision supersedes the "`mixed` degree structure pending/TBD" clause expressed on lines 28, 74, 84, and 104 of Decision 004; all other approved rules of Decision 004 remain in force. Where the two Approved records conflict, this decision prevails solely on the `mixed` degree structure.
+- **Approval boundary**: this record approves only the `mixed` degree structure; it does not approve G1 as a whole and does not authorize coding.
 
-## 1. 已批准决定
+## 1. Approved decisions
 
-### DEC-G1-005-01：Mixed 使用两个独立的 1–5 程度
+### DEC-G1-005-01: Mixed uses two independent 1–5 degrees
 
-当同一个行为或事件对同一个 Life Dimension 同时存在正向和负向影响时：
+When the same behavior or event has both positive and negative impacts on the same Life Dimension:
 
 - `direction = mixed`
-- 分别记录 `positive_degree` 与 `negative_degree`
-- 两个程度各自使用整数 `1–5`：`1` 很弱、`2` 较弱、`3` 中等、`4` 较强、`5` 很强
-- 每一侧必须分别有支持它的证据与理由
-- 某一侧方向有依据但程度依据不足时，该侧程度允许为 `null` 并保持待确认
+- Record `positive_degree` and `negative_degree` separately
+- Each degree uses integers `1–5`: `1` very weak, `2` relatively weak, `3` moderate, `4` relatively strong, `5` very strong
+- Each side must have its own supporting evidence and rationale
+- When a side's direction is grounded but evidence for its degree is insufficient, that side's degree may be `null` and remain pending confirmation
 
-行为时长、频率、情境和用户 Blueprint/目标可以作为程度证据。例如，同为“熬夜工作”，持续时间不同可能使同一维度的正向与负向程度组合不同。
+Behavior duration, frequency, context, and the user's Blueprint/goals may serve as degree evidence. For example, for the same "working late at night", differing durations may produce different combinations of positive and negative degrees on the same dimension.
 
-## 2. “相对比例”的解释边界
+## 2. Interpretive boundary of "relative proportion"
 
-本决定将 Max 所说的“正向和负向的比例”落实为：**同一行为、同一维度内两个 1–5 程度所表达的相对强弱关系**。
+This decision implements what Max called "the proportion of positive and negative" as: **the relative strength relation expressed by two 1–5 degrees within the same behavior and the same dimension**.
 
-它不引入百分比或 `proportion` 字段，也不要求两值合计为固定总数。系统不得自动把两值相减、相除、净额化或压缩成单一分数。若未来需要正式比例或净影响算法，必须另行评审并升级契约。
+It introduces no percentage or `proportion` field, nor does it require the two values to sum to a fixed total. The system must not automatically subtract, divide, net out, or compress the two values into a single score. If a formal proportion or net-impact algorithm is needed in the future, it must be separately reviewed and the contract upgraded.
 
-## 3. 数据语义摘要
+## 3. Data semantics summary
 
 ```yaml
 direction: mixed
@@ -47,25 +47,25 @@ positive_status: proposed | confirmed | modified | rejected
 negative_status: proposed | confirmed | modified | rejected
 ```
 
-约束：
+Constraints:
 
-- `positive | negative` 继续使用原有单一 `degree`；两个 mixed 专用字段为空。
-- `mixed` 的单一 `degree` 必须为空；使用 `positive_degree` 与 `negative_degree`。正负方向证据始终必填，即使某侧程度因证据不足为 `null`。
-- 两侧分别保存理由、置信度和确认状态，以区分证据不足、用户清空程度与用户拒绝该侧。
-- 用户只拒绝一侧方向时，有效方向转为另一侧的单方向；两侧均拒绝时整项不得进入长期分析。只清空某侧程度不否定该侧方向，仍可保持 `mixed`。每次转换均保留修订历史。
-- `neutral | unknown` 的三个程度字段均为空。
-- 正负程度只可在同一行为、同一维度、同一评估时间窗内作为相对强弱信息展示。
-- 不得据此生成净影响、跨维度排名、Life Score 或因果结论。
-- AI 提出的两侧程度仍是候选，只有用户确认或修改后才能进入长期分析。
+- `positive | negative` continue to use the existing single `degree`; the two mixed-specific fields are empty.
+- For `mixed`, the single `degree` must be empty; use `positive_degree` and `negative_degree`. Evidence for both positive and negative directions is always required, even when one side's degree is `null` due to insufficient evidence.
+- Rationale, confidence, and confirmation status are saved separately for each side, to distinguish insufficient evidence from the user clearing a degree and the user rejecting that side.
+- When the user rejects only one side's direction, the effective direction becomes the single direction of the other side; when both sides are rejected, the whole item must not enter long-term analysis. Clearing one side's degree alone does not negate that side's direction, and `mixed` may be retained. Every transition keeps a revision history.
+- For `neutral | unknown`, all three degree fields are empty.
+- Positive and negative degrees may only be displayed as relative-strength information within the same behavior, same dimension, and same assessment time window.
+- They must not be used to derive net impact, cross-dimension rankings, Life Score, or causal conclusions.
+- The two AI-proposed degrees are still candidates and can only enter long-term analysis after the user confirms or modifies them.
 
-## 4. UX 与验收要求
+## 4. UX and acceptance requirements
 
-- Confirm 界面在 `mixed` 时同时展示正向和负向程度及各自依据。
-- 用户可以分别修改、清空或拒绝两侧程度；不得强迫用户为证据不足的一侧选择数字。
-- Review 可以描述“正向作用较强、负向消耗较弱”等相对关系，但必须保留上下文和认识论标签。
-- Review 不得使用“净 +2”“60% 正向”等未经批准的派生表达。
-- 测试必须覆盖：两侧程度不同、某侧程度证据不足、用户分别修改/清空/拒绝/重新确认两侧、方向转换、历史回放、跨时间窗拒绝比较，以及禁止净额化。
+- When `mixed`, the Confirm interface shows both the positive and negative degrees along with their respective grounds.
+- Users can separately modify, clear, or reject either side's degree; users must not be forced to pick a number for a side with insufficient evidence.
+- Review may describe relative relations such as "positive effect is stronger, negative drain is weaker", but must retain context and epistemic labels.
+- Review must not use unapproved derived expressions such as "net +2" or "60% positive".
+- Tests must cover: differing degrees on the two sides, insufficient degree evidence on one side, the user separately modifying/clearing/rejecting/re-confirming each side, direction transitions, history replay, refusing cross-time-window comparisons, and the prohibition on netting out.
 
-## 5. 仍未批准的事项
+## 5. Items still not approved
 
-本决定不处理 ONE BIG CHANGE 是否允许为零个，也不关闭其他 G1 产品、数据、隐私、安全或试用范围问题。G1 继续保持 `In Review`，编码继续未授权。
+This decision does not address whether ONE BIG CHANGE may be zero, nor does it close other G1 product, data, privacy, security, or trial-scope questions. G1 remains `In Review`, and coding remains unauthorized.

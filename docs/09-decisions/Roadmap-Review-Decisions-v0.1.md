@@ -1,126 +1,126 @@
-# AI Life OS Roadmap Review 决策记录 v0.1
+# AI Life OS Roadmap Review Decision Record v0.1
 
-- **状态**：Approved
-- **决策人 / 最终验收人**：Max
-- **日期**：2026-09-01
-- **适用文档**：`AI-Life-OS-SDLC-Roadmap-v0.1.md`
-- **效力**：本记录是 Roadmap v0.1 的正式评审结论；与原 Roadmap 冲突时，以本记录为准。后续合并进 Roadmap v0.2。
+- **Status**: Approved
+- **Decision maker / final acceptance authority**: Max
+- **Date**: 2026-09-01
+- **Applicable document**: `AI-Life-OS-SDLC-Roadmap-v0.1.md`
+- **Effect**: this record is the formal review conclusion for Roadmap v0.1; where it conflicts with the original Roadmap, this record prevails. To be merged into Roadmap v0.2 later.
 
-## 1. 已确认决策
+## 1. Confirmed decisions
 
-| ID | 主题 | 决策 |
+| ID | Topic | Decision |
 |---|---|---|
-| DEC-001 | 首批用户 | 只为 Max 本人构建；暂不以多人通用产品为前提。 |
-| DEC-002 | 首个客户端 | 采用手机优先的响应式 Web；当前 Roadmap 不再把微信小程序作为 MVP 默认目标。 |
-| DEC-003 | 项目节奏 | 采用单用户快速迭代。Max 可提供模拟测试数据，因此不以原 Roadmap 的周数或强制 7–14 天真实使用作为进入下一步的硬门槛。 |
-| DEC-004 | 同期目标数 | 最多同时推进 3 个核心目标。 |
-| DEC-005 | 人生总分 | 不建设单一总 Life Score。按领域展示状态、目标进度、趋势、偏离和数据置信度。 |
-| DEC-006 | 第一闭环 | 第一版优先实现 Capture → AI 结构化/确认 → Review；不先建设完整 Life OS。 |
-| DEC-007 | 模型策略 | 以云端 LLM API 为主，无本地部署模型计划。模型供应商、数据保留和隐私条款需要在设计阶段明确。 |
-| DEC-008 | 首轮重点 | 首轮围绕健康、主业工作、副业三个关注方向组织目标和测试数据。 |
-| DEC-009 | 验收责任 | Max 同时承担产品负责人、需求批准人、隐私风险接受人和最终 UAT/发布验收人。Hermes 负责提出标准、证据和风险，不代替 Max 作最终产品决策。 |
+| DEC-001 | First users | Built for Max only; not premised on a multi-user general-purpose product for now. |
+| DEC-002 | First client | Mobile-first responsive Web; the current Roadmap no longer treats the WeChat Mini Program as the default MVP target. |
+| DEC-003 | Project cadence | Single-user rapid iteration. Max can provide simulated test data, so the original Roadmap's week counts or mandatory 7–14 days of real usage are not hard gates for entering the next step. |
+| DEC-004 | Concurrent goals | At most 3 core goals pursued simultaneously. |
+| DEC-005 | Life total score | No single aggregate Life Score is built. State, goal progress, trends, deviations, and data confidence are displayed per domain. |
+| DEC-006 | First loop | The first version prioritizes Capture → AI structuring/correction → Review; the full Life OS is not built first. |
+| DEC-007 | Model strategy | Primarily cloud LLM APIs, with no plan for locally deployed models. Model vendor, data retention, and privacy terms must be clarified during the design phase. |
+| DEC-008 | First-round focus | The first round organizes goals and test data around three focus directions: health, primary job, and side project. |
+| DEC-009 | Acceptance responsibility | Max simultaneously serves as product owner, requirements approver, privacy risk acceptor, and final UAT/release acceptance authority. Hermes is responsible for proposing standards, evidence, and risks, and does not make final product decisions in Max's place. |
 
-## 2. 对 RAG 的纠正
+## 2. Correction regarding RAG
 
-原 Roadmap 把 RAG 理解为“个人知识库 / 个人语义记忆”，这是误解，现正式纠正：
+The original Roadmap understood retrieval-augmented generation (RAG) as a "personal knowledge base / personal semantic memory" — this is a misunderstanding, now formally corrected:
 
-> AI Life OS 中的 RAG 主要用于检索合法获得的电子书、论文或其他可信资料，使系统在分析问题和提出建议时，能够引用明确的学者、理论和来源作为支撑。
+> RAG in AI Life OS is mainly used to retrieve lawfully obtained e-books, papers, or other trusted materials, so that when analyzing problems and proposing suggestions the system can cite explicit scholars, theories, and sources as support.
 
-因此：
+Therefore:
 
-- RAG 的核心对象是**外部理论与权威资料**，不是把用户日记建设成个人向量知识库。
-- 用户记录仍需保存、查询和追溯，但优先采用结构化数据、时间范围和目标关联查询；是否需要对个人记录做向量检索，未来另行验证，不作为既定架构。
-- 理论引用不能压过个人事实：先说明“你的记录显示什么”，再说明“哪些理论可能帮助解释或设计行动”。
-- 系统必须显示作者/理论、资料名称、引用位置或可核验来源，并区分原文观点、AI 解释和面向 Max 的建议。
-- 不得把名家观点包装成确定性结论；应说明证据强度、适用边界、争议和不确定性。
-- 资料必须具有合法访问与使用权；不对外分发电子书全文。
+- The core object of retrieval-augmented generation (RAG) is **external theory and authoritative materials**, not turning the user's diary into a personal vector knowledge base.
+- User records still need to be saved, queried, and traceable, but structured data, time ranges, and goal-linked queries are preferred; whether vector retrieval over personal records is needed will be validated separately in the future and is not a settled architecture.
+- Theoretical citations must not override personal facts: first state "what your records show", then state "which theories may help explain or design actions".
+- The system must display author/theory, material name, citation location or verifiable source, and distinguish the original viewpoint, AI interpretation, and advice aimed at Max.
+- Famous authorities' views must not be packaged as deterministic conclusions; evidence strength, applicability boundaries, controversies, and uncertainties should be stated.
+- Materials must have lawful access and use rights; full e-book texts are not distributed externally.
 
-### 第一版中的位置
+### Place in the first version
 
-第一闭环仍然是 Capture and Review。为避免 RAG 拖慢核心验证：
+The first loop is still Capture and Review. To keep RAG from slowing down core validation:
 
-1. POC-01 先验证记录、结构化、纠正和复盘是否有价值。
-2. Review 的产品和数据结构从一开始预留 `theory_reference` / `source_reference`。
-3. 首轮只用少量人工筛选、可核验的理论资料做引用样例；不先建设海量电子书摄取、OCR 或复杂向量检索管道。
-4. 核心闭环通过后，再单独验证“理论检索是否比普通云 LLM 回答更可靠、更有帮助”。
+1. POC-01 first validates whether capture, structuring, correction, and Review are valuable.
+2. The Review product and data structures reserve `theory_reference` / `source_reference` from the start.
+3. The first round uses only a small set of manually curated, verifiable theoretical materials as citation samples; no massive e-book ingestion, OCR, or complex vector retrieval pipeline is built first.
+4. After the core loop passes, separately validate "whether theory retrieval is more reliable and helpful than ordinary cloud LLM answers".
 
-## 3. 领域模型澄清
+## 3. Domain model clarification
 
-“健康、主业工作、副业”作为首轮重点描述是准确的，但不必强行等同于固定的五个人生维度。
+Describing "health, primary job, side project" as the first-round focus is accurate, but they need not be forcibly equated with the five fixed life dimensions.
 
-建议使用三层模型：
+A three-layer model is recommended:
 
 ```text
-Life Area（长期领域）
-→ Goal / Project（阶段目标或项目）
-→ Metric / Action / Capture（指标、行动和记录）
+Life Area (long-term domain)
+→ Goal / Project (phase goal or project)
+→ Metric / Action / Capture (metrics, actions, and records)
 ```
 
-首轮可直接设置三个 Focus Area：
+The first round can directly set up three Focus Areas:
 
-1. **健康**：睡眠、运动、饮食、精力或具体健康目标。
-2. **主业工作**：职责、关键成果、能力成长、工作负荷与满意度。
-3. **副业**：作为独立项目追踪投入、里程碑、收入验证与机会成本。
+1. **Health**: sleep, exercise, diet, energy, or specific health goals.
+2. **Primary job**: responsibilities, key results, capability growth, workload, and satisfaction.
+3. **Side project**: tracked as an independent project for investment, milestones, revenue validation, and opportunity cost.
 
-其中副业若重点是收入，可同时关联“财富”；若重点是职业转型，可关联“事业/工作”。系统允许关联，不要求 Max 先决定它只能属于某一个维度。
+If the side project's focus is revenue, it can also be associated with "Wealth"; if the focus is career transition, it can be associated with "Career/Work". The system allows associations and does not require Max to first decide that it can only belong to one dimension.
 
-## 4. 快速 Roadmap（替代原周数估算）
+## 4. Rapid Roadmap (replacing the original week estimates)
 
-原 Roadmap 的周期仅是团队化开发估算。单用户、自测和模拟数据条件下，改用交付物门禁，不用固定周数控制进度：
+The original Roadmap's timelines were team-development estimates only. Under single-user, self-testing, and simulated-data conditions, deliverable gates are used instead of fixed week counts to control progress:
 
-| 阶段 | 建议节奏 | 完成条件 |
+| Phase | Suggested cadence | Completion criteria |
 |---|---:|---|
-| Scope Baseline | 1–2 个集中评审回合 | 明确 Capture 输入、Review 输出、三类重点和 Won't Do |
-| UX / Data / AI Contract | 2–4 个集中评审回合 | 手机端流程、结构化 Schema、事实/推测/引用规范获 Max 批准 |
-| POC-01 | 约 1–2 周的开发量，允许继续压缩 | 模拟数据集通过，Max 能在手机 Web 完成 Capture-to-Review |
-| Self-use MVP | POC 通过后连续迭代 | Max 在真实场景中认为记录成本可接受、复盘有用且可追溯 |
-| V1 Baseline | 由 Max 决定 | Must Have 通过，关键隐私与数据风险被明确接受或解决 |
+| Scope Baseline | 1–2 concentrated review rounds | Capture inputs, Review outputs, the three focus areas, and Won't Do are clarified |
+| UX / Data / AI Contract | 2–4 concentrated review rounds | Mobile flows, structured schemas, and fact/speculation/citation rules approved by Max |
+| POC-01 | About 1–2 weeks of development effort, allowed to compress further | Simulated dataset passes; Max can complete Capture-to-Review on mobile Web |
+| Self-use MVP | Continuous iteration after the POC passes | Max finds the capture cost acceptable in real scenarios, and Review useful and traceable |
+| V1 Baseline | Decided by Max | Must Have passes; key privacy and data risks are explicitly accepted or resolved |
 
-这些时间不是等待期。上一阶段交付物达到标准并经 Max 批准后即可进入下一阶段。
+These times are not waiting periods. Once the previous phase's deliverables meet the standard and are approved by Max, the next phase may begin.
 
-## 5. “成功标准”解释与修订
+## 5. Interpretation and revision of "success criteria"
 
-原评审问题第 9 项指的是 Roadmap §6.8 的 POC 验收指标，不是要求 Max 另找一份未知文档。原表中的 `85%`、`4/5`、`60 秒` 等只是候选阈值，尚未获批准。
+Item 9 of the original review questions refers to the POC acceptance metrics in Roadmap §6.8; it does not require Max to find some unknown document. Values like `85%`, `4/5`, and `60 seconds` in the original table were only candidate thresholds and are not yet approved.
 
-首轮建议改为更适合单用户的验收标准：
+The first round is recommended to use acceptance criteria better suited to a single user:
 
-### A. 必须通过的确定性标准
+### A. Deterministic criteria that must pass
 
-- 保存的原始 Capture 不被 AI 结果覆盖。
-- Max 的人工修订保存和再次展示 100% 一致。
-- 数值、单位、时间、否定语义和目标关联可逐条核验。
-- 每条 Review 事实能回到具体 Capture 或结构化记录。
-- AI 明确区分事实、推测、理论引用和建议。
-- 数据不足时明确表示无法判断，不生成伪精确结论。
-- Max 可导出和删除全部个人数据。
+- The saved raw Capture is not overwritten by AI results.
+- Max's manual revisions are saved and re-displayed with 100% consistency.
+- Numbers, units, times, negation semantics, and goal associations are verifiable item by item.
+- Every Review fact can be traced back to a specific Capture or structured record.
+- The AI explicitly distinguishes facts, speculation, theoretical citations, and suggestions.
+- When data is insufficient, it explicitly states that no judgment can be made, without generating pseudo-precise conclusions.
+- Max can export and delete all personal data.
 
-### B. 由测试集评估但不预先武断设阈值
+### B. Evaluated by the test set without arbitrary pre-set thresholds
 
-- 结构化字段准确率。
-- 需要 Max 修改的比例及修改成本。
-- 无依据结论率。
-- 理论引用的正确性、相关性和可核验性。
-- Capture 和确认所需时间。
+- Structured field accuracy.
+- The proportion requiring Max's edits and the cost of those edits.
+- Rate of unsupported conclusions.
+- Correctness, relevance, and verifiability of theoretical citations.
+- Time required for Capture and confirmation.
 
-第一轮建立基线；若错误集中在可通过 Schema、Prompt 或交互修复的范围，则继续迭代，而不是仅凭一个平均分判死刑。
+The first round establishes a baseline; if errors concentrate in ranges fixable through schemas, prompts, or interaction, continue iterating rather than condemning on the basis of a single average score.
 
-### C. Max 的最终产品判断
+### C. Max's final product judgment
 
-POC 是否通过最终由 Max 判断：
+Whether the POC passes is ultimately judged by Max:
 
-1. 我是否愿意继续用？
-2. Review 是否比直接把记录发给通用聊天模型更可信、更有帮助？
-3. 系统是否让我更清楚下一步，而不是增加负担或制造自责？
-4. 错误是否容易发现和纠正？
-5. 理论引用是否真正提高理解和行动质量，而不是装饰？
+1. Am I willing to keep using it?
+2. Is Review more trustworthy and helpful than simply sending my records to a general chat model?
+3. Does the system make my next step clearer, rather than adding burden or inducing self-blame?
+4. Are errors easy to spot and correct?
+5. Do theoretical citations genuinely improve understanding and action quality, rather than serving as decoration?
 
-## 6. 本轮 Gate 结论
+## 6. This round's Gate conclusion
 
-- **G0：通过。** 目标用户已明确为 Max 本人；首个问题空间和交付形式已确认。
-- **下一阶段：G1/G2 需求与设计基线。** 仍只做需求、交互、数据、AI 与隐私设计，不开始编码。
-- 下一批文档不必一次写十份；优先合并为三份：
+- **G0: Passed.** The target user is clarified as Max himself; the first problem space and delivery form are confirmed.
+- **Next phase: G1/G2 requirements and design baselines.** Still only requirements, interaction, data, AI, and privacy design — no coding yet.
+- The next batch of documents need not be ten at once; prioritize consolidating into three:
   1. `POC-01 Product & UX Spec`
   2. `Capture Data + AI Output Contract`
   3. `POC-01 Test & Acceptance Spec`
 
-三份经 Max Review 后，再决定是否进入实现。
+After the three are reviewed by Max, decide whether to enter implementation.

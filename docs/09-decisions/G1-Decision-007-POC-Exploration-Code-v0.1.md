@@ -1,25 +1,25 @@
-# G1 Decision 007 — POC 代码分支定性与处置 v0.1
+# G1 Decision 007 — POC Code Branch Classification and Disposition v0.1
 
-- **状态**：已决定（Max，2026-10-08）
-- **决策人**：Max；**记录**：Hermes（PM）
-- **Gate**：G1 In Review；编码未授权；本文不授权任何实现工作
+- **Status**: Decided (Max, 2026-10-08)
+- **Decision maker**: Max; **Recorded by**: Hermes (PM)
+- **Gate**: G1 In Review; coding not authorized; this document authorizes no implementation work
 
-## 决定
+## Decision
 
-1. `feat/poc-implementation` 分支及其迭代线（iteration-1 至 iteration-6）的 POC 代码定性为**探索性实验**：用于验证 v0.6 规格的可行性与 AI 迭代流程，**不作为正式实现继续**。
-2. `feat/poc-implementation` 分支**废弃**：已打归档 tag `archive/poc-exploration-20261008` 保留历史后删除分支。
-3. 正式实现在 **G2（设计基线）通过后**从 `main` 重新开始；探索代码不合并、不继承。
+1. The POC code on the `feat/poc-implementation` branch and its iteration line (iteration-1 through iteration-6) is classified as **exploratory experiment**: used to validate the feasibility of the v0.6 specs and the AI iteration process, **not continued as formal implementation**.
+2. The `feat/poc-implementation` branch is **deprecated**: after the archive tag `archive/poc-exploration-20261008` has preserved the history, the branch is deleted.
+3. Formal implementation **starts fresh from `main` after G2 (design baseline) passes**; the exploration code is neither merged nor inherited.
 
-## 背景
+## Background
 
-- 该代码线在 G1/G2 未通过期间由代理自主迭代产出（见 `ITERATION-PLAN.md` 的 proxy 授权），与 AGENTS.md"未过 gate 不进入编码"存在治理张力。
-- 本决定消除该张力：探索性实验豁免于编码禁令，但不获得实现地位。
+- This code line was produced by autonomous agent iteration while G1/G2 had not passed (see the proxy authorization in `ITERATION-PLAN.md`), creating governance tension with AGENTS.md's "no coding before passing the gate".
+- This decision resolves that tension: exploratory experiments are exempt from the coding ban, but do not obtain implementation status.
 
-## 待附带确认（G1 关闭决策包）
+## Pending accompanying confirmation (G1 Closure Decision Packet)
 
-`feat/poc-iteration-1/4/6`、`poc/exploration` 是否同样归档删除，随 [G1-Closure-Decision-Packet-v0.1](../00-governance/G1-Closure-Decision-Packet-v0.1.md) 一并确认。
+Whether `feat/poc-iteration-1/4/6` and `poc/exploration` are likewise archived and deleted will be confirmed together with the [G1-Closure-Decision-Packet-v0.1](../00-governance/G1-Closure-Decision-Packet-v0.1.md).
 
-## 影响
+## Impact
 
-- G2 之后的实现任务以 v0.6 规格为唯一基线，探索代码仅作参考素材，不作为验收对象。
-- Roadmap 与 AGENTS.md 规则不变；本决定是范围/资产处置，不修改任何需求。
+- Implementation tasks after G2 use the v0.6 specs as the sole baseline; the exploration code serves only as reference material and is not an acceptance target.
+- The Roadmap and AGENTS.md rules are unchanged; this decision is an asset/scope disposition and modifies no requirements.

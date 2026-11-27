@@ -1,8 +1,8 @@
-"""AI Life OS — 数据层。Schema 对齐 Capture-Data-AI-Output-Contract v0.6（Approved）。
+"""AI Life OS — data layer. Schema aligned with Capture-Data-AI-Output-Contract v0.6 (Approved).
 
-不变量落点：
-- INV-01  captures.raw_text 永不 UPDATE（本模块不提供任何改写 raw_text 的接口）。
-- INV-10  所有查询带 user_id。
+Invariant anchors:
+- INV-01  captures.raw_text is never UPDATEd (this module offers no interface that rewrites raw_text).
+- INV-10  every query filters by user_id.
 """
 import os
 import sqlite3
@@ -171,8 +171,8 @@ CREATE TABLE IF NOT EXISTS feedback(
 """
 
 DIM_NAMES = {
-    "time": "时间", "health": "健康", "wealth": "财富",
-    "relationship": "关系", "purpose": "目的",
+    "time": "Time", "health": "Health", "wealth": "Wealth",
+    "relationship": "Relationship", "purpose": "Purpose",
 }
 
 
@@ -200,6 +200,6 @@ def ensure_user(conn, user_id=1):
 
 
 def effective_impact(row):
-    """INV-02：用户修订值优先于 AI 值。返回 dict(effective, original)。"""
+    """INV-02: user-revised values take precedence over AI values. Returns dict(effective, original)."""
     rev = row["degree"]
     return {"effective": rev, "original": rev}

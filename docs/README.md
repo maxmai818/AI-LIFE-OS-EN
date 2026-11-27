@@ -1,71 +1,71 @@
-# AI Life OS 文档索引
+# AI Life OS Documentation Index
 
-## 文档状态定义
+## Document Status Definitions
 
-- **Draft**：草案，允许大范围修改
-- **In Review**：正在评审
-- **Approved**：已批准并形成 Baseline
-- **Approved with Conditions**：有条件批准；条件、责任人和关闭标准必须明确
-- **Superseded**：已被新版本替代
-- **Superseded in part**：仅部分内容被后续决定取代，其余内容仍有效
-- **Archived**：不再使用，仅保留历史
+- **Draft**: draft; broad changes allowed
+- **In Review**: under review
+- **Approved**: approved and forms a Baseline
+- **Approved with Conditions**: conditional approval; conditions, owners, and closure criteria must be explicit
+- **Superseded**: replaced by a newer version
+- **Superseded in part**: only part of the content is superseded by later decisions; the rest remains valid
+- **Archived**: no longer in use, kept for history only
 
-## 文档登记
+## Document Register
 
-| 文档 | 版本 | 状态 | 所属阶段 | Gate | 路径 |
+| Document | Version | Status | Stage | Gate | Path |
 |---|---|---|---|---|---|
 | AI Life OS SDLC Roadmap | v0.1 | Superseded in part | Governance | G0 | `00-governance/AI-Life-OS-SDLC-Roadmap-v0.1.md` |
-| Roadmap Review 决策记录 | v0.1 | Approved | Governance / Decision | G0 Passed | `09-decisions/Roadmap-Review-Decisions-v0.1.md` |
-| G0 Amendment 001：用户范围 | v0.1 | Approved | Governance / Decision | G0 Amendment | `09-decisions/G0-Amendment-001-User-Scope-v0.1.md` |
-| Amendment 002：五维与当前关注点 | v0.1 | Superseded in part | Governance / Decision | G0/G1 Amendment | `09-decisions/G0-G1-Amendment-002-Life-Dimensions-v0.1.md` |
-| Amendment 003：五维行为影响模型 | v0.1 | Approved | Governance / Decision | G0/G1 Amendment | `09-decisions/G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md` |
-| G1 Decision 004：五维行为影响规则 | v0.1 | Approved | Governance / Decision | G1 Partial Decision | `09-decisions/G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md` |
-| G1 Decision 005：Mixed 影响分别记录正负程度 | v0.1 | Approved | Governance / Decision | G1 Partial Decision | `09-decisions/G1-Decision-005-Mixed-Impact-Degrees-v0.1.md` |
+| Roadmap Review Decision Record | v0.1 | Approved | Governance / Decision | G0 Passed | `09-decisions/Roadmap-Review-Decisions-v0.1.md` |
+| G0 Amendment 001: User Scope | v0.1 | Approved | Governance / Decision | G0 Amendment | `09-decisions/G0-Amendment-001-User-Scope-v0.1.md` |
+| Amendment 002: Five Life Dimensions and Current Focus | v0.1 | Superseded in part | Governance / Decision | G0/G1 Amendment | `09-decisions/G0-G1-Amendment-002-Life-Dimensions-v0.1.md` |
+| Amendment 003: Five-Dimension Behavior Impact Model | v0.1 | Approved | Governance / Decision | G0/G1 Amendment | `09-decisions/G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md` |
+| G1 Decision 004: Five-Dimension Behavior Impact Rules | v0.1 | Approved | Governance / Decision | G1 Partial Decision | `09-decisions/G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md` |
+| G1 Decision 005: Mixed Impacts Record Positive and Negative Degrees Separately | v0.1 | Approved | Governance / Decision | G1 Partial Decision | `09-decisions/G1-Decision-005-Mixed-Impact-Degrees-v0.1.md` |
 | POC-01 Product & UX Spec | v0.1 | Superseded | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.1.md` |
 | POC-01 Product & UX Spec | v0.2 | Superseded | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.2.md` |
 | POC-01 Product & UX Spec | v0.3 | Superseded | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.3.md` |
 | POC-01 Product & UX Spec | v0.4 | Superseded | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.4.md` |
 | POC-01 Product & UX Spec | v0.5 | Superseded | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.5.md` |
-| POC-01 Product & UX Spec | v0.6 | Approved（G1 基线 2026-10-08） | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.6.md` |
+| POC-01 Product & UX Spec | v0.6 | Approved (G1 baseline 2026-10-08) | Requirements | G1 | `02-requirements/POC-01-Product-UX-Spec-v0.6.md` |
 | Capture Data + AI Output Contract | v0.1 | Superseded | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.1.md` |
 | Capture Data + AI Output Contract | v0.2 | Superseded | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.2.md` |
 | Capture Data + AI Output Contract | v0.3 | Superseded | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.3.md` |
 | Capture Data + AI Output Contract | v0.4 | Superseded | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.4.md` |
 | Capture Data + AI Output Contract | v0.5 | Superseded | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.5.md` |
-| Capture Data + AI Output Contract | v0.6 | Approved（G1 基线 2026-10-08） | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md` |
+| Capture Data + AI Output Contract | v0.6 | Approved (G1 baseline 2026-10-08) | Data / AI | G1/G2 | `04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md` |
 | POC-01 Test & Acceptance Spec | v0.1 | Superseded | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.1.md` |
 | POC-01 Test & Acceptance Spec | v0.2 | Superseded | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.2.md` |
 | POC-01 Test & Acceptance Spec | v0.3 | Superseded | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.3.md` |
 | POC-01 Test & Acceptance Spec | v0.4 | Superseded | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.4.md` |
 | POC-01 Test & Acceptance Spec | v0.5 | Superseded | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.5.md` |
-| POC-01 Test & Acceptance Spec | v0.6 | Approved（G1 基线 2026-10-08） | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.6.md` |
-| G1 Decision 006：自适应 Review | v0.1 | 原则确认；细节已随 G1 关闭并入基线 | Governance / Decision | G1 Partial Decision | `09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md` |
-| G1 Closure Decision Packet | v0.1 | 已决策：A 带条件关闭（Max 2026-10-08） | Governance / Decision | G1 | `00-governance/G1-Closure-Decision-Packet-v0.1.md` |
-| G1 Decision 007：POC 探索代码定性 | v0.1 | 已决定（Max 2026-10-08） | Governance / Decision | G1 | `09-decisions/G1-Decision-007-POC-Exploration-Code-v0.1.md` |
-| Max CEO 决策协议 | v0.1 | 生效（Max 2026-10-08） | Governance / Protocol | 全程 | `00-governance/Max-CEO-Decision-Protocol-v0.1.md` |
-| Design Language | v1.0 | Frozen — 设计基线（Max 2026-10-17 选定变体 2 对话引导型） | Design | G2 | `03-design/Design-Language-v1.0.md`（历史：v0.1） |
-| Product Core（产品内核） | v0.1 | Approved — G2 内核基线（Max 2026-10-17） | Architecture / Core | G2 | `05-technical-architecture/Product-Core-v0.1.md` |
-| G2 Decision 001：内核基线批准与设计基线选定 | v0.1 | 已决定（Max 2026-10-17） | Governance / Decision | G2 | `09-decisions/G2-Decision-001-Core-Baseline-and-Design-Baseline-v0.1.md` |
-| G2 Decision 002：开发启动（第一张皮 v0.1） | v0.1 | 已决定（Max 2026-10-17） | Governance / Decision | G2 | `09-decisions/G2-Decision-002-Development-Start-v0.1.md` |
-| 第一张皮 v0.1（应用代码） | v0.1 | 开发中（INV 测试 11/11 + 冒烟 10/10 通过） | Application | G2 | `app/`（见 `app/README.md`） |
-| G2 原型（3 变体） | v0.1 | 待 Max 选择（1/2/3 + 圈注） | Design / Prototype | G2 | `03-design/prototypes/` |
-| G1 v0.6 Delta & Review Status | v0.1 | 已归档（G1 2026-10-08）；文档一致性 PASS；心理安全 `PASS_WITH_CONDITIONS`；隐私 `PASS_WITH_CONDITIONS` | Research / Review | G1 | `08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md` |
-| G1 心理安全专项审查方案 | v0.1 | In Review；审查方法已定义 | Research / Specialist Review | G1 | `08-research/G1-Psychological-Safety-Review-Plan-v0.1.md` |
-| G1 心理安全专项审查记录（第一轮及 PSR-001 复核） | v0.1 | Complete；`PASS_WITH_CONDITIONS` | Research / Specialist Review | G1 | `08-research/G1-Psychological-Safety-Review-Record-v0.1.md` |
-| G1 隐私专项审查方案 | v0.1 | Complete；审查方法已执行 | Research / Specialist Review | G1 | `08-research/G1-Privacy-Review-Plan-v0.1.md` |
-| G1 隐私专项审查记录 | v0.1 | Complete；`PASS_WITH_CONDITIONS` / PRV-001、PRV-002 已关闭 | Research / Specialist Review | G1 | `08-research/G1-Privacy-Review-Record-v0.1.md` |
-| Adaptive Review Evidence Card | v0.1 | In Review；作者建议 EXPERIMENT_ONLY | Research / Evidence | G1 | `08-research/Adaptive-Review-Evidence-Card-v0.1.md` |
+| POC-01 Test & Acceptance Spec | v0.6 | Approved (G1 baseline 2026-10-08) | Testing / Acceptance | G1 | `06-testing/POC-01-Test-Acceptance-Spec-v0.6.md` |
+| G1 Decision 006: Adaptive Review | v0.1 | Principles confirmed; details merged into the baseline at G1 closure | Governance / Decision | G1 Partial Decision | `09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md` |
+| G1 Closure Decision Packet | v0.1 | Decided: A, conditional closure (Max 2026-10-08) | Governance / Decision | G1 | `00-governance/G1-Closure-Decision-Packet-v0.1.md` |
+| G1 Decision 007: POC Exploration Code Classification | v0.1 | Decided (Max 2026-10-08) | Governance / Decision | G1 | `09-decisions/G1-Decision-007-POC-Exploration-Code-v0.1.md` |
+| Max CEO Decision Protocol | v0.1 | In effect (Max 2026-10-08) | Governance / Protocol | All stages | `00-governance/Max-CEO-Decision-Protocol-v0.1.md` |
+| Design Language | v1.0 | Frozen — design baseline (Max selected Variant 2 conversational-guided on 2026-10-17) | Design | G2 | `03-design/Design-Language-v1.0.md` (history: v0.1) |
+| Product Core (product kernel) | v0.1 | Approved — G2 kernel baseline (Max 2026-10-17) | Architecture / Core | G2 | `05-technical-architecture/Product-Core-v0.1.md` |
+| G2 Decision 001: Kernel Baseline Approval and Design Baseline Selection | v0.1 | Decided (Max 2026-10-17) | Governance / Decision | G2 | `09-decisions/G2-Decision-001-Core-Baseline-and-Design-Baseline-v0.1.md` |
+| G2 Decision 002: Development Start (First Skin v0.1) | v0.1 | Decided (Max 2026-10-17) | Governance / Decision | G2 | `09-decisions/G2-Decision-002-Development-Start-v0.1.md` |
+| First Skin v0.1 (application code) | v0.1 | In development (INV tests 11/11 + smoke 10/10 passed) | Application | G2 | `app/` (see `app/README.md`) |
+| G2 Prototypes (3 variants) | v0.1 | Awaiting Max's choice (1/2/3 + annotations) | Design / Prototype | G2 | `03-design/prototypes/` |
+| G1 v0.6 Delta & Review Status | v0.1 | Archived (G1 2026-10-08); document consistency PASS; psychological safety `PASS_WITH_CONDITIONS`; privacy `PASS_WITH_CONDITIONS` | Research / Review | G1 | `08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md` |
+| G1 Psychological Safety Specialist Review Plan | v0.1 | In Review; review method defined | Research / Specialist Review | G1 | `08-research/G1-Psychological-Safety-Review-Plan-v0.1.md` |
+| G1 Psychological Safety Specialist Review Record (first round and PSR-001 re-check) | v0.1 | Complete; `PASS_WITH_CONDITIONS` | Research / Specialist Review | G1 | `08-research/G1-Psychological-Safety-Review-Record-v0.1.md` |
+| G1 Privacy Specialist Review Plan | v0.1 | Complete; review method executed | Research / Specialist Review | G1 | `08-research/G1-Privacy-Review-Plan-v0.1.md` |
+| G1 Privacy Specialist Review Record | v0.1 | Complete; `PASS_WITH_CONDITIONS` / PRV-001, PRV-002 closed | Research / Specialist Review | G1 | `08-research/G1-Privacy-Review-Record-v0.1.md` |
+| Adaptive Review Evidence Card | v0.1 | In Review; author recommends EXPERIMENT_ONLY | Research / Evidence | G1 | `08-research/Adaptive-Review-Evidence-Card-v0.1.md` |
 | G1 v0.4 Independent Review | v0.1 | Superseded in part | Research / Independent Review | G1 | `08-research/G1-v0.4-Independent-Review-v0.1.md` |
 | G1 v0.5 Mixed Impact Independent Review | v0.1 | In Review | Research / Independent Review | G1 | `08-research/G1-v0.5-Mixed-Impact-Independent-Review-v0.1.md` |
 
-> Roadmap v0.1 与决策记录冲突时，以已批准的决策记录及 Amendments 为准；Amendment 003 取代 Amendment 002 中将临时关注点固化的部分；G1 Decision 004 批准五维全量评估、固定 1–5 程度、非零和、`unknown`/`neutral` 分离及确认后进入长期分析；G1 Decision 005 批准 `mixed` 分别记录正向与负向 1–5 程度，不计算比例或净值。这些内容将在 Roadmap v0.2 中合并。
+> Where Roadmap v0.1 conflicts with the decision records, the approved decision records and Amendments take precedence; Amendment 003 supersedes the part of Amendment 002 that fixed temporary focus areas in place; G1 Decision 004 approves full evaluation across the Five Life Dimensions, fixed 1–5 impact degrees, non-zero-sum, separation of `unknown`/`neutral`, and entry into long-term analysis only after confirmation; G1 Decision 005 approves recording positive and negative 1–5 degrees separately for `mixed`, without computing ratios or net values. These will be consolidated in Roadmap v0.2.
 
-## 当前 G1 Review Pack
+## Current G1 Review Pack
 
 1. `02-requirements/POC-01-Product-UX-Spec-v0.6.md`
 2. `04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md`
 3. `06-testing/POC-01-Test-Acceptance-Spec-v0.6.md`
 
-三份文档已于 2026-10-08 获 Max 批准（决策包选项 A：带条件关闭），形成 POC-01 需求与验收基线（tag `G1-baseline`）。遗留条件（心理安全/隐私 `PASS_WITH_CONDITIONS` 的技术兑现、真实用户验证、临床安全协议）登记于 G2/G3 跟踪清单。编码在 G2 通过前不授权。
+The three documents were approved by Max on 2026-10-08 (decision packet Option A: conditional closure), forming the POC-01 requirements and acceptance baseline (tag `G1-baseline`). Leftover conditions (technical fulfillment of the psychological safety/privacy `PASS_WITH_CONDITIONS`, real-user validation, clinical safety protocol) are registered in the G2/G3 tracking list. Coding is not authorized before G2 passes.
 
-Decision 006 关闭零建议待决，并记录用户主动 Review、自适应而非必选人格、即时反馈/停止原则；不扩大 Decision 004/005 的授权。v0.6 字段、策略、期限与实验随 G1 关闭获批，具体设计参数移交 G2。文档一致性复核已 PASS；[心理安全专项审查](08-research/G1-Psychological-Safety-Review-Record-v0.1.md) 已以 `PASS_WITH_CONDITIONS` 关闭文档级 PSR-001，技术兑现和真实用户验证留 G2/G3；[隐私专项审查](08-research/G1-Privacy-Review-Record-v0.1.md) 已以 `PASS_WITH_CONDITIONS` 关闭 `PRV-001`、`PRV-002` 的文档级缺口，认证、删除、缓存/备份、跨设备、供应商和真实用户验证留 G2/G3。作者不自批；文档合并不等于 G2 编码授权。
+Decision 006 closes the pending zero-suggestion question and records the principles of user-initiated Review, adaptive rather than mandatory persona, and instant feedback/stop; it does not expand the authorizations of Decision 004/005. The v0.6 fields, policies, retention periods, and experiments were approved at G1 closure, with concrete design parameters deferred to G2. The document consistency re-check has PASSED; the [psychological safety specialist review](08-research/G1-Psychological-Safety-Review-Record-v0.1.md) closed the document-level PSR-001 with `PASS_WITH_CONDITIONS`, leaving technical fulfillment and real-user validation to G2/G3; the [privacy specialist review](08-research/G1-Privacy-Review-Record-v0.1.md) closed the document-level gaps of `PRV-001` and `PRV-002` with `PASS_WITH_CONDITIONS`, leaving authentication, deletion, cache/backup, cross-device, vendors, and real-user validation to G2/G3. Authors do not self-approve; merging documents does not equal G2 coding authorization.

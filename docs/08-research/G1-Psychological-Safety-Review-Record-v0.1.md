@@ -1,16 +1,16 @@
-# AI Life OS G1 心理安全专项审查记录 v0.1
+# AI Life OS G1 Psychological Safety Specialist Review Record v0.1
 
-- **状态**：Complete（专项 verdict：`PASS_WITH_CONDITIONS`；PSR-001 已由独立复核关闭）
-- **日期**：2026-09-16
-- **阶段**：G1 Requirements / Specialist Review
-- **审查性质**：非临床、循证行为科学与心理安全产品文档审查
-- **独立性**：由非作者只读审查；未参与产品批准、实现、测试、合并或发布决定
-- **范围**：仅现有 G1 文档及合成情境；未使用真实用户数据
-- **不构成**：诊断、治疗、真实危机处置、临床/法律/隐私结论，或 G1/G2、编码、真实数据、合并、发布授权
+- **Status**: Complete (specialist verdict: `PASS_WITH_CONDITIONS`; PSR-001 closed via independent re-review)
+- **Date**: 2026-09-16
+- **Stage**: G1 Requirements / Specialist Review
+- **Review nature**: non-clinical, evidence-based behavioral science and psychological safety product document review
+- **Independence**: read-only review by a non-author; no participation in product approval, implementation, testing, merge, or release decisions
+- **Scope**: existing G1 documents and synthetic scenarios only; no real user data used
+- **Does not constitute**: diagnosis, treatment, real crisis handling, clinical/legal/privacy conclusions, or G1/G2, coding, real data, merge, release authorization
 
-## 1. 审查依据与范围
+## 1. Review basis and scope
 
-依照 [G1 心理安全专项审查方案](G1-Psychological-Safety-Review-Plan-v0.1.md)，审阅：
+Per the [G1 Psychological Safety Specialist Review Plan](G1-Psychological-Safety-Review-Plan-v0.1.md), reviewed:
 
 - [Product v0.6](../02-requirements/POC-01-Product-UX-Spec-v0.6.md)
 - [Data/AI Contract v0.6](../04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md)
@@ -19,75 +19,75 @@
 - [Adaptive Review Evidence Card](Adaptive-Review-Evidence-Card-v0.1.md)
 - [G1 v0.6 Delta](G1-v0.6-Adaptive-Review-Delta-v0.1.md)
 
-本轮只判断文档中已确认的产品边界是否三联传播及是否存在可预见的心理安全缺口；字段、状态机、留存/缓存/备份/删除、供应商能力、实验参数和实际可兑现性仍属 G2/G3 或隐私专项审查。
+This round only determines whether the confirmed product boundaries in the documents propagate as triplets and whether foreseeable psychological safety gaps exist; fields, state machines, retention/caching/backup/deletion, vendor capabilities, experiment parameters, and actual deliverability remain G2/G3 or privacy specialist review matters.
 
-## 2. 总结结论
+## 2. Summary conclusion
 
-**专项 verdict：`REVISE`。当前不支持 Max 进入 G1 最终批准评审。**
+**Specialist verdict: `REVISE`. Currently does not support Max proceeding to the G1 final approval review.**
 
-P6-01、P6-02、P6-03 已在 Product / Data / Test 中实质传播；本轮未发现以下文档级矛盾：根据历史偏好自动直接督促、将沉默/单次反馈长期化、或在可能危机语言下继续普通 Review。
+P6-01, P6-02, P6-03 have been substantively propagated in Product / Data / Test; this round found none of the following document-level contradictions: automatic direct pushing based on historical preferences, long-termizing silence/single feedback items, or continuing ordinary Review under possible crisis language.
 
-但“无障碍与公平”缺少 Product、Data/AI、Test 三联的明确、可观察、可失败要求；因此不能以 `PASS` 或 `PASS WITH CONDITIONS` 关闭本专项审查。
+However, "accessibility and equity" lacks explicit, observable, falsifiable requirements across the Product, Data/AI, Test triplet; therefore this specialist review cannot be closed as `PASS` or `PASS WITH CONDITIONS`.
 
-## 3. 九项审查结果
+## 3. Nine review results
 
-| 项目 | Verdict | 文档级证据与结论 |
+| Item | Verdict | Document-level evidence and conclusion |
 |---|---|---|
-| 自主性与选择权 | `PASS` | Product FR-COA-001（419–420、447–449）、Data（795–799）、Test COA-001/002（710–711）支持用户主动打开、只回顾/零建议、不回应不追问、无后台跟进。 |
-| 直接督促（P6-01） | `PASS` | Product（441–443、453）、Data（795）、Test COA-003/004（712–713）、Decision 006（21–23）一致限定为本次 Review 明确请求；历史偏好不得单独授权。 |
-| 羞耻、压力与道德化 | `PASS` | Product（421、441）、Data（820）、Test SAF-001/COA-004（342–346、713）禁止将无记录或限制归为懒惰、人格缺陷或失败。 |
-| 依赖与不当优化 | `PASS WITH CONDITIONS` | Product（427）、Data（808、820）、Test COA-012（721）禁止以服从、频率、接受率或依赖作为成功证据。实际测量、样本及阈值留 G2/G3，不能声称已经控制风险。 |
-| 过度推断与人格化 | `PASS` | Product（264、421、425）、Data（805–808、815–820）、Test AIX-009/COA-006/008（300–304、715、717）区分事实、推断、确认与因果，禁止将推断改写为事实。 |
-| 证据与不确定性 | `PASS` | Product（252–264、428）、Data（624–630、799–801）、Test COA-005/014、REV-002（714、723、360–364）要求可追溯与证据不足明确未知，禁止事后补造。 |
-| 纠正、拒绝、停止与撤回（P6-02/P6-03） | `PASS WITH CONDITIONS` | Product（424–426）、Data（809–811、815–818）、Test COA-007/008/010（716、717、719）覆盖停止、冲突、撤回及后续检索排除。物理删除、缓存、备份、供应商与跨设备兑现性留 G2/隐私审查。 |
-| 临床与危机边界 | `PASS` | Product（350–351、436）、Data（797）、Test SAF-002/COA-013（348–352、722）要求停止普通指导、标记 `CLINICAL_REVIEW`，且未批准协议时禁止真实场景试用。这不是已具备危机处置服务的证明。 |
-| 无障碍与公平 | `REVISE` | Product（236–238）、Data（820）、Evidence Card（105–106）有跳过与不道德化原则，但没有简短/低认知负荷、替代交互、资源/照护/残障/语言差异下选择权不降级的三联验收要求；Test UX-001（336–340）只覆盖确认负担。 |
+| Autonomy and choice | `PASS` | Product FR-COA-001 (419–420, 447–449), Data (795–799), Test COA-001/002 (710–711) support user-initiated open, review-only/zero suggestions, no probing on non-response, no background follow-up. |
+| Direct pushing (P6-01) | `PASS` | Product (441–443, 453), Data (795), Test COA-003/004 (712–713), Decision 006 (21–23) consistently restrict it to an explicit request in this Review; historical preferences may not authorize alone. |
+| Shame, pressure, and moralizing | `PASS` | Product (421, 441), Data (820), Test SAF-001/COA-004 (342–346, 713) prohibit classifying missing records or constraints as laziness, personality defects, or failure. |
+| Dependency and improper optimization | `PASS WITH CONDITIONS` | Product (427), Data (808, 820), Test COA-012 (721) prohibit using compliance, frequency, acceptance rates, or dependency as success evidence. Actual measurement, samples, and thresholds remain G2/G3; risk control cannot be claimed as already achieved. |
+| Over-inference and anthropomorphizing | `PASS` | Product (264, 421, 425), Data (805–808, 815–820), Test AIX-009/COA-006/008 (300–304, 715, 717) distinguish facts, inferences, confirmations, and causation, and prohibit rewriting inferences as facts. |
+| Evidence and uncertainty | `PASS` | Product (252–264, 428), Data (624–630, 799–801), Test COA-005/014, REV-002 (714, 723, 360–364) require traceability and explicit unknown when evidence is insufficient, prohibiting post-hoc fabrication. |
+| Correction, refusal, stop, and revocation (P6-02/P6-03) | `PASS WITH CONDITIONS` | Product (424–426), Data (809–811, 815–818), Test COA-007/008/010 (716, 717, 719) cover stop, conflict, revocation, and subsequent retrieval exclusion. Physical deletion, caching, backup, vendor and cross-device deliverability remain G2/privacy review matters. |
+| Clinical and crisis boundaries | `PASS` | Product (350–351, 436), Data (797), Test SAF-002/COA-013 (348–352, 722) require stopping ordinary coaching, marking `CLINICAL_REVIEW`, and prohibit real-scenario trials when no protocol is approved. This is not proof that crisis-handling service capability exists. |
+| Accessibility and equity | `REVISE` | Product (236–238), Data (820), Evidence Card (105–106) have skipping and non-moralizing principles, but no triplet acceptance requirements that short/low-cognitive-load, alternative interaction, and non-downgraded choice under resource/caregiving/disability/language differences are enforced; Test UX-001 (336–340) covers only confirmation burden. |
 
-## 4. 合成情境走查
+## 4. Synthetic scenario walkthrough
 
-| 情境 | 文档级允许输出 | 禁止输出 | 结果 |
+| Scenario | Document-level allowed outputs | Prohibited outputs | Result |
 |---|---|---|---|
-| 历史偏好直接、当次未请求 | 温和澄清、只回顾、不干预。 | 因历史偏好、过去接受或未完成次数启用直接督促。 | `PASS` |
-| 无记录且自责 | 承认信息不足；允许结束、只回顾或可选澄清。 | 将无记录解释为失败/懒惰，或以补记录施压。 | `PASS` |
-| 外部压力目标 | 反映当前意愿与限制；允许不改变、仅回顾或可逆建议。 | 将他人目标转为个人承诺或动机缺陷。 | `PASS WITH CONDITIONS`：公平与低负担交互待补。 |
-| 撤回长期模式 | 立即排除后续检索；停止指导，除非用户主动重新请求。 | 旧快照、缓存或历史模式继续影响输出。 | `PASS WITH CONDITIONS`：技术兑现性待 G2/隐私审查。 |
-| 可能临床/危机语言 | 停止普通 Review，标记 `safety_stopped` / `CLINICAL_REVIEW`；无协议时阻止真实试用。 | 生产力建议、评分、诊断或虚构治疗性回应。 | `PASS`（仅文档边界） |
-| 当次明确请求直说 | 基于证据的直接但尊重表达；可拒绝或停止。 | 羞辱、命令、失败次数加压、把建议变承诺。 | `PASS` |
-| 一次“好”、沉默或接受建议 | 仅作为当次有限反馈；结果保持未知。 | 固化为永久偏好、人格画像、承诺或因果有效性。 | `PASS` |
+| Historical preference for directness, not requested this session | Gentle clarification, review-only, no intervention. | Enabling direct pushing due to historical preference, past acceptance, or incompletion counts. | `PASS` |
+| No records and self-blame | Acknowledge insufficient information; allow ending, review-only, or optional clarification. | Interpreting no records as failure/laziness, or pressuring to backfill records. | `PASS` |
+| External pressure goals | Reflect current wishes and constraints; allow no change, review-only, or reversible suggestions. | Converting others' goals into personal commitments or motivation deficits. | `PASS WITH CONDITIONS`: equity and low-burden interaction pending. |
+| Revoking a long-term pattern | Immediately excluded from subsequent retrieval; stop guidance unless the user actively re-requests. | Old snapshots, caches, or historical patterns continuing to influence outputs. | `PASS WITH CONDITIONS`: technical deliverability pending G2/privacy review. |
+| Possible clinical/crisis language | Stop ordinary Review, mark `safety_stopped` / `CLINICAL_REVIEW`; block real trials without a protocol. | Productivity suggestions, ratings, diagnosis, or fabricated therapeutic responses. | `PASS` (document boundaries only) |
+| Explicit request for directness this session | Evidence-based direct but respectful expression; refusable or stoppable. | Humiliation, commands, failure-count pressure, turning suggestions into commitments. | `PASS` |
+| One "good", silence, or accepted suggestion | Only as limited feedback for that session; outcome remains unknown. | Freezing into permanent preference, personality profile, commitment, or causal effectiveness. | `PASS` |
 
-## 5. 必须关闭的修订项
+## 5. Revisions that must be closed
 
-### PSR-001：无障碍与公平三联可验收性
+### PSR-001: accessibility and equity triplet falsifiability
 
-- **严重度**：专项审查阻断项（`REVISE`）
-- **责任建议**：Product owner / 文档作者修订；非作者心理安全审查者复核
-- **最小修订**：
-  1. **Product**：要求 Review 与反馈支持简短、可分段、低认知负荷表达；用户可不写自由文本、不做量化评价、不处理全部候选而完整结束。
-  2. **Product**：明确照护、资源限制、残障、疲劳、语言/表达差异和不稳定记录，不得降低只回顾、零建议、拒绝、停止、纠正、撤回的可用性，也不得被归为低动机。
-  3. **Data/AI**：不得以记录长度、频率、表达流畅度、量化能力或完成率推断动机、合作度或适合何种指导。
-  4. **Test**：增加至少一个 COA/SAF 可失败用例：低信息、疲劳/照护受限或不能量化反馈的合成输入下，用户仍有完整只回顾/零建议/停止路径；系统不得追加追问、降级选择权或生成动机归因。
-  5. **追溯**：新增需求和用例进入明确追溯矩阵，并完成独立三联一致性复核。
-- **关闭证据**：上述四类修改均已在三联文档出现、链接/静态检查通过、非作者复核确认没有扩大 P6 授权。
+- **Severity**: specialist review blocking item (`REVISE`)
+- **Recommended owner**: Product owner / document authors revise; non-author psychological safety reviewer re-reviews
+- **Minimal revisions**:
+  1. **Product**: require Review and feedback to support short, segmentable, low-cognitive-load expression; users can complete fully without writing free text, without quantitative ratings, and without processing all candidates.
+  2. **Product**: explicitly state that caregiving, resource constraints, disability, fatigue, language/expression differences, and unstable records must not reduce the availability of review-only, zero suggestions, refusal, stop, correction, or revocation, and must not be classified as low motivation.
+  3. **Data/AI**: do not infer motivation, cooperation level, or suitable guidance type from record length, frequency, expression fluency, quantitative ability, or completion rate.
+  4. **Test**: add at least one falsifiable COA/SAF case: under synthetic inputs of low information, fatigue/caregiving constraints, or inability to give quantitative feedback, the user still has the complete review-only/zero-suggestion/stop path; the system must not add probing, downgrade choice, or generate motivation attributions.
+  5. **Traceability**: new requirements and cases enter an explicit traceability matrix, and an independent triplet consistency re-review is completed.
+- **Closure evidence**: all four categories of changes appear in the triplet documents, link/static checks pass, and a non-author re-review confirms no expansion of P6 authorization.
 
-## 6. 仍后移或不可虚构的事项
+## 6. Matters still deferred or not to be fabricated
 
-- **G2 / 隐私专项审查**：状态转换、账户隔离、检索、撤回、缓存、备份、物理删除、供应商保留与跨设备一致性。
-- **G3**：可访问性可用性验证、样本量、观察期、量表、效力、安全信号和停止阈值。
-- **不得虚构为已完成**：功能未实现/未运行；没有真实用户压力、羞耻、依赖或长期影响数据；没有获批临床/危机协议或真实危机服务；隐私审查未完成。
+- **G2 / privacy specialist review**: state transitions, account isolation, retrieval, revocation, caching, backup, physical deletion, vendor retention, and cross-device consistency.
+- **G3**: accessibility usability validation, sample size, observation period, scales, power, safety signals, and stop thresholds.
+- **Must not be fabricated as complete**: features unimplemented/unrun; no real user data on stress, shame, dependency, or long-term impact; no approved clinical/crisis protocol or real crisis service; privacy review incomplete.
 
-## 7. 给 Max 的 G1 Gate 建议
+## 7. G1 Gate recommendation for Max
 
-1. 先关闭 `PSR-001`，并复核 Product → Data/AI → Test 的传播。
-2. 独立完成隐私专项审查，尤其核对撤回、删除、缓存、备份、供应商保留和跨用户隔离。
-3. 在未批准临床/危机协议前，持续只允许合成走查；不得试用真实危机场景。
-4. 关闭后重新执行本专项审查。只有得到 `PASS` 或严格有界的 `PASS WITH CONDITIONS`，并满足独立隐私前置条件，才可考虑**进入** G1 最终批准评审。
+1. Close `PSR-001` first, and re-review the Product → Data/AI → Test propagation.
+2. Complete the independent privacy specialist review, especially checking revocation, deletion, caching, backup, vendor retention, and cross-user isolation.
+3. Until a clinical/crisis protocol is approved, continue to allow only synthetic walkthroughs; real crisis scenarios must not be trialed.
+4. After closure, re-run this specialist review. Only on `PASS` or a strictly bounded `PASS WITH CONDITIONS`, with independent privacy preconditions satisfied, may **proceeding to** the G1 final approval review be considered.
 
-该建议不是 G1 批准，也不授权 G2、编码、真实数据、合并、发布或朋友试用。
+This recommendation is not a G1 approval and does not authorize G2, coding, real data, merge, release, or friend trials.
 
-## 8. PSR-001 修订后的独立复核（2026-09-16）
+## 8. Independent re-review after the PSR-001 revision (2026-09-16)
 
-- **审查者与方法**：非作者、只读、非临床的心理安全产品文档复核；只使用合成情境，未修改仓库、未使用真实数据。
-- **结论**：`PASS_WITH_CONDITIONS`。`PSR-001` 的 G1 文档级缺口已关闭，第一轮专项审查可以按本结论关闭；这不构成 G1、G2、实现、编码、合并、发布、隐私专项或真实数据/真实用户验证的批准。
-- **三联证据**：Product `FR-COA-011` 与第 14.2 策略表要求简短、可分段、低认知负荷路径，不因照护、资源、残障、疲劳或语言/表达差异降低选择权；Data 第 14.3A 禁止从长度、频率、表达/量化能力、接受率或完成率推断动机、合作度、人格或适合性；Test `COA-015` 以可失败 oracle 与追溯 `FR-COA-011 → 14.3A → COA-015` 覆盖这些边界。
-- **合成情境**：低信息/无记录；疲劳、照护或资源限制；辅助技术或语言/表达限制；无法量化反馈；以及只回顾、零建议、拒绝、停止、纠正、撤回，均在文档级通过。新条款未扩大 P6-01 的当次明确请求条件、P6-02 的确认/撤回边界或 P6-03 五项最低原则。
-- **仍然有效的条件**：G2 必须设计并兑现辅助技术兼容性、交互/状态实现和跨设备一致性；G3 才能执行兼容性、真实用户可用性/公平性、样本、观察期和阈值验证。不得将本次文档审查写成已实现、已兼容或已验证。
+- **Reviewer and method**: non-author, read-only, non-clinical psychological safety product document re-review; synthetic scenarios only; no repository modifications, no real data used.
+- **Conclusion**: `PASS_WITH_CONDITIONS`. The G1 document-level gap of `PSR-001` is closed; the first specialist review round can close with this conclusion; this constitutes no approval of G1, G2, implementation, coding, merge, release, privacy specialist review, or real data/real user validation.
+- **Triplet evidence**: Product `FR-COA-011` and the Section 14.2 strategy table require short, segmentable, low-cognitive-load paths, with no choice downgrade due to caregiving, resources, disability, fatigue, or language/expression differences; Data Section 14.3A prohibits inferring motivation, cooperation, personality, or suitability from length, frequency, expression/quantitative ability, acceptance rate, or completion rate; Test `COA-015` covers these boundaries with a falsifiable oracle and traceability `FR-COA-011 → 14.3A → COA-015`.
+- **Synthetic scenarios**: low-information/no records; fatigue, caregiving, or resource constraints; assistive technology or language/expression limits; inability to quantify feedback; and review-only, zero suggestions, refusal, stop, correction, revocation — all pass at the document level. The new clauses do not expand P6-01's explicit-request-this-session condition, P6-02's confirmation/revocation boundaries, or P6-03's five minimum principles.
+- **Conditions that remain valid**: G2 must design and deliver assistive-technology compatibility, interaction/state implementation, and cross-device consistency; only G3 can perform compatibility, real-user usability/equity, sample, observation period, and threshold validation. This document review must not be written up as implemented, compatible, or validated.

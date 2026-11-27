@@ -1,63 +1,63 @@
 # AI Life OS Design Language
 
-- **版本**：v0.1
-- **状态**：Draft — 由三个 G2 原型的共同风格沉淀；待 Max 选定原型变体后冻结为 v1.0（设计基线）
-- **Owner**：lifeosdesign（维护）；Max（批准与冻结）
-- **规则**：设计任务开场必读；Max 每次圈注/偏好表达后由 lifeosdesign 回写本文件
-- **边界**：本文件管「长什么样」（皮肤层）；「是什么和为什么」见 `docs/05-technical-architecture/Product-Core-v0.1.md`（内核层），皮肤不得自设业务规则
+- **Version**: v0.1
+- **Status**: Draft — distilled from the shared style of the three G2 prototypes; to be frozen as v1.0 (design baseline) once Max selects a prototype variant
+- **Owner**: lifeosdesign (maintenance); Max (approval and freezing)
+- **Rule**: Required reading at the start of every design task; after each annotation/preference statement by Max, lifeosdesign writes it back into this file
+- **Boundary**: This file governs "what it looks like" (skin layer); for "what it is and why", see `docs/05-technical-architecture/Product-Core-v0.1.md` (kernel layer); the skin must not define its own business rules
 
-## 1. 设计定位
+## 1. Design Positioning
 
-- 轻量、可信、每天 5 分钟用完即走；用户是自己人生的 CEO，工具不打扰、不评判、不诱导。
-- 一切数据「可核验」：每条 AI 结论可回溯原文证据；不确定就显示「未知」，绝不用猜测填数。
-- AI 是可纠正的候选，不是权威：确认才入长期分析，修订保留 AI 原始值。
+- Lightweight, trustworthy, usable in 5 minutes a day and then gone; the user is the CEO of their own life, and the tool does not disturb, judge, or manipulate.
+- All data is "verifiable": every AI conclusion can be traced back to source-text evidence; when uncertain, show "unknown" and never fill in numbers with guesses.
+- AI is a correctable candidate, not an authority: only confirmed entries enter long-term analysis, and revisions preserve the AI's original values.
 
-## 2. 界面红线（产品规格 → UI 语言）
+## 2. UI Red Lines (Product Spec → UI Language)
 
-| 红线 | 界面表达 |
+| Red Line | UI Expression |
 |---|---|
-| 原文 Capture 是证据，永不覆盖 | 编辑产生新版本，原文入口常驻 |
-| AI 值与用户修订值分离 | 双值并列显示（"AI 推断 / 你的修订"），修订后标注来源 |
-| 无证据 = unknown，非 neutral | 空状态可见（"无法判断·程度待定"），不隐藏 |
-| 无伪进度 | 不可量化目标显示定性状态，不画进度条 |
-| ONE BIG CHANGE 零或一 | 「本次不需要改变」是一等选项，不强塞建议 |
-| 批量接受非默认 | 批量操作降权/折叠，逐项确认为主路径 |
-| 事实/推测/理论/建议/局限分标 | 每个结论块带类型标签与（理论）来源引用 |
+| The original Capture text is evidence and is never overwritten | Editing creates a new version; the entry point to the original text is always present |
+| AI values and user-revised values are kept separate | Dual values displayed side by side ("AI inference / your revision"); source labeled after revision |
+| No evidence = unknown, not neutral | Empty state is visible ("Cannot determine · impact degree pending"), never hidden |
+| No fake progress | Non-quantifiable goals show qualitative status; no progress bars |
+| ONE BIG CHANGE: zero or one | "No change needed this time" is a first-class option; never force suggestions |
+| Bulk accept is not the default | Bulk actions are de-emphasized/collapsed; item-by-item confirmation is the primary path |
+| Fact / speculation / theory / recommendation / limitation are labeled separately | Every conclusion block carries a type label and a (theory) source citation |
 
-## 3. 风格基调（暂定，冻结于 v1.0）
+## 3. Style Baseline (Provisional; Frozen at v1.0)
 
-- **布局**：移动优先，按 375px 宽设计；PC 为窄容器居中。四个核心屏：Capture → AI 结构化确认 → 五维视图 → Review。
-- **语言**：中文 UI。
-- **五维识别色**（取自变体 1 实现值，暂定）：
+- **Layout**: mobile-first, designed for 375px width; on PC, a narrow centered container. Four core screens: Capture → AI structuring confirmation → Five Life Dimensions view → Review.
+- **Language**: Chinese UI.
+- **Five Life Dimension identity colors** (taken from Variant 1 implementation values, provisional):
 
-| 维度 | 名称 | Token |
+| Dimension | Name | Token |
 |---|---|---|
-| Time 时间 | 蓝 | `--time:#3E6DE0` |
-| Health 健康 | 绿 | `--health:#158A4C` |
-| Wealth 财富 | 琥珀 | `--wealth:#C2740B` |
-| Relationship 关系 | 玫红 | `--rel:#D4244E` |
-| Purpose 目的 | 紫 | `--purpose:#7135CE` |
+| Time | Blue | `--time:#3E6DE0` |
+| Health | Green | `--health:#158A4C` |
+| Wealth | Amber | `--wealth:#C2740B` |
+| Relationship | Rose | `--rel:#D4244E` |
+| Purpose | Purple | `--purpose:#7135CE` |
 
-- **中性色**：底 `#F4F4F6`、面 `#FFFFFF`、正文 `#17171A`、次级 `#71717A`、边线 `#E5E5EA`。
-- **语义色**：正向 `#16A34A`、负向 `#DC2626`、混合 `#B45309`、未知 `#A1A1AA`。
-- **排版密度、圆角、动效**：待 Max 选定原型变体后定（三变体差异点：密度型小字号紧凑 / 对话型留白多 / 卡片型圆角手势）。
+- **Neutrals**: background `#F4F4F6`, surface `#FFFFFF`, body text `#17171A`, secondary `#71717A`, border `#E5E5EA`.
+- **Semantic colors**: positive `#16A34A`, negative `#DC2626`, mixed `#B45309`, unknown `#A1A1AA`.
+- **Typographic density, corner radius, and motion**: to be decided after Max selects a prototype variant (how the three variants differ: density type with small, compact type / conversation type with generous whitespace / card type with rounded corners and gestures).
 
-## 4. Max 的设计偏好记录
+## 4. Max's Design Preference Record
 
-**已确认**：
-- 每天使用 ≤5 分钟，不制造使用时长。
-- 移动优先，手机是主要使用场景。
-- 隐私优先（单人私密体验，多独立账号）。
+**Confirmed**:
+- Daily use ≤5 minutes; do not manufacture screen time.
+- Mobile-first; the phone is the primary usage context.
+- Privacy-first (single-person private experience, multiple independent accounts).
 
-**待确认**（下次圈注时顺带回答，不催）：
-- 字体密度偏好（紧凑 / 舒适）
-- 五维识别色是否调整
-- 动效程度（无 / 克制 / 丰富）
+**To be confirmed** (answer along with the next annotation when convenient; no prompting):
+- Type density preference (compact / comfortable)
+- Whether to adjust the Five Life Dimension identity colors
+- Motion level (none / restrained / rich)
 
-**已否决的方向**：（暂无；出现后在此记录，防重犯）
+**Rejected directions**: (none yet; record here when they occur, to avoid repeats)
 
-## 5. 变更记录
+## 5. Change Log
 
-| 日期 | 版本 | 变更 | 来源 |
+| Date | Version | Change | Source |
 |---|---|---|---|
-| 2026-10-10 | v0.1 | 初建：从 G2 三个原型变体沉淀共同风格与红线 | 三原型 + POC-01 Spec v0.6 |
+| 2026-10-10 | v0.1 | Initial creation: distilled shared style and red lines from the three G2 prototype variants | Three prototypes + POC-01 Spec v0.6 |

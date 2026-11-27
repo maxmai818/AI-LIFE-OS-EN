@@ -1,172 +1,172 @@
-# 虚拟团队工作记录（WORK LOG）
+# Virtual Agent Team Work Log (WORK LOG)
 
-每完成一项工作记一条，让 Max 一屏看清虚拟团队的协作方式。格式：日期 · 角色 · 任务 · 输入 · 产出 · 验证 · 状态。
+Log one entry per completed work item, so Max can see how the virtual agent team collaborates at a glance. Format: Date · Role · Task · Input · Artifact · Verification · Status.
 
 ---
 
-## 2026-11-18（PWA App 体验包）
+## 2026-11-18 (PWA App Experience Pack)
 
-- 执行人：lifeosdev（lifeosdesign 会签：按 Design-Language v1.0 执行）
-- 工作：现有 Web 应用升级为可「添加到主屏幕」的 PWA「App 体验包」——① manifest.json（display:standalone、中文产品名）② 五维色环图标（`scripts/generate_pwa_icons.py` 零依赖生成 icon-512/192/512-maskable/32 + apple-touch-icon 180，色环取 v1.0 五维 token time/health/wealth/rel/purpose）③ sw.js 壳缓存加速二次打开（API 永不缓存；注册失败静默降级，自签证书场景不影响使用）④ 首访一次性「3 步开始用」引导（设密码→加到主屏→随手记一句；localStorage 标记，可关闭不再出现）⑤ 移动端手感优化：记录框打开即聚焦、发送即时反馈+防重复发送、打字骨架屏、AI 卡片入场动画、「对/不对」44px+ 大按钮、按压反馈、输入框 16px 防 iOS 聚焦缩放、visualViewport 键盘避让。server.py 新增 /manifest.json、/sw.js、/apple-touch-icon.png、/icons/{name} 路由；auth.py 公开路径放行 PWA 资源（无隐私数据）。不新增功能，INV 红线未触碰（内核层零改动）
-- 验证：pytest 13/13 全绿；uvicorn 本地冒烟关键路由全 200、图标路径穿越 404、AI_LIFE_OS_AUTH=1 下 PWA 资源 200/页面 302/API 401；浏览器实测引导只出现一次、关闭后输入框自动聚焦、无 JS 报错
-- 决策：manifest name「生活本 AI Life OS」/ short_name「生活本」（需求方指定；Design-Language 未命名产品，待 Max 确认）；theme-color 与图标底按 v1.0 中性底 #F4F4F6（现行皮肤底 #F6F2EC 与 v1.0 token 存在既有差异，本次不动皮肤）
-- 状态：⏸ Draft PR 待审（feat/pwa-app-experience，不合并、不部署）；真机 iOS/Android 验证（添加主屏、启动画面、键盘避让）为遗留项
+- Owner: lifeosdev (co-signed by lifeosdesign: executed per Design-Language v1.0)
+- Work: upgraded the existing web app into a PWA "App Experience Pack" that can be "added to the home screen" — ① manifest.json (display:standalone, Chinese product name) ② Five Life Dimensions color-ring icon (`scripts/generate_pwa_icons.py` generates icon-512/192/512-maskable/32 + apple-touch-icon 180 with zero dependencies; the color ring uses the v1.0 dimension tokens time/health/wealth/rel/purpose) ③ sw.js shell cache speeds up repeat opens (APIs are never cached; registration failure degrades silently, so self-signed certificate setups are unaffected) ④ one-time first-visit "Get started in 3 steps" onboarding (set a password → add to home screen → jot a sentence; localStorage flag, dismissible and never shown again) ⑤ mobile feel polish: capture box auto-focuses on open, instant send feedback + duplicate-send prevention, typing skeleton screen, AI card entrance animation, "Yes / No" 44px+ large buttons, press feedback, 16px input font to prevent iOS focus zoom, visualViewport keyboard avoidance. server.py adds the /manifest.json, /sw.js, /apple-touch-icon.png, and /icons/{name} routes; auth.py allows PWA assets on public paths (no private data). No new features; INV red lines untouched (zero changes at the kernel layer)
+- Verification: pytest 13/13 all green; uvicorn local smoke test — all key routes 200, icon path traversal 404, and with AI_LIFE_OS_AUTH=1 PWA assets 200 / pages 302 / API 401; browser-tested that onboarding appears only once, the input auto-focuses after dismissal, and there are no JS errors
+- Decision: manifest name "Shenghuo Ben AI Life OS" / short_name "Shenghuo Ben" (specified by the requester; Design-Language does not name the product, pending Max's confirmation); theme-color and the icon background use the v1.0 neutral base #F4F4F6 (the current skin base #F6F2EC has a pre-existing discrepancy with the v1.0 tokens; the skin is not touched in this change)
+- Status: ⏸ Draft PR pending review (feat/pwa-app-experience, not merged, not deployed); real-device iOS/Android verification (add to home screen, splash screen, keyboard avoidance) is a leftover item
 
-## 2026-11-17（POC-01 v0.7 三件套起草）
+## 2026-11-17 (POC-01 v0.7 three-document set drafted)
 
-- **角色**：lifeospm（需求与产品基线主责）
-- **内容**：变更清单 1–8（Max 2026-11-17 批复「1-8都按建议」，含待圈注点 ①固化自适应 Review ②无痛记录默认形态 ③6 问观察指标）落实为 POC-01 v0.7 三件套：Product & UX Spec v0.7、Capture Data + AI Output Contract v0.7、Test & Acceptance Spec v0.7（v0.6 三件套留档，`G1-baseline` 不动）。新增：FR-CAP-006/FR-COM-001~003、DP-008/009、CAP-003/004、CAL-001~003、§14.5 行为设计证据口径、受益/负担 6 问观察指标（不设门槛）、§19 验收语义固化（未执行产品测试措辞保留）。
-- **状态**：Max 2026-11-17 飞书批复「批准」，随 PR #29 合并；v0.7 转正需求基线（v0.6 转历史）。文档批准不等于实现/编码授权。
-- **产出**：`docs/02-requirements/POC-01-Product-UX-Spec-v0.7.md`、`docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.7.md`、`docs/06-testing/POC-01-Test-Acceptance-Spec-v0.7.md`
+- **Role**: lifeospm (primary owner of requirements and product baseline)
+- **Content**: change list 1–8 (Max's 2026-11-17 approval "do 1-8 all per the recommendations", including the circled points to pin down: ① solidify Adaptive Review ② default form of frictionless capture ③ the 6-question observation metrics) implemented as the POC-01 v0.7 three-document set: Product & UX Spec v0.7, Capture Data + AI Output Contract v0.7, Test & Acceptance Spec v0.7 (the v0.6 set is archived, `G1-baseline` untouched). Added: FR-CAP-006/FR-COM-001~003, DP-008/009, CAP-003/004, CAL-001~003, §14.5 evidence criteria for behavioral design, benefit/burden 6-question observation metrics (no thresholds set), §19 acceptance semantics fixed (the wording that product testing has not been executed is retained).
+- **Status**: Max approved via Feishu on 2026-11-17 ("Approved"), merged with PR #29; v0.7 promoted to baseline requirements (v0.6 moved to history). Document approval is not authorization to implement or write code.
+- **Artifacts**: `docs/02-requirements/POC-01-Product-UX-Spec-v0.7.md`, `docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.7.md`, `docs/06-testing/POC-01-Test-Acceptance-Spec-v0.7.md`
 
-## 2026-11-17（DQ-006 决策记录）
+## 2026-11-17 (DQ-006 decision record)
 
-- 执行人：lifeospm
-- 工作：`docs/09-decisions/DQ-006-Product-Analytics-Self-Built-v0.1.md` — OQ-03 收口：**埋点采用自建极简版**（匿名事件表、统计默认本地、上传 opt-in 可撤回、绝不含内容文本）；排除第三方云版 SDK（默认上报与隐私承诺冲突，非费用原因——各家免费额度事实已附来源）；后门=PostHog 自托管（数据不出域），留待未来决策包
-- 验证：grounded-citations `sources.py verify` 通过（3 来源定价页，2026-11 检索）；事件清单引用 v0.2 §4.1；红线（无内容文本/本地默认/opt-in）逐项继承
-- 状态：✅ Max 已采纳（2026-11-17 凌晨飞书批复「采纳」），随 PR #24 squash 合并（a86f943）；OQ-03 销项；批准边界=技术路线选定 ≠ 埋点上线批准
+- Owner: lifeospm
+- Work: `docs/09-decisions/DQ-006-Product-Analytics-Self-Built-v0.1.md` — closing out OQ-03: **analytics instrumentation uses a minimal self-built solution** (anonymous event table, statistics local by default, upload opt-in and revocable, never containing content text); third-party cloud SDKs excluded (default reporting conflicts with our privacy commitment — not a cost issue; facts on each vendor's free tier are cited to sources); fallback = PostHog self-hosted (data stays in-domain), left to a future decision packet
+- Verification: grounded-citations `sources.py verify` passed (3 source pricing pages, retrieved 2026-11); the event list references v0.2 §4.1; red lines (no content text / local by default / opt-in) inherited item by item
+- Status: ✅ Adopted by Max (Feishu approval "Adopted" in the early hours of 2026-11-17), squash-merged with PR #24 (a86f943); OQ-03 closed; approval boundary = technical route selected ≠ analytics instrumentation launch approved
 
-## 2026-11-15（复核关闭）
+## 2026-11-15 (review closure)
 
-- 执行人：lifeosreview
-- 工作：`docs/08-research/Commercialization-Validation-Independent-Review-v0.1.md` §6 整改核查 — 对商业化验证设计 v0.2 逐条关闭核验 12 条发现（High-1/2、Medium-1～5、Low-1～5），不采信附录 D 整改对照表自称、逐条到 v0.2 正文比对修正标准；含两项专项核验（High-1 单臂阈值式判定自认无对照、不作因果归因；High-2 降级语义表定义目标功能降级后读写语义）
-- 验证：12 条修正标准与 v0.2 §1.4/§2.2/§2.3/§2.4/§4.1–4.5/§5/附录 A/B 落点逐项比对，每条引用确切章节；High-2 与 Product Core v0.1 §3/§4（Goal，Active ≤3）一致性复核
-- 状态：✅ 12/12 CLOSED，结论更新为 `PASS（整改关闭）`；残余条件保留（本记录不批准实施、不代表阶段批准；真实付费/计费接入/埋点上线/G3 启动仍须 Max 明示批准；未解假设只能由 G3 真实用户实验解决）
-- 终审：✅ Max 已批准（2026-11-15 飞书批复「批准」，随 PR #19 合并）；OQ-04 闭环
+- Owner: lifeosreview
+- Work: `docs/08-research/Commercialization-Validation-Independent-Review-v0.1.md` §6 remediation check — item-by-item closure verification of the 12 findings (High-1/2, Medium-1~5, Low-1~5) against Commercialization Validation Design v0.2; the self-reported remediation table in Appendix D was not taken at face value — each correction criterion was compared against the v0.2 body text; includes two special verifications (High-1: the single-arm threshold-style judgment admits it has no control group and makes no causal attribution; High-2: the degradation semantics table defines read/write semantics after the target feature is degraded)
+- Verification: all 12 correction criteria compared item by item against their landing points in v0.2 §1.4/§2.2/§2.3/§2.4/§4.1–4.5/§5/Appendix A/B, each citing the exact section; High-2 consistency-checked against Product Core v0.1 §3/§4 (Goal, Active ≤3)
+- Status: ✅ 12/12 CLOSED, conclusion updated to `PASS (remediation closed)`; residual conditions retained (this record does not approve implementation and does not constitute stage approval; real payments / billing integration / analytics instrumentation launch / G3 kickoff still require explicit approval from Max; unresolved assumptions can only be settled by G3 real-user experiments)
+- Final sign-off: ✅ Approved by Max (Feishu approval "Approved" on 2026-11-15, merged with PR #19); OQ-04 closed
 
-## 2026-11-15（整改修订与流程勘误）
+## 2026-11-15 (remediation revision and process erratum)
 
-- 执行人：lifeospm + lifeospsych（整改修订）
-- 工作：`docs/02-requirements/Commercialization-Validation-Design-v0.2.md` — 逐条关闭独立复核 12 条发现（2 blocking + 5 major + 5 minor），整改对照表见附录 D（High-1 单臂阈值判定+量化停止规则；High-2 目标回 Free 闭环+降级语义对照表+功能人质禁令）
-- 验证：grounded-citations `sources.py verify` 通过（勘误后重跑）；阈值逐项 Level 标注；待 lifeosreview 复核关闭
-- 流程勘误（如实记录）：v0.2 提交 `4f9f516` 因共享工作区被并行会话（PR #17 技术架构基线）切至 main 而直接推送 origin/main，违反「未经批准不得合并 main」分支策略；原因=提交前未重查当前分支；处理=已向 Max 披露；**Max 裁定 B（revert 撤掉、重走 PR，2026-11-15 飞书批复）**：4f9f516 已 revert（fa6de0e），v0.2 以干净分支重走 PR；日期误标（11-12→实际 11-15）与引用格式勘误一并纳入重走 PR
-- 状态：✅ Max 已批准（2026-11-15 飞书批复「批准」），随 PR #19 squash 合并；批准范围=商业化验证设计 v0.2 基线 + OQ-04 关闭，实施（付费墙开发/计费接入/埋点上线/G3 启动）仍须 Max 另行明示批准
+- Owner: lifeospm + lifeospsych (remediation revision)
+- Work: `docs/02-requirements/Commercialization-Validation-Design-v0.2.md` — closing the 12 findings from the independent review one by one (2 blocking + 5 major + 5 minor); the remediation table is in Appendix D (High-1 single-arm threshold judgment + quantified stop rules; High-2 target back to the Free loop + degradation semantics table + feature-hostage prohibition)
+- Verification: grounded-citations `sources.py verify` passed (re-run after the erratum); every threshold annotated with its Level; pending lifeosreview review closure
+- Process erratum (recorded as it happened): the v0.2 commit `4f9f516` was pushed directly to origin/main because a parallel session (PR #17 technical architecture baseline) switched the shared workspace to main, violating the "never merge to main without approval" branch policy; cause = did not re-check the current branch before committing; handling = disclosed to Max; **Max ruled B (revert it and redo the PR, Feishu approval 2026-11-15)**: 4f9f516 has been reverted (fa6de0e), and v0.2 redoes the PR from a clean branch; the date mislabel (11-12 → actually 11-15) and a citation-format erratum are folded into the redone PR
+- Status: ✅ Approved by Max (Feishu approval "Approved" on 2026-11-15), squash-merged with PR #19; approval scope = Commercialization Validation Design v0.2 baseline + OQ-04 closure; implementation (paywall development / billing integration / analytics instrumentation launch / G3 kickoff) still requires separate explicit approval from Max
 
-## 2026-11-12（独立复核）
+## 2026-11-12 (independent review)
 
-- 执行人：lifeosreview
-- 工作：`docs/08-research/Commercialization-Validation-Independent-Review-v0.1.md` — 对商业化验证设计 v0.1 的独立对抗式复核（证据等级/迁移距离、暗黑模式与自主性、指标有效性、隐私一致性、Product Core/INV 兼容性、引用核查、验收可测性），结论 `PASS_WITH_CHANGES`：2 blocking（实验成败不可客观判定、目标追踪入 Pro 触碰核心闭环且降级语义未定义）+ 5 major + 5 minor
-- 验证：grounded-citations `sources.py verify` 对评审对象输出 `citations OK`（6 来源、1 条摘录核验）；抽查 6 条来源真实且主题对应；RevenueCat 基准年份（2026 vs 2025）与 Market-Research 附录 A [17][18] 逐项比对；Product Core v0.1 §3/§4 与 §2.2 付费墙逐条对照；发现均引用确切章节号或 Evidence Card 字段
-- 状态：✅ 本 PR（Draft，待 Max 批准）
+- Owner: lifeosreview
+- Work: `docs/08-research/Commercialization-Validation-Independent-Review-v0.1.md` — adversarial independent review of Commercialization Validation Design v0.1 (level of evidence / transfer distance, dark patterns and autonomy, metric validity, privacy consistency, Product Core/INV compatibility, citation checks, acceptance testability), verdict `PASS_WITH_CHANGES`: 2 blocking (experiment success/failure cannot be objectively judged; putting goal tracking behind Pro touches the core loop and degradation semantics are undefined) + 5 major + 5 minor
+- Verification: grounded-citations `sources.py verify` output `citations OK` for the review target (6 sources, 1 excerpt verified); spot-checked that all 6 sources are real and topically relevant; RevenueCat baseline year (2026 vs 2025) compared item by item with Market-Research Appendix A [17][18]; Product Core v0.1 §3/§4 checked item by item against the §2.2 paywall; every finding cites an exact section number or Evidence Card field
+- Status: ✅ This PR (Draft, awaiting Max's approval)
 
-## 2026-11-12（商业化验证设计）
+## 2026-11-12 (commercialization validation design)
 
-- 执行人：lifeospm（起草）+ lifeospsych（证据与自主性审查）
-- 工作：`docs/02-requirements/Commercialization-Validation-Design-v0.1.md` — 付费墙形态（反向试用+限流，REJECT 硬墙与打卡 streak）、定价实验（$12/月 / $80/年 + Van Westendorp 三阶段）、留存埋点（事件表+隐私约束+guardrail）；含 Evidence Card（周 Review 仪式，verdict PASS_WITH_CHANGES）
-- 验证：grounded-citations verify 通过（6 来源入台账、1 条原文摘录核验）；引用仅取核实过的内容，Harkin 效应量未核实则不引用
-- 状态：✅ Max 已批准（2026-11-12 飞书批复「批准」），随 PR #15 合并；DQ-04/05 按推荐采纳，未决 OQ-03/04（OQ-04 = lifeosreview 独立复核，创建者不自批）
+- Owner: lifeospm (drafting) + lifeospsych (evidence and autonomy review)
+- Work: `docs/02-requirements/Commercialization-Validation-Design-v0.1.md` — paywall shape (reverse trial + rate limiting; REJECT hard walls and check-in streaks), pricing experiment ($12/month / $80/year + three-stage Van Westendorp), retention analytics instrumentation (event table + privacy constraints + guardrails); includes an Evidence Card (weekly Review ritual, verdict PASS_WITH_CHANGES)
+- Verification: grounded-citations verify passed (6 sources registered in the ledger, 1 verbatim excerpt verified); citations use only verified content — the Harkin effect size was not cited because it could not be verified
+- Status: ✅ Approved by Max (Feishu approval "Approved" on 2026-11-12), merged with PR #15; DQ-04/05 adopted per recommendations, OQ-03/04 pending (OQ-04 = independent review by lifeosreview; creators do not self-approve)
 
-## 2026-11-09（产品决策）
+## 2026-11-09 (product decisions)
 
-- **2026-11-09 · lifeospm · G2-Decision-003 产品定位修正案（市场调研后三项裁定）**
-  - 输入：Max 批复「DQ-01: A / DQ-02: A / DQ-03: A」（依据 Market-Research-AI-Life-OS-v0.1）
-  - 产出：`docs/09-decisions/G2-Decision-003-Product-Positioning-Amendment-v0.1.md`（indie 线 $10K–$200K MRR / 中英双语并行 / $8–15 月费 + 年付；5 条定位修正：Review 仪式留存、隐私一级卖点、无诊断红线、12 个月验证里程碑、口碑 niche 不买量；2 项未决 OQ-01/02）
-  - 验证：`scripts/check_repository_safety.py` 通过（80 tracked files）；既有 INV-01～12 与 Product Core v0.1 显式声明不变；关键数字与市场调研 §4/§7 逐项对应
-  - 状态：✅ Max 已批准（2026-11-09 飞书批复「#13和#14都APprove」），随 PR #14 合并
+- **2026-11-09 · lifeospm · G2-Decision-003 product positioning amendment (three rulings after market research)**
+  - Input: Max's approval "DQ-01: A / DQ-02: A / DQ-03: A" (based on Market-Research-AI-Life-OS-v0.1)
+  - Artifact: `docs/09-decisions/G2-Decision-003-Product-Positioning-Amendment-v0.1.md` (indie track $10K–$200K MRR / Chinese-English bilingual in parallel / $8–15 monthly fee + annual payment; 5 positioning corrections: Review-ritual retention, privacy as a top-tier selling point, no-diagnosis red line, 12-month validation milestone, word-of-mouth niche with no paid acquisition; 2 open items OQ-01/02)
+  - Verification: `scripts/check_repository_safety.py` passed (80 tracked files); existing INV-01~12 and the Product Core v0.1 explicit declarations unchanged; key numbers map item by item to Market Research §4/§7
+  - Status: ✅ Approved by Max (Feishu approval "#13 and #14 both APprove" on 2026-11-09), merged with PR #14
 
-- **2026-11-09 · lifeospm · Design-Language-v1.0.md 归位排查**
-  - 输入：Max「我没动过，也不知道跟 Obsidian 有什么关系，其实不用管 Obsidian」
-  - 产出：恢复 `docs/03-design/Design-Language-v1.0.md`（自 git 恢复），删除 `docs/04-data-ai/` 下逐字节相同的重复副本
-  - 验证：删除前 diff 确认副本与 git HEAD 版本逐字节一致（4152 字节），零信息损失；safety check 恢复通过
-  - 状态：✅ 完成（工作区恢复与 HEAD 一致，无须提交）
+- **2026-11-09 · lifeospm · Design-Language-v1.0.md restoration check**
+  - Input: Max: "I never touched it, and I don't know what it has to do with Obsidian — actually there's no need to worry about Obsidian"
+  - Artifact: restored `docs/03-design/Design-Language-v1.0.md` (recovered from git), deleted the byte-identical duplicate under `docs/04-data-ai/`
+  - Verification: diff before deletion confirmed the copy was byte-identical to the git HEAD version (4152 bytes), zero information loss; safety check passes again
+  - Status: ✅ Complete (workspace restored to match HEAD, no commit needed)
 
-## 2026-11-05（调研）
+## 2026-11-05 (research)
 
-- **2026-11-05 · lifeospm · AI Life OS 市场调研 v0.1（能不能做 / 赚不赚钱）**
-  - 输入：Max「Life OS 项目，我想做个市场调研，能不能做，赚不赚钱」+「要的」（确认固化为 repo 文档）
-  - 产出：`docs/08-research/Market-Research-AI-Life-OS-v0.1.md`（结论先行 + 市场口径辨析 + 竞品格局 + 变现经济学 + 监管/风险 + 验证里程碑 + 26 来源附录 + 3 项待决策 DQ-01～03）
-  - 验证：来源 URL 由 grounded-citations 台账机械渲染，估算口径逐条标注，失败案例（Character.AI 破产、Calm/Headspace 萎缩）纳入结论；`scripts/check_repository_safety.py` 报告的唯一问题是工作区既有状态（Design-Language-v1.0.md 被本地移至 04-data-ai、tracked 文件缺失），与本次变更无关；已排查：系逐字节重复副本，已恢复原位（见 11-09 归位排查条目）
-  - 状态：✅ Max 已批准（2026-11-09 飞书批复「#13和#14都APprove」），随 PR #13 合并
+- **2026-11-05 · lifeospm · AI Life OS market research v0.1 (can it be done / can it make money)**
+  - Input: Max: "For the Life OS project I want to do some market research — can it be done, can it make money" + "yes, do it" (confirmed to be preserved as repo documents)
+  - Artifact: `docs/08-research/Market-Research-AI-Life-OS-v0.1.md` (conclusions first + market-definition analysis + competitive landscape + monetization economics + regulation/risks + validation milestones + 26-source appendix + 3 pending decisions DQ-01~03)
+  - Verification: source URLs rendered mechanically from the grounded-citations ledger, every estimate annotated with its basis, failure cases (Character.AI bankruptcy, Calm/Headspace shrinkage) included in the conclusions; the only issue reported by `scripts/check_repository_safety.py` was pre-existing workspace state (Design-Language-v1.0.md locally moved to 04-data-ai, tracked file missing), unrelated to this change; investigated: it was a byte-identical duplicate, restored to its original place (see the 11-09 restoration check entry)
+  - Status: ✅ Approved by Max (Feishu approval "#13 and #14 both APprove" on 2026-11-09), merged with PR #13
 
-## 2026-10-17（架构确认）
+## 2026-10-17 (architecture confirmation)
 
-- **2026-10-17 · lifeospm · 技术架构基线确认（决策包补确认）**
-  - 输入：Max 指出技术架构未先行确认；决策包 A/B/C/D
-  - 产出：Max 回复「A」——SQLite + 原生 JS + Python/FastAPI 基线确认；G2-Decision-002 更新为已确认
-  - 验证：决策原文入档；试用入口已交付（127.0.0.1:8787 / 192.168.50.158:8787）
-  - 状态：✅ 流程教训：架构类基线须先出决策包再实现，此后不再自行默认
-
-
-- **2026-10-17 · lifeosdev · 第一张皮 v0.1 开发（G2-Decision-002）**
-  - 输入：Max「开始开发」；Product Core v0.1（Approved）+ Design Language v1.0（变体 2 基线）
-  - 产出：`app/` FastAPI+SQLite 应用（Capture→AI 结构化→确认→五维→Review→反馈全闭环）+ 变体 2 对话式皮肤 + `app/tests/` INV 不变量测试 + CI workflow `app-tests.yml`
-  - 验证：pytest 11/11 通过（含 :memory: 跨连接坑修复、create_goal 缺 commit 真 bug 修复）；真实服务器冒烟 10/10（含 INV-03 unknown 生效、INV-06 零建议、INV-02 双值）
-  - 状态：✅ 待 PR 合并
+- **2026-10-17 · lifeospm · technical architecture baseline confirmed (retroactive decision-packet confirmation)**
+  - Input: Max pointed out that the technical architecture had not been confirmed first; decision packet A/B/C/D
+  - Artifact: Max replied "A" — SQLite + vanilla JS + Python/FastAPI baseline confirmed; G2-Decision-002 updated to confirmed
+  - Verification: decision text archived; trial entry point delivered (127.0.0.1:8787 / 192.168.50.158:8787)
+  - Status: ✅ Process lesson: architecture baselines must go through a decision packet before implementation; no more self-defaulting from now on
 
 
-- **2026-10-17 · lifeospm · G2-Decision-001 执行（三项决策落地）**
-  - 输入：Max 批复「#1，批准 #2，2无 #3，1」
-  - 产出：Product Core v0.1 升 Approved 内核基线；Design Language v1.0 冻结（第一张皮=变体 2 对话引导型）；`docs/09-decisions/G2-Decision-001-*.md` 决策记录；公开演示仓库 `ai-life-os-prototypes`（手机访问）
-  - 验证：决策原文入档；check_repository_safety.py 通过；演示仓库 Pages URL 实测 200
-  - 状态：✅ 完成
+- **2026-10-17 · lifeosdev · First Skin v0.1 development (G2-Decision-002)**
+  - Input: Max: "Start development"; Product Core v0.1 (Approved) + Design Language v1.0 (Variant 2 baseline)
+  - Artifact: `app/` FastAPI+SQLite application (full loop Capture → AI structuring → confirm → Five Life Dimensions → Review → feedback) + Variant 2 conversational skin + `app/tests/` INV invariant tests + CI workflow `app-tests.yml`
+  - Verification: pytest 11/11 passed (including a fix for the :memory: cross-connection pitfall and a real bug fix for create_goal missing a commit); real-server smoke test 10/10 (including INV-03 unknown taking effect, INV-06 zero suggestions, INV-02 dual values)
+  - Status: ✅ awaiting PR merge
 
-- **2026-10-17 · lifeospm · Product Core v0.1（内核/皮肤分层落地）**
-  - 输入：Max 路线选择「内核/皮肤分层 + 自用反馈喂内核」（对话确认）
-  - 产出：`docs/05-technical-architecture/Product-Core-v0.1.md`（价值/逻辑主线、数据结构骨架、INV-01～12 不变量、变更与反馈回流政策）、docs/README 索引与 Design Language 边界声明更新
-  - 验证：内核内容逐条对齐 v0.6 G1 基线（Data Contract DP-001～007、3.x 实体）；`check_repository_safety.py` 通过
-  - 状态：✅ 本 PR（Draft 状态待 Max 批准为 G2 内核基线）
+
+- **2026-10-17 · lifeospm · G2-Decision-001 execution (three decisions implemented)**
+  - Input: Max's approval "#1, approved / #2, 2 none / #3, 1"
+  - Artifact: Product Core v0.1 promoted to Approved kernel baseline; Design Language v1.0 frozen (First Skin = Variant 2 conversational-guided); decision record `docs/09-decisions/G2-Decision-001-*.md`; public demo repo `ai-life-os-prototypes` (mobile access)
+  - Verification: decision text archived; check_repository_safety.py passed; demo repo Pages URL verified live with 200
+  - Status: ✅ Complete
+
+- **2026-10-17 · lifeospm · Product Core v0.1 (kernel/skin layering implemented)**
+  - Input: Max's route choice "kernel/skin layering + feeding self-use feedback into the kernel" (confirmed in conversation)
+  - Artifact: `docs/05-technical-architecture/Product-Core-v0.1.md` (value/logic through-line, data-structure skeleton, INV-01~12 invariants, change and feedback-reflow policy), plus updates to the docs/README index and the Design Language boundary statement
+  - Verification: kernel content aligned item by item with the v0.6 G1 baseline (Data Contract DP-001~007, 3.x entities); `check_repository_safety.py` passed
+  - Status: ✅ this PR (Draft, awaiting Max's approval as the G2 kernel baseline)
 
 ## 2026-10-10
 
-- **2026-10-10 · lifeosdesign（角色化前由并行临时执行者完成）· G2 原型三变体产出**
-  - 输入：POC-01 Product & UX Spec v0.6、设计方向三条（信息密度 / 对话引导 / 卡片清单）
-  - 产出：`docs/03-design/prototypes/variant-{1,2,3}/index.html` + 各自 NOTES.md（已入仓，手机经 Pages 目录页访问）
-  - 验证：变体 2/3 经 headless Chrome 20+/24 项交互断言通过；变体 1 经 jsdom 20 项断言通过；零外部依赖
-  - 状态：⏳ 待 Max 选择（1/2/3 + 圈注），修改由 lifeosdesign 承接（≤2 轮）
+- **2026-10-10 · lifeosdesign (done by a parallel ad-hoc executor before role formalization) · G2 prototype three-variant output**
+  - Input: POC-01 Product & UX Spec v0.6, three design directions (information density / conversational guidance / card list)
+  - Artifact: `docs/03-design/prototypes/variant-{1,2,3}/index.html` + their respective NOTES.md (committed to the repo, accessible on phones via the Pages directory page)
+  - Verification: Variants 2/3 passed 20+/24 interaction assertions via headless Chrome; Variant 1 passed 20 assertions via jsdom; zero external dependencies
+  - Status: ⏳ awaiting Max's choice (1/2/3 + annotations); changes handled by lifeosdesign (≤2 rounds)
 
-- **2026-10-10 · lifeospm · 虚拟团队编制落地（角色档案 + Design Language + 工作记录）**
-  - 输入：Max 方案确认（"同意"）
-  - 产出：`agent-assets/profiles/lifeosdesign/SOUL.md`、`docs/03-design/Design-Language-v0.1.md`、`agent-assets/WORK-LOG.md`、AGENTS.md 角色表更新
-  - 验证：`check_repository_safety.py` 通过
-  - 状态：✅ 本 PR
+- **2026-10-10 · lifeospm · virtual agent team established (role profiles + Design Language + work log)**
+  - Input: Max's confirmation of the plan ("Agreed")
+  - Artifact: `agent-assets/profiles/lifeosdesign/SOUL.md`, `docs/03-design/Design-Language-v0.1.md`, `agent-assets/WORK-LOG.md`, AGENTS.md role table update
+  - Verification: `check_repository_safety.py` passed
+  - Status: ✅ this PR
 
-- **2026-10-10 · lifeospm · G1 关闭全流程（历史补记）**
-  - 输入：Max 决策（选项 A + Decision 007）
-  - 产出：PR #4/#5/#6 合并、tag `G1-baseline`、tag `archive/poc-exploration-20261008`、实验分支归档删除
-  - 验证：CI 全绿；归档 tag 覆盖全部实验历史后才删分支
-  - 状态：✅ 完成
+- **2026-10-10 · lifeospm · G1 closure full process (retrospective record)**
+  - Input: Max's decision (Option A + Decision 007)
+  - Artifact: PR #4/#5/#6 merged, tag `G1-baseline`, tag `archive/poc-exploration-20261008`, experimental branches archived then deleted
+  - Verification: CI all green; branches deleted only after the archive tags covered the full experiment history
+  - Status: ✅ Complete
 
-## 2026-11-15（皮肤移植 PR #20）
+## 2026-11-15 (skin port PR #20)
 
-- 日期：2026-11-15
-- 角色：lifeosdesign（视觉搬运）+ lifeosdev（接线）+ lifeosqa（验证）
-- 任务：Max 反馈试用页面"跟三个版本不同、垃圾多"；要求变体 2 皮肤原样移植进产品
-- 输入：docs/03-design/prototypes/variant-2/index.html（1316 行设计稿）；app/static 毛坯版
-- 产出：app/static/style.css = 设计稿 CSS 原样搬运（390 行零改动+2 条注明补充）；index.html/app.js 组件类名与设计稿逐个对齐并接真 API；server.py 新增 /style.css /app.js 路由 + POST /api/impacts/{id}/revise（INV-02 双值）
-- 验证：pytest 12/12；页面资产 200 全通；记录→整理→修订→确认→五维→复盘全链路 curl 冒烟通过；CI 3 项绿
-- 状态：PR #20 已合并 main（205d27a）
-- 教训（重要）：①"没有东西"真根因=静态文件从未挂路由，页面一直是无样式无脚本白纸——此前冒烟只测 API 没测页面资产，验收必须覆盖用户实际打开的东西；②"骨架"指需求主线，皮肤=产品长相必须原样搬，不能只搬交互做毛坯
+- Date: 2026-11-15
+- Role: lifeosdesign (visual transfer) + lifeosdev (wiring) + lifeosqa (verification)
+- Task: Max's feedback on the trial page — "different from the three versions, full of junk"; asked for the Variant 2 skin to be ported into the product as-is
+- Input: docs/03-design/prototypes/variant-2/index.html (1316-line design draft); bare-bones app/static
+- Artifact: app/static/style.css = design-draft CSS copied as-is (390 lines, zero changes + 2 annotated additions); index.html/app.js component class names aligned one by one with the design draft and wired to the real API; server.py adds the /style.css and /app.js routes + POST /api/impacts/{id}/revise (INV-02 dual values)
+- Verification: pytest 12/12; page assets all 200; full-chain curl smoke of record → structure → revise → confirm → Five Life Dimensions → review passed; CI 3 checks green
+- Status: PR #20 merged into main (205d27a)
+- Lesson (important): ① the real root cause of "there's nothing there" = the static files were never mounted on a route, so the page had always been an unstyled, scriptless blank — earlier smoke tests only hit the API, never the page assets; acceptance must cover what the user actually opens; ② "skeleton" refers to the requirement through-line; the skin = what the product looks like and must be transferred as-is — porting only the interactions into a bare-bones shell is not enough
 
-## 2026-11-15（无痛记录 v0.2 · PR #22）
+## 2026-11-15 (frictionless capture v0.2 · PR #22)
 
-- 日期：2026-11-15
-- 角色：lifeospm（体验整改决策）+ lifeosdev（实现）+ lifeosqa（验证）
-- 任务：Max 试用反馈"手动选方向 5 选 + 程度 5 级太繁琐、选择困难、体现不出 AI 辅助"，要求无痛记录、AI 按感觉推荐怎么记
-- 产出：记录卡=一句话人话总结+「对，就是这样/不太对」；硬指标折叠进细节；自然语言纠错（POST /api/items/{id}/correct + llm.correct，mock 关键词/真 LLM 语义）；一键整卡确认；修订双值全留痕（INV-02）
-- 验证：pytest 13/13；冒烟：说"程度没那么强"→degree 3→2+note，原值入 user_revisions，一键确认 confirmed；页面资产 200
-- 状态：PR #22 已合并
-- 决策依据：内核数据模型不变（方向/程度照记），只把"谁来填"从用户改为 AI——属体验层整改，符合"自用反馈分流：体验→皮肤"，未触内核不需要决策包
-- 教训：用户面对的每一个选择都是负担；硬指标是 AI 的工作语言，不是用户的；UI 里数字要让位于人话结论
+- Date: 2026-11-15
+- Role: lifeospm (experience remediation decision) + lifeosdev (implementation) + lifeosqa (verification)
+- Task: Max's trial feedback — "manually picking direction from 5 options + degree from 5 levels is too tedious, causes decision fatigue, and doesn't show any AI assistance" — asked for frictionless capture, with the AI recommending how to record based on the feeling
+- Artifact: capture card = one-sentence plain-language summary + "Yes, that's right / Not quite"; hard metrics folded into details; natural-language correction (POST /api/items/{id}/correct + llm.correct, mock keywords / real LLM semantics); one-click whole-card confirmation; all revisions keep dual values with full audit trail (INV-02)
+- Verification: pytest 13/13; smoke: saying "the degree isn't that strong" → degree 3→2 + note, original value recorded in user_revisions, one-click confirm → confirmed; page assets 200
+- Status: PR #22 merged
+- Decision rationale: the kernel data model is unchanged (direction/degree still recorded the same way) — only "who fills it in" changes from the user to the AI. This is an experience-layer remediation, consistent with "self-use feedback triage: experience → skin"; it does not touch the kernel, so no decision packet is needed
+- Lesson: every choice a user faces is a burden; hard metrics are the AI's working language, not the user's; in the UI, numbers must give way to plain-language conclusions
 
-## 2026-11-15（LLM 配置向导）
+## 2026-11-15 (LLM setup wizard)
 
-- 角色：lifeosdev；任务：Max 要求配上真 LLM
-- 产出：app/setup-llm.sh（隐藏输入密钥→写 .env 权限 600→连通性实测）；.env.example 模板；start.sh 自动加载 .env
-- 安全：.env 已被 .gitignore 保护；密钥不进聊天/不进 git；本会话凭据一律 [REDACTED]
-- 阻塞：XIAOMI_API_KEY 实际值不在任何可读配置（Hermes auth.json 只存指纹），需 Max 本人跑一次 setup-llm.sh 灌入
+- Role: lifeosdev; Task: Max asked for a real LLM to be configured
+- Artifact: app/setup-llm.sh (hidden key input → write .env with permissions 600 → live connectivity test); .env.example template; start.sh auto-loads .env
+- Security: .env protected by .gitignore; keys never enter chat or git; all credentials in this session are [REDACTED]
+- Blocker: the actual XIAOMI_API_KEY value is not in any readable config (Hermes auth.json stores only a fingerprint); Max needs to run setup-llm.sh once himself to enter it
 
-## 2026-11-17（真 LLM 接通 · MiMo）
+## 2026-11-17 (real LLM connected · MiMo)
 
-- 角色：lifeosdev + lifeosqa；任务：Max 充值后接通真 LLM 并实测
-- 产出：llm.py 输出预算适配推理型模型（extract 4000/correct 2000/review 3000）；空返回/坏 JSON 从静默改为报错（不再假报"没内容"）；setup-llm.sh 连通性实测通过
-- 验证：真语义冒烟——非示例句式"陪客户聊两小时方案…单子谈下来"→ 跨维混合影响+情绪单列（mock 做不到）；说人话纠错"财富程度低一点、谈单挺耗神"→ degree 4→2+health 转负，原值全部入 user_revisions（INV-02）；一键确认 confirmed；pytest 13/13
-- 状态：生产可用（app/.env 权限 600，.gitignore 保护，密钥不进 git）
-- 教训：推理型模型先烧 reasoning_tokens，max_tokens 按"推理+正文"给预算，否则正文截断为空；AI 失败必须显式报错，静默返回空会被 UI 误读成"无需拆解"
+- Role: lifeosdev + lifeosqa; Task: after Max topped up, connect the real LLM and test it live
+- Artifact: llm.py output budgets adapted for reasoning models (extract 4000/correct 2000/review 3000); empty returns / bad JSON changed from silent to explicit errors (no more falsely reporting "no content"); setup-llm.sh connectivity test passed
+- Verification: real-semantics smoke — a non-template sentence "spent two hours with a client discussing the proposal… closed the deal" → cross-dimension mixed impacts + emotion listed separately (impossible for mock); plain-language correction "the wealth degree is a bit low, closing deals is quite draining" → degree 4→2 + health turns negative, all original values recorded in user_revisions (INV-02); one-click confirm → confirmed; pytest 13/13
+- Status: production-ready (app/.env permissions 600, protected by .gitignore, keys never enter git)
+- Lesson: reasoning models burn reasoning_tokens first, so max_tokens must budget for "reasoning + body", otherwise the body is truncated to empty; AI failures must raise explicit errors — silently returning empty gets misread by the UI as "no breakdown needed"
 
-## 2026-11-17（云端部署 · 腾讯 VPS）
+## 2026-11-17 (cloud deployment · Tencent Cloud VPS)
 
-- 角色：lifeosdev；任务：Max 明示批准云部署后，把 AI Life OS 部署到腾讯 VPS（[REDACTED-VPS-IP]，Lighthouse [REDACTED-INSTANCE-ID]）
-- 产出：auth.py 登录层（首次访问自设密码、PBKDF2 哈希、HMAC 签名 Cookie、AI_LIFE_OS_AUTH=1 门控，本地/测试默认关闭零影响）；VPS 部署 /opt/lifeos（venv+依赖+自签证书 HTTPS 443 + systemd 常驻 + cron 每日备份留 14 天）
-- 验证：登录层本地 7/7（重定向/401/设密码/带 cookie 200/错密码/对密码/状态文件 600）；pytest 13/13；VPS 外部冒烟见部署记录
-- 安全：密码只存哈希不进聊天；LLM key .env 600 仅在服务器；SSH 仅密钥（password auth 关闭）
-- 教训：Starlette 中间件 call_next 必须 await；request.form() 需 python-multipart，改手解 urlencoded 零依赖
+- Role: lifeosdev; Task: after Max explicitly approved cloud deployment, deploy AI Life OS to the Tencent Cloud VPS ([REDACTED-VPS-IP], Lighthouse [REDACTED-INSTANCE-ID])
+- Artifact: auth.py login layer (self-set password on first visit, PBKDF2 hash, HMAC-signed cookies, AI_LIFE_OS_AUTH=1 gating, off by default locally/in tests with zero impact); VPS deployment at /opt/lifeos (venv + dependencies + self-signed certificate HTTPS 443 + systemd service + cron daily backups kept for 14 days)
+- Verification: login layer locally 7/7 (redirect / 401 / set password / 200 with cookie / wrong password / correct password / state file 600); pytest 13/13; VPS external smoke test in the deployment record
+- Security: passwords stored only as hashes and never in chat; LLM key .env 600 on the server only; SSH key-only (password auth disabled)
+- Lesson: Starlette middleware must await call_next; request.form() needs python-multipart, so switched to manually parsing urlencoded with zero dependencies

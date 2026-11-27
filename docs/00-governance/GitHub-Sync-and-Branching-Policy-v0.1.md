@@ -1,87 +1,87 @@
-# GitHub 同步与分支策略 v0.1
+# GitHub Sync and Branching Policy v0.1
 
 **Status:** Active
-**Scope:** AI Life OS 产品文档、Agent 规范与项目代码
+**Scope:** AI Life OS product documents, agent specifications, and project code
 
-## 1. 目标
+## 1. Objective
 
-GitHub 私有仓库是 AI Life OS 正式项目资产的远程副本和协作入口，便于在电脑和手机查看文档、代码、提交、评审与 CI 结果。
+The GitHub private repository is the remote copy and collaboration entry point for AI Life OS's official project assets, making it easy to view documents, code, commits, reviews, and CI results on a computer or phone.
 
-GitHub 不保存 Hermes 的运行状态，也不作为真实用户数据、密钥或运行数据库的备份位置。
+GitHub does not hold Hermes runtime state, nor does it serve as a backup location for real user data, secrets, or running databases.
 
-## 2. 纳入版本控制
+## 2. Included in Version Control
 
-- 产品愿景、Roadmap、需求、UX、架构和决策文档
-- 心理学 Evidence Card 与证据审查记录
-- 脱敏后的测试规范和固定测试数据
-- Agent 的 Skill 与角色规则源文件
-- 未来应用、服务、共享包和自动化测试代码
-- 数据库 Schema 与迁移脚本，但不包括真实数据库文件
-- CI/CD 工作流、发布说明和不含凭据的部署配置
+- Product vision, roadmap, requirements, UX, architecture, and decision documents
+- Psychology Evidence Cards and evidence review records
+- Redacted test specifications and fixed test data
+- Agent skill and role rule source files
+- Future application, service, shared package, and automated test code
+- Database schema and migration scripts, but not actual database files
+- CI/CD workflows, release notes, and deployment configs without credentials
 
-## 3. 禁止提交
+## 3. Prohibited from Commits
 
-- `.env`、API Key、Token、证书、私钥和部署凭据
-- 用户日记、健康、财务、关系或其他真实私人数据
-- 未脱敏的日志、会话转录和模型请求/响应转储
-- SQLite/PostgreSQL 数据文件、缓存、锁文件和临时文件
-- `~/.hermes/` 下的 Profile、Memory、Session、Kanban DB 与运行日志
-- 构建产物、依赖目录和本机 IDE 配置
+- `.env` files, API keys, tokens, certificates, private keys, and deployment credentials
+- User journals, health, finance, relationship, or other real private data
+- Unredacted logs, session transcripts, and model request/response dumps
+- SQLite/PostgreSQL data files, caches, lock files, and temporary files
+- Profiles, Memory, Session, Kanban DB, and runtime logs under `~/.hermes/`
+- Build artifacts, dependency directories, and local IDE configuration
 
-任何敏感数据一旦误提交，应立即停止推送/发布，撤销暴露的凭据，并清理 Git 历史；仅新增 `.gitignore` 不能消除已经进入历史的秘密。
+If any sensitive data is committed by mistake, stop pushing/releasing immediately, revoke the exposed credentials, and purge the Git history; adding a `.gitignore` alone does not remove secrets that have already entered history.
 
-## 4. 同步方式
+## 4. Sync Approach
 
-不采用“每次文件变化即自动提交”。采用任务完成后的受控同步：
+Do not use "auto-commit on every file change". Use controlled sync after task completion:
 
 ```text
-Kanban 任务
-→ 分支或 worktree
-→ 修改并验证
-→ 聚焦的 commit
+Kanban task
+→ branch or worktree
+→ modify and verify
+→ focused commit
 → push
 → Pull Request
-→ 独立评审 + CI
-→ 合并 main
+→ independent review + CI
+→ merge into `main`
 ```
 
-需求和代码都按这个流程处理。未完成草稿可以推送到独立分支，但不得绕过评审直接进入 `main`。
+Both requirements and code follow this process. Unfinished drafts may be pushed to their own branches, but must never bypass review to enter `main`.
 
-## 5. 分支约定
+## 5. Branch Conventions
 
-- `docs/<topic>`：需求、研究和决策文档
-- `feat/<topic>`：新功能
-- `fix/<topic>`：缺陷修复
-- `test/<topic>`：测试与评估
-- `security/<topic>`：安全与隐私变更
-- `ci/<topic>`：持续集成和发布流程
+- `docs/<topic>`: requirements, research, and decision documents
+- `feat/<topic>`: new features
+- `fix/<topic>`: bug fixes
+- `test/<topic>`: testing and evaluation
+- `security/<topic>`: security and privacy changes
+- `ci/<topic>`: continuous integration and release processes
 
-## 6. 自动化边界
+## 6. Automation Boundaries
 
-允许自动执行：
+Automated execution allowed:
 
-- 验证后提交和推送任务分支
-- 创建 Pull Request
-- 运行格式、测试、构建和安全检查
-- 根据明确缺陷在原分支修复并重新验证
-- 部署到批准的 Staging 环境并执行 smoke test
+- Commit and push task branches after verification
+- Open Pull Requests
+- Run formatting, tests, builds, and security checks
+- Fix and re-verify on the original branch for identified defects
+- Deploy to an approved Staging environment and run smoke tests
 
-必须人工批准：
+Requires human approval:
 
-- 合并改变产品范围、心理机制或敏感数据用途的需求
-- 临床或健康效果声明
-- 破坏性数据库迁移
-- Production 部署
-- 密钥、账单、域名和生产权限变更
+- Merging requirements that change product scope, psychological mechanisms, or sensitive data usage
+- Clinical or health effect claims
+- Destructive database migrations
+- Production deployments
+- Secret, billing, domain, and production permission changes
 
-## 7. 手机查看
+## 7. Viewing on Mobile
 
-优先查看：
+Check first:
 
-- 仓库首页 `README.md`
+- The repository home `README.md`
 - `docs/README.md`
-- Pull Requests 与评审意见
-- Actions/CI 结果
-- Releases 和发布说明
+- Pull Requests and review comments
+- Actions/CI results
+- Releases and release notes
 
-Hermes Kanban 状态保留在本机运行系统中，不通过 GitHub 数据库文件同步。
+Hermes Kanban state stays in the local runtime system and is not synced through GitHub database files.

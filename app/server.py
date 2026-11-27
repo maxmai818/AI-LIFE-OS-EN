@@ -1,4 +1,4 @@
-"""AI Life OS — 应用层（流程编排 + API）。内核不变量 INV-01～12 在此强制执行。"""
+"""AI Life OS — application layer (flow orchestration + API). Kernel invariants INV-01..12 are enforced here."""
 import json
 import os
 import secrets
@@ -17,7 +17,7 @@ import auth as authmod
 
 app = FastAPI(title="AI Life OS")
 
-# ---- 登录层（仅云端部署时启用：AI_LIFE_OS_AUTH=1）----
+# ---- Login layer (enabled only for cloud deployments: AI_LIFE_OS_AUTH=1)----
 if os.environ.get("AI_LIFE_OS_AUTH") == "1":
     @app.middleware("http")
     async def _auth_gate(request: Request, call_next):
@@ -30,7 +30,7 @@ def setup_get():
 
 
 async def _form_password(request: Request) -> str:
-    """手解 urlencoded 表单，避免引入 python-multipart 依赖。"""
+    """Parse the urlencoded form by hand to avoid pulling in the python-multipart dependency."""
     from urllib.parse import parse_qs
     body = (await request.body()).decode("utf-8", "ignore")
     return (parse_qs(body).get("password") or [""])[0]
@@ -42,7 +42,7 @@ async def setup_post(request: Request):
         return RedirectResponse("/", 302)
     password = await _form_password(request)
     if len(password) < 6:
-        raise HTTPException(400, "密码至少 6 位")
+        raise HTTPException(400, "Password must be at least 6 characters")
     salt = secrets.token_hex(16)
     state = {"password_hash": f"{salt}${authmod._hash(password, salt)}",
              "secret": secrets.token_hex(32)}
@@ -139,7 +139,7 @@ def app_js():
     return FileResponse(os.path.join(STATIC, "app.js"), media_type="application/javascript")
 
 
-# ---- PWA 外壳资源（App 体验包）----
+# ---- PWA shell assets (app experience pack) ----
 @app.get("/manifest.json")
 def pwa_manifest():
     return FileResponse(os.path.join(STATIC, "manifest.json"), media_type="application/manifest+json")
@@ -147,7 +147,7 @@ def pwa_manifest():
 
 @app.get("/sw.js")
 def pwa_sw():
-    # scope 限定根路径；no-cache 保证 SW 更新及时
+    # scope limited to the root path; no-cache keeps SW updates timely
     return FileResponse(os.path.join(STATIC, "sw.js"), media_type="application/javascript",
                         headers={"Cache-Control": "no-cache", "Service-Worker-Allowed": "/"})
 
@@ -196,7 +196,7 @@ def extract_capture(capture_id: int, request: Request):
     cap = conn.execute("SELECT * FROM captures WHERE id=? AND user_id=?", (capture_id, uid)).fetchone()
     if not cap:
         raise HTTPException(404, "capture not found")
-    conn.execute("UPDATE captures SET status='processing' WHERE id=?", (capture_id,))  # raw_text 不动 (INV-01)
+    conn.execute("UPDATE captures SET status='processing' WHERE id=?", (capture_id,))  # raw_text untouched (INV-01)
     conn.commit()
     started = database.now_iso()
     cur = conn.execute(
@@ -206,7 +206,7 @@ def extract_capture(capture_id: int, request: Request):
     run_id = cur.lastrowid
     try:
         items = llm.extract(cap["raw_text"])
-    except Exception as exc:  # AI 失败原文仍在 (DP-002)
+    except Exception as exc:  # on AI failure the original text is kept (DP-002)
         conn.execute("UPDATE extraction_runs SET status='failed', finished_at=? WHERE id=?",
                      (database.now_iso(), run_id))
         conn.execute("UPDATE captures SET status='failed' WHERE id=?", (capture_id,))
@@ -328,7 +328,7 @@ class CorrectIn(BaseModel):
 
 @app.post("/api/items/{item_id}/correct")
 def correct_item(item_id: int, body: CorrectIn, request: Request):
-    """自然语言纠错：用户说「哪里不对」，AI 修订；所有原值入 user_revisions（INV-02）。"""
+    """Natural-language correction: the user says "what's wrong", the AI revises; all original values go into user_revisions (INV-02)."""
     uid = get_user(request)
     conn = conn_user(uid)
     it = conn.execute("SELECT * FROM extracted_items WHERE id=? AND user_id=?", (item_id, uid)).fetchone()
@@ -370,7 +370,7 @@ def correct_item(item_id: int, body: CorrectIn, request: Request):
             conn.execute("UPDATE behavior_dimension_impacts SET %s=? WHERE id=?" % f, (v, imp["id"]))
             changed.append(f"{u['dimension_key']}.{f}")
     if not changed:
-        return {"id": item_id, "changed": [], "note": "反馈已记录，但没有可安全修改的部分（不猜）"}
+        return {"id": item_id, "changed": [], "note": "Feedback recorded, but there was nothing that could be safely changed (no guessing)"}
     conn.execute("UPDATE extracted_items SET status='modified', needs_confirmation=0 WHERE id=?", (item_id,))
     conn.commit()
     return {"id": item_id, "changed": changed}
@@ -398,7 +398,7 @@ def revise_item(item_id: int, body: ReviseIn, request: Request):
 
 @app.post("/api/impacts/{impact_id}/revise")
 def revise_impact(impact_id: int, body: ImpactReviseIn, request: Request):
-    """修订 AI 候选影响的方向/程度（INV-02 双值：原始值存 user_revisions）。"""
+    """Revise the direction/degree of an AI-candidate impact (INV-02 dual values: the original goes into user_revisions)."""
     uid = get_user(request)
     conn = conn_user(uid)
     imp = conn.execute("SELECT * FROM behavior_dimension_impacts WHERE id=? AND user_id=?",
@@ -429,7 +429,7 @@ def revise_impact(impact_id: int, body: ImpactReviseIn, request: Request):
 
 @app.get("/api/dimensions")
 def dimensions(request: Request):
-    """五维视图：只聚合 confirmed|modified 且非 unknown 的影响（INV-03/04）；无总分、无排名。"""
+    """Five-dimension view: aggregates only confirmed|modified and non-unknown impacts (INV-03/04); no total score, no ranking."""
     uid = get_user(request)
     conn = conn_user(uid)
     rows = conn.execute(
@@ -450,12 +450,12 @@ def dimensions(request: Request):
             d["evidence"].append({"item_id": r["item_id"], "text": r["text_value"], "direction": r["direction"]})
     for d in dims.values():
         d["avg_degree"] = round(sum(d["degrees"]) / len(d["degrees"]), 2) if d["degrees"] else None
-        # unknown 计数来自未定影响（含被排除的），补统计：
-        d["qualitative"] = ("正向证据居多" if d["positive"] > d["negative"] else
-                            "负向证据居多" if d["negative"] > d["positive"] else
-                            "混合" if d["mixed"] else ("有证据无方向" if d["neutral"] else "数据不足"))
+        # the unknown count comes from undetermined impacts (including excluded ones); extra summary:
+        d["qualitative"] = ("Mostly positive evidence" if d["positive"] > d["negative"] else
+                            "Mostly negative evidence" if d["negative"] > d["positive"] else
+                            "Mixed" if d["mixed"] else ("Evidence without direction" if d["neutral"] else "Not enough data"))
         del d["degrees"]
-    return {"dimensions": list(dims.values()), "note": "五维非零和，无总分；仅统计已确认影响"}
+    return {"dimensions": list(dims.values()), "note": "The five dimensions are non-zero-sum, with no total score; only confirmed impacts are counted"}
 
 
 @app.get("/api/goals")
@@ -475,7 +475,7 @@ def create_goal(body: GoalIn, request: Request):
     goal_rows = conn.execute(
         "SELECT COUNT(*) c FROM goals WHERE user_id=? AND status NOT IN ('deleted','completed')", (uid,)).fetchone()["c"]
     if goal_rows >= 3:
-        raise HTTPException(422, "核心目标最多 3 个（产品范围约束）")
+        raise HTTPException(422, "At most 3 core goals (product scope constraint)")
     ts = database.now_iso()
     cur = conn.execute(
         "INSERT INTO goals(user_id, title, dimension_keys, measurable, target_description, metric,"
@@ -518,13 +518,13 @@ def generate_review(body: ReviewIn, request: Request):
             continue
         seen.add(r["item_id"])
         facts.append(r["text_value"])
-    calculated = "本期共确认 %d 条记录，覆盖 %d 个维度的非 unknown 影响 %d 条。" % (
+    calculated = "%d entries confirmed this period, covering %d dimensions with %d non-unknown impacts." % (
         len(facts), len({r['dimension_key'] for r in rows}), len(rows))
     facts_payload = {"facts": facts, "calculated": calculated if facts else ""}
-    if not facts:  # 数据不足 → 只给 limitation，不给建议
+    if not facts:  # not enough data -> give only a limitation, no recommendation
         statements = [{"statement_type": "limitation",
-                       "text": "本期没有已确认的记录，无法生成实质复盘。", "confidence": 1.0,
-                       "uncertain_points": ["无确认数据"], "theory": None}]
+                       "text": "There are no confirmed entries this period, so no substantive review can be generated.", "confidence": 1.0,
+                       "uncertain_points": ["No confirmed data"], "theory": None}]
         recommendation = None
     else:
         result = llm.generate_review(facts_payload, body.review_type)
@@ -535,7 +535,7 @@ def generate_review(body: ReviewIn, request: Request):
         " prompt_version, schema_version, title) VALUES(?,?,?,?,?,?,?,?,?)",
         (uid, body.review_type, period_start.isoformat(), period_end.isoformat(), database.now_iso(),
          llm.model_name(), llm.REVIEW_PROMPT_VERSION, llm.SCHEMA_VERSION,
-         "%s 复盘" % body.review_type))
+         "%s review" % body.review_type))
     review_id = cur.lastrowid
     evidence_map = [{"item_id": r["item_id"], "capture_id": r["capture_id"], "text": r["raw_text"][:120]}
                     for r in rows[:20]]
@@ -556,7 +556,7 @@ def generate_review(body: ReviewIn, request: Request):
                 " verifiability, assumption_boundary) VALUES(?,?,?,?,?,?,?)",
                 (theory_id, th.get("author"), th.get("source_title"), th.get("year"),
                  th.get("citation"), th.get("verifiability"), th.get("assumption_boundary")))
-    if recommendation:  # INV-06：零或一
+    if recommendation:  # INV-06: zero or one
         conn.execute(
             "INSERT INTO recommendations(review_id, text, action_type, target_dimension_keys, reason,"
             " evidence_refs, expected_effect, unknowns) VALUES(?,?,?,?,?,?,?,?)",

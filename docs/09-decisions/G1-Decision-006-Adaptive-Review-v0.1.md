@@ -1,70 +1,70 @@
-# G1 Decision 006：自主、轻量自适应 Review 与反馈
+# G1 Decision 006: Autonomous, Lightweight Adaptive Review and Feedback
 
-- **状态**：原则确认记录；v0.6 细节已随 G1 关闭（Max 2026-10-08）并入需求基线
-- **产品负责人 / 原则决策人 / 最终批准人**：Max
-- **作者**：Hermes
-- **记录日期**：2026-09-15；不据此推定每次口头确认的日期
-- **Gate**：G1 已于 2026-10-08 关闭（tag `G1-baseline`）；编码在 G2 通过前不授权
-- **来源**：本次委派中提供的 Max 后续讨论摘要及明确“好的，进行下一步”。这是需求来源摘要，不是新增用户行为记录、逐字访谈档案或实验结果。
-- **相关决定**：[Decision 004](G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md)、[Decision 005](G1-Decision-005-Mixed-Impact-Degrees-v0.1.md)
+- **Status**: principle-confirmation record; v0.6 details were merged into the requirements baseline with the G1 closure (Max, 2026-10-08)
+- **Product owner / principle decision maker / final approver**: Max
+- **Author**: Hermes
+- **Record date**: 2026-09-15; dates of individual verbal confirmations are not to be inferred from this record
+- **Gate**: G1 closed on 2026-10-08 (tag `G1-baseline`); coding is not authorized before G2 passes
+- **Source**: summary of Max's follow-up discussion provided in this delegation, plus the explicit "OK, proceed to the next step". This is a requirements-source summary, not a new record of user behavior, a verbatim interview archive, or experimental results.
+- **Related decisions**: [Decision 004](G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md), [Decision 005](G1-Decision-005-Mixed-Impact-Degrees-v0.1.md)
 
-## 1. 已确认原则（仅此节）
+## 1. Confirmed principles (this section only)
 
-### DEC-G1-006-01：自主与范围
+### DEC-G1-006-01: Autonomy and scope
 
-ONE BIG CHANGE 允许零个或一个；无改变意愿、无需改变或证据不足时，不强塞建议。POC 仅在用户主动打开 Review 时提供指导，不主动提醒、定时推送、后台监控。以此关闭 v0.5 的“是否允许零个”问题，不变更五维及 mixed 已批准规则。
+ONE BIG CHANGE allows zero or one; when there is no willingness to change, no need to change, or insufficient evidence, suggestions are not forced. The POC provides guidance only when the user actively opens Review — no proactive reminders, scheduled pushes, or background monitoring. This closes the v0.5 question of "whether zero is allowed", without changing the approved Five-Dimension and mixed rules.
 
-### DEC-G1-006-02：自适应，而非必选教练人格
+### DEC-G1-006-02: Adaptive, not a mandatory coach persona
 
-后续明确选择取代早期“用户选三种风格”：不要求人格选择或大量设置。AI 根据当前证据与情境选择倾听、澄清、任务拆解、直接督促或不干预，并调整直接程度。不得按失败次数自动加压；无日志不等于失败，限制不等于懒惰。AI 调整表达与支持方式，不单方修改用户目标或承诺。长期行为/思维模式判断须用户确认；认可不把推断变为客观事实。
+The explicit later choice supersedes the earlier "user picks one of three styles": no persona selection or extensive setup is required. The AI selects listening, clarification, task breakdown, direct accountability, or non-intervention based on current evidence and context, and adjusts its level of directness. It must not automatically increase pressure based on failure counts; absence of logs is not failure, and constraints are not laziness. The AI adjusts how it expresses and supports, and does not unilaterally modify the user's goals or commitments. Long-term behavior/thinking-pattern judgments require user confirmation; endorsement does not turn an inference into an objective fact.
 
-### DEC-G1-006-02A：直接督促的附加授权条件
+### DEC-G1-006-02A: Additional authorization conditions for direct accountability
 
-**Max 于 2026-09-15 选择 `Approved with conditions`**：`direct_accountability` 仅限用户在本次 Review 中明确请求时使用。历史反馈、历史偏好或过去接受过直接表达，不得单独授权本次直接督促；当次停止、拒绝或不想改变的表达优先于历史信息。本条件只关闭 P6-01 的直接督促边界，不代表 P6-02 之外的事项、P6-03、G1 整体、G2、编码或合并获批。
+**Max chose `Approved with conditions` on 2026-09-15**: `direct_accountability` may be used only when the user explicitly requests it in the current Review. Historical feedback, historical preferences, or having accepted direct expression in the past must not by themselves authorize direct accountability this time; an in-session stop, refusal, or "don't want to change" takes precedence over historical information. This condition only closes the direct-accountability boundary of P6-01; it does not signify approval of matters beyond P6-02, P6-03, G1 as a whole, G2, coding, or merging.
 
-### DEC-G1-006-02B：跨 Review 使用的明确确认与用户控制
+### DEC-G1-006-02B: Explicit confirmation and user control for cross-Review use
 
-**Max 于 2026-09-15 选择 `Approved with conditions`**：只有用户明确确认内容与适用情境的长期模式，才可在后续相关 Review 中作为受限上下文使用。一次反馈默认仅作用于当前 Review；用户必须能查看、纠正、撤销和删除反馈或已确认模式。未确认的 AI 推断、一次性反馈、沉默或接受一次建议不得自动变为长期依据。具体逻辑字段、检索数量/期限、存储、缓存、备份、物理删除和供应商保留参数移至 G2 决定与验证。本条件只关闭 P6-02 的产品原则，不代表 P6-03、G1 整体、G2、编码或合并获批。
+**Max chose `Approved with conditions` on 2026-09-15**: only long-term patterns whose content and applicable context the user has explicitly confirmed may be used as restricted context in subsequent related Reviews. A single piece of feedback by default applies only to the current Review; users must be able to view, correct, revoke, and delete feedback or confirmed patterns. Unconfirmed AI inferences, one-off feedback, silence, or accepting a single suggestion must not automatically become long-term basis. Specific logical fields, retrieval quantity/duration, storage, caching, backup, physical deletion, and vendor retention parameters move to G2 decisions and verification. This condition only closes the product principle of P6-02; it does not signify approval of P6-03, G1 as a whole, G2, coding, or merging.
 
-### DEC-G1-006-03：解释与反馈归入同一 Review
+### DEC-G1-006-03: Explanation and feedback fold into the same Review
 
-每次 Review 保存实际采用的指导/直接程度、实际使用的证据来源、目标与反馈引用、不确定性、选择理由摘要及规则/模型/Prompt 版本。保留 Review 当时不可变的决策和最小必要上下文快照及修订历史；后续反馈、来源或版本变化不得改写当时依据，保留仍服从用户删除与隐私范围。理由是可核验的决策依据摘要，不得在事后编造，不保存或索要隐藏思维链。解释默认折叠，用户按需问“为什么这样指导”。同意/不同意与自然语言反馈可选、可修订，完成 Review 不需要评分。
+Each Review saves the guidance/directness level actually used, the evidence sources actually used, goal and feedback references, uncertainties, a summary of the choice rationale, and the rule/model/prompt versions. An immutable snapshot of the decision as of the Review and the minimally necessary context, along with revision history, is retained; later changes to feedback, sources, or versions must not rewrite the basis at that time, and retention remains subject to user deletion and privacy scope. The rationale is a verifiable summary of the decision basis; it must not be fabricated after the fact, and no hidden chain of thought is saved or requested. Explanations are collapsed by default; users can ask "why this guidance" on demand. Agree/disagree and natural-language feedback are optional and revisable; completing a Review does not require a rating.
 
-分别处理事实纠正、解释分歧、表达风格反馈、建议接受和实际结果。同意不等于接受建议，接受不等于实际有用或已完成，也不是因果证明。当前纠正/停止立即生效；一次局部反馈不得自动泛化为永久偏好。用户目标、承诺和长期个人模式判断均须用户确认；持久模式可通过自然对话确认，无需配置面板。
+Fact corrections, explanation disagreements, style feedback, suggestion acceptance, and actual outcomes are handled separately. Agreement does not equal accepting the suggestion, acceptance does not equal being actually helpful or completed, nor is it causal proof. Current corrections/stop requests take effect immediately; a single local feedback must not be automatically generalized into a permanent preference. User goals, commitments, and long-term personal pattern judgments all require user confirmation; persistent patterns can be confirmed through natural conversation without a settings panel.
 
-### DEC-G1-006-04：用户利益与边界
+### DEC-G1-006-04: User interest and boundaries
 
-不以胁迫、羞耻或依赖优化推动改变；评价应依据用户目标一致性、实际帮助、自主性与负担，而非服从率、同意率或参与度。信任、触点与持续使用的价值是未验证产品假设。各支持方式共用安全边界，不因直接程度而豁免。
+Change is not driven through coercion, shame, or dependency optimization; evaluation should be based on alignment with user goals, actual helpfulness, autonomy, and burden — not compliance rate, agreement rate, or engagement. The value of trust, touchpoints, and continued use is an unvalidated product hypothesis. All support modes share safety boundaries and are not exempted based on level of directness.
 
-反馈应保存并用于有情境边界的适应；仅用户明确确认内容与适用情境的长期模式可跨 Review 使用，一次反馈默认仅当前 Review，用户可查看、纠正、撤销和删除。未确认推断、一次性反馈、沉默或接受一次建议不得形成长期依据。“持续学习”仅指获许可的情境记忆/检索与规则使用，不授权模型训练、微调或秘密心理画像。检索只允许同用户、目标/时间范围内必要且获授权的有效已确认数据及情境反馈，不自动读取全部历史或扩展为新数据用途。具体字段、检索数量/期限、存储、缓存、备份、物理删除与供应商参数移至 G2；本决定不自动批准任何新增敏感推断用途。
+Feedback should be saved and used for adaptation within contextual boundaries; only long-term patterns whose content and applicable context the user has explicitly confirmed may be used across Reviews, while a single piece of feedback by default applies only to the current Review, and users can view, correct, revoke, and delete. Unconfirmed inferences, one-off feedback, silence, or accepting a single suggestion must not form long-term basis. "Continuous learning" refers only to permitted contextual memory/retrieval and rule use; it does not authorize model training, fine-tuning, or secret psychological profiling. Retrieval is limited to the same user's valid, confirmed data and contextual feedback that is necessary and authorized within the goal/time scope; it does not automatically read all history or expand into new data uses. Specific fields, retrieval quantity/duration, storage, caching, backup, physical deletion, and vendor parameters move to G2; this decision does not automatically approve any new use of sensitive inferences.
 
-### DEC-G1-006-05：POC 最低验收与安全阻断原则
+### DEC-G1-006-05: POC minimum acceptance and safety-blocking principles
 
-**Max 于 2026-09-15 选择 `Approved with conditions`**：POC 必须验证五项最低原则：用户可纠正 AI；AI 结论可追溯至用户记录；证据不足时明确说明“不知道”；用户可停止或拒绝建议；系统不得跨用户使用数据。具体测试数量、观察期、场景覆盖、比较方法、效力阈值和实验设计移至 G2/G3 决定。此条件只关闭 P6-03 的 G1 验收原则，不表示任何功能已实现、测试已运行、POC 已通过，亦不代表 G1 整体、G2、编码或合并获批。
+**Max chose `Approved with conditions` on 2026-09-15**: the POC must validate five minimum principles: users can correct the AI; AI conclusions are traceable to user records; "I don't know" is explicitly stated when evidence is insufficient; users can stop or refuse suggestions; the system must not use data across users. Specific test counts, observation periods, scenario coverage, comparison methods, effect thresholds, and experimental designs move to G2/G3 decisions. This condition only closes the G1 acceptance principles of P6-03; it does not mean any feature has been implemented, tests have been run, or the POC has passed, nor does it signify approval of G1 as a whole, G2, coding, or merging.
 
-## 2. 仍为 In Review 的设计提案
+## 2. Design proposals still In Review
 
-以下是 Hermes 为可验收性提出的细节；除本决定明确记录的 P6-01、P6-02 与 P6-03 附条件产品原则外，均不属于上述已确认原则：
+The following are details Hermes proposed for acceptability; except for the conditional product principles P6-01, P6-02, and P6-03 explicitly recorded in this decision, none belong to the confirmed principles above:
 
-- 保守、可解释、有版本的策略表；冷启动/冲突/缺失证据回退，不做微调或在线 RL。
-- 指导枚举、直接程度标签、反馈类型/状态、模式作用域、确认和撤回的逻辑字段与转换。
-- 上下文检索窗口与数量上限、证据失效处理、保存/删除期限、缓存与备份上界。
-- 对照实验、观察时间、指标、阈值、严重度和停止策略。
+- Conservative, explainable, versioned policy tables; cold-start/conflict/missing-evidence fallbacks, no fine-tuning or online RL.
+- Logical fields and transitions for guidance enumeration, directness labels, feedback types/statuses, pattern scope, confirmation, and revocation.
+- Context retrieval windows and quantity caps, evidence-expiry handling, save/delete durations, cache and backup upper bounds.
+- Controlled experiments, observation time, metrics, thresholds, severity, and stop policies.
 
-这些内容只能由 Max 审阅后批准；独立审查通过也不能替代产品批准。
+This content can only be approved after review by Max; passing independent review does not substitute for product approval.
 
-## 3. 版本与优先级
+## 3. Versions and priority
 
-- v0.6 Product/Data/Test 替代 v0.5 评审草案；v0.5 仅状态改为 Superseded，正文保留。
-- Decision 005 第 5 节“零建议未处理”是历史边界，不追改；该问题由本次原则关闭。
-- Decision 004/005 的五维全量、非零和、固定 ordinal 1–5、分侧证据/置信度/状态、null/拒绝区别、修订历史、上下文版本与禁止比例/净额化全部继续有效。
-- Life Score、Goal Progress、Deviation/Gap 保持分离；适应性指导不读取程度差值来制造压力分数。
+- v0.6 Product/Data/Test supersedes the v0.5 review drafts; v0.5 only changes status to Superseded, with the body retained.
+- Decision 005 Section 5 "zero suggestions unaddressed" is a historical boundary and is not retroactively amended; that question is closed by these principles.
+- Decision 004/005's full five-dimension assessment, non-zero-sum, fixed ordinal 1–5, per-side evidence/confidence/status, null/rejection distinctions, revision history, context versions, and the ban on proportions/netting-out all remain in force.
+- Life Score, Goal Progress, and Deviation/Gap remain separate; adaptive guidance does not read degree differences to manufacture pressure scores.
 
-## 4. 评审交付
+## 4. Review deliverables
 
-1. [Product v0.6](../02-requirements/POC-01-Product-UX-Spec-v0.6.md) 第 14 节：先审指导与回退提案。
-2. [Data v0.6](../04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md) 第 14 节：再审数据及生命周期。
-3. [Test v0.6](../06-testing/POC-01-Test-Acceptance-Spec-v0.6.md) 第 19 节：最后审验证与停止标准。
-4. [Delta / review status](../08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md)、[Evidence Card](../08-research/Adaptive-Review-Evidence-Card-v0.1.md)。
+1. [Product v0.6](../02-requirements/POC-01-Product-UX-Spec-v0.6.md) Section 14: review the guidance and fallback proposals first.
+2. [Data v0.6](../04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md) Section 14: then review data and lifecycle.
+3. [Test v0.6](../06-testing/POC-01-Test-Acceptance-Spec-v0.6.md) Section 19: finally review validation and stop criteria.
+4. [Delta / review status](../08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md), [Evidence Card](../08-research/Adaptive-Review-Evidence-Card-v0.1.md).
 
-G1 整体、G2、编码、发布与合并均未获本记录授权。
+G1 as a whole, G2, coding, release, and merging are not authorized by this record.
