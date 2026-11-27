@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Life OS · Variant 2 — Conversational (live demo)</title>
+<link rel="stylesheet" href="skin.css">
+</head>
+<body>
+<div class="phone">
+
+  <header class="app-header">
+    <div class="row">
+      <div class="brand">Life OS<small>Variant 2 · conversation-guided</small></div>
+      <div class="privacy-pill demo"><span class="dot"></span>Live demo · fictional shared data</div>
+    </div>
+  </header>
+
+  <!-- ================= chat (capture → confirm) ================= -->
+  <main class="screen" id="screen-chat">
+    <div class="day-divider" id="chat-top">— Today —</div>
+    <div id="chat-stream"></div>
+    <div class="suggest-wrap" id="suggestWrap">
+      <button class="chip accent" onclick="sendPreset('Ran for 30 minutes, feeling good')">"Ran for 30 minutes, feeling good"</button>
+      <button class="chip" onclick="sendPreset('Stayed up scrolling on my phone until 1 AM last night')">"Stayed up scrolling on my phone until 1 AM last night"</button>
+      <button class="chip" onclick="sendPreset('Worked overtime until 22:30 and finished the quarterly plan')">"Worked overtime until 22:30 and finished the quarterly plan"</button>
+      <button class="chip" onclick="sendPreset('Nothing special today')">"Nothing special today"</button>
+    </div>
+  </main>
+
+  <!-- composer -->
+  <div class="composer" id="composer">
+    <div class="box">
+      <textarea id="captureInput" rows="1" placeholder="Quick capture: what happened, how you felt…"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendFree()" aria-label="Send">↑</button>
+    </div>
+    <div class="note">The original text is saved in full first · AI only organizes, never rewrites your words</div>
+  </div>
+
+  <!-- ================= five-dimension view ================= -->
+  <main class="screen hidden" id="screen-dims">
+    <div class="screen-head">
+      <h1>Five Dimensions</h1>
+      <p>Each behavior maps to the five dimensions by direction and 1–5 impact degree. Only entries <b>you confirmed</b> are counted; where evidence is thin, we leave it blank.</p>
+    </div>
+    <div class="note-card">
+      The 1–5 here is your subjective estimate relative to your own goals, not a medical measurement. Each dimension is judged independently: no sums, no rankings, no combined total score. Tap open to see the basis.
+    </div>
+    <div id="dims-list"></div>
+    <div class="foot-note">Data source: confirmed entries only · AI candidates not counted<br>Evidence entries are clickable and take you back to the original text</div>
+  </main>
+
+  <!-- ================= review ================= -->
+  <main class="screen hidden" id="screen-review">
+    <div class="screen-head">
+      <h1>Review</h1>
+      <p>It only starts when you open it. The whole thing feels like a conversation — you can say "stop here" at any time.</p>
+    </div>
+    <div id="rev-step0">
+      <div class="period-row">
+        <button onclick="pickPeriod(this,1)">Today</button>
+        <button class="sel" onclick="pickPeriod(this,7)">This week</button>
+      </div>
+      <div class="msg ai">
+        <div class="avatar">AI</div>
+        <div>
+          <div class="bubble">
+            <p>How would you like to look back? I can walk you through a round, or say nothing and just show you the facts.</p>
+            <div class="actions">
+              <button class="btn btn-primary" onclick="startReview('guided')">Walk me through it</button>
+              <button class="btn btn-ghost" onclick="startReview('facts')">Facts only</button>
+              <button class="btn btn-line" onclick="startReview('none')">No review today</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="quiet-end">
+        No reminders, no nudges. If you want this week's Five Life Dimensions summary, take your time on the Five Dimensions tab.
+      </div>
+    </div>
+    <div id="rev-stream" class="hidden"></div>
+  </main>
+
+  <!-- ================= me ================= -->
+  <main class="screen hidden" id="screen-me">
+    <div class="screen-head">
+      <h1>Me</h1>
+      <p>Your data stays on this machine. The original text is never rewritten; AI candidates enter long-term analysis only once you confirm them.</p>
+    </div>
+    <div class="note-card">
+      Export / delete: your data is a single local SQLite file (app/data.db) — copy the file to export it, delete the file to delete everything. In-app export/delete buttons will come in a later version.
+    </div>
+    <div class="rev-section">
+      <h3>Core goals<span class="kind-tag kind-fact">max 3</span></h3>
+      <div id="goal-list"></div>
+    </div>
+    <div class="quiet-end">
+      No pushes, no reminders, no leaderboards anywhere. Your feedback is yours.
+    </div>
+  </main>
+
+  <!-- ================= tabbar ================= -->
+  <nav class="tabbar">
+    <button class="active" data-tab="chat" onclick="switchTab('chat',this)">
+      <span class="ic">💬</span><span>Chat</span>
+    </button>
+    <button data-tab="dims" onclick="switchTab('dims',this)">
+      <span class="ic">◎</span><span>Five Dimensions</span>
+    </button>
+    <button data-tab="review" onclick="switchTab('review',this)">
+      <span class="ic">◔</span><span>Review</span>
+    </button>
+    <button data-tab="me" onclick="switchTab('me',this)">
+      <span class="ic">☰</span><span>Me</span>
+    </button>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+</div>
+<script src="skin.js"></script>
+</body>
+</html>

@@ -1,17 +1,19 @@
 """AI Life OS — application layer (flow orchestration + API). Kernel invariants INV-01..12 are enforced here."""
 import json
 import os
+import re
 import secrets
 import sys
 from datetime import datetime, timedelta, timezone
 
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from typing import Optional
 from pydantic import BaseModel, Field
 
 sys.path.insert(0, os.path.dirname(__file__))
 import db as database
+import demo as demomod
 import llm
 import auth as authmod
 
@@ -22,6 +24,19 @@ if os.environ.get("AI_LIFE_OS_AUTH") == "1":
     @app.middleware("http")
     async def _auth_gate(request: Request, call_next):
         return await authmod.gate(request, call_next)
+
+
+# Public-demo guard: the demo namespace calls the real LLM — cap it per demo user and per client IP.
+@app.middleware("http")
+async def _demo_llm_guard(request: Request, call_next):
+    path = request.url.path
+    if path.startswith("/demo-api/") and demomod.is_llm_call(path, request.method):
+        ip = request.client.host if request.client else "?"
+        if not demomod.allow_llm(demomod.uid_for_path(path), ip):
+            return JSONResponse(
+                {"detail": "This public demo is rate-limited so that everyone gets a turn. Try again later."},
+                status_code=429)
+    return await call_next(request)
 
 
 @app.get("/setup")
@@ -73,6 +88,13 @@ STATIC = os.path.join(os.path.dirname(__file__), "static")
 
 
 def get_user(request: Request):
+    """Per-user isolation (MVP header / later JWT); default single-user 1 (INV-10).
+    In the public /demo-api/ namespace the uid is fixed by the URL (synthetic demo
+    users) and X-User-Id is deliberately ignored — a visitor can never reach a real
+    account through the demo endpoints."""
+    demo_uid = demomod.uid_for_path(request.url.path)
+    if demo_uid:
+        return demo_uid
     return int(request.headers.get("X-User-Id", "1"))
 
 
@@ -165,6 +187,37 @@ def pwa_icon(name: str):
     if not os.path.isfile(path):
         raise HTTPException(404, "icon not found")
     return FileResponse(path, media_type="image/png")
+
+
+# ---------- public demos: three style-variant skins, English ----------
+DEMOS = os.path.join(os.path.dirname(__file__), "demos")
+_DEMO_DIR = {"v1": "variant-1", "v2": "variant-2", "v3": "variant-3"}
+
+
+def _demo_file(variant: str, name: str):
+    sub = _DEMO_DIR.get(variant)
+    if not sub or not re.fullmatch(r"[a-z0-9._-]+", name or ""):
+        raise HTTPException(404, "not found")
+    path = os.path.join(DEMOS, sub, name)
+    if not os.path.isfile(path):
+        raise HTTPException(404, "not found")
+    return FileResponse(path)
+
+
+@app.get("/demo")
+@app.get("/demo/")
+def demo_picker():
+    return FileResponse(os.path.join(DEMOS, "index.html"))
+
+
+@app.get("/demo/{variant}/")
+def demo_index(variant: str):
+    return _demo_file(variant, "index.html")
+
+
+@app.get("/demo/{variant}/{name}")
+def demo_asset(variant: str, name: str):
+    return _demo_file(variant, name)
 
 
 @app.post("/api/captures")
@@ -550,20 +603,25 @@ def generate_review(body: ReviewIn, request: Request):
              json.dumps(evidence_map if s["statement_type"] in ("fact", "calculation", "inference") else [],
                         ensure_ascii=False)))
         theory_id = cur2.lastrowid
-        if isinstance(th, dict) and th.get("author") and th.get("source_title"):
-            conn.execute(
-                "INSERT INTO theory_references(review_statement_id, author, source_title, year, citation,"
-                " verifiability, assumption_boundary) VALUES(?,?,?,?,?,?,?)",
-                (theory_id, th.get("author"), th.get("source_title"), th.get("year"),
-                 th.get("citation"), th.get("verifiability"), th.get("assumption_boundary")))
+        th_list = th if isinstance(th, list) else ([th] if isinstance(th, dict) else [])
+        for one_th in th_list[:3]:
+            if isinstance(one_th, dict) and one_th.get("author") and one_th.get("source_title"):
+                conn.execute(
+                    "INSERT INTO theory_references(review_statement_id, author, source_title, year, citation,"
+                    " verifiability, assumption_boundary) VALUES(?,?,?,?,?,?,?)",
+                    (theory_id, one_th.get("author"), one_th.get("source_title"), one_th.get("year"),
+                     one_th.get("citation"), one_th.get("verifiability"), one_th.get("assumption_boundary")))
     if recommendation:  # INV-06: zero or one
+        unknowns = recommendation.get("unknowns")
+        if not isinstance(unknowns, str):  # LLM may return a list — SQLite needs a string
+            unknowns = json.dumps(unknowns or [], ensure_ascii=False)
         conn.execute(
             "INSERT INTO recommendations(review_id, text, action_type, target_dimension_keys, reason,"
             " evidence_refs, expected_effect, unknowns) VALUES(?,?,?,?,?,?,?,?)",
             (review_id, recommendation.get("text", ""), recommendation.get("action_type"),
              json.dumps(recommendation.get("target_dimension_keys") or [], ensure_ascii=False),
              recommendation.get("reason"), json.dumps(evidence_map[:5], ensure_ascii=False),
-             recommendation.get("expected_effect"), recommendation.get("unknowns")))
+             recommendation.get("expected_effect"), unknowns))
     conn.commit()
     return {"review_id": review_id, "statements": len(statements),
             "recommendation": bool(recommendation)}
@@ -620,6 +678,32 @@ def rec_status(rec_id: int, body: StatusIn, request: Request):
     conn.execute("UPDATE recommendations SET status=? WHERE id=?", (body.status, rec_id))
     conn.commit()
     return {"id": rec_id, "status": body.status}
+
+
+# ---------- demo API mirror: every /api/... route also under /demo-api/{v}/... ----------
+# Handlers are shared unchanged; get_user() pins the synthetic demo uid from the URL.
+def _mount_demo_api():
+    from fastapi.routing import APIRoute
+    api_routes = [r for r in list(app.routes)
+                  if isinstance(r, APIRoute) and r.path.startswith("/api/")]
+    for variant in demomod.DEMO_VARIANTS:
+        for r in api_routes:
+            app.add_api_route(
+                "/demo-api/%s%s" % (variant, r.path[4:]),
+                r.endpoint,
+                methods=sorted(m for m in (r.methods or set()) if m not in ("HEAD", "OPTIONS")),
+                response_model=r.response_model,
+                name="demo_%s_%s" % (variant, r.name),
+                include_in_schema=False)
+
+
+_mount_demo_api()
+
+
+@app.on_event("startup")
+def _seed_demo_users():
+    """Fictional demo entries so demo visitors never meet empty views."""
+    demomod.seed_demo_data()
 
 
 if __name__ == "__main__":

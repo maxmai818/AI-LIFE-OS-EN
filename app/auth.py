@@ -28,8 +28,10 @@ PUBLIC_PATHS = {"/setup", "/login", "/style.css", "/app.js",
 
 
 def _is_public(path: str) -> bool:
-    """Public paths: static shell assets + PWA assets (icons/manifest hold no private data; home-screen install and SW registration need them allowed)."""
-    return path in PUBLIC_PATHS or path.startswith("/icons/")
+    """Public paths: static shell assets + PWA assets (icons/manifest hold no private data; home-screen install and SW registration need them allowed).
+    /demo/ and /demo-api/ = the public demo (synthetic users only, rate-limited LLM calls) — they must never see the login wall."""
+    return (path in PUBLIC_PATHS or path.startswith("/icons/")
+            or path == "/demo" or path.startswith("/demo/") or path.startswith("/demo-api/"))
 
 _PAGE = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AI Life OS · Variant 3 — Card Stack</title>
+<link rel="stylesheet" href="skin.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="app-header">
+    <div class="app-title">AI Life OS<span class="dot"> · </span><span class="app-sub">Card-Stack</span></div>
+    <div class="date-pill" id="datePill">&nbsp;</div>
+  </header>
+
+  <!-- ============ Screen 1: Capture (conversation stream + AI result cards) ============ -->
+  <main class="screen active" id="screen-capture" tabindex="-1">
+    <div id="pending-wrap"></div>
+    <div id="capture-stream"></div>
+  </main>
+
+  <!-- composer (fixed above the tab bar; Capture tab only) -->
+  <div class="composer" id="composer">
+    <div class="composer-chips" id="exampleChips">
+      <button class="tag" data-act="fill" data-fill="Ran 30 minutes before work and felt energized all morning.">🏃 Morning run</button>
+      <button class="tag" data-act="fill" data-fill="Stayed up scrolling on my phone until 1 AM and felt groggy in the morning.">📱 Late-night scrolling</button>
+      <button class="tag" data-act="fill" data-fill="Called mom for 20 minutes in the evening and talked about her health checkup.">💬 Called mom</button>
+      <button class="tag" data-act="fill" data-fill="Ordered takeout twice this week instead of cooking.">🍜 Takeout twice</button>
+    </div>
+    <div class="composer-box">
+      <textarea id="captureInput" rows="1" placeholder="Jot one line — what happened, how it felt…"></textarea>
+      <button class="send-btn" id="sendBtn" data-act="send" aria-label="Send">↑</button>
+    </div>
+    <p class="composer-note">Your own words are saved first, exactly as written · the AI only organizes, never rewrites</p>
+  </div>
+
+  <!-- ============ Screen 2: Five Dimensions ============ -->
+  <main class="screen" id="screen-dims" tabindex="-1">
+    <div class="card head-card">
+      <p class="card-title">Five dimensions</p>
+      <p class="card-sub">Each dimension is judged on its own, from entries <b>you confirmed</b>. The 1–5 degree is your own subjective estimate. Where the evidence is thin, the honest answer is "unknown" — never a guess.</p>
+    </div>
+    <div id="dims-list"></div>
+    <p class="foot-note" id="dims-foot"></p>
+  </main>
+
+  <!-- ============ Screen 3: Review (swipeable card stack) ============ -->
+  <main class="screen" id="screen-review" tabindex="-1">
+    <div class="card head-card">
+      <div class="chip-row"><span class="chip chip-info">Opened by you</span></div>
+      <p class="card-sub">No reminders, never auto-triggered. A review starts only when you ask for one — and you can stop at any time.</p>
+    </div>
+
+    <div class="card picker-card">
+      <p class="imp-title">PERIOD</p>
+      <div class="seg" id="periodRow">
+        <button class="seg-btn" data-act="period" data-days="1">Today</button>
+        <button class="seg-btn on" data-act="period" data-days="7">This week</button>
+        <button class="seg-btn" data-act="period" data-days="30">This month</button>
+      </div>
+      <p class="imp-title" style="margin-top:16px">HOW TO REVIEW</p>
+      <div class="btn-col">
+        <button class="btn btn-primary" data-act="start-review" data-mode="guided">Walk me through it</button>
+        <button class="btn btn-soft" data-act="start-review" data-mode="facts">Facts only</button>
+        <button class="btn btn-ghost" data-act="start-review" data-mode="none">No review for now</button>
+      </div>
+      <p class="edit-hint">Everything here is optional. "No review for now" is a first-class answer, and nothing will nag you later.</p>
+    </div>
+
+    <div id="review-area"></div>
+  </main>
+
+  <!-- ============ Screen 4: Me ============ -->
+  <main class="screen" id="screen-me" tabindex="-1">
+    <div class="card">
+      <p class="card-title">Your data, your call</p>
+      <p class="card-sub">Everything lives in one SQLite file on your own server — copy the file to export it, delete the file to delete everything. The original text of every capture is kept exactly as you wrote it; corrections are stored as revisions beside the AI's original values.</p>
+      <p class="card-sub" style="margin-top:10px">Privacy &amp; AI boundaries: a cloud LLM may process the content of your entries while extraction runs. AI output is provisional until you confirm it.</p>
+      <p class="demo-note">Live demo · fictional shared demo data · it may reset at any time.</p>
+    </div>
+
+    <p class="section-hint">Core goals · at most 3</p>
+    <div id="goal-list"></div>
+
+    <div class="card" id="goal-add-card">
+      <p class="card-title">Add a goal</p>
+      <p class="edit-hint">A goal links to one or more dimensions. Leave the metric blank for a qualitative goal — no fake progress bars.</p>
+      <label class="field-label" for="goalTitle">Title</label>
+      <input class="field" id="goalTitle" type="text" placeholder="e.g. Sleep before 11 p.m.">
+      <p class="field-label">Dimensions</p>
+      <div class="tag-row" id="goalDims">
+        <button class="tag" data-act="goal-dim" data-key="time">⏳ Time</button>
+        <button class="tag" data-act="goal-dim" data-key="health">🌿 Health</button>
+        <button class="tag" data-act="goal-dim" data-key="wealth">💰 Wealth</button>
+        <button class="tag" data-act="goal-dim" data-key="relationship">💬 Relationship</button>
+        <button class="tag" data-act="goal-dim" data-key="purpose">🌱 Purpose</button>
+      </div>
+      <label class="field-label" for="goalMetric">Metric (optional)</label>
+      <input class="field" id="goalMetric" type="text" placeholder="e.g. nights per week in bed before 23:00">
+      <label class="field-label" for="goalHorizon">Horizon (optional)</label>
+      <input class="field" id="goalHorizon" type="text" placeholder="e.g. this quarter">
+      <button class="btn btn-primary" id="goalSave" data-act="goal-save" style="margin-top:14px">Save goal</button>
+      <p class="edit-hint" id="goalCapNote"></p>
+    </div>
+
+    <p class="foot-note">No pushes, no reminders, no streaks, no leaderboards. Private solo experience — your data is yours.</p>
+  </main>
+
+  <!-- ============ fixed bottom tab bar (4 tabs) ============ -->
+  <nav class="tabbar" role="tablist" aria-label="Main sections">
+    <button class="tab on" data-act="tab" data-tab="capture" role="tab" aria-selected="true"><span class="ti">✍️</span>Capture</button>
+    <button class="tab" data-act="tab" data-tab="dims" role="tab" aria-selected="false"><span class="ti">◎</span>Five Dimensions</button>
+    <button class="tab" data-act="tab" data-tab="review" role="tab" aria-selected="false"><span class="ti">◔</span>Review</button>
+    <button class="tab" data-act="tab" data-tab="me" role="tab" aria-selected="false"><span class="ti">☰</span>Me</button>
+  </nav>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<!-- evidence bottom sheet -->
+<div class="mask" id="mask" data-act="close-sheet"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet-handle"></div>
+  <h3 id="sheetTitle">Evidence trail</h3>
+  <div class="body" id="sheetBody"></div>
+  <button class="btn btn-soft" data-act="close-sheet" style="margin-top:16px">Close</button>
+</div>
+
+<script src="skin.js"></script>
+</body>
+</html>
