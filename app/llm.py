@@ -11,7 +11,7 @@ import urllib.request
 
 PROMPT_VERSION = "extract-v1"
 SCHEMA_VERSION = "extracted_item@contract-v0.6"
-REVIEW_PROMPT_VERSION = "review-v1"
+REVIEW_PROMPT_VERSION = "review-v2"
 
 ALLOWED_ITEM_TYPES = {"behavior", "thought", "emotion", "event", "plan", "constraint", "question", "summary"}
 DIMS = ["time", "health", "wealth", "relationship", "purpose"]
@@ -86,7 +86,8 @@ EXTRACT_SYSTEM = (
     "Never invent facts that are not in the original text. Output JSON: "
     "{items:[{item_type,text_value,normalized_value,quantity,unit,"
     "item_date,confidence,ai_reason,impacts:[{dimension_key,direction,degree,degree_positive,"
-    "degree_negative,confidence,basis}]}]}"
+    "degree_negative,confidence,basis}]}]} "
+    "Write text_value, normalized_value and ai_reason in the same language as the input sentence."
 )
 
 
@@ -176,6 +177,7 @@ CORRECT_SYSTEM = (
     "mentions; leave everything else untouched. "
     "Output JSON: {text_value: string|null, impacts: [{dimension_key, direction, degree,"
     " degree_positive, degree_negative, note}]} (list only the impacts that changed)."
+    " Write the changed text and notes in the same language as the user's feedback."
 )
 
 
@@ -240,7 +242,9 @@ REVIEW_SYSTEM = (
     "data. Output JSON: "
     "{statements:[{statement_type,text,confidence,uncertain_points,theory:{author,source_title,year,"
     "citation,verifiability,assumption_boundary}}], recommendation: {text, action_type,"
-    "target_dimension_keys, reason, expected_effect, unknowns} | null}"
+    "target_dimension_keys, reason, expected_effect, unknowns} | null} "
+    "Write statement text, recommendation text, reason and unknowns in the same language as the "
+    "confirmed facts."
 )
 
 

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Life OS · Variant 1 — Information Dense</title>
+<link rel="stylesheet" href="skin.css">
+</head>
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+  <div class="bar-inner">
+    <div class="tb-row">
+      <div class="brand"><b>AI Life OS</b><span>dense v0.1</span></div>
+      <div class="row" style="gap:5px">
+        <div class="pill priv">Private · Solo</div>
+        <div class="pill">Interview demo</div>
+      </div>
+    </div>
+    <div class="tb-sub">
+      <span class="k" id="tbDate">—</span><span>·</span>
+      <span id="tbWeek">—</span><span>·</span>
+      <span id="tbPending">Pending —</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ================= 1. CAPTURE ================= -->
+  <section class="screen active" id="s-capture">
+    <div class="sec">
+      <div class="stats">
+        <div class="stat"><div class="n" id="stToday">–</div><div class="l">Today's entries</div></div>
+        <div class="stat warn"><div class="n" id="stPending">–</div><div class="l">Pending</div></div>
+        <div class="stat"><div class="n" id="stWeek">–</div><div class="l">This week's entries</div></div>
+        <div class="stat"><div class="n" id="stGoals">–</div><div class="l">Active goals</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head">
+        <div class="sec-title">Awaiting confirmation</div>
+        <div class="sec-note">AI candidates · they count only after you confirm</div>
+      </div>
+      <div id="pendingList"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head">
+        <div class="sec-title">Capture · conversation</div>
+        <div class="sec-note">Your own words are kept verbatim · AI never rewrites them</div>
+      </div>
+      <div id="stream"></div>
+    </div>
+
+    <div class="footnote">AI structures entries as candidates; they enter long-term analysis only after you confirm</div>
+  </section>
+
+  <!-- ================= 2. FIVE DIMENSIONS ================= -->
+  <section class="screen" id="s-dims">
+    <div class="sec">
+      <div class="sec-head">
+        <div class="sec-title">Five-Dimension View · confirmed entries only</div>
+        <div class="sec-note">No composite score · unknown ≠ neutral</div>
+      </div>
+      <div class="card note-card">
+        Each behavior maps to the five dimensions by direction and 1–5 impact degree.
+        Only entries <b>you confirmed</b> are counted; where evidence is thin we say unknown — never a guess.
+        The 1–5 is your subjective estimate relative to your own goals, not a measurement.
+      </div>
+      <div id="dimsList" class="dimgrid"></div>
+    </div>
+    <div class="footnote">The five dimensions are non-zero-sum; there is no overall score · no sums, no averages across dimensions, no ranking</div>
+  </section>
+
+  <!-- ================= 3. REVIEW ================= -->
+  <section class="screen" id="s-review">
+    <div class="sec">
+      <div class="sec-head">
+        <div class="sec-title">Review · generated only when you open it</div>
+        <div class="sec-note">No reminders · no automatic triggers</div>
+      </div>
+      <div class="card">
+        <div class="lab">Period</div>
+        <div class="periods" id="periods">
+          <button class="period" data-days="1" onclick="pickPeriod(this,1)">Today</button>
+          <button class="period on" data-days="7" onclick="pickPeriod(this,7)">This week</button>
+          <button class="period" data-days="30" onclick="pickPeriod(this,30)">This month</button>
+        </div>
+        <div class="lab" style="margin-top:10px">How should it read?</div>
+        <div class="modes">
+          <button class="btn primary" onclick="startReview('guided')">Walk me through it</button>
+          <button class="btn" onclick="startReview('facts')">Facts only</button>
+          <button class="btn ghost" onclick="startReview('none')">No review for now</button>
+        </div>
+      </div>
+    </div>
+    <div id="revStream"></div>
+    <div class="footnote">Review is opened by you · no reminders · not used for model training</div>
+  </section>
+
+  <!-- ================= 4. ME ================= -->
+  <section class="screen" id="s-me">
+    <div class="sec">
+      <div class="sec-head">
+        <div class="sec-title">Core goals · max 3</div>
+        <div class="sec-note mono" id="goalCap">0 / 3 in use</div>
+      </div>
+      <div id="goalList"></div>
+      <div class="card" id="goalForm">
+        <div class="lab">Add a goal</div>
+        <input class="inp" id="goalTitle" maxlength="120" placeholder="Title — e.g. Run 3 times a week" aria-label="Goal title">
+        <div class="lab">Linked dimensions <span class="muted">(tap to toggle)</span></div>
+        <div class="chips" id="goalDims">
+          <button class="chip dimsel" data-dim="time" onclick="toggleDimSel(this)"><span class="dot" style="background:var(--time)"></span>Time</button>
+          <button class="chip dimsel" data-dim="health" onclick="toggleDimSel(this)"><span class="dot" style="background:var(--health)"></span>Health</button>
+          <button class="chip dimsel" data-dim="wealth" onclick="toggleDimSel(this)"><span class="dot" style="background:var(--wealth)"></span>Wealth</button>
+          <button class="chip dimsel" data-dim="relationship" onclick="toggleDimSel(this)"><span class="dot" style="background:var(--rel)"></span>Relationship</button>
+          <button class="chip dimsel" data-dim="purpose" onclick="toggleDimSel(this)"><span class="dot" style="background:var(--purpose)"></span>Purpose</button>
+        </div>
+        <div class="lab">Metric <span class="muted">(optional — a goal need not be quantified)</span></div>
+        <input class="inp" id="goalMetric" maxlength="120" placeholder="e.g. runs per week" aria-label="Goal metric">
+        <div class="lab">Horizon <span class="muted">(optional)</span></div>
+        <input class="inp" id="goalHorizon" maxlength="120" placeholder="e.g. this quarter" aria-label="Goal horizon">
+        <button class="btn primary block" id="btnAddGoal">Add a goal</button>
+        <div class="xs muted" style="margin-top:6px">At most three goals stay active — finish or pause one before adding another.</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head">
+        <div class="sec-title">Privacy &amp; data</div>
+        <div class="sec-note">yours only</div>
+      </div>
+      <div class="card small">
+        Your data lives in a <b>single SQLite file</b> on your server — copy the file to export everything,
+        delete the file to erase everything. Your original capture text is never rewritten, corrections are
+        kept as revisions beside the AI's original values, and none of it is used to train models.
+      </div>
+      <div class="card small demo-note">
+        <span class="badge b-mod">Demo</span>
+        Interview demo with fictional shared data — it may reset at any time.
+      </div>
+    </div>
+
+    <div class="footnote">No pushes, no reminders, no leaderboards · AI output stays provisional until you confirm it</div>
+  </section>
+
+</main>
+
+<!-- ================= DOCK: composer + tab bar ================= -->
+<div class="dock" id="dock">
+  <div class="composer" id="composer">
+    <div class="bar-inner">
+      <div class="chips" id="exampleChips">
+        <button class="chip" data-fill="Ran 30 minutes this morning, pace felt better than last week.">Ran 30 minutes</button>
+        <button class="chip" data-fill="Called mom for 20 minutes, talked about her health checkup.">Called mom</button>
+        <button class="chip" data-fill="Scrolled my phone until 1 a.m., meant to sleep by 11.">Phone until 1 a.m.</button>
+      </div>
+      <div class="composer-box">
+        <textarea id="capInput" rows="1" placeholder="What happened today? Plain language is fine…" aria-label="Capture text"></textarea>
+        <button class="send-btn" id="sendBtn" aria-label="Send capture">↑</button>
+      </div>
+      <div class="composer-note">The original text is saved in full first · AI only organizes, never rewrites your words</div>
+    </div>
+  </div>
+
+  <nav class="tabbar" aria-label="Main sections">
+    <div class="bar-inner tabs">
+      <button class="tab on" data-tab="capture" onclick="switchTab('capture',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 20h16"/><path d="M14.5 4.5l5 5L9 20H4v-5z"/></svg>
+        <span class="lb">Capture</span>
+      </button>
+      <button class="tab" data-tab="dims" onclick="switchTab('dims',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>
+        <span class="lb">Five Dimensions</span>
+      </button>
+      <button class="tab" data-tab="review" onclick="switchTab('review',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M3.5 9.5h17M8 3v3M16 3v3M8 14h4"/></svg>
+        <span class="lb">Review</span>
+      </button>
+      <button class="tab" data-tab="me" onclick="switchTab('me',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20c1.3-3.4 4-5.2 7.2-5.2s5.9 1.8 7.2 5.2"/></svg>
+        <span class="lb">Me</span>
+      </button>
+    </div>
+  </nav>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="skin.js"></script>
+</body>
+</html>

@@ -7,6 +7,20 @@ A self-hosted, mobile-first web app (FastAPI + SQLite + PWA) built with a discip
 
 ---
 
+## ▶ Live demos (interview showcase)
+
+The three UI style variants below are **live, interactive apps** deployed on my cloud server — each one calls a **real LLM API** (type a sentence and watch it get structured in real time), with a fixed bottom four-button shell and shared synthetic demo data:
+
+| Variant | Style | Live link |
+|---|---|---|
+| **Variant 1** | Information-Dense dashboard | **[https://42.193.174.212/demo/v1/](https://42.193.174.212/demo/v1/)** |
+| **Variant 2** *(chosen direction)* | Conversational · Guided | **[https://42.193.174.212/demo/v2/](https://42.193.174.212/demo/v2/)** |
+| **Variant 3** | Card-Stack | **[https://42.193.174.212/demo/v3/](https://42.193.174.212/demo/v3/)** |
+
+All three: [demo picker page](https://42.193.174.212/demo/) · The demos run on shared fictional accounts (anyone can explore them; AI calls are rate-limited; data may reset). HTTPS is self-hosted with a self-signed certificate — accept your browser's one-time warning to continue.
+
+---
+
 ## Why
 
 Personal life data (habits, time, money, relationships, purpose) usually lives in scattered notes and trackers that can't talk to each other. Life OS treats every behavior/event as a first-class record and evaluates it against **five fixed top-level dimensions** — no arbitrary custom taxonomies, no single vanity "life score".

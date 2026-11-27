@@ -1,0 +1,481 @@
+/* Skin layer = variant 2 design mockup copied as-is (docs/03-design/prototypes/variant-2/index.html)
+   Zero visual changes; productization tweaks must be appended at the end of the file and annotated. */
+:root{
+    --bg:#F6F2EC;
+    --paper:#FFFFFF;
+    --ink:#2E2B26;
+    --ink-soft:#57524A;
+    --muted:#8C857A;
+    --line:#E7E0D5;
+    --green:#4C6B58;
+    --green-soft:#E6EEE8;
+    --clay:#B4613C;
+    --clay-soft:#F6E7DE;
+    --gold:#A98A3F;
+    --gold-soft:#F5EEDC;
+    --blue:#4A6572;
+    --blue-soft:#E3EBEE;
+    --danger:#A94B3C;
+    --radius:18px;
+    --shadow:0 1px 2px rgba(60,50,35,.06), 0 8px 24px rgba(60,50,35,.06);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:#E9E2D7;
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.65;
+    display:flex;justify-content:center;
+    min-height:100vh;
+  }
+  .phone{
+    width:100%;max-width:420px;min-height:100vh;
+    background:var(--bg);
+    display:flex;flex-direction:column;
+    position:relative;
+    box-shadow:0 0 40px rgba(60,50,35,.18);
+    overflow:hidden;
+  }
+  /* ---------- header ---------- */
+  .app-header{
+    padding:14px 18px 10px;
+    background:rgba(246,242,236,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:20;
+  }
+  .app-header .row{display:flex;align-items:center;justify-content:space-between}
+  .brand{font-size:15px;font-weight:650;letter-spacing:.02em}
+  .brand small{display:block;font-size:11px;font-weight:400;color:var(--muted);letter-spacing:.05em}
+  .privacy-pill{
+    font-size:11px;color:var(--green);background:var(--green-soft);
+    padding:5px 10px;border-radius:999px;display:flex;align-items:center;gap:5px;
+  }
+  .privacy-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+
+  /* ---------- scroll area ---------- */
+  .screen{
+    flex:1;overflow-y:auto;padding:18px 16px 108px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .screen::-webkit-scrollbar{width:0}
+  .hidden{display:none !important}
+
+  /* ---------- chat ---------- */
+  .day-divider{
+    text-align:center;font-size:11px;color:var(--muted);
+    margin:6px 0 18px;letter-spacing:.08em;
+  }
+  .msg{display:flex;margin-bottom:18px;gap:9px;align-items:flex-end}
+  .msg.user{flex-direction:row-reverse}
+  .msg > div{min-width:0}
+  .avatar{
+    width:30px;height:30px;border-radius:50%;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:600;
+  }
+  .msg.ai .avatar{background:var(--green-soft);color:var(--green)}
+  .msg.user .avatar{background:#DED6C7;color:var(--ink-soft)}
+  .bubble{
+    max-width:80%;
+    padding:12px 15px;
+    border-radius:var(--radius);
+    font-size:14.5px;
+    box-shadow:var(--shadow);
+    overflow-wrap:anywhere;
+  }
+  .msg.ai .bubble{
+    background:var(--paper);
+    border-bottom-left-radius:6px;
+    color:var(--ink);
+  }
+  .msg.user .bubble{
+    background:var(--green);
+    color:#F7FAF7;
+    border-bottom-right-radius:6px;
+  }
+  .bubble p{margin:0 0 .55em}
+  .bubble p:last-child{margin-bottom:0}
+  .bubble .soft{color:var(--ink-soft);font-size:13px}
+  .msg.user .bubble .soft{color:#D9E5DC}
+  .bubble.wide{max-width:92%}
+
+  .time-stamp{font-size:10.5px;color:var(--muted);margin-top:5px;padding:0 4px}
+  .msg.user .time-stamp{text-align:right}
+
+  /* typing dots */
+  .typing{display:flex;gap:5px;padding:6px 2px}
+  .typing i{
+    width:7px;height:7px;border-radius:50%;background:#C9C1B3;
+    animation:blink 1.2s infinite ease-in-out;
+  }
+  .typing i:nth-child(2){animation-delay:.18s}
+  .typing i:nth-child(3){animation-delay:.36s}
+  @keyframes blink{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+
+  /* ---------- structured card inside bubble ---------- */
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:14px;
+    margin-top:10px;
+    box-shadow:var(--shadow);
+  }
+  .card-title{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    margin-bottom:2px;
+  }
+  .card-title b{font-size:14.5px}
+  .badge{
+    font-size:10.5px;padding:3px 8px;border-radius:999px;white-space:nowrap;
+    background:#EFEAE1;color:var(--ink-soft);
+  }
+  .badge.pending{background:var(--gold-soft);color:#7C6326}
+  .badge.confirmed{background:var(--green-soft);color:var(--green)}
+  .badge.edited{background:var(--blue-soft);color:var(--blue)}
+  .badge.deleted{background:#F2E2DE;color:var(--danger)}
+  .badge.later{background:#EFEAE1;color:var(--ink-soft)}
+
+  .quote{
+    font-size:12.5px;color:var(--ink-soft);
+    background:#F8F5F0;border-left:3px solid #D8CDB9;
+    padding:8px 11px;border-radius:8px;margin:8px 0;
+  }
+  .quote .tag{
+    display:inline-block;font-size:10px;letter-spacing:.06em;
+    color:var(--muted);margin-bottom:3px;
+  }
+  .meta-line{font-size:12px;color:var(--muted);margin:4px 0}
+  .meta-line b{color:var(--ink-soft);font-weight:600}
+
+  /* impact rows */
+  .impact-list{margin:10px 0 4px;display:flex;flex-direction:column;gap:8px}
+  .impact-row{
+    display:flex;align-items:center;gap:9px;flex-wrap:wrap;row-gap:5px;
+    padding:8px 10px;border-radius:12px;background:#FAF8F4;
+    border:1px solid #EFE9DE;
+  }
+  .impact-row .dim{
+    font-size:12px;width:58px;flex:none;color:var(--ink-soft);font-weight:600;
+  }
+  .impact-row .dim span{display:block;font-size:9.5px;font-weight:400;color:var(--muted);letter-spacing:.05em}
+  .dir-chip{
+    font-size:11px;padding:3px 9px;border-radius:999px;font-weight:600;white-space:nowrap;
+  }
+  .dir-pos{background:var(--green-soft);color:var(--green)}
+  .dir-neg{background:#F2E2DE;color:var(--danger)}
+  .dir-mix{background:var(--gold-soft);color:#7C6326}
+  .dir-neu{background:#EFEAE1;color:var(--ink-soft)}
+  .dir-unk{background:#F1EEEA;color:#9A9287}
+  .degrees{display:flex;gap:3px;align-items:center}
+  .degrees i{
+    width:9px;height:9px;border-radius:50%;background:#E2DBCD;display:inline-block;
+  }
+  .degrees i.on{background:var(--clay)}
+  .degrees i.on.pos{background:var(--green)}
+  .degrees .deg-label{font-size:10px;color:var(--muted);margin-left:4px}
+  .epi{
+    font-size:9.5px;color:var(--muted);margin-left:auto;white-space:nowrap;
+    border:1px solid var(--line);padding:1px 6px;border-radius:999px;
+  }
+
+  /* card actions */
+  .actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+  .btn{
+    border:none;border-radius:999px;padding:8px 15px;font-size:12.5px;
+    font-weight:600;cursor:pointer;font-family:inherit;
+    transition:transform .06s ease, opacity .15s ease;
+  }
+  .btn:active{transform:scale(.96)}
+  .btn-primary{background:var(--green);color:#fff}
+  .btn-ghost{background:#F1EDE5;color:var(--ink-soft)}
+  .btn-line{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .btn-danger{background:transparent;color:var(--danger);border:1px solid #E5C6BF}
+  .btn-done{background:var(--green-soft);color:var(--green);cursor:default}
+
+  /* edit panel */
+  .edit-panel{
+    margin-top:12px;border-top:1px dashed var(--line);padding-top:12px;
+  }
+  .edit-hint{font-size:12px;color:var(--muted);margin:0 0 10px}
+  .edit-row{margin-bottom:12px}
+  .edit-row .lab{font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;display:flex;gap:8px;align-items:center}
+  .seg{display:flex;gap:6px;flex-wrap:wrap}
+  .seg button{
+    border:1px solid var(--line);background:#fff;color:var(--ink-soft);
+    font-size:11.5px;padding:5px 11px;border-radius:999px;cursor:pointer;font-family:inherit;
+  }
+  .seg button.sel{background:var(--green);color:#fff;border-color:var(--green)}
+  .deg-picker{display:flex;gap:6px;margin-top:8px;align-items:center}
+  .deg-picker button{
+    width:30px;height:30px;border-radius:50%;border:1px solid var(--line);
+    background:#fff;color:var(--ink-soft);font-size:12px;cursor:pointer;font-family:inherit;
+  }
+  .deg-picker button.sel{background:var(--clay);color:#fff;border-color:var(--clay)}
+  .deg-picker .lbl{font-size:11px;color:var(--muted);margin-right:2px}
+
+  /* suggestion chips */
+  .suggest-wrap{
+    display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;
+  }
+  .suggest-wrap::-webkit-scrollbar{height:0}
+  .chip{
+    flex:none;background:var(--paper);border:1px solid var(--line);
+    color:var(--ink-soft);font-size:12.5px;padding:8px 14px;border-radius:999px;
+    cursor:pointer;white-space:nowrap;font-family:inherit;box-shadow:var(--shadow);
+  }
+  .chip:active{transform:scale(.96)}
+  .chip.accent{border-color:#CBDACF;color:var(--green);background:#F2F7F3}
+
+  /* composer */
+  .composer{
+    position:sticky;bottom:64px;
+    background:linear-gradient(180deg, rgba(246,242,236,0), var(--bg) 30%);
+    padding:10px 14px 12px;
+    z-index:15;
+  }
+  .composer .box{
+    display:flex;align-items:flex-end;gap:9px;
+    background:var(--paper);border:1px solid var(--line);
+    border-radius:22px;padding:8px 8px 8px 16px;box-shadow:var(--shadow);
+  }
+  .composer textarea{
+    flex:1;border:none;outline:none;resize:none;background:transparent;
+    font-family:inherit;font-size:14.5px;line-height:1.5;color:var(--ink);
+    max-height:96px;padding:6px 0;
+  }
+  .composer textarea::placeholder{color:#B3AB9E}
+  .send-btn{
+    width:38px;height:38px;border-radius:50%;border:none;flex:none;
+    background:var(--green);color:#fff;font-size:16px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .send-btn:disabled{background:#C9CFC9;cursor:default}
+  .composer .note{font-size:10.5px;color:var(--muted);text-align:center;margin-top:7px}
+
+  /* ---------- bottom nav ---------- */
+  .tabbar{
+    position:sticky;bottom:0;z-index:25;
+    display:flex;background:rgba(252,250,247,.96);
+    border-top:1px solid var(--line);
+    padding:8px 0 max(10px, env(safe-area-inset-bottom));
+    backdrop-filter:blur(10px);
+  }
+  .tabbar button{
+    flex:1;background:none;border:none;cursor:pointer;font-family:inherit;
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    color:var(--muted);font-size:10.5px;padding:4px 0;
+  }
+  .tabbar button .ic{font-size:19px;line-height:1}
+  .tabbar button.active{color:var(--green);font-weight:600}
+
+  /* ---------- five dimension screen ---------- */
+  .screen-head{margin:2px 2px 16px}
+  .screen-head h1{font-size:21px;margin:0 0 5px;letter-spacing:.01em}
+  .screen-head p{margin:0;font-size:13px;color:var(--muted);line-height:1.6}
+  .note-card{
+    background:var(--gold-soft);border-radius:14px;padding:11px 13px;
+    font-size:11.5px;color:#7C6326;margin-bottom:16px;line-height:1.6;
+  }
+  .dim-card{
+    background:var(--paper);border-radius:16px;box-shadow:var(--shadow);
+    margin-bottom:12px;overflow:hidden;border:1px solid var(--line);
+  }
+  .dim-card .head{
+    padding:14px 15px;display:flex;align-items:center;gap:11px;cursor:pointer;
+  }
+  .dim-icon{
+    width:38px;height:38px;border-radius:12px;flex:none;
+    display:flex;align-items:center;justify-content:center;font-size:17px;
+  }
+  .dim-name{flex:1}
+  .dim-name b{font-size:15px;display:block}
+  .dim-name span{font-size:11.5px;color:var(--muted)}
+  .dim-verdict{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .dim-body{padding:0 15px 15px;display:none}
+  .dim-card.open .dim-body{display:block}
+  .dim-card.open .chev{transform:rotate(180deg)}
+  .chev{transition:transform .2s;color:var(--muted);font-size:12px}
+  .evi{
+    font-size:12px;color:var(--ink-soft);background:#FAF8F4;
+    border-radius:10px;padding:9px 11px;margin-top:8px;border:1px solid #EFE9DE;
+  }
+  .evi .src{font-size:10.5px;color:var(--muted);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap}
+  .evi .src span{border:1px solid var(--line);border-radius:999px;padding:1px 7px}
+  .unknown-note{font-size:12px;color:var(--muted);background:#F5F2ED;border-radius:10px;padding:10px 12px;margin-top:8px}
+
+  /* ---------- review screen ---------- */
+  .period-row{display:flex;gap:8px;margin-bottom:16px}
+  .period-row button{
+    flex:1;padding:11px 0;border-radius:14px;border:1px solid var(--line);
+    background:var(--paper);font-family:inherit;font-size:13px;font-weight:600;
+    color:var(--ink-soft);cursor:pointer;
+  }
+  .period-row button.sel{background:var(--green);border-color:var(--green);color:#fff}
+
+  .rev-section{
+    background:var(--paper);border-radius:16px;box-shadow:var(--shadow);
+    padding:15px;margin-bottom:12px;border:1px solid var(--line);
+  }
+  .rev-section h3{
+    margin:0 0 3px;font-size:14px;display:flex;align-items:center;gap:8px;
+  }
+  .rev-section h3 .step{
+    width:20px;height:20px;border-radius:50%;background:var(--green-soft);
+    color:var(--green);font-size:11px;display:flex;align-items:center;justify-content:center;
+  }
+  .kind-tag{font-size:9.5px;letter-spacing:.08em;padding:2px 8px;border-radius:999px;margin-left:auto}
+  .kind-fact{background:var(--green-soft);color:var(--green)}
+  .kind-guess{background:var(--gold-soft);color:#7C6326}
+  .kind-theory{background:var(--blue-soft);color:var(--blue)}
+  .kind-advice{background:var(--clay-soft);color:var(--clay)}
+  .rev-section p{font-size:13px;margin:8px 0 0;color:var(--ink-soft);line-height:1.7}
+  .fact-line{
+    display:flex;gap:9px;align-items:flex-start;font-size:13px;
+    padding:7px 0;border-bottom:1px dashed var(--line);
+  }
+  .fact-line:last-child{border-bottom:none}
+  .fact-line .dot{width:6px;height:6px;border-radius:50%;background:var(--green);margin-top:8px;flex:none}
+  .cite{
+    font-size:10.5px;color:var(--muted);border:1px solid var(--line);
+    padding:1px 7px;border-radius:999px;cursor:pointer;white-space:nowrap;background:#FAF8F4;
+  }
+  .goal-row{
+    background:#FAF8F4;border-radius:12px;padding:11px 12px;margin-top:9px;
+    font-size:12.5px;color:var(--ink-soft);border:1px solid #EFE9DE;
+  }
+  .goal-row b{color:var(--ink);font-size:13px}
+  .tension{color:#7C6326;font-weight:600}
+  .aligned{color:var(--green);font-weight:600}
+  .obc{
+    border:1.5px solid var(--clay);border-radius:16px;padding:15px;
+    background:linear-gradient(180deg,#FBF2EC,#FFF);
+  }
+  .obc h3{margin:0 0 2px;color:var(--clay)}
+  .obc .sub{font-size:11px;color:var(--clay);letter-spacing:.06em;margin-bottom:9px}
+  .obc p{color:var(--ink)}
+  .limit-list{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:var(--ink-soft)}
+  .limit-list li{margin-bottom:5px}
+  .why-box{
+    margin-top:11px;background:#F5F2ED;border-radius:12px;padding:11px 13px;
+    font-size:11.5px;color:var(--ink-soft);line-height:1.7;
+  }
+  .why-box b{color:var(--ink)}
+  .feedback-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
+  .fb{
+    border:1px solid var(--line);background:#fff;color:var(--ink-soft);
+    font-size:12px;padding:7px 13px;border-radius:999px;cursor:pointer;font-family:inherit;
+  }
+  .fb.sel{background:var(--green);border-color:var(--green);color:#fff}
+
+  .quiet-end{
+    text-align:center;font-size:12px;color:var(--muted);
+    padding:18px 20px;background:var(--paper);border-radius:16px;
+    border:1px dashed var(--line);line-height:1.8;
+  }
+
+  /* toast */
+  .toast{
+    position:fixed;left:50%;bottom:150px;transform:translateX(-50%) translateY(10px);
+    background:rgba(46,43,38,.92);color:#fff;font-size:12.5px;
+    padding:9px 18px;border-radius:999px;opacity:0;pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;z-index:60;white-space:nowrap;
+    max-width:86vw;overflow:hidden;text-overflow:ellipsis;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* misc */
+  .divider-soft{height:1px;background:var(--line);margin:16px 2px}
+  .foot-note{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;padding:6px 12px 2px}
+
+/* ===== Productization additions (not from the design mockup; each item annotated) ===== */
+/* Review feedback free-text box (the mockup shows a single-line demo; the product needs multiple lines) */
+.fb-text{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;font-family:inherit;resize:none;margin:6px 0}
+/* Native dropdown/inputs in the edit panel, styled to match the mockup's input style */
+.edit-row select,.edit-row input{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;background:var(--bg);font-family:inherit}
+.edit-row input{flex:1}
+
+/* ===== Frictionless capture v0.2 interaction components (productization additions, not from the design mockup) ===== */
+/* Plain-language summary: AI's feel-based conclusion, takes precedence over hard metrics */
+.human-summary{font-size:15px;line-height:1.6;margin:2px 0 10px}
+/* Collapsed "how AI broke it down" details area */
+.details{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}
+.mini-item{margin-bottom:12px;padding-bottom:10px;border-bottom:1px dashed var(--line)}
+.mini-item .impact-row{opacity:.95}
+.mini-item .impact-row:last-of-type{margin-bottom:4px}
+/* Correction: spoken, not dropdowns */
+.correct-box{display:flex;gap:8px;margin-top:10px}
+.correct-box input{flex:1;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13.5px;font-family:inherit;background:var(--bg)}
+.correct-box input:focus{outline:none;border-color:var(--violet);background:#fff}
+/* Main actions: Yes / No */
+.actions.big{margin:10px 0 2px}
+.actions.big .btn{padding:11px 18px;font-size:14.5px}
+.badge-row{margin:8px 0}
+
+/* ===== PWA app experience pack (productization additions, not from the design mockup; each item annotated) ===== */
+/* 1. Message/card entrance animation (restrained: only for state transitions) */
+@keyframes msg-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg.enter{animation:msg-in .25s ease both}
+
+/* 2. Skeleton screen (loading placeholder with a subtle shimmer, no fake progress) */
+.sk-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
+.sk-bar{height:12px;border-radius:6px;margin:8px 0;background:linear-gradient(90deg,#EDE8DF 25%,#F7F4EE 50%,#EDE8DF 75%);background-size:200% 100%;animation:shimmer 1.3s infinite linear}
+.sk-bar.w40{width:40%}.sk-bar.w60{width:60%}.sk-bar.w80{width:80%}
+@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+
+/* 3. One-tap "Yes / No" big buttons: 44px+ touch target */
+.actions.big .btn{min-height:44px;padding:12px 20px;font-size:15px}
+.actions.big .btn-primary{flex:1 1 58%}
+.actions.big .btn-ghost{flex:1 1 34%}
+
+/* 4. Button press feedback + removal of tap delay / double-tap zoom */
+button,.chip,.fb,.cite{touch-action:manipulation}
+.send-btn,.tabbar button,.fb,.seg button,.period-row button,.onboard-go,.onboard-skip{transition:transform .06s ease,opacity .15s ease}
+.send-btn:active,.tabbar button:active,.fb:active,.seg button:active,.period-row button:active,.onboard-go:active,.onboard-skip:active{transform:scale(.94)}
+.send-btn.busy{opacity:.55;cursor:default;animation:busy-pulse 1s infinite ease-in-out}
+@keyframes busy-pulse{0%,100%{opacity:.55}50%{opacity:.85}}
+
+/* 5. Inputs ≥16px: prevents iOS focus auto-zoom; correction/feedback boxes handled the same way */
+.composer textarea{font-size:16px}
+.correct-box input{font-size:16px}
+.fb-text{font-size:16px}
+.edit-row select,.edit-row input{font-size:16px}
+
+/* 6. Keep the keyboard from covering the input (visualViewport: shift everything up when the keyboard appears so the composer stays visible) */
+body.kb-open .phone{transform:translateY(calc(-1 * var(--kb-h, 0px)))}
+
+/* 7. One-time first-visit onboarding (get started in 3 steps) */
+.onboard{position:fixed;inset:0;z-index:80;background:rgba(23,23,26,.42);display:flex;align-items:flex-end;justify-content:center}
+.onboard.hidden{display:none}
+.onboard-sheet{width:100%;max-width:420px;background:var(--paper);border-radius:22px 22px 0 0;padding:22px 20px max(24px, env(safe-area-inset-bottom));animation:sheet-in .28s ease both}
+@keyframes sheet-in{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+.onboard-title{font-size:19px;font-weight:650;margin-bottom:4px}
+.onboard-title small{display:block;font-size:11.5px;font-weight:400;color:var(--muted);letter-spacing:.03em;margin-top:3px}
+.onboard-steps{list-style:none;margin:14px 0 4px;padding:0;display:flex;flex-direction:column;gap:14px}
+.onboard-steps li{display:flex;gap:11px;align-items:flex-start}
+.onboard-steps .step-no{width:24px;height:24px;border-radius:50%;flex:none;background:var(--green-soft);color:var(--green);font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.onboard-steps b{font-size:14.5px}
+.onboard-steps p{margin:2px 0 0;font-size:12.5px;color:var(--ink-soft);line-height:1.65}
+.onboard-go{width:100%;min-height:46px;font-size:15px;margin-top:16px}
+.onboard-skip{width:100%;min-height:44px;background:none;border:none;color:var(--muted);font-size:13px;font-family:inherit;cursor:pointer;margin-top:4px}
+
+/* ===== Productization addition 8 (2026-11-18 · Fold/wide screens at 100% full width) =====
+   Max's feedback: the Fold 7 inner screen doesn't use the full width. Without touching the mockup:
+   remove the 420px cap on .phone / the onboarding card so any screen width fills 100%;
+   on phones ≤420px the visuals stay identical to the mockup. */
+.phone{max-width:none;box-shadow:none;min-height:100dvh}
+.onboard-sheet{max-width:none}
+
+/* ===== Productization addition 9 (2026-11-18 · App shell: four bottom buttons pinned) =====
+   Max's feedback: the bottom buttons only appear after scrolling the whole page. Root cause:
+   .phone used min-height and got stretched by content, so the whole page scrolled, and
+   .phone's overflow:hidden broke sticky. Switched to a fixed-height app shell:
+   only .screen scrolls internally, and the composer/tabbar stay pinned at the bottom (the mockup's original intent). */
+.phone{height:100dvh}
+
+/* ---- interview-demo banner (demo skin only) ---- */
+.privacy-pill.demo { background: #EDE6F6; color: #6B4FA0; }
+.privacy-pill.demo .dot { background: #8B6FC0; }
