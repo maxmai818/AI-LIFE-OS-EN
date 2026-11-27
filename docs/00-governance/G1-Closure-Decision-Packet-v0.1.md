@@ -1,69 +1,69 @@
-# G1 关闭决策包 v0.1
+# G1 Closure Decision Packet v0.1
 
-- **状态**：待 Max 决策（一页决策，不需要读全文）
-- **提案**：Hermes（PM）；**决策人**：Max；**日期**：2026-10-08
-- **决策对象**：[PR #4 — G1 v0.6 需求基线](https://github.com/maxmai818/AI-LIFE-OS/pull/4)（`docs/g1-adaptive-review-v06`，11 个 Markdown 文件，docs-only）
-- **性质**：里程碑验收（G1：需求基线），属 Max 保留决策（见 [Max-CEO-Decision-Protocol-v0.1](Max-CEO-Decision-Protocol-v0.1.md)）
+- **Status**: Pending Max's decision (a one-page decision; no need to read the full text)
+- **Proposer**: Hermes (PM); **Decision maker**: Max; **Date**: 2026-10-08
+- **Decision object**: [PR #4 — G1 v0.6 requirements baseline](https://github.com/maxmai818/AI-LIFE-OS/pull/4) (`docs/g1-adaptive-review-v06`, 11 Markdown files, docs-only)
+- **Nature**: milestone acceptance (G1: requirements baseline), a decision reserved for Max (see [Max-CEO-Decision-Protocol-v0.1](Max-CEO-Decision-Protocol-v0.1.md))
 
 ---
 
-## ① 要决定什么（一句话）
+## ① What needs to be decided (one sentence)
 
-是否批准 v0.6 需求基线（Product / Data / Test 三件套 + Decision 006），并正式关闭 G1 需求阶段。
+Whether to approve the v0.6 requirements baseline (the Product / Data / Test three-document set + Decision 006) and formally close the G1 requirements phase.
 
-## ② 推荐选项与理由
+## ② Recommended option and rationale
 
-**推荐：A — 带条件批准，关闭 G1。**
+**Recommendation: A — approve with conditions, close G1.**
 
-理由：
+Rationale:
 
-1. **G1 验收条件已满足**（Roadmap §2.2：PRD、用户旅程、范围、非功能需求，Must/Should/Could/Won't 已确认，关键术语无歧义）。三件套 v0.6 齐备；五维、mixed 影响、Life Score/Goal Progress/Deviation 分离等关键术语已由 Decision 004/005/006 固化。
-2. **三项独立评审均已完成**：文档一致性 `PASS`（09-15）；心理安全专项 `PASS_WITH_CONDITIONS`（09-16，PSR-001 修订已复核）；隐私专项 `PASS_WITH_CONDITIONS`（09-17，PRV-001/002 修订已复核）。
-3. **遗留条件不阻断 G1**：全部 `PASS_WITH_CONDITIONS` 遗留项都是"技术兑现与真实用户验证"（辅助技术兼容、认证、删除、缓存/备份、供应商、训练审计），按 Roadmap 属于 G2/G3 验收对象，不是需求层缺口。
-4. **延后是设计决定而非缺口**：阈值、期限、供应商参数、实验标准已显式移至 G2/G3，文档没有把它们伪装成已批准。
+1. **G1 acceptance conditions are satisfied** (Roadmap §2.2: PRD, user journeys, scope, non-functional requirements; Must/Should/Could/Won't confirmed; key terms unambiguous). The v0.6 three-document set is complete; key terms such as the Five Life Dimensions, mixed impacts, and the Life Score/Goal Progress/Deviation separation have been codified by Decisions 004/005/006.
+2. **All three independent reviews are complete**: document consistency `PASS` (09-15); psychological safety special review `PASS_WITH_CONDITIONS` (09-16, PSR-001 revisions re-checked); privacy special review `PASS_WITH_CONDITIONS` (09-17, PRV-001/002 revisions re-checked).
+3. **Leftover conditions do not block G1**: all `PASS_WITH_CONDITIONS` leftovers are "technical delivery and real-user validation" (assistive technology compatibility, authentication, deletion, cache/backup, vendors, training audits); per the Roadmap these are G2/G3 acceptance targets, not requirements-layer gaps.
+4. **Deferral is a design decision, not a gap**: thresholds, deadlines, vendor parameters, and experiment criteria have been explicitly moved to G2/G3; the documents do not disguise them as approved.
 
-## ③ v0.5 → v0.6 关键差异（唯一需要看的变化）
+## ③ Key v0.5 → v0.6 differences (the only changes you need to look at)
 
-| 主题 | v0.6 结论 |
+| Topic | v0.6 conclusion |
 |---|---|
-| ONE BIG CHANGE | 零个或一个；不想改不强塞 |
-| Review 触发 | 仅用户主动打开；无提醒/监控/自动周期 |
-| 教练风格 | 轻量自适应；无必选人格/大量设置 |
-| 适应依据 | 当前证据、目标/限制、有效反馈；不按失败次数加压 |
-| 反馈 | 可选、可修订；事实/解释/风格/接受/结果分开 |
-| 可解释性 | 理由摘要默认折叠；不存隐藏思维链 |
-| 学习与隐私 | 不微调/RL；受限检索、有界保留/删除；敏感推断不自动批准 |
+| ONE BIG CHANGE | Zero or one; no forcing suggestions when there is no will to change |
+| Review trigger | Only when the user actively opens it; no reminders/monitoring/automatic cycles |
+| Coaching style | Lightweight adaptive; no mandatory persona/extensive setup |
+| Basis for adaptation | Current evidence, goals/constraints, valid feedback; no pressure based on failure counts |
+| Feedback | Optional, revisable; fact/explanation/style/acceptance/outcome separated |
+| Explainability | Rationale summary collapsed by default; no hidden chain of thought stored |
+| Learning and privacy | No fine-tuning/RL; restricted retrieval, bounded retention/deletion; sensitive inferences not automatically approved |
 
-**不变**：五维模型、Decision 004/005 全部规则、mixed 双侧 1–5、null ≠ 拒绝、禁比例/净值/跨维排名。
+**Unchanged**: the Five-Dimension model, all rules of Decisions 004/005, mixed two-sided 1–5, null ≠ rejection, ban on proportions/net values/cross-dimension rankings.
 
-## ④ 风险（不可逆性评估）
+## ④ Risks (irreversibility assessment)
 
-- **不可逆性：低。** 本次是 docs-only 基线冻结；后续改动走新版本/修订流程，可追溯、可回退。
-- **不会因本次批准解锁**：真实数据采集、危机场景试用、编码、合并后的实现开工（实现须待 G2 通过）。
-- **条件不丢失**：遗留条件在下方"遗留义务"登记，随 G2/G3 验收清单跟踪。
+- **Irreversibility: low.** This is a docs-only baseline freeze; subsequent changes go through the new-version/revision process — traceable and reversible.
+- **Not unlocked by this approval**: real data collection, crisis-scenario trials, coding, or starting implementation after merging (implementation must wait for G2 to pass).
+- **Conditions are not lost**: leftover conditions are registered under "Outstanding obligations" below and tracked with the G2/G3 acceptance checklist.
 
-## ⑤ 备选
+## ⑤ Alternatives
 
-- **B — 批准内容但 G1 保持 In Review**：仅当你认为仍有需求层缺口时选，回复时注明缺口。
-- **C — 退回修改**：回复时注明要改什么，Hermes 出 v0.7。
-
----
-
-## 遗留义务（G2/G3 跟踪清单，不阻断 G1）
-
-1. **心理安全**（来自 `PASS_WITH_CONDITIONS`）：辅助技术兼容、跨设备一致性、真实用户公平性验证 → G2/G3。
-2. **隐私**（来自 `PASS_WITH_CONDITIONS`）：认证、实际删除、缓存/备份、供应商边界、训练日志/权重审计、法律兑现 → G2/G3。
-3. **临床安全协议**：未定义；批准前不得试用真实危机场景 → G2 定义。
-
-## 附带确认项（随本次一并回复，不另占时间）
-
-1. **POC 代码分支处置**：见 [Decision 007](../09-decisions/G1-Decision-007-POC-Exploration-Code-v0.1.md)。`feat/poc-implementation` 已按 Max 2026-10-08 决定废弃（已打归档 tag `archive/poc-exploration-20261008` 后删除分支，可恢复）。建议同一实验线的 `feat/poc-iteration-1/4/6`、`poc/exploration` 同样归档删除——代码不继承，G2 通过后从 main 开始正式实现。
-2. **CEO 决策协议**：[Max-CEO-Decision-Protocol-v0.1](Max-CEO-Decision-Protocol-v0.1.md) 生效（决策分级、一页决策包格式、每天≤5 分钟/每周≤15 分钟节奏）。
-
-## 选 A 后自动执行（无需再次确认）
-
-merge PR #4 → 打 tag `G1-baseline` → 更新 README/docs 状态为"G1 通过" → 附带项按上述处置 → **启动 G2：原型三选一**（3 个可点击 HTML 原型并行产出，交 Max 选择）。
+- **B — approve the content but keep G1 In Review**: choose only if you believe requirements-layer gaps remain; note the gaps in your reply.
+- **C — send back for revision**: note what to change in your reply; Hermes will produce v0.7.
 
 ---
 
-**怎么回复**：`A`（全部同意）/ `A + 附带项1不同意` 等一行即可；选 B/C 请注明原因。
+## Outstanding obligations (G2/G3 tracking list; does not block G1)
+
+1. **Psychological safety** (from `PASS_WITH_CONDITIONS`): assistive technology compatibility, cross-device consistency, real-user fairness validation → G2/G3.
+2. **Privacy** (from `PASS_WITH_CONDITIONS`): authentication, actual deletion, cache/backup, vendor boundaries, training log/weight audits, legal delivery → G2/G3.
+3. **Clinical safety protocol**: undefined; no real crisis-scenario trials before it is approved → define in G2.
+
+## Accompanying confirmation items (reply together with this one; no extra time needed)
+
+1. **POC code branch disposition**: see [Decision 007](../09-decisions/G1-Decision-007-POC-Exploration-Code-v0.1.md). `feat/poc-implementation` has been deprecated per Max's 2026-10-08 decision (archive tag `archive/poc-exploration-20261008` stamped, then the branch deleted; recoverable). Recommend that `feat/poc-iteration-1/4/6` and `poc/exploration` from the same experiment line be archived and deleted likewise — code is not inherited; formal implementation starts from main after G2 passes.
+2. **CEO decision protocol**: [Max-CEO-Decision-Protocol-v0.1](Max-CEO-Decision-Protocol-v0.1.md) takes effect (decision tiers, one-page decision packet format, cadence of ≤5 minutes per day / ≤15 minutes per week).
+
+## Auto-executed after choosing A (no further confirmation needed)
+
+merge PR #4 → tag `G1-baseline` → update README/docs status to "G1 passed" → accompanying items disposed as above → **kick off G2: three-way prototype selection** (3 clickable HTML prototypes produced in parallel, for Max to choose).
+
+---
+
+**How to reply**: one line is enough — `A` (agree with everything) / `A + disagree with accompanying item 1`, etc.; for B/C, please note the reason.

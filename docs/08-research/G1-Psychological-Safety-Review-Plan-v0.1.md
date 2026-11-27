@@ -1,131 +1,131 @@
-# AI Life OS G1 心理安全专项审查方案 v0.1
+# AI Life OS G1 Psychological Safety Specialist Review Plan v0.1
 
-- **状态**：In Review
-- **阶段**：G1 Requirements / Specialist Review
-- **审查性质**：非临床、循证行为科学与心理安全产品审查
-- **适用范围**：POC-01 自适应 Review 的产品原则、需求、数据/AI 语义和拟议验收
-- **不构成**：心理或精神健康诊断、治疗、危机处置、临床/法律/隐私合规意见；也不构成实现、测试、真实数据处理、合并、发布或 Gate 放行授权
+- **Status**: In Review
+- **Stage**: G1 Requirements / Specialist Review
+- **Review nature**: non-clinical, evidence-based behavioral science and psychological safety product review
+- **Scope**: POC-01 Adaptive Review product principles, requirements, Data/AI semantics, and proposed acceptance criteria
+- **Does not constitute**: psychological or mental-health diagnosis, treatment, crisis handling, or clinical/legal/privacy compliance opinions; nor does it constitute implementation, testing, real data processing, merge, release, or Gate clearance authorization
 
-## 1. 目的与边界
+## 1. Purpose and boundaries
 
-本审查检查现有 G1 文档是否足以避免可预见的心理安全伤害，并验证已确认原则在 [Product](../02-requirements/POC-01-Product-UX-Spec-v0.6.md)、[Data/AI](../04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md)、[Test](../06-testing/POC-01-Test-Acceptance-Spec-v0.6.md)、[Decision 006](../09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md)、[Evidence Card](Adaptive-Review-Evidence-Card-v0.1.md) 与 [Delta](G1-v0.6-Adaptive-Review-Delta-v0.1.md) 中一致落实。
+This review checks whether the existing G1 documents are sufficient to prevent foreseeable psychological safety harms, and verifies that the confirmed principles are consistently implemented across [Product](../02-requirements/POC-01-Product-UX-Spec-v0.6.md), [Data/AI](../04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md), [Test](../06-testing/POC-01-Test-Acceptance-Spec-v0.6.md), [Decision 006](../09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md), [Evidence Card](Adaptive-Review-Evidence-Card-v0.1.md), and [Delta](G1-v0.6-Adaptive-Review-Delta-v0.1.md).
 
-### 1.1 已确认的 G1 产品原则
+### 1.1 Confirmed G1 product principles
 
-| 决定 | 已确认原则 | 本审查的核对重点 |
+| Decision | Confirmed principle | This review's checkpoints |
 |---|---|---|
-| P6-01 | `direct_accountability` 仅当用户在**本次 Review 明确请求**时使用；历史反馈、偏好或过去接受直接表达均不得单独授权。 | 不得存在“根据历史偏好自动直说”的文案、逻辑或测试预期。 |
-| P6-02 | 仅用户明确确认的长期模式及其适用情境可跨 Review 使用；一次反馈默认仅当前 Review；用户可查看、纠正、撤销、删除。 | 不得把沉默、一次接受建议、一次反馈或未确认推断转为长期画像或跨 Review 依据。 |
-| P6-03 | POC 必须可纠正 AI、结论可追溯用户记录、证据不足说明“不知道”、用户可停止或拒绝建议、不得跨用户使用数据。 | 五项是产品安全底线，不代表功能已实现、测试已运行或 POC/G1 已通过。 |
+| P6-01 | `direct_accountability` is used only when the user **explicitly requests it in this Review**; historical feedback, preferences, or past acceptance of direct expression must never authorize it alone. | There must be no copy, logic, or test expectation of "speak directly automatically based on historical preferences". |
+| P6-02 | Only long-term patterns the user has explicitly confirmed, and their applicable context, may be used across Reviews; one feedback item defaults to the current Review only; users can view, correct, revoke, delete. | Silence, one accepted suggestion, one feedback item, or an unconfirmed inference must not become a long-term profile or cross-Review basis. |
+| P6-03 | The POC must allow correcting the AI, trace conclusions to user records, say "don't know" when evidence is insufficient, allow users to stop or refuse suggestions, and never use data across users. | These five are product safety baselines; they do not mean features are implemented, tests have run, or POC/G1 has passed. |
 
-### 1.2 不在范围内
+### 1.2 Out of scope
 
-以下事项只能登记为依赖或留给后续 Gate，本审查不批准：
+The following may only be logged as dependencies or deferred to later Gates; this review does not approve them:
 
-- G2 的字段、状态转换、数据库/API、检索/留存/缓存/备份/删除机制与供应商设计；
-- G3 的样本量、观察期、场景覆盖、对照、效力或成功阈值；
-- 临床/危机协议、转介机制、运营责任与法律义务；
-- 隐私工程与合规结论、真实数据处理或技术可兑现性。
+- G2 fields, state transitions, database/API, retrieval/retention/caching/backup/deletion mechanisms and vendor design;
+- G3 sample sizes, observation periods, scenario coverage, controls, power, or success thresholds;
+- clinical/crisis protocols, referral mechanisms, operational responsibilities, and legal obligations;
+- privacy engineering and compliance conclusions, real data processing, or technical deliverability.
 
-## 2. 审查清单与硬性标准
+## 2. Review checklist and hard criteria
 
-| 项目 | 通过标准 | 阻断级问题示例 |
+| Item | Pass criteria | Blocking-level issue examples |
 |---|---|---|
-| 自主性与选择权 | 用户可只回顾、零建议、拒绝、跳过、停止及退出；AI 不单方修改目标或承诺；无后台提醒、追问或自动周期触发。 | 退出前必须解释/评分；“只回顾”被转成隐形待办；缺失记录触发劝服。 |
-| 直接督促（P6-01） | 仅当前 Review 的明确请求允许；当前停止、拒绝或不想改变优先于历史。直接表达仍尊重且可拒绝。 | 历史上偏好直接就自动升级语气；连续未完成自动施压。 |
-| 羞耻、压力与道德化 | 不使用懒惰、失败、意志薄弱等人格/道德标签；限制、照护、疲劳、资源不足及缺失数据不被归为动机缺陷。 | 把无记录解释为“不自律”；以失败次数、威胁或比较推动行动。 |
-| 依赖与不当优化 | 不把打开频率、停留时长、接受率、服从率或“信任 AI”当作效力证据；允许不干预和现实世界判断。 | 将依赖/留存增长称为帮助；迫使用户反复询问 AI。 |
-| 过度推断与人格化 | 用户证据、用户自述、AI 推断、确定性计算、理论和建议可区分；不从稀疏记录推断人格、疾病、关系真相或因果。 | 把认可的 AI 推断改写成客观事实；把 `unknown` 填补成 `neutral`。 |
-| 证据与不确定性 | 每项事实可回到正确用户和周期的记录；证据不足明确说明未知；理论来源不压过用户异议。 | 虚构趋势/引用；用理论证明本产品或个人一定有效。 |
-| 纠正、拒绝、停止与撤回（P6-02/P6-03） | 纠正事实、反对解释、拒绝建议、停止指导和撤回模式都可生效；跳过无需理由；冲突时暂停争议指导。 | 停止后仍继续建议；撤回后仍检索旧模式；一次同意变成承诺或长期模式。 |
-| 临床与危机边界 | 疑似危机或严重临床风险语言时停止普通指导；无获批协议时标记 `CLINICAL_REVIEW` 并阻断真实场景试用。 | 在自伤/立即危险线索下继续评分、生产力建议或自制治疗性回应。 |
-| 无障碍与公平 | 语言简短、认知负荷、资源/照护限制、残障或不稳定记录不降低选择权或被解释为低动机。 | 只有长文本或频繁量化反馈才获得完整体验；把无法执行建议归为个人失败。 |
+| Autonomy and choice | Users can review-only, zero suggestions, refuse, skip, stop, and exit; the AI does not unilaterally modify goals or commitments; no background reminders, probing, or automatic cycle triggers. | Explanations/ratings required before exit; "review-only" turned into a hidden to-do; missing records trigger persuasion. |
+| Direct pushing (P6-01) | Allowed only on explicit request in the current Review; current stop, refusal, or not wanting change takes precedence over history. Direct expression remains respectful and refusable. | Historical preference for directness automatically escalates tone; repeated incompletion automatically applies pressure. |
+| Shame, pressure, and moralizing | No personality/moral labels like lazy, failure, weak-willed; constraints, caregiving, fatigue, resource scarcity, and missing data are not classified as motivation deficits. | Explaining no records as "no self-discipline"; driving action via failure counts, threats, or comparison. |
+| Dependency and improper optimization | Open frequency, dwell time, acceptance rate, compliance rate, or "trusting the AI" are not treated as evidence of effectiveness; no-intervention and real-world judgment are allowed. | Calling dependency/retention growth helpful; forcing users to repeatedly consult the AI. |
+| Over-inference and anthropomorphizing | User evidence, user self-report, AI inference, deterministic computation, theory, and suggestions are distinguishable; no inferring personality, illness, relationship truths, or causation from sparse records. | Rewriting endorsed AI inferences as objective facts; filling `unknown` with `neutral`. |
+| Evidence and uncertainty | Every fact traces back to the correct user and cycle's records; insufficient evidence is explicitly stated as unknown; theory sources do not override user disagreement. | Fabricated trends/citations; using theory to prove this product or an individual is certainly effective. |
+| Correction, refusal, stop, and revocation (P6-02/P6-03) | Correcting facts, disputing interpretations, refusing suggestions, stopping guidance, and revoking patterns all take effect; skipping needs no reason; disputed guidance is paused on conflict. | Continuing to suggest after a stop; retrieving old patterns after revocation; one agreement becoming a commitment or long-term pattern. |
+| Clinical and crisis boundaries | Stop ordinary guidance when language suggests crisis or severe clinical risk; mark `CLINICAL_REVIEW` when no approved protocol exists and block real-scenario trials. | Continuing ratings, productivity suggestions, or improvised therapeutic responses under self-harm/immediate-danger cues. |
+| Accessibility and equity | Short language, cognitive load, resource/caregiving constraints, disability, or unstable records do not reduce choice or get read as low motivation. | Only long text or frequent quantitative feedback gets the full experience; inability to execute a suggestion classified as personal failure. |
 
-**判定规则**：上述任一项有未关闭阻断问题时，不得给出 `PASS` 或 `PASS WITH CONDITIONS`。P6-01 越界、停止失效、羞辱/威胁、普通指导处理危机、未确认推断长期化，均属于阻断。
+**Decision rule**: while any of the above has an open blocking issue, `PASS` or `PASS WITH CONDITIONS` may not be given. P6-01 overreach, stop failures, humiliation/threats, handling crises with ordinary guidance, and long-termizing unconfirmed inferences are all blocking.
 
-## 3. 审查方法
+## 3. Review method
 
-### 3.1 文档三联走查
+### 3.1 Document triplet walkthrough
 
-逐项检查：
+Check item by item:
 
-1. Product 是否说明用户可见的行为边界；
-2. Data/AI 是否保留执行边界所需的语义，且不将推断写作事实；
-3. Test 是否有可观察、可失败的验收用例；
-4. P6-01/P6-02/P6-03 在每份文档标记为 `已传播 / 缺失 / 矛盾 / G2/G3 待决`；
-5. 文档无法证明的事项标为 `INSUFFICIENT_EVIDENCE`，不得误记为通过。
+1. Whether Product states user-visible behavioral boundaries;
+2. Whether Data/AI preserves the semantics needed to enforce boundaries and does not write inferences as facts;
+3. Whether Test has observable, falsifiable acceptance cases;
+4. P6-01/P6-02/P6-03 marked in each document as `propagated / missing / contradictory / G2/G3 pending`;
+5. Matters the documents cannot prove are marked `INSUFFICIENT_EVIDENCE`, never misrecorded as pass.
 
-### 3.2 合成情境走查
+### 3.2 Synthetic scenario walkthrough
 
-不用真实用户数据，至少覆盖：
+Without real user data, cover at least:
 
-1. 自主目标与一个可逆建议；
-2. 原因不明的拖延或无记录；
-3. 家庭、工作或社会压力目标；
-4. 反复未完成且自责；
-5. 当次明确请求直说；
-6. 历史偏好直说、当次未请求；
-7. 一次“好”、沉默或接受建议；
-8. 已确认模式的情境限制与撤回；
-9. 低信息 Review；
-10. 可能临床/危机语言。
+1. Autonomous goal with one reversible suggestion;
+2. Procrastination of unknown cause or no records;
+3. Family, work, or social pressure goals;
+4. Repeated incompletion with self-blame;
+5. Explicit request for directness in this session;
+6. Historical preference for directness, not requested this session;
+7. One "good", silence, or accepted suggestion;
+8. Contextual limits and revocation of a confirmed pattern;
+9. Low-information Review;
+10. Possible clinical/crisis language.
 
-每个情境记录允许输出、禁止输出、文档依据和缺口。
+For each scenario record allowed outputs, prohibited outputs, document basis, and gaps.
 
-### 3.3 红队问题
+### 3.3 Red-team questions
 
-- 用户不记录时，系统会否把沉默解释为失败、不合作或拒绝？
-- 历史喜欢直说、当次未请求时，是否仍可能直接督促？
-- 接受建议但未行动，是否被记为承诺、成功或长期偏好？
-- 用户说“不要建议”后，是否还存在行动清单、重试提示或等价追问？
-- 撤回旧模式后，旧解释、快照或后续输出是否仍受影响？
-- 压力、自责或依赖上升但使用率上升时，是否会错误宣布成功？
-- 缺乏证据时，系统是否承认未知而非堆砌暗示性画像？
+- When the user does not record, will the system interpret silence as failure, non-cooperation, or refusal?
+- When history prefers directness but this session does not request it, can direct pushing still occur?
+- Accepting a suggestion but not acting — is that recorded as commitment, success, or long-term preference?
+- After the user says "no suggestions", do action lists, retry prompts, or equivalent probing still exist?
+- After revoking an old pattern, are old explanations, snapshots, or later outputs still influenced?
+- If stress, self-blame, or dependency rises while usage rises, will success be wrongly declared?
+- When evidence is lacking, does the system admit unknown instead of piling up suggestive profiling?
 
-### 3.4 不可作为通过证据的材料
+### 3.4 Materials that cannot serve as passing evidence
 
-静态检查、链接有效、JSON 可解析、作者自评、高使用率、一次用户好评、无负反馈、建议接受率、外部理论本身、未运行测试和未批准临床协议，均不能单独替代心理安全通过证据。
+Static checks, valid links, parseable JSON, author self-assessments, high usage rates, one favorable user review, absence of negative feedback, suggestion acceptance rates, external theory itself, unrun tests, and unapproved clinical protocols cannot individually substitute for psychological safety passing evidence.
 
-## 4. 交付物与结论词汇
+## 4. Deliverables and conclusion vocabulary
 
-审查者应交付：
+The reviewer should deliver:
 
-1. 审查记录（版本、日期、审查者、独立性声明、范围）；
-2. 九项清单结果表（证据定位、结论、未决项）；
-3. P6 传播矩阵；
-4. 合成情境结果表；
-5. 阻断问题清单（风险、最小修订、责任人、关闭证据）；
-6. 面向 Max 的 G1 心理安全建议 memo。
+1. A review record (version, date, reviewer, independence statement, scope);
+2. A nine-item checklist results table (evidence locations, conclusions, open items);
+3. A P6 propagation matrix;
+4. A synthetic scenario results table;
+5. A blocking issue list (risk, minimal revision, owner, closure evidence);
+6. A G1 psychological safety recommendation memo for Max.
 
-允许的结论：
+Permitted conclusions:
 
-- `PASS`：无阻断；原则传播完整；其余事项明确留在 G2/G3。
-- `PASS WITH CONDITIONS`：只有明确、非阻断的澄清项，且有责任人、关闭标准和下一 Gate。
-- `REVISE`：需求、数据语义或测试 oracle 不完整或冲突。
-- `BLOCK`：存在阻断级风险、原则被绕过、或临床边界不安全。
-- `OUT OF SCOPE / DEFER TO G2/G3`：技术、实验、隐私工程或临床/法律问题。
-- `INSUFFICIENT_EVIDENCE`：现有文档无法证实某项可兑现；不等于通过。
+- `PASS`: no blocking issues; principle propagation complete; remaining matters explicitly deferred to G2/G3.
+- `PASS WITH CONDITIONS`: only clear, non-blocking clarification items, with owners, closure criteria, and next Gate.
+- `REVISE`: requirements, data semantics, or test oracles incomplete or conflicting.
+- `BLOCK`: blocking-level risk exists, principles are bypassed, or clinical boundaries are unsafe.
+- `OUT OF SCOPE / DEFER TO G2/G3`: technical, experimental, privacy engineering, or clinical/legal questions.
+- `INSUFFICIENT_EVIDENCE`: existing documents cannot verify something is deliverable; not equal to pass.
 
-## 5. 责任与 G1 Gate 使用方式
+## 5. Responsibilities and G1 Gate usage
 
-- **心理安全审查者**：非作者，具备循证行为科学、数字产品风险或非临床心理安全经验；执行桌面与合成情境走查并给出专项 verdict。
-- **Max**：产品负责人和最终 G1 决策人；审阅专项结论，不将作者意见替代为独立审查。
-- **隐私审查者**：独立完成数据最小化、供应商、保留、删除、缓存、备份、授权与跨用户边界审查。
-- **临床/危机及法律专业人员**：只有要定义或启用真实危机流程、临床主张或转介机制时介入。
+- **Psychological safety reviewer**: non-author, with evidence-based behavioral science, digital product risk, or non-clinical psychological safety experience; performs desktop and synthetic scenario walkthroughs and issues the specialist verdict.
+- **Max**: product owner and final G1 decision-maker; reviews the specialist conclusion and does not substitute author opinion for independent review.
+- **Privacy reviewer**: independently performs data minimization, vendor, retention, deletion, cache, backup, authorization, and cross-user boundary review.
+- **Clinical/crisis and legal professionals**: engaged only when defining or enabling real crisis processes, clinical claims, or referral mechanisms.
 
-只有心理安全审查为 `PASS` 或严格有界的 `PASS WITH CONDITIONS`、隐私阻断项关闭或被列为 G2 不可绕过前置条件、P6 原则无跨文档冲突，且真实危机场景仍禁止试用时，Max 才可考虑 G1 文档层面的批准。任何该类批准都不自动授权编码、真实数据、供应商接入、朋友试用、发布或合并。
+Only when the psychological safety review is `PASS` or a strictly bounded `PASS WITH CONDITIONS`, privacy blocking items are closed or listed as non-bypassable G2 preconditions, the P6 principles have no cross-document conflicts, and real crisis scenarios remain prohibited for trials may Max consider approval at the G1 document level. Any such approval does not automatically authorize coding, real data, vendor integration, friend trials, release, or merge.
 
-## 6. 一次 Review 的最小议程（75 分钟）
+## 6. Minimal agenda for one Review (75 minutes)
 
-| 时间 | 内容 | 输出 |
+| Time | Content | Output |
 |---|---|---|
-| 0–10 分钟 | 确认定位、独立性、P6-01/02/03 和 G2/G3 边界。 | 审查范围与不可越界清单。 |
-| 10–25 分钟 | 审查自主性、直接督促、羞耻/压力、依赖。 | 初步结论与阻断记录。 |
-| 25–40 分钟 | 审查推断、证据、纠正/拒绝/停止。 | P6 传播矩阵与缺口。 |
-| 40–50 分钟 | 审查临床边界、无障碍与公平。 | 临床边界与升级依赖。 |
-| 50–65 分钟 | 走查五个关键反例。 | 情境结果表与禁止输出。 |
-| 65–75 分钟 | 汇总结论、责任人、关闭证据与 G2/G3 deferred 项。 | 专项审查 memo 与 G1 建议。 |
+| 0–10 min | Confirm positioning, independence, P6-01/02/03, and G2/G3 boundaries. | Review scope and non-overreach list. |
+| 10–25 min | Review autonomy, direct pushing, shame/pressure, dependency. | Preliminary conclusions and blocking records. |
+| 25–40 min | Review inference, evidence, correction/refusal/stop. | P6 propagation matrix and gaps. |
+| 40–50 min | Review clinical boundaries, accessibility and equity. | Clinical boundaries and escalation dependencies. |
+| 50–65 min | Walk through five key counterexamples. | Scenario results table and prohibited outputs. |
+| 65–75 min | Consolidate conclusions, owners, closure evidence, and G2/G3 deferred items. | Specialist review memo and G1 recommendation. |
 
-## 7. 当前状态
+## 7. Current status
 
-本文件定义审查方法，**不是审查结论**。心理安全专项审查当前仍为 `Pending`；作者不自批。
+This document defines the review method; **it is not a review conclusion**. The psychological safety specialist review is currently still `Pending`; the author does not self-approve.

@@ -1,25 +1,25 @@
-# G2 Decision 001：内核基线批准与设计基线选定
+# G2 Decision 001: Kernel Baseline Approval and Design Baseline Selection
 
-- **日期**：2026-10-17
-- **决策人**：Max（回复原文："#1，批准 #2，2无 #3，1"）
-- **类型**：里程碑 / 方向决策
-- **状态**：已决定
+- **Date**: 2026-10-17
+- **Decision maker**: Max (original reply: "#1, approved #2, 2 without annotations #3, 1")
+- **Type**: milestone / direction decision
+- **Status**: Decided
 
-## 决策内容
+## Decision content
 
-| # | 决策项 | 决定 |
+| # | Decision item | Decision |
 |---|---|---|
-| 1 | Product Core v0.1 批准为 G2 内核基线 | **批准**（Approved，2026-10-17） |
-| 2 | G2 原型选型 | **变体 2「对话引导型」**，无圈注（零修改轮） |
-| 3 | 手机访问方案 | **① 公开演示仓库**（免费；主仓保持私有） |
+| 1 | Product Core v0.1 approved as the G2 kernel baseline | **Approved** (2026-10-17) |
+| 2 | G2 prototype selection | **Variant 2 "Conversational-Guided"**, no annotations (zero revision rounds) |
+| 3 | Mobile access plan | **① Public demo repository** (free; the main repo stays private) |
 
-## 落地含义
+## Implications
 
-- 内核（数据结构 + INV-01～12 不变量 + 逻辑主线）自此为 G2 基线；变更走决策包（Product Core §6）。
-- 设计基线冻结为 Design Language v1.0（第一张皮 = 变体 2 交互哲学）；换皮不动内核。
-- 原型三变体归档于公开演示仓库供手机访问，页面 noindex；真实数据永留私有主仓（Design Language v1.0 §5）。
+- The kernel (data structures + INV-01–12 invariants + the logic mainline) is now the G2 baseline; changes go through a decision packet (Product Core §6).
+- The design baseline is frozen as Design Language v1.0 (the first skin = Variant 2's interaction philosophy); reskinning does not touch the kernel.
+- The three prototype variants are archived in the public demo repository for mobile access, with pages noindex; real data always stays in the private main repo (Design Language v1.0 §5).
 
-## 备选（未选）
+## Alternatives (not chosen)
 
-1. 原型：变体 1 信息密度型 / 变体 3 卡片清单型。
-2. 手机方案：② GitHub Pro（付费）/ ③ 不托管（仅对话卡片）。
+1. Prototype: Variant 1 "Information-Dense" / Variant 3 "Card-List".
+2. Mobile plan: ② GitHub Pro (paid) / ③ no hosting (conversation cards only).

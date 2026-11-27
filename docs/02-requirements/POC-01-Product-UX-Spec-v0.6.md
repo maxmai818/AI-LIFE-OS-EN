@@ -1,126 +1,126 @@
 # POC-01 Product & UX Spec v0.6
 
-- **项目**：AI Life OS
-- **文档状态**：Approved — G1 需求基线（Max 2026-10-08，决策包选项 A）
-- **SDLC 阶段**：G1 Requirements
-- **产品负责人 / 批准人**：Max
-- **作者**：Hermes
-- **日期**：2026-09-15
-- **关联决策**：`Roadmap-Review-Decisions-v0.1.md`、`G0-Amendment-001-User-Scope-v0.1.md`、`G0-G1-Amendment-002-Life-Dimensions-v0.1.md`、`G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md`、`G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`、`G1-Decision-005-Mixed-Impact-Degrees-v0.1.md`
-- **实现状态**：未开始；本文不授权编码
+- **Project**: AI Life OS
+- **Document status**: Approved — G1 requirements baseline (Max, 2026-10-08, decision packet option A)
+- **SDLC stage**: G1 Requirements
+- **Product owner / approver**: Max
+- **Author**: Hermes
+- **Date**: 2026-09-15
+- **Related decisions**: `Roadmap-Review-Decisions-v0.1.md`, `G0-Amendment-001-User-Scope-v0.1.md`, `G0-G1-Amendment-002-Life-Dimensions-v0.1.md`, `G0-G1-Amendment-003-Behavior-Dimension-Impact-v0.1.md`, `G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`, `G1-Decision-005-Mixed-Impact-Degrees-v0.1.md`
+- **Implementation status**: Not started; this document authorizes no coding
 
-- **本次变更**：[Decision 006](../09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md)；[Delta Review](../08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md)
-- **编码授权**：未授权；G1 未整体批准；作者不得自批。
+- **Changes in this version**: [Decision 006](../09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md); [Delta Review](../08-research/G1-v0.6-Adaptive-Review-Delta-v0.1.md)
+- **Coding authorization**: Not authorized; G1 not approved as a whole; the author may not self-approve.
 
 ---
 
-## 1. 文档目的
+## 1. Document purpose
 
-本文定义 POC-01 的产品范围、用户体验、功能需求和验收边界。评审通过后，它将成为 POC-01 的产品需求基线；数据字段、AI 输出和测试细节分别由配套 Contract 与 Test Spec 定义。
+This document defines the product scope, user experience, functional requirements, and acceptance boundaries of POC-01. Once review passes, it becomes the product requirements baseline for POC-01; data fields, AI outputs, and test details are defined separately by the accompanying Contract and Test Spec.
 
-## 2. 产品定义
+## 2. Product definition
 
-AI Life OS 是一个手机优先的响应式 Web 人生管理系统。用户通过自然语言记录生活，系统将记录转化为可确认、可纠正、可计算的个人事实，并生成能够回到原始证据的周期复盘。
+AI Life OS is a mobile-first responsive web life-management system. Users record their lives in natural language; the system turns those records into confirmable, correctable, computable personal facts, and generates periodic reviews that trace back to the original evidence.
 
-### 2.1 第一闭环
+### 2.1 The first closed loop
 
 ```text
-设定五维 Life Blueprint 与目标
-→ 输入 Capture
-→ AI 提取结构化内容
-→ 用户确认/纠正
-→ 保存可信事实
-→ 形成周期 Review
-→ 用户自主选择零个或一个 ONE BIG CHANGE
+Set the five-dimension Life Blueprint and goals
+→ Enter a Capture
+→ AI extracts structured content
+→ User confirms/corrects
+→ Trusted facts saved
+→ Periodic Review formed
+→ User freely chooses zero or one ONE BIG CHANGE
 ```
 
-### 2.2 POC-01 要验证的问题
+### 2.2 The question POC-01 must validate
 
-> 自然语言生活记录能否以可接受的成本转化为可信数据，并产生比直接把记录发给通用聊天模型更可追溯、更有帮助的复盘？
+> Can natural-language life logging be converted into trustworthy data at acceptable cost, and produce reviews that are more traceable and more helpful than just sending the log to a general-purpose chat model?
 
-### 2.3 目标用户
+### 2.3 Target users
 
-- POC-01 主要验证用户：Max。
-- 系统体验是单人私密的，但数据模型不得写死为唯一用户。
-- 核心闭环通过且账号隔离验证完成后，可邀请少量朋友使用独立账号。
-- 当前不设计社交、共享或协作功能。
+- POC-01's primary validation user: Max.
+- The system experience is single-user and private, but the data model must not be hard-coded to a single user.
+- After the core loop passes and account isolation is verified, a small number of friends may be invited to use separate accounts.
+- No social, sharing, or collaboration features are designed at this stage.
 
 ## 3. Jobs-to-be-Done
 
-### JTBD-01：低摩擦记录
+### JTBD-01: Low-friction capture
 
-当一天中发生值得记录的事情时，我希望用一段自然语言快速记录，而不是填写复杂表格，以便系统保留可复盘的事实，并理解同一行为可能以不同方向和程度影响五大人生维度。
+When something worth recording happens during the day, I want to capture it quickly in a paragraph of natural language instead of filling out complex forms, so the system preserves reviewable facts and understands that the same behavior may affect the Five Life Dimensions in different directions and degrees.
 
-### JTBD-02：纠正 AI 理解
+### JTBD-02: Correcting AI understanding
 
-当 AI 对我的记录进行分类和提取时，我希望看见它从哪里得出结论，并能快速纠正，以免错误数据进入长期分析。
+When the AI classifies and extracts from my records, I want to see where it drew its conclusions from and be able to correct it quickly, so wrong data does not enter long-term analysis.
 
-### JTBD-03：理解周期变化
+### JTBD-03: Understanding periodic change
 
-当我回顾一段时间时，我希望看到发生了什么、哪些目标有进展或偏离、依据是什么，以及下一步最值得改变什么。
+When I look back over a period, I want to see what happened, which goals progressed or deviated, what the evidence is, and what is most worth changing next.
 
-### JTBD-04：获得理论视角
+### JTBD-04: Gaining theoretical perspectives
 
-当系统用理论解释我的情况时，我希望看到作者、理论、资料和可核验来源，并明确区分个人事实、AI 推测、理论观点和建议。
+When the system explains my situation through theory, I want to see the author, theory, material, and verifiable sources, and a clear separation between personal facts, AI speculation, theoretical viewpoints, and suggestions.
 
-## 4. POC 范围
+## 4. POC scope
 
 ### 4.1 Must Have
 
-1. 手机优先的响应式 Web 体验。
-2. 简化版 Life Blueprint，固定包含 Time、Health、Wealth、Relationship、Purpose 五大人生维度。
-3. 最多三个同时进行的核心目标。
-4. 文字 Capture。
-5. 原始 Capture 独立保存、不被 AI 覆盖；保存服从用户删除与批准的保留策略，不代表永久保留。
-6. AI 提取结构化内容并显示原文证据片段。
-7. 用户逐项确认、修改或删除提取结果。
-8. 保存 AI 原始提取值和用户修订值。
-9. 仅在用户主动打开 Review 后按选择周期生成 Review。
-10. Review 明确区分事实、推测、理论引用和建议。
-11. 每条 Review 事实可以回到 Capture 或结构化记录。
-12. ONE BIG CHANGE 零个或一个；用户无改变意愿、无需改变或证据不足时不强塞建议。
-13. 数据不足时明确表示无法判断。
-14. 用户可导出和删除自己的全部数据。
-15. 轻量自适应指导、可选反馈、即时纠正/停止及按需解释（FR-COA-001～010）。
+1. Mobile-first responsive web experience.
+2. Simplified Life Blueprint, always containing the Five Life Dimensions: Time / Health / Wealth / Relationship / Purpose.
+3. At most three concurrent core goals.
+4. Text Capture.
+5. The raw Capture is stored independently and never overwritten by AI; retention follows user deletion and approved retention policies, and does not imply permanent retention.
+6. AI extracts structured content and displays source evidence snippets.
+7. The user confirms, edits, or deletes extracted results item by item.
+8. Both the AI's original extracted values and the user's revisions are saved.
+9. Reviews are generated only after the user actively opens Review, for the selected period.
+10. Reviews clearly separate facts, speculation, theoretical citations, and suggestions.
+11. Every Review fact can be traced back to a Capture or structured record.
+12. ONE BIG CHANGE is zero or one; when the user has no desire to change, no change is needed, or evidence is insufficient, no suggestion is forced.
+13. When data is insufficient, explicitly state that no judgment can be made.
+14. Users can export and delete all of their own data.
+15. Lightweight adaptive guidance, optional feedback, instant correction/stop, and on-demand explanation (FR-COA-001–010).
 
 ### 4.2 Should Have
 
-1. Capture 历史列表。
-2. Review 历史列表。
-3. 目标关联的简单进展和趋势。
-4. 用户对 Review 的可选扩展反馈视图（基础反馈、纠正和停止属 Must）。
-5. 少量人工筛选、可核验的理论引用样例。
-6. AI 失败后允许重新处理，但不重复保存原始 Capture。
+1. Capture history list.
+2. Review history list.
+3. Simple progress and trends tied to goals.
+4. An optional extended feedback view for Reviews (basic feedback, correction, and stop are Must).
+5. A small set of manually curated, verifiable theoretical citation samples.
+6. AI failures allow reprocessing, without duplicating the saved raw Capture.
 
 ### 4.3 Could Have
 
-1. Capture 标签筛选。
-2. 简单趋势图。
-3. 目标暂停和恢复。
-4. Review 中对证据的折叠/展开。
-5. 用模拟历史数据快速形成周期样本。
+1. Capture tag filtering.
+2. Simple trend charts.
+3. Goal pause and resume.
+4. Collapse/expand of evidence within Reviews.
+5. Quickly forming periodic samples with simulated historical data.
 
-### 4.4 Won’t Have（POC-01）
+### 4.4 Won't Have (POC-01)
 
-- 单一 0–100 Life Score
-- 语音、图片、账单、OCR 或文档上传
-- 海量电子书导入
-- 复杂向量检索管道
-- Apple Health、银行或日历同步
-- 社区、好友、排行榜、共同目标或共享记录
-- 多 Agent
-- 主动提醒、计划推送、后台监控与周期自动触发 Review
-- 必选三类教练人格、复杂偏好设置、模型微调或在线强化学习
-- 自动执行外部任务
-- 支付与订阅
-- 正式公开注册和规模化运营
+- A single 0–100 Life Score
+- Voice, images, bills, OCR, or document upload
+- Bulk ebook import
+- Complex vector retrieval pipelines
+- Apple Health, bank, or calendar sync
+- Community, friends, leaderboards, shared goals, or shared records
+- Multiple agents
+- Proactive reminders, scheduled pushes, background monitoring, and period-triggered automatic Reviews
+- Mandatory three-coach personas, complex preference settings, model fine-tuning, or online reinforcement learning
+- Automatic execution of external tasks
+- Payments and subscriptions
+- Formal public registration and scaled operations
 
-## 5. 五维与行为影响模型
+## 5. Five-dimension and behavior impact model
 
-POC-01 使用固定五大人生维度，并把用户的目标、项目、行为和事件映射到五维：
+POC-01 uses the fixed Five Life Dimensions and maps the user's goals, projects, behaviors, and events onto the five dimensions:
 
 ```text
-Life Blueprint（固定五维）
+Life Blueprint (fixed five dimensions)
         ↓
 Goal / Project / Context
         ↓
@@ -129,330 +129,329 @@ Behavior / Event / Capture
 Behavior Dimension Impact × 5
 ```
 
-### 5.1 固定五大人生维度
+### 5.1 The fixed Five Life Dimensions
 
-1. **Time（时间）**：时间控制权、自由时间、Deep Work、屏幕时间及低价值时间。
-2. **Health（健康）**：睡眠、运动、饮食、体重、精力及身体状态。
-3. **Wealth（财富）**：收入、资产、负债、支出及长期财务目标。
-4. **Relationship（关系）**：伴侣、家人、朋友、同事及关系质量。
-5. **Purpose（目的/意义）**：人生方向、身份认同、成长、创造和长期愿景。
+1. **Time**: control over time, free time, Deep Work, screen time, and low-value time.
+2. **Health**: sleep, exercise, diet, weight, energy, and physical condition.
+3. **Wealth**: income, assets, liabilities, spending, and long-term financial goals.
+4. **Relationship**: partner, family, friends, colleagues, and relationship quality.
+5. **Purpose (meaning)**: life direction, identity, growth, creativity, and long-term vision.
 
-五维用于 Life Blueprint、长期状态观察、目标影响分析和 Review。POC 不生成五维总分或单一 Life Score。
+The five dimensions are used for the Life Blueprint, long-term state observation, goal impact analysis, and Review. The POC does not generate a five-dimension aggregate score or a single Life Score.
 
-### 5.2 行为影响向量
+### 5.2 Behavior impact vector
 
-每个有效行为或事件都应评估其对五维的影响：
+Every valid behavior or event should be assessed for its impact on the five dimensions:
 
-- 影响方向：正向、负向、混合、中性或未知。
-- 影响程度：采用固定 1–5 离散等级；`1` 为很弱，`5` 为很强。`positive`/`negative` 使用单一 `degree`；`mixed` 分别使用 `positive_degree` 与 `negative_degree`；`unknown` 或 `neutral` 时程度为空，并由方向字段区分二者。
-- 证据：来自原始 Capture、目标或可核验计算。
-- 置信度：AI 对映射的确定程度。
-- 确认状态：候选、已确认、已修改、已拒绝或未知。
-- 认识论类型：用户自述事实、用户自述影响、AI 推断影响或确定性计算。用户确认只改变确认状态，不把推断变成客观事实。
+- Impact direction: positive, negative, mixed, neutral, or unknown.
+- Impact degree: a fixed 1–5 discrete scale; `1` is very weak, `5` is very strong. `positive`/`negative` use a single `degree`; `mixed` uses `positive_degree` and `negative_degree` separately; for `unknown` or `neutral` the degree is null, and the direction field distinguishes the two.
+- Evidence: from the raw Capture, goals, or verifiable calculations.
+- Confidence: how certain the AI is about the mapping.
+- Confirmation status: candidate, confirmed, modified, rejected, or unknown.
+- Epistemic type: user-reported fact, user-reported impact, AI-inferred impact, or deterministic calculation. User confirmation only changes the confirmation status; it does not turn an inference into objective fact.
 
-五维影响不是零和分配。一个行为可以同时强烈影响多个维度，各维度的 1–5 程度独立判断，不要求合计为固定总数。
+Five-dimension impact allocation is non-zero-sum. One behavior can strongly affect several dimensions at once; each dimension's 1–5 degree is judged independently and is not required to sum to a fixed total.
 
-### 5.3 规则
+### 5.3 Rules
 
-- 所有有效行为/事件都进入五维影响评估。
-- 一个 Capture 可以包含多个行为；每个行为分别形成五维影响候选。
-- 一个 Goal 或 Project 可以为行为提供上下文，但不是新的顶层维度。
-- AI 可以提出方向和程度，用户可确认、修改或拒绝。
-- 没有证据的维度必须为 `unknown`；只有证据支持“无明显影响”时才可标记 `neutral`，不得猜测。
-- AI 产生的非 `unknown` 影响在确认或修改前仅为候选，不得进入长期趋势、维度状态或 Review 事实；被拒绝候选不得参与分析。
-- `unknown` 可以作为数据局限保留，不要求用户强行选择方向或程度。
-- 1–5 是用户相对其 Blueprint、目标和评估时间窗作出的有序主观影响估计，不是测量值，不得跨维度比较、平均、排名或直接解释为趋势。`mixed` 的两个程度可在同一行为、同一维度、同一时间窗内表达相对强弱，但不得相减、相除、净额化或转成百分比。
-- 若方向有依据但程度无可靠依据，允许对应的 `degree`、`positive_degree` 或 `negative_degree` 为 `null` 并要求确认；不得为了满足量表而填入数字。
-- `Current Focus` 如未来需要，只能作为可选用户标签或视图，不是 POC 固定模型，也不预置任何具体内容。
-- 同期处于 Active 状态的核心目标最多三个。
-- POC 不强制所有目标量化；不可量化目标不得生成伪精确进度。
+- All valid behaviors/events enter five-dimension impact assessment.
+- One Capture may contain multiple behaviors; each behavior produces its own five-dimension impact candidates.
+- A Goal or Project can provide context for a behavior, but is not a new top-level dimension.
+- The AI may propose direction and degree; the user may confirm, modify, or reject.
+- A dimension without evidence must be `unknown`; `neutral` may only be marked when evidence supports "no noticeable impact" — never guess.
+- Non-`unknown` impacts produced by the AI are only candidates until confirmed or modified, and must not enter long-term trends, dimension states, or Review facts; rejected candidates must not participate in analysis.
+- `unknown` may be kept as a data limitation; the user is not forced to choose a direction or degree.
+- 1–5 is an ordered subjective impact estimate made by the user relative to their Blueprint, goals, and assessment time window — not a measurement. It must not be compared across dimensions, averaged, ranked, or directly interpreted as a trend. The two `mixed` degrees can express relative strength within the same behavior, same dimension, and same time window, but must not be subtracted, divided, netted off, or converted to percentages.
+- If the direction has a basis but the degree has no reliable basis, the corresponding `degree`, `positive_degree`, or `negative_degree` may be `null` and confirmation requested; a number must not be filled in just to satisfy the scale.
+- If `Current Focus` is ever needed, it may only exist as an optional user label or view; it is not a fixed POC model and no specific content is pre-provisioned.
+- No more than three core goals in Active status at the same time.
+- The POC does not force all goals to be quantified; non-quantifiable goals must not generate pseudo-precise progress.
 
-## 6. 信息架构
+## 6. Information architecture
 
-POC-01 建议五个主要页面：
+POC-01 proposes five main pages:
 
-1. **Setup**：五维 Life Blueprint、目标和基本偏好。
-2. **Capture**：输入记录、查看 AI 处理状态。
-3. **Confirm**：逐项确认或纠正提取结果。
-4. **Review**：查看周期事实、偏离、理论与建议。
-5. **History & Settings**：历史记录、导出、删除及隐私设置。
+1. **Setup**: five-dimension Life Blueprint, goals, and basic preferences.
+2. **Capture**: enter records, view AI processing status.
+3. **Confirm**: confirm or correct extracted results item by item.
+4. **Review**: view periodic facts, deviations, theory, and suggestions.
+5. **History & Settings**: history, export, delete, and privacy settings.
 
-POC 可将 Capture 与 Confirm 设计为同一页面的连续状态，不要求五个独立路由。
+The POC may design Capture and Confirm as consecutive states of the same page; five separate routes are not required.
 
-## 7. 核心用户流程
+## 7. Core user flows
 
-### 7.1 首次设置
-
-```text
-进入系统
-→ 阅读隐私与 AI 边界说明
-→ 查看五大人生维度并填写简化 Blueprint
-→ 创建 0–3 个核心目标
-→ 确认设置
-→ 进入 Capture
-```
-
-#### 验收要求
-
-- 用户可以跳过暂时无法回答的目标字段。
-- 系统不得要求建立 Life Score。
-- 系统必须提示云端 LLM 可能处理 Capture 内容。
-- 未完成目标设置也可以开始 Capture。
-
-### 7.2 创建 Capture
+### 7.1 First-time setup
 
 ```text
-打开 Capture
-→ 输入自然语言
-→ 点击保存并分析
-→ 原始文本立即保存
-→ AI 异步处理
-→ 进入 Confirm
+Enter the system
+→ Read the privacy and AI boundary explanation
+→ View the Five Life Dimensions and fill in the simplified Blueprint
+→ Create 0–3 core goals
+→ Confirm settings
+→ Enter Capture
 ```
 
-#### 验收要求
+#### Acceptance requirements
 
-- 空输入不可提交。
-- AI 服务失败不影响原始 Capture 保存。
-- 同一次提交不得因重试产生重复原始记录。
-- 用户可看到保存成功与 AI 处理状态是两个不同状态。
+- The user can skip goal fields they cannot answer for now.
+- The system must not require creating a Life Score.
+- The system must warn that a cloud LLM may process Capture content.
+- Capture can begin before goal setup is complete.
 
-### 7.3 确认和纠正
+### 7.2 Creating a Capture
 
 ```text
-显示原始文本
-→ 显示结构化提取项
-→ 每项显示证据片段与置信/待确认状态
-→ 用户确认、编辑或删除
-→ 保存为用户确认版本
+Open Capture
+→ Enter natural language
+→ Click save and analyze
+→ Raw text saved immediately
+→ AI processes asynchronously
+→ Enter Confirm
 ```
 
-#### 验收要求
+#### Acceptance requirements
 
-- 用户可以逐项操作，不必一次接受全部结果。
-- 编辑后再次查看必须与用户保存值一致。
-- 被删除的 AI 提取项不作为事实参与 Review。
-- 不确定内容允许保持“未确认”，不得默认为事实。
-- 默认只展开有证据、需要纠正或可能高影响的候选；“高影响”仅表示 AI 粗略候选，不得以权威化文案或视觉强化诱导接受。用户可以先隐藏 AI 程度、自行选择程度或“不确定”，再按需查看 AI 候选；五个 `unknown` 不要求逐项处理，也不得持续催促。
-- 用户可以选择“稍后处理”“跳过本次影响分析”“只保存原文”、撤销或批量拒绝；也可以只确认事实而不确认影响解释。
-- 批量接受不得作为诱导性默认主操作，且必须清楚显示会进入长期分析的内容。
+- Empty input cannot be submitted.
+- AI service failure must not affect saving the raw Capture.
+- The same submission must not produce duplicate raw records due to retries.
+- The user can see that save success and AI processing status are two distinct states.
 
-### 7.4 生成 Review
+### 7.3 Confirm and correct
 
 ```text
-用户主动打开 Review 并选择周期（不是周期到达触发）
-→ 系统读取该用户、该周期的已确认事实
-→ 计算可确定的进展/趋势/偏离
-→ 建立证据集合
-→ 可选检索少量理论资料
-→ AI 生成 Review
-→ 用户查看并反馈
+Show raw text
+→ Show structured extraction entries
+→ Each entry shows an evidence snippet and confidence/pending-confirmation status
+→ User confirms, edits, or deletes
+→ Saved as the user-confirmed version
 ```
 
-Review 固定包含：
+#### Acceptance requirements
 
-1. **发生了什么**：已确认事实。
-2. **进展与偏离**：只呈现可计算或有充分记录支持的内容。
-3. **可能的模式**：明确标记为推测。
-4. **理论视角**：作者、理论、资料和来源；说明适用边界。
-5. **ONE BIG CHANGE**：零个或一个建议；允许无需改变或只回顾。
-6. **数据不足**：缺少哪些信息以及哪些结论无法得出。
-7. **证据**：支持事实和分析的 Capture/记录引用。
+- The user can act entry by entry; they need not accept everything at once.
+- After editing, viewing again must match the user's saved value.
+- Deleted AI extraction entries do not participate in Review as facts.
+- Uncertain content may remain "unconfirmed" and must not default to fact.
+- By default, only candidates with evidence, needing correction, or possibly high-impact are expanded; "high impact" only signals an AI rough candidate and must not induce acceptance through authoritative copy or visual emphasis. The user may hide AI degrees first, choose degrees themselves or "unsure", and view AI candidates on demand; the five `unknown` entries need not be processed one by one and must not be nagged.
+- The user can choose "Handle later", "Skip this impact analysis", "Save original text only", undo, or bulk-reject; they can also confirm facts without confirming impact interpretations.
+- Bulk accept must not serve as an inducing default primary action, and must clearly show what will enter long-term analysis.
 
-Review 主要按 Time、Health、Wealth、Relationship、Purpose 五大维度组织，并说明本周期行为对各维度的方向和程度。Goal 或 Project 可以作为过滤和解释上下文，但不替代五维结构。没有证据的影响必须标记为未知，不得为填满矩阵而猜测。
+### 7.4 Generating a Review
 
-展示文案优先使用“支持/消耗”“与当前目标一致/存在张力”等用户情境化语言。系统不得定义什么是“有意义的人生”或“好关系”，不得生成跨维度优劣排名、人格归因、纪律性判断或缺陷叙事。用户确认的 AI 推断仍须显示为“用户认可的判断”，不能改写成已证实因果事实。
+```text
+The user actively opens Review and selects a period (not triggered by the period arriving)
+→ The system reads that user's confirmed facts for that period
+→ Computes determinable progress/trends/deviations
+→ Builds the evidence set
+→ Optionally retrieves a small amount of theoretical material
+→ AI generates the Review
+→ User views and gives feedback
+```
 
-### 7.5 Review 反馈
+A Review always contains:
 
-用户无需评分即可完成 Review；可按需同意/不同意、自然语言纠正或停止，见第 14 节。用户可以：
+1. **What happened**: confirmed facts.
+2. **Progress and deviations**: only what is computable or well supported by records.
+3. **Possible patterns**: explicitly marked as speculation.
+4. **Theoretical perspectives**: author, theory, material, and sources; applicability boundaries explained.
+5. **ONE BIG CHANGE**: zero or one suggestion; "no change needed" or "review only" is allowed.
+6. **Insufficient data**: which information is missing and which conclusions cannot be drawn.
+7. **Evidence**: Capture/record references supporting the facts and analysis.
 
-- 标记“准确 / 不准确”；
-- 标记“有帮助 / 没帮助”；
-- 标记“有依据 / 无依据”；
-- 接受、修改或拒绝 ONE BIG CHANGE；
-- 填写自由文本反馈。
+The Review is organized primarily by the five dimensions Time, Health, Wealth, Relationship, Purpose, and explains the direction and degree of this period's behaviors on each dimension. Goals or Projects can serve as filtering and interpretation context, but do not replace the five-dimension structure. Impacts without evidence must be marked as unknown; they must not be guessed to fill a matrix.
 
-## 8. 功能需求
+Display copy prioritizes user-contextualized language such as "supports / depletes" and "aligned with current goals / in tension". The system must not define what counts as "a meaningful life" or "a good relationship", and must not generate cross-dimension quality rankings, personality attributions, discipline judgments, or deficit narratives. AI inferences confirmed by the user must still be displayed as "user-endorsed judgment" and must not be rewritten as proven causal facts.
 
-### 8.1 用户与数据所有权
+### 7.5 Review feedback
 
-- **FR-USR-001**：所有个人数据必须归属于明确用户。
-- **FR-USR-002**：用户只能读取、修改、导出或删除自己的数据。
-- **FR-USR-003**：POC 可以限制为 Max 使用，但实现不得依赖硬编码的唯一用户。
-- **FR-USR-004**：朋友私测前必须完成账号身份和数据隔离验收。
+The user can complete a Review without rating; agreement/disagreement, natural-language correction, or stop are available on demand — see Section 14. The user can:
 
-### 8.2 Life Dimension、行为影响与目标
+- Mark "Accurate / Inaccurate";
+- Mark "Helpful / Not helpful";
+- Mark "Well-grounded / Not grounded";
+- Accept, modify, or reject the ONE BIG CHANGE;
+- Fill in free-text feedback.
 
-- **FR-DIM-001**：系统固定提供 Time、Health、Wealth、Relationship、Purpose 五大 Life Dimension。
-- **FR-DIM-002**：用户可以为五大维度填写简化 Life Blueprint，但允许暂时留空。
-- **FR-IMP-001**：系统对每个有效行为/事件产生五维影响候选。
-- **FR-IMP-002**：每个维度影响包含方向、可空的 1–5 程度、证据、置信度和确认状态；`positive`/`negative` 使用 `degree`，`mixed` 使用独立的 `positive_degree` 与 `negative_degree`；`unknown`/`neutral` 或对应程度证据不足时程度为空；POC-01 不使用比例字段。
-- **FR-IMP-003**：用户可以确认、修改、拒绝或保持未知。
-- **FR-IMP-004**：无证据时必须为 `unknown`；只有用户明确陈述或经批准的确定性规则提供证据时才可标记 `neutral`。
-- **FR-IMP-005**：AI 提出的非 `unknown` 影响只有在用户确认或修改后才能进入长期分析；拒绝项不得参与分析。
-- **FR-IMP-006**：五个维度的程度独立判断，不执行求和、归一化、平均、跨维度排名或合成 Life Score。
-- **FR-IMP-007**：确认状态与认识论类型必须分离；用户确认不得把 AI 推断改变为直接观察或确定性事实。
-- **FR-IMP-008**：`mixed` 的正向和负向程度必须分别记录，分别保存证据、理由、置信度和确认状态且分别可修改；拒绝一侧时有效方向转为另一侧单方向，拒绝两侧时整项不进入长期分析；只清空某侧程度不否定该侧方向。不得计算净值、比例或单一总体强度。
-- **FR-IMP-009**：每次影响评估必须保存评估时间窗及所用 Blueprint、Goal context 和量表锚点版本；跨行为、跨维度、跨时间窗或上下文版本变化后的程度不得直接比较。
-- **FR-GOL-001**：用户可以创建、编辑、暂停和归档目标。
-- **FR-GOL-002**：Active 核心目标不得超过三个。
-- **FR-GOL-003**：目标至少包含标题；Why、指标、当前值、目标值和日期为可选。
-- **FR-GOL-004**：数据不足时不显示伪精确 Progress 或 Deviation。
+## 8. Functional requirements
+
+### 8.1 Users and data ownership
+
+- **FR-USR-001**: All personal data must belong to a defined user.
+- **FR-USR-002**: Users can only read, modify, export, or delete their own data.
+- **FR-USR-003**: The POC may be restricted to Max, but the implementation must not rely on a hard-coded single user.
+- **FR-USR-004**: Account identity and data-isolation acceptance must be completed before any friend's private test.
+
+### 8.2 Life Dimension, behavior impact, and goals
+
+- **FR-DIM-001**: The system always provides the five Life Dimensions: Time, Health, Wealth, Relationship, Purpose.
+- **FR-DIM-002**: Users can fill in a simplified Life Blueprint for the five dimensions, but may leave items blank for now.
+- **FR-IMP-001**: The system produces five-dimension impact candidates for every valid behavior/event.
+- **FR-IMP-002**: Each dimension impact includes direction, a nullable 1–5 degree, evidence, confidence, and confirmation status; `positive`/`negative` use `degree`, `mixed` uses separate `positive_degree` and `negative_degree`; the degree is null for `unknown`/`neutral` or when evidence for the degree is insufficient; POC-01 uses no ratio fields.
+- **FR-IMP-003**: Users can confirm, modify, reject, or leave unknown.
+- **FR-IMP-004**: Without evidence it must be `unknown`; `neutral` may only be marked when the user explicitly states it or an approved deterministic rule provides evidence.
+- **FR-IMP-005**: Non-`unknown` impacts proposed by the AI may enter long-term analysis only after the user confirms or modifies them; rejected items must not participate in analysis.
+- **FR-IMP-006**: Degrees for the five dimensions are judged independently; no summation, normalization, averaging, cross-dimension ranking, or composite Life Score is performed.
+- **FR-IMP-007**: Confirmation status and epistemic type must be kept separate; user confirmation must not turn an AI inference into a direct observation or deterministic fact.
+- **FR-IMP-008**: The positive and negative degrees of `mixed` must be recorded separately, with evidence, rationale, confidence, and confirmation status saved and modifiable separately per side; when one side is rejected, the effective direction becomes the other side's single direction, and when both sides are rejected the whole entry does not enter long-term analysis; clearing only one side's degree does not negate that side's direction. No net value, ratio, or single overall strength may be computed.
+- **FR-IMP-009**: Each impact assessment must save the assessment time window and the Blueprint, Goal context, and scale-anchor versions used; degrees must not be directly compared across behaviors, dimensions, time windows, or after context-version changes.
+- **FR-GOL-001**: Users can create, edit, pause, and archive goals.
+- **FR-GOL-002**: No more than three Active core goals.
+- **FR-GOL-003**: A goal contains at least a title; Why, metrics, current value, target value, and dates are optional.
+- **FR-GOL-004**: With insufficient data, no pseudo-precise Progress or Deviation is displayed.
 
 ### 8.3 Capture
 
-- **FR-CAP-001**：用户可以保存一段非空文字 Capture。
-- **FR-CAP-002**：原始文本、创建时间和所有者必须保存。
-- **FR-CAP-003**：AI 失败或超时不丢失原始 Capture。
-- **FR-CAP-004**：用户可以查看 Capture 的处理状态。
-- **FR-CAP-005**：用户可以删除自己的 Capture；删除影响需明确提示。
+- **FR-CAP-001**: Users can save a non-empty text Capture.
+- **FR-CAP-002**: The raw text, creation time, and owner must be saved.
+- **FR-CAP-003**: The raw Capture is not lost on AI failure or timeout.
+- **FR-CAP-004**: Users can view a Capture's processing status.
+- **FR-CAP-005**: Users can delete their own Captures; the impact of deletion must be clearly indicated.
 
-### 8.4 AI 结构化与纠正
+### 8.4 AI structuring and correction
 
-- **FR-AIX-001**：AI 输出必须符合经批准的结构化 Contract。
-- **FR-AIX-002**：每个提取项必须包含原文证据或明确标识“无直接证据”。
-- **FR-AIX-003**：系统保存模型、Prompt 和 Schema 版本。
-- **FR-AIX-004**：用户可以确认、编辑或删除提取项。
-- **FR-AIX-005**：用户修订不得覆盖 AI 原始输出。
-- **FR-AIX-006**：低置信或歧义信息必须标记待确认。
+- **FR-AIX-001**: AI output must conform to the approved structured Contract.
+- **FR-AIX-002**: Every extraction entry must contain source-text evidence or be explicitly marked "no direct evidence".
+- **FR-AIX-003**: The system saves model, Prompt, and Schema versions.
+- **FR-AIX-004**: Users can confirm, edit, or delete extraction entries.
+- **FR-AIX-005**: User revisions must not overwrite the AI's original output.
+- **FR-AIX-006**: Low-confidence or ambiguous information must be marked pending confirmation.
 
 ### 8.5 Review
 
-- **FR-REV-001**：用户可以生成或查看一个周期的 Review。
-- **FR-REV-002**：Review 中的事实必须引用个人记录。
-- **FR-REV-003**：推测必须与事实视觉和语义区分。
-- **FR-REV-004**：理论引用必须包含可核验来源。
-- **FR-REV-005**：建议不得伪装成事实或理论原话。
-- **FR-REV-006**：每份 Review 允许零个或一个主建议 ONE BIG CHANGE；不想改变或无需改变时不强制建议。
-- **FR-REV-007**：数据不足时明确列出限制。
-- **FR-REV-008**：用户可以提交 Review 反馈。
+- **FR-REV-001**: Users can generate or view a Review for a period.
+- **FR-REV-002**: Facts in a Review must cite personal records.
+- **FR-REV-003**: Speculation must be visually and semantically distinguished from facts.
+- **FR-REV-004**: Theoretical citations must include verifiable sources.
+- **FR-REV-005**: Suggestions must not masquerade as facts or as the original words of a theory.
+- **FR-REV-006**: Each Review allows zero or one main suggestion, ONE BIG CHANGE; when the user does not want to change or no change is needed, no suggestion is forced.
+- **FR-REV-007**: With insufficient data, limitations are explicitly listed.
+- **FR-REV-008**: Users can submit Review feedback.
 
-### 8.6 数据控制
+### 8.6 Data control
 
-- **FR-DAT-001**：用户可以导出自己的全部数据。
-- **FR-DAT-002**：用户可以删除自己的全部数据。
-- **FR-DAT-003**：导出和删除不得影响其他用户。
-- **FR-DAT-004**：删除前显示范围和不可逆提示。
+- **FR-DAT-001**: Users can export all of their own data.
+- **FR-DAT-002**: Users can delete all of their own data.
+- **FR-DAT-003**: Export and delete must not affect other users.
+- **FR-DAT-004**: Before deletion, show the scope and an irreversibility warning.
 
-## 9. 非功能需求摘要
+## 9. Non-functional requirements summary
 
-- **NFR-PRV-001**：云端 LLM 使用方式和数据保留政策必须在 G2 明确。
-- **NFR-SEC-001**：所有服务端数据查询必须受用户所有权约束。
-- **NFR-SEC-002**：日志不得默认记录完整敏感 Capture。
-- **NFR-REL-001**：AI 不可用时，原始数据写入仍可成功。
-- **NFR-TRC-001**：Capture → 提取 → 修订 → Review → Evidence 全链路可追溯。
-- **NFR-AI-001**：同一确定性计算版本和输入必须产生相同结果。
-- **NFR-AI-002**：AI 不得生成无来源的用户事实。
-- **NFR-UX-001**：手机竖屏为主要交互环境。
-- **NFR-UX-002**：记录和确认操作应尽量减少字段填写；具体耗时先建立基线，不预设武断阈值。
-- **NFR-UX-003**：POC 必须测量每条确认耗时、操作数、放弃率、未确认积压、AI 数值接受/修改偏差、感知自主性和被评判感；负担或锚定效应持续高于用户可接受范围时必须简化或停止该交互方案。
-- **NFR-SAF-001**：五维方向和程度不得被用于道德评判、人格判断、跨维度排名或制造羞耻与自责。
-- **NFR-SAF-002**：出现可能的危机或临床内容时，系统停止普通五维影响建议，不诊断，并转入另行批准的安全流程；在该流程批准前不得邀请朋友处理此类真实内容。
+- **NFR-PRV-001**: Cloud LLM usage and data retention policies must be defined at G2.
+- **NFR-SEC-001**: All server-side data queries must be constrained by user ownership.
+- **NFR-SEC-002**: Logs must not record full sensitive Captures by default.
+- **NFR-REL-001**: When AI is unavailable, raw data writes still succeed.
+- **NFR-TRC-001**: The full chain Capture → extraction → revision → Review → Evidence is traceable.
+- **NFR-AI-001**: The same deterministic computation version and inputs must produce the same result.
+- **NFR-AI-002**: The AI must not generate user facts without a source.
+- **NFR-UX-001**: Portrait mobile is the primary interaction environment.
+- **NFR-UX-002**: Recording and confirmation operations should minimize field entry; concrete time costs get a baseline first, without arbitrary preset thresholds.
+- **NFR-UX-003**: The POC must measure per-confirmation time, action counts, abandonment rate, unconfirmed backlog, AI value acceptance/modification bias, perceived autonomy, and feeling of being judged; when burden or anchoring effects persist above the user's acceptable range, the interaction design must be simplified or stopped.
+- **NFR-SAF-001**: Five-dimension directions and degrees must not be used for moral judgment, personality judgment, cross-dimension ranking, or manufacturing shame and self-blame.
+- **NFR-SAF-002**: When possible crisis or clinical content appears, the system stops ordinary five-dimension impact suggestions, does not diagnose, and transfers to a separately approved safety flow; until that flow is approved, friends must not be invited to handle such real content.
 
-## 10. 关键空状态与异常状态
+## 10. Key empty and error states
 
-必须定义并在 G2 原型中展示：
+Must be defined and shown in the G2 prototype:
 
-1. 尚无目标。
-2. 尚无 Capture。
-3. Capture 已保存但 AI 处理中。
-4. AI 提取失败。
-5. AI 没有找到可提取事实。
-6. 提取内容全部待确认。
-7. Review 数据不足。
-8. 理论资料不可用或引用无法核验。
-9. 导出处理中或失败。
-10. 删除确认和删除完成。
+1. No goals yet.
+2. No Captures yet.
+3. Capture saved but AI still processing.
+4. AI extraction failed.
+5. AI found no extractable facts.
+6. All extracted content pending confirmation.
+7. Review data insufficient.
+8. Theoretical material unavailable or citations unverifiable.
+9. Export in progress or failed.
+10. Delete confirmation and delete completion.
 
-## 11. 成功判断
+## 11. Success criteria
 
-### 必须满足
+### Must be satisfied
 
-- 原始 Capture 不被覆盖。
-- 用户修订保存和再次展示一致。
-- 数值、单位、时间、否定和目标关联可逐条核验。
-- Review 事实可回到证据。
-- 事实、推测、理论引用和建议明确分开。
-- 数据不足时不生成伪精确结论。
-- 用户可导出和删除个人数据。
+- The raw Capture is not overwritten.
+- Saved user revisions match what is shown again.
+- Values, units, time, negations, and goal associations are verifiable entry by entry.
+- Review facts trace back to evidence.
+- Facts, speculation, theoretical citations, and suggestions are clearly separated.
+- With insufficient data, no pseudo-precise conclusions are generated.
+- Users can export and delete their personal data.
 
-### 由 Max 最终判断
+### Final judgment by Max
 
-1. 是否愿意继续使用？
-2. Review 是否比通用聊天模型更可信、更有帮助？
-3. 系统是否让我更清楚下一步，而不是制造负担或自责？
-4. 错误是否容易发现和纠正？
-5. 理论引用是否真正提高理解和行动质量？
+1. Would you keep using it?
+2. Is the Review more trustworthy and more helpful than a general-purpose chat model?
+3. Does the system make your next step clearer, rather than creating burden or self-blame?
+4. Are errors easy to spot and correct?
+5. Do the theoretical citations genuinely improve understanding and action quality?
 
-## 12. G1 Review 决策项
+## 12. G1 Review decision items
 
-2026-09-12，Max 已批准 `G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`。2026-09-13，Max 又批准 `G1-Decision-005-Mixed-Impact-Degrees-v0.1.md`：`mixed` 分别记录正向与负向 1–5 程度，以表达同一行为、同一维度内的相对强弱，但不计算比例或净值。以下其余项目继续 Review。
+On 2026-09-12, Max approved `G1-Decision-004-Five-Dimension-Impact-Rules-v0.1.md`. On 2026-09-13, Max also approved `G1-Decision-005-Mixed-Impact-Degrees-v0.1.md`: `mixed` records positive and negative 1–5 degrees separately, to express relative strength within the same behavior and dimension, but computes no ratio or net value. The remaining items below continue in review.
 
-请 Max 对以下项目标记 `Approve / Revise / Reject`：
+Please mark each item `Approve / Revise / Reject`:
 
-1. POC-01 的第一闭环和目标是否准确？
-2. 五大维度的中英文名称和定义是否准确？
-3. 五个页面是否足够，是否有必须增加的入口？
-4. Must/Should/Could/Won’t 划分是否合理？
-5. 目标可以缺少量化字段的规则是否接受？
-6. Review 主要按五维组织是否符合预期？
-7. 已由 Decision 006 关闭：ONE BIG CHANGE 零个或一个；不重新投票。
-8. POC 阶段是否需要真正的注册登录，还是先使用受限的 Max 账号？
-9. 数据导出需要什么格式：JSON、CSV、Markdown 或全部？
-10. 删除是立即永久删除，还是提供短暂恢复期？
-11. 朋友私测应在 POC 通过后还是 POC 中后段开始？
-12. 还有哪些 Must Have 未被本文覆盖？
-13. 新增细节请按第 14 节逐项评审；零建议原则已确认。
+1. Are POC-01's first closed loop and goals accurate?
+2. Are the Chinese and English names and definitions of the five dimensions accurate?
+3. Are five pages enough; are there any entry points that must be added?
+4. Is the Must/Should/Could/Won't split reasonable?
+5. Is the rule that goals may lack quantification fields acceptable?
+6. Does organizing the Review primarily by the five dimensions match expectations?
+7. Closed by Decision 006: ONE BIG CHANGE is zero or one; no re-vote.
+8. Does the POC stage need real sign-up/login, or start with a restricted Max account?
+9. What format is needed for data export: JSON, CSV, Markdown, or all?
+10. Is deletion immediate and permanent, or is there a short recovery window?
+11. Should friend private testing start after the POC passes, or in the mid-to-late POC?
+12. What other Must Haves are not covered by this document?
+13. Please review the new details item by item per Section 14; the zero-suggestion principle is confirmed.
 
-## 13. Gate 条件
+## 13. Gate conditions
 
-本文必须经过 Max Review，所有阻断意见关闭后才能标记为 `Approved` 或 `Approved with Conditions`。本文批准不等于授权编码；还需同步批准 Data + AI Contract 与 Test + Acceptance Spec。
+This document must undergo Max's review, with all blocking comments closed, before it can be marked `Approved` or `Approved with Conditions`. Approval of this document does not authorize coding; the Data + AI Contract and the Test + Acceptance Spec must be approved in parallel.
 
+## 14. Adaptive Review increment
 
-## 14. 自适应 Review 增量
+**Authorization layering**: Section 1 of Decision 006 is principles Max has confirmed; this section turns those principles into reviewable requirements. Fields, labels, policy priorities, scope, and experiment parameters are all **In Review proposals** and are not automatically approved by being written into Must. The five-dimension section is unchanged. [Data Section 14](../04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md) and [Test Section 19](../06-testing/POC-01-Test-Acceptance-Spec-v0.6.md) are the companion documents.
 
-**授权分层**：Decision 006 第 1 节是 Max 已确认原则；本节把原则落实为可评审需求。字段、标签、策略优先级、作用域和实验参数均为 **In Review 提案**，没有因写入 Must 而自动获批。五维章节不变。[Data 第 14 节](../04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md) 与 [Test 第 19 节](../06-testing/POC-01-Test-Acceptance-Spec-v0.6.md) 配套。
+### 14.1 New Must requirements and user experience
 
-### 14.1 新增 Must 需求与用户体验
+- **FR-COA-001**: Reviews are generated only when the user actively opens/requests them; no proactive reminders, on-schedule auto-generation, background monitoring, or cross-session follow-up questioning. ONE BIG CHANGE is zero or one; "don't want to change", "no suggestions needed", and "review only" are respected immediately and never swapped for hidden to-dos.
+- **FR-COA-002**: No mandatory coach personas or three fixed styles; the AI chooses its support mode and directness based on current evidence, allowing listening, clarifying, breaking things down, direct accountability, or non-intervention. The UI adds no long-term preference-configuration burden.
+- **FR-COA-003**: The choice is based on current willingness, goal/commitment versions, capability/opportunity/constraints, confirmed and context-relevant patterns, and feedback — not failure counts. Unknown/no-log must not be treated as failure; contextual constraints must not be read as laziness. Goals or commitments must not be changed unilaterally, and no pressure via shame/threats.
+- **FR-COA-004**: Each Review saves the guidance and directness actually shown, rule/model/Prompt versions, the evidence/goals/feedback actually used, uncertainties, and a summary of the choice rationale, and retains an immutable minimal-necessary context snapshot and revision history from that time. Collapsed by default; users can ask "why this guidance"; no hidden chain-of-thought, internal step-by-step reasoning, or back-filled rationales are saved; later changes in basis must not rewrite history, and snapshots must not bypass privacy deletion.
+- **FR-COA-005**: Users can skip feedback, and can also agree/disagree or modify feedback in natural language. Fact corrections, interpretation disagreements, style feedback, suggestion acceptance, and actual outcomes are expressed separately; "agreement" cannot be treated as validity or causal proof.
+- **FR-COA-006**: A current correction, rejection, or stop immediately affects subsequent output; no waiting for retraining, the next Review, or a permanent-preference confirmation. When saving fails, stopped guidance still must not continue; state clearly that feedback is not yet persisted, allow the user to retry actively, and never auto-nag.
+- **FR-COA-007**: Learning is restricted use of contextual evidence, never automatic model training. Long-term patterns must have their content and applicable contexts explicitly confirmed; confirmation in natural conversation is sufficient and can be modified/withdrawn; local feedback, silence, or accepting one suggestion cannot become a permanent preference or personality label. An AI inference remains an inference even when confirmed. Feedback, confirmed patterns, and Reviews must not be used for model training, fine-tuning, online RL, cross-user aggregate learning, or automatic policy-weight updates based on agreement/acceptance rates.
+- **FR-COA-008**: Feedback, guidance, patterns, citations, and derived data belong to the current user; users can view the content, applicable scope, status, and confirmation basis of their feedback and confirmed patterns, and are provided export, deletion, withdrawal of AI use, and restricted context retrieval. Views show only the current user's valid versions; withdrawn, deleted, expired, or baseless content must not be shown as valid patterns or reused for guidance. Deletion/withdrawal must not be bypassed by historical snapshots, caches, indexes, or newly generated text; precise retention proposals are in Data and authorize no new sensitive uses.
+- **FR-COA-009**: The evaluation target is autonomous understanding or a self-chosen next step plus burden/safety — not compliance rate, agreement rate, usage frequency, or dependence; growing trust is not proof of effectiveness either.
+- **FR-COA-010**: Each interaction uses a versioned conservative policy; on cold start and conflicts, admit not knowing, offer low-burden clarification, or do not intervene; crisis/clinical signals prioritize stopping ordinary guidance and comply with NFR-SAF-002, and unapproved safety protocols must not be self-completed by the policy table.
+- **FR-COA-011**: Reviews and feedback must offer a short, segmentable, low-cognitive-load completion path; users can complete review-only, zero-suggestion, rejection, stop, correction, or withdrawal without writing free text, giving quantitative ratings, or processing all candidates. Caregiving, resource constraints, disability, fatigue, language/expression differences, and irregular logging must not reduce these options or be interpreted as low motivation, low cooperation, or unsuitability for guidance.
 
-- **FR-COA-001**：Review 只由用户主动打开/请求生成；没有主动提醒、到点自动生成、后台监控或跨会话追问。ONE BIG CHANGE 为零个或一个；“不想改”“不用建议”“只回顾”立即得到尊重，不偷换成隐形待办。
-- **FR-COA-002**：不设置必选教练人格或三种固定风格；AI 据当前证据选择支持方式及直接程度，允许倾听、澄清、拆解、直接督促、不干预。UI 不增加长期偏好配置负担。
-- **FR-COA-003**：选择依据为当前意愿、目标/承诺版本、能力/机会/限制、经确认且情境相关的模式及反馈，不是失败计数。未知/无日志不得当失败；情境约束不解释为懒惰。不得擅自改变目标、承诺或用羞耻/威胁加压。
-- **FR-COA-004**：同一 Review 保存实际展示的指导与直接程度、规则/模型/Prompt 版本、实际采用的证据/目标/反馈、不确定性及选择理由摘要，并保留当时不可变的最小必要上下文快照与修订历史。默认折叠，可问“为什么这样指导”；不保存隐藏思维链、内部逐步推理或凭空补写理由；后续依据变化不得改写历史，快照不能绕过隐私删除。
-- **FR-COA-005**：用户可跳过反馈，也可同意/不同意、自然语言修改反馈。分别表达事实纠正、解释分歧、风格反馈、建议接受和实际结果；不能把“同意”当有效或因果证明。
-- **FR-COA-006**：当前纠正、拒绝或停止立即影响后续输出；不等待重训、下次 Review 或永久偏好确认。保存失败时也不能继续已停止的指导；明确反馈尚未持久化，允许用户主动重试，不自动催促。
-- **FR-COA-007**：学习是情境证据的受限使用，不自动训练模型。长期模式必须明确确认其内容和适用情境；自然对话确认足够，可修改/撤回；局部反馈、沉默或接受一次建议不能成为永久偏好或人格标签。AI 推断经确认仍是推断。反馈、确认模式与 Review 不得用于模型训练、微调、在线 RL、跨用户汇总学习或基于同意率/接受率的自动策略权重更新。
-- **FR-COA-008**：反馈、指导、模式、引用与派生数据归当前用户；用户可查看其反馈与已确认模式的内容、适用范围、状态及确认依据，并提供导出、删除、撤回 AI 使用和受限上下文检索。查看只显示当前用户的有效版本；已撤回、删除、过期或无可用依据的内容不得被显示为有效模式或再次用于指导。删除/撤回不得被历史快照、缓存、索引或新生成文本绕过；精确保留提案见 Data，不授权新敏感用途。
-- **FR-COA-009**：评价目标是自主理解或自主选择的下一步及负担/安全，不优化服从率、同意率、使用频次或依赖；信任增长也不是有效性证明。
-- **FR-COA-010**：每次采用版本化保守策略，冷启动和冲突时承认不知道、低负担澄清或不干预；危机/临床信号优先停止普通指导并遵守 NFR-SAF-002，未经批准的安全协议不得由策略表自行补全。
-- **FR-COA-011**：Review 与反馈必须提供简短、可分段、低认知负荷的完成路径；用户可以不写自由文本、不作量化评价、不处理全部候选而完成只回顾、零建议、拒绝、停止、纠正或撤回。照护、资源限制、残障、疲劳、语言/表达差异和不稳定记录不得降低这些选择权或被解释为低动机、低合作度或不适合指导。
+### 14.2 Conservative policy table (POC proposal, not an approved algorithm)
 
-### 14.2 保守策略表（POC 提案，不是批准算法）
+"Learning" means only: at the user's active Review, read permitted and relevant current evidence / valid revisions / confirmed patterns, select and record an explainable policy; updates to the policy itself require version review and regression, never automatic online optimization from satisfaction. The model handles expression and candidate explanation, not secret changes to policy weights. No fine-tuning, online RL, or failure-count thresholds are needed.
 
-“学习”仅指：在用户主动 Review 时，读取获许可且相关的当前证据/有效修订/已确认模式，选择并记录可解释策略；策略本身更新须版本评审与回归，不从满意度自动在线优化。模型负责表达与候选解释，不负责暗自修改策略权重。无需微调、在线 RL 或失败次数阈值。
-
-| 优先约束 / 情境 | 候选交互 | 直接程度提案 | 证据不足与退出 |
+| Priority constraint / context | Candidate interaction | Directness proposal | Insufficient evidence & exit |
 |---|---|---|---|
-| 临床/危机风险 | 停止普通指导，进入批准安全流程 | 不适用 | 无协议则 CLINICAL_REVIEW，不自行诊断 |
-| 明确停止、不想改变、无需建议 | 不干预或仅回顾 | 无指导 | 不因目标偏离反驳意愿；零建议 |
-| 当前只想表达、无求解意图 | 倾听与复述 | 温和 | 不强迫说更多，随时结束 |
-| 目标含糊、记录缺失、反馈冲突、冷启动，或用户受疲劳、照护、资源、残障、语言/表达限制影响 | 可选的一次简短澄清、只回顾或不干预 | 温和 | 不把缺失或表达能力补成失败/低动机；不回答不追问；不因简化路径降低零建议、停止或纠正权 |
-| 用户想行动且证据指向任务过大/能力或机会限制 | 提议拆解一个可逆步骤 | 平实 | 不替换原目标；用户选择才成为承诺 |
-| 明确希望当次直说、现有目标与障碍证据支持 | 直接指出具体差距/下一步选择 | 直接但尊重 | 不用失败次数、道德标签、羞辱或命令强制 |
+| Clinical/crisis risk | Stop ordinary guidance, enter approved safety flow | N/A | Without a protocol, CLINICAL_REVIEW; no self-diagnosis |
+| Explicit stop, does not want to change, no suggestions wanted | Non-intervention or review-only | No guidance | Do not counter the wish with goal deviation; zero suggestions |
+| Currently just wants to express, no problem-solving intent | Listening and reflecting back | Gentle | No pressure to say more; end any time |
+| Vague goals, missing records, conflicting feedback, cold start, or user affected by fatigue, caregiving, resources, disability, language/expression limits | One optional brief clarification, review-only, or non-intervention | Gentle | Do not turn missing data or expression ability into failure/low motivation; no answer → no follow-up; simplified paths must not reduce zero-suggestion, stop, or correction rights |
+| User wants to act and evidence points to a task too large / capability or opportunity limits | Propose breaking off one reversible step | Plain-spoken | Do not replace the original goal; only user choice makes it a commitment |
+| Explicitly wants directness this time, supported by current goal and obstacle evidence | Directly point out the specific gap / next-step options | Direct but respectful | No forcing via failure counts, moral labels, humiliation, or commands |
 
-表中顺序为 In Review 优先级提案。当前明确反馈优先于历史模式；不一致时保留冲突并回退，不自动“折中加压”。历史喜欢直说不意味着每次直说，更不覆盖当次停止。
+The order in the table is the In Review priority proposal. Current explicit feedback takes precedence over historical patterns; on inconsistency, keep the conflict and fall back — never automatically "compromise and push". A history of preferring directness does not mean directness every time, and never overrides a stop for the current session.
 
-### 14.3 轻量流程与失败状态
+### 14.3 Lightweight flow and failure states
 
-用户打开 Review → 看五维证据/局限 → 依情境获得倾听/澄清/指导/零建议 → 可选择折叠解释、反馈或直接结束。无需先选风格、评分或确认模式才能完成。
+User opens Review → sees five-dimension evidence/limits → receives listening/clarification/guidance/zero suggestions per context → may collapse explanations, give feedback, or end directly. No need to pick a style, rate, or confirm a pattern before finishing.
 
-无记录：说明未知，可回顾或结束。无目标：不虚构目标，不要求先建立目标。证据失效/检索或生成失败：不沿用过期依据伪装新指导；显示限制，可由用户重试。当前反馈反转：立即停止原策略，新展示生成修订记录。退出：停止本次指导，不产生后台跟进；同一 Review 再次生成仍受已有停止/修订约束，除非用户主动请求恢复指导。新周期只采用获许可的有效上下文，不因一次局部反馈自动禁止或偏好所有未来风格。
+No records: state what is unknown; review-only or end. No goals: do not fabricate goals or demand goal creation first. Evidence invalid / retrieval or generation failure: do not pass off stale basis as new guidance; show limitations, user may retry. Current feedback reverses: stop the original policy immediately; a new display generates a revision record. Exit: stop this session's guidance with no background follow-up; regenerating the same Review remains bound by existing stop/revisions unless the user actively requests resumed guidance. A new period only adopts permitted valid context; one piece of local feedback neither automatically bans nor prefers all future styles.
 
-### 14.4 Max 决策状态（不重开已确认原则）
+### 14.4 Max decision status (do not reopen confirmed principles)
 
-1. **P6-01**：**Approved with conditions（Max，2026-09-15）**：接受 14.2 保守策略、冷启动/冲突/当次直接督促边界；其中 `direct_accountability` 仅可由用户在本次 Review 中明确请求触发，历史反馈、历史偏好或过去接受过直接表达均不得单独授权本次直接督促。
-2. **P6-02**：**Approved with conditions（Max，2026-09-15）**：仅用户明确确认内容及适用情境的长期模式可跨 Review 使用；一次反馈默认仅当前 Review；用户可查看、纠正、撤销和删除。未确认 AI 推断、一次反馈、沉默或接受一次建议不得自动形成长期依据。字段、检索/保留期限、缓存、备份、物理删除和供应商参数移至 G2。
-3. **P6-03**：**Approved with conditions（Max，2026-09-15）**：POC 最低验收为：可纠正 AI、结论可追溯至用户记录、证据不足明确说“不知道”、可停止或拒绝建议、不得跨用户使用数据。测试数量、观察期、场景覆盖、比较方法、效力阈值和实验设计移至 G2/G3；不代表实现、测试运行、POC 通过或编码授权。
+1. **P6-01**: **Approved with conditions (Max, 2026-09-15)**: Accepts the 14.2 conservative policy and the cold-start/conflict/in-session direct-accountability boundaries; `direct_accountability` may be triggered only by the user's explicit request in the current Review; historical feedback, historical preferences, or past acceptance of direct expression must never alone authorize direct accountability this time.
+2. **P6-02**: **Approved with conditions (Max, 2026-09-15)**: Only long-term patterns whose content and applicable context the user has explicitly confirmed may be used across Reviews; one piece of feedback applies to the current Review only by default; users can view, correct, revoke, and delete. Unconfirmed AI inferences, one-off feedback, silence, or accepting one suggestion must not automatically form a long-term basis. Fields, retrieval/retention periods, caching, backups, physical deletion, and vendor parameters move to G2.
+3. **P6-03**: **Approved with conditions (Max, 2026-09-15)**: The POC minimum acceptance is: the AI is correctable, conclusions trace back to user records, insufficient evidence explicitly says "don't know", suggestions can be stopped or rejected, and data must not be used across users. Test counts, observation periods, scenario coverage, comparison methods, effect thresholds, and experiment design move to G2/G3; this does not represent implementation, test runs, POC passage, or coding authorization.
 
-独立一致性和心理安全审查仍待完成；Max 产品批准和 G1/G2 授权均不由作者或工具检查替代。
+Independent consistency and psychological-safety reviews are still pending; Max's product approval and G1/G2 authorization are not replaced by the author or tool checks.

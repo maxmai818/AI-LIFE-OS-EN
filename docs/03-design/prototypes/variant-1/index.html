@@ -4,7 +4,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AI Life OS · 变体 1 信息密度型</title>
+<title>AI Life OS · Variant 1 Information-Dense</title>
 <style>
   :root{
     --bg:#F4F4F6; --surface:#FFFFFF; --surface-2:#FAFAFB;
@@ -168,7 +168,7 @@
   .pip.on{background:var(--ink-2)}
   .pip.on.pos{background:var(--pos)} .pip.on.neg{background:var(--neg)}
   .ev{color:var(--ink-3); font-size:10.5px}
-  .ev q{quotes:"「" "」"}
+  .ev q{quotes:"“" "”"}
 
   /* confirm card */
   .xcard{background:var(--surface); border:1px solid var(--line); border-radius:11px; margin-bottom:8px; overflow:hidden}
@@ -299,14 +299,14 @@
     <div class="tb-row">
       <div class="brand"><b>AI Life OS</b><span>dense v0.1</span></div>
       <div class="row" style="gap:5px">
-        <div class="pill priv">私密 · 单人</div>
+        <div class="pill priv">Private · Solo</div>
         <div class="pill">Max</div>
       </div>
     </div>
     <div class="tb-sub">
-      <span class="k">2026-10-12 周一</span><span>·</span>
-      <span>本周 10.06–10.12</span><span>·</span>
-      <span id="tbPending">待确认 2</span>
+      <span class="k">2026-10-12 Mon</span><span>·</span>
+      <span>This week 10.06–10.12</span><span>·</span>
+      <span id="tbPending">Pending 2</span>
     </div>
   </header>
 
@@ -315,329 +315,329 @@
     <section class="screen active" id="s-capture">
       <div class="sec">
         <div class="stats">
-          <div class="stat"><div class="n" id="stToday">3</div><div class="l">今日记录</div></div>
-          <div class="stat warn"><div class="n" id="stPending">2</div><div class="l">待确认</div></div>
-          <div class="stat"><div class="n">12</div><div class="l">本周记录</div></div>
-          <div class="stat"><div class="n">3/3</div><div class="l">进行中目标</div></div>
+          <div class="stat"><div class="n" id="stToday">3</div><div class="l">Today's entries</div></div>
+          <div class="stat warn"><div class="n" id="stPending">2</div><div class="l">Pending</div></div>
+          <div class="stat"><div class="n">12</div><div class="l">This week's entries</div></div>
+          <div class="stat"><div class="n">3/3</div><div class="l">Active goals</div></div>
         </div>
       </div>
 
       <div class="sec">
         <div class="sec-head">
-          <div class="sec-title">Capture · 随手记</div>
-          <div class="sec-note">原文永远保留 · AI 不覆盖</div>
+          <div class="sec-title">Capture · Quick notes</div>
+          <div class="sec-note">The raw text is always kept · AI never overwrites it</div>
         </div>
         <div class="card">
-          <textarea class="capture" id="capInput" placeholder="用一段自然语言记录今天发生的事，例如：早上跑步 30 分钟，配速比上周快，跑完精神不错。"></textarea>
-          <div class="charcount"><span id="capCount">0</span> 字</div>
-          <div class="err" id="capErr">空输入不可提交，请先写下一点什么。</div>
+          <textarea class="capture" id="capInput" placeholder="Write what happened today in natural language, e.g.: ran 30 minutes this morning, pace faster than last week, felt good afterward."></textarea>
+          <div class="charcount"><span id="capCount">0</span> chars</div>
+          <div class="err" id="capErr">Empty input cannot be submitted — write something first.</div>
           <div class="chips">
-            <div class="chip" data-fill="早上跑步 30 分钟，配速比上周快，跑完精神不错。">跑步 30 分钟</div>
-            <div class="chip" data-fill="和妈妈通话 20 分钟，聊了她体检的事，心情有点担心。">和妈妈通话</div>
-            <div class="chip" data-fill="刷手机到凌晨 1 点，本来打算 11 点睡。">刷手机到凌晨 1 点</div>
-            <div class="chip" data-fill="今天写周报花了 2 小时，比预期久，但按时交了。">写周报 2 小时</div>
-            <div class="chip" data-fill="这周办了健身卡，花了 1200 元，有点犹豫值不值。">健身卡 1200 元</div>
+            <div class="chip" data-fill="Ran 30 minutes this morning, pace faster than last week, felt good afterward.">Ran 30 minutes</div>
+            <div class="chip" data-fill="Called mom for 20 minutes, talked about her health checkup, feeling a bit worried.">Called mom</div>
+            <div class="chip" data-fill="Scrolled my phone until 1 a.m., meant to sleep by 11.">Phone until 1 a.m.</div>
+            <div class="chip" data-fill="Spent 2 hours writing the weekly report today, longer than expected, but submitted on time.">Weekly report 2 hours</div>
+            <div class="chip" data-fill="Got a gym membership this week, spent 1200 yuan, a bit unsure if it is worth it.">Gym card ¥1200</div>
           </div>
           <div style="margin-top:10px">
-            <button class="btn primary block" id="btnSave">保存并分析</button>
+            <button class="btn primary block" id="btnSave">Save & analyze</button>
           </div>
           <div class="statusline" id="capStatus" style="display:none">
             <div class="dotpulse"></div>
-            <div id="capStatusText" style="flex:1">原文已保存 · AI 处理中…</div>
-            <button class="btn sm" id="btnGoConfirm" style="display:none">去确认</button>
+            <div id="capStatusText" style="flex:1">Raw saved · AI processing…</div>
+            <button class="btn sm" id="btnGoConfirm" style="display:none">Go to confirm</button>
           </div>
         </div>
       </div>
 
       <div class="sec">
         <div class="sec-head">
-          <div class="sec-title">最近 Capture</div>
-          <div class="sec-note">结构化条目 · 倒序</div>
+          <div class="sec-title">Recent captures</div>
+          <div class="sec-note">Structured entries · newest first</div>
         </div>
         <div id="capList"></div>
       </div>
 
-      <div class="footnote">AI 结构化为候选，经你确认后才进入长期分析</div>
+      <div class="footnote">AI structures entries as candidates; they enter long-term analysis only after you confirm</div>
     </section>
 
     <!-- ================= 2. CONFIRM ================= -->
     <section class="screen" id="s-confirm">
       <div class="sec">
         <div class="sec-head">
-          <div class="sec-title">Confirm · 逐项确认</div>
-          <div class="sec-note">3 项提取 · 12 个影响候选</div>
+          <div class="sec-title">Confirm · one by one</div>
+          <div class="sec-note">3 extractions · 12 impact candidates</div>
         </div>
         <div class="card" style="padding:9px 11px">
           <div class="row between">
-            <div class="small muted">默认只展开有证据 / 低置信 / 高影响候选。<br>用户确认不改变认识论类型：AI 推断仍是推断。</div>
+            <div class="small muted">By default only candidates with evidence / low confidence / high impact are expanded.<br>Your confirmation does not change the epistemic type: AI inference stays an inference.</div>
           </div>
           <div class="row" style="margin-top:8px; gap:6px; flex-wrap:wrap">
-            <button class="btn sm" onclick="batchDefer()">全部稍后处理</button>
-            <button class="btn sm" onclick="batchReject()">批量拒绝</button>
-            <button class="btn sm ghost" onclick="toast('批量接受不是默认主操作：请逐项确认后再进入长期分析')">全部接受（不推荐）</button>
+            <button class="btn sm" onclick="batchDefer()">Defer all</button>
+            <button class="btn sm" onclick="batchReject()">Batch reject</button>
+            <button class="btn sm ghost" onclick="toast('Batch accept is not the default primary action: confirm item by item before long-term analysis')">Accept all (not recommended)</button>
           </div>
         </div>
       </div>
 
       <div class="sec">
         <div class="sec-head">
-          <div class="sec-title">提取项</div>
-          <div class="sec-note" id="confProgress">已处理 1 / 3</div>
+          <div class="sec-title">Extraction:</div>
+          <div class="sec-note" id="confProgress">1 / 3 processed</div>
         </div>
         <div id="confirmList"></div>
       </div>
 
-      <div class="footnote">保存 AI 原始值与用户修订值 · 被删除项不进入 Review</div>
+      <div class="footnote">Saves both the AI original values and your revisions · deleted items do not enter Review</div>
     </section>
 
     <!-- ================= 3. FIVE DIMENSIONS ================= -->
     <section class="screen" id="s-dims">
       <div class="sec">
         <div class="sec-head">
-          <div class="sec-title">五维视图 · 本周</div>
-          <div class="sec-note">仅计已确认 · 不合成总分</div>
+          <div class="sec-title">Five-Dimension View · this week</div>
+          <div class="sec-note">Confirmed only · no composite score</div>
         </div>
 
         <div class="dimrow" onclick="toggleDim(this)" id="dim-time">
           <div class="row between">
-            <div class="row" style="gap:7px"><span class="dot" style="background:var(--time)"></span><b style="font-size:13px">时间 Time</b></div>
-            <div class="mono xs muted">5 条 · 2 支持 / 2 消耗 / 1 未知</div>
+            <div class="row" style="gap:7px"><span class="dot" style="background:var(--time)"></span><b style="font-size:13px">Time</b></div>
+            <div class="mono xs muted">5 entries · 2 support / 2 drain / 1 unknown</div>
           </div>
           <div class="dimbar"><i style="width:52%;background:var(--time)"></i></div>
           <div class="row between">
-            <div class="xs muted">时间控制权 · Deep Work · 屏幕时间</div>
-            <div class="xs mono muted">程度 1–4</div>
+            <div class="xs muted">Time control · Deep Work · screen time</div>
+            <div class="xs mono muted">Degree 1–4</div>
           </div>
           <div class="dimdetail">
-            <div class="kv"><div class="k">支持</div><div>2 条：深度工作 2 小时（+2）、晨跑占早间 35 分钟（+1 低置信）</div></div>
-            <div class="kv"><div class="k">消耗</div><div>2 条：刷手机至凌晨 1 点（−4）、周报返工（−2）</div></div>
-            <div class="kv"><div class="k">未知</div><div>1 条：与妈妈通话时长占用无明确取舍证据</div></div>
-            <div class="kv"><div class="k">目标</div><div>11 点前睡觉：5 天中 3 天达成 · 2 天偏离 <span class="badge b-goal">有记录支持</span></div></div>
-            <div class="xs muted" style="margin-top:6px">程度为相对你的 Blueprint 与本周时间窗的主观估计，不跨维度比较。</div>
+            <div class="kv"><div class="k">Support</div><div>2 entries: 2 hours of deep work (+2), morning run took 35 min of the morning slot (+1, low confidence)</div></div>
+            <div class="kv"><div class="k">Drain</div><div>2 entries: phone until 1 a.m. (−4), weekly report rework (−2)</div></div>
+            <div class="kv"><div class="k">Unknown</div><div>1 entry: time spent on the call with mom — no clear trade-off evidence</div></div>
+            <div class="kv"><div class="k">Goal</div><div>Sleep before 11 p.m.: hit on 3 of 5 days · deviated 2 days <span class="badge b-goal">Backed by records</span></div></div>
+            <div class="xs muted" style="margin-top:6px">Degree is a subjective estimate relative to your Blueprint and this week time window — not comparable across dimensions.</div>
           </div>
         </div>
 
         <div class="dimrow" onclick="toggleDim(this)" id="dim-health">
           <div class="row between">
-            <div class="row" style="gap:7px"><span class="dot" style="background:var(--health)"></span><b style="font-size:13px">健康 Health</b></div>
-            <div class="mono xs muted">4 条 · 3 支持 / 1 消耗</div>
+            <div class="row" style="gap:7px"><span class="dot" style="background:var(--health)"></span><b style="font-size:13px">Health</b></div>
+            <div class="mono xs muted">4 entries · 3 support / 1 drain</div>
           </div>
           <div class="dimbar"><i style="width:64%;background:var(--health)"></i></div>
           <div class="row between">
-            <div class="xs muted">睡眠 · 运动 · 饮食 · 精力</div>
-            <div class="xs mono muted">程度 2–4</div>
+            <div class="xs muted">Sleep · exercise · diet · energy</div>
+            <div class="xs mono muted">Degree 2–4</div>
           </div>
           <div class="dimdetail">
-            <div class="kv"><div class="k">支持</div><div>3 条：晨跑 3 次（+3）、睡够 7 小时 3 晚（+2）</div></div>
-            <div class="kv"><div class="k">消耗</div><div>1 条：2 晚睡眠不足（−3）</div></div>
-            <div class="kv"><div class="k">混合</div><div>与妈妈通话：疏解 +1 / 担心体检 −2（分别记录，不作净值）</div></div>
-            <div class="kv"><div class="k">目标</div><div>每周运动 3 次：本周 3 / 3 <span class="badge b-ok">与目标一致</span></div></div>
+            <div class="kv"><div class="k">Support</div><div>3 entries: 3 morning runs (+3), 3 nights with 7+ hours of sleep (+2)</div></div>
+            <div class="kv"><div class="k">Drain</div><div>1 entry: 2 nights of insufficient sleep (−3)</div></div>
+            <div class="kv"><div class="k">Mixed</div><div>Call with mom: relief +1 / worry about health checkup −2 (recorded separately, not netted)</div></div>
+            <div class="kv"><div class="k">Goal</div><div>Exercise 3× per week: 3 / 3 this week <span class="badge b-ok">Consistent with goal</span></div></div>
           </div>
         </div>
 
         <div class="dimrow" onclick="toggleDim(this)" id="dim-wealth">
           <div class="row between">
-            <div class="row" style="gap:7px"><span class="dot" style="background:var(--wealth)"></span><b style="font-size:13px">财富 Wealth</b></div>
-            <div class="mono xs muted">1 条 · 证据不足</div>
+            <div class="row" style="gap:7px"><span class="dot" style="background:var(--wealth)"></span><b style="font-size:13px">Wealth</b></div>
+            <div class="mono xs muted">1 entry · insufficient evidence</div>
           </div>
           <div class="dimbar"><i style="width:14%;background:var(--wealth)"></i></div>
           <div class="row between">
-            <div class="xs muted">收入 · 支出 · 资产 · 负债</div>
-            <div class="xs mono muted">状态：未知</div>
+            <div class="xs muted">Income · spending · assets · debt</div>
+            <div class="xs mono muted">Status: unknown</div>
           </div>
           <div class="dimdetail">
-            <div class="kv"><div class="k">已确认</div><div>0 条</div></div>
-            <div class="kv"><div class="k">待确认</div><div>健身卡 1200 元支出（−1 候选，未确认不计入）</div></div>
-            <div class="kv"><div class="k">结论</div><div><span class="badge b-unk">无法判断</span> 本周财富维度证据不足，不生成趋势或评分。</div></div>
+            <div class="kv"><div class="k">Confirmed</div><div>0 entries</div></div>
+            <div class="kv"><div class="k">Pending</div><div>Gym card ¥1200 expense (−1 candidate, not counted until confirmed)</div></div>
+            <div class="kv"><div class="k">Verdict</div><div><span class="badge b-unk">Cannot tell</span> Not enough Wealth evidence this week — no trend or score is generated.</div></div>
           </div>
         </div>
 
         <div class="dimrow" onclick="toggleDim(this)" id="dim-rel">
           <div class="row between">
-            <div class="row" style="gap:7px"><span class="dot" style="background:var(--rel)"></span><b style="font-size:13px">关系 Relationship</b></div>
-            <div class="mono xs muted">2 条 · 2 支持</div>
+            <div class="row" style="gap:7px"><span class="dot" style="background:var(--rel)"></span><b style="font-size:13px">Relationship</b></div>
+            <div class="mono xs muted">2 entries · 2 support</div>
           </div>
           <div class="dimbar"><i style="width:38%;background:var(--rel)"></i></div>
           <div class="row between">
-            <div class="xs muted">家人 · 朋友 · 伴侣 · 同事</div>
-            <div class="xs mono muted">程度 2–3</div>
+            <div class="xs muted">Family · friends · partner · colleagues</div>
+            <div class="xs mono muted">Degree 2–3</div>
           </div>
           <div class="dimdetail">
-            <div class="kv"><div class="k">支持</div><div>2 条：与妈妈通话 20 分钟（+3）、和同事午餐（+2）</div></div>
-            <div class="kv"><div class="k">消耗</div><div>无记录 · 标记未知，不推断</div></div>
-            <div class="kv"><div class="k">说明</div><div>系统不评价关系质量，只记录你自述的方向与程度。</div></div>
+            <div class="kv"><div class="k">Support</div><div>2 entries: 20-minute call with mom (+3), lunch with a colleague (+2)</div></div>
+            <div class="kv"><div class="k">Drain</div><div>No records · marked unknown, not guessed</div></div>
+            <div class="kv"><div class="k">Note</div><div>The system does not judge relationship quality; it only records the direction and degree you report.</div></div>
           </div>
         </div>
 
         <div class="dimrow" onclick="toggleDim(this)" id="dim-purpose">
           <div class="row between">
-            <div class="row" style="gap:7px"><span class="dot" style="background:var(--purpose)"></span><b style="font-size:13px">目的 Purpose</b></div>
-            <div class="mono xs muted">3 条 · 1 支持 / 2 未知</div>
+            <div class="row" style="gap:7px"><span class="dot" style="background:var(--purpose)"></span><b style="font-size:13px">Purpose</b></div>
+            <div class="mono xs muted">3 entries · 1 support / 2 unknown</div>
           </div>
           <div class="dimbar"><i style="width:26%;background:var(--purpose)"></i></div>
           <div class="row between">
-            <div class="xs muted">方向 · 成长 · 创造 · 长期愿景</div>
-            <div class="xs mono muted">程度待定</div>
+            <div class="xs muted">Direction · growth · creation · long-term vision</div>
+            <div class="xs mono muted">Degree pending</div>
           </div>
           <div class="dimdetail">
-            <div class="kv"><div class="k">支持</div><div>1 条：晨跑配速提升（+? 方向有依据，程度无可靠依据，留空待你补）</div></div>
-            <div class="kv"><div class="k">未知</div><div>2 条：周报、通话均无方向证据，保持 unknown</div></div>
-            <div class="kv"><div class="k">目标</div><div>输出 1 篇学习笔记：无可量化记录 <span class="badge b-unk">不显示伪进度</span></div></div>
+            <div class="kv"><div class="k">Support</div><div>1 entry: faster morning-run pace (+? — direction is grounded, degree has no reliable basis, left blank for you)</div></div>
+            <div class="kv"><div class="k">Unknown</div><div>2 entries: weekly report and call have no direction evidence, stay unknown</div></div>
+            <div class="kv"><div class="k">Goal</div><div>Publish 1 study note: no quantifiable records <span class="badge b-unk">No fake progress shown</span></div></div>
           </div>
         </div>
       </div>
 
       <div class="sec">
         <div class="sec-head">
-          <div class="sec-title">核心目标 · 3 / 3 Active</div>
-          <div class="sec-note">上限三个 · 可不量化</div>
+          <div class="sec-title">Core Goals · 3 / 3 Active</div>
+          <div class="sec-note">Max three · need not be quantified</div>
         </div>
         <div class="goal">
-          <div class="row between"><b style="font-size:12.5px">每周运动 3 次</b><span class="badge b-ok">一致</span></div>
-          <div class="xs muted" style="margin-top:2px">Why：保持精力与睡眠质量 · 关联 Health / Time</div>
+          <div class="row between"><b style="font-size:12.5px">Exercise 3× per week</b><span class="badge b-ok">Consistent</span></div>
+          <div class="xs muted" style="margin-top:2px">Why: keep up energy and sleep quality · linked to Health / Time</div>
           <div class="bar"><i style="width:100%;background:var(--health)"></i></div>
-          <div class="row between" style="margin-top:4px"><div class="xs mono muted">本周 3 / 3 次</div><div class="xs mono muted">证据 3 条</div></div>
+          <div class="row between" style="margin-top:4px"><div class="xs mono muted">3 / 3 times this week</div><div class="xs mono muted">3 evidence entries</div></div>
         </div>
         <div class="goal">
-          <div class="row between"><b style="font-size:12.5px">11 点前睡觉</b><span class="badge b-pending">有张力</span></div>
-          <div class="xs muted" style="margin-top:2px">Why：第二天上午是主要 Deep Work 窗口 · 关联 Time / Health</div>
+          <div class="row between"><b style="font-size:12.5px">Sleep before 11 p.m.</b><span class="badge b-pending">Tension</span></div>
+          <div class="xs muted" style="margin-top:2px">Why: the next morning is the main Deep Work window · linked to Time / Health</div>
           <div class="bar"><i style="width:60%;background:var(--time)"></i></div>
-          <div class="row between" style="margin-top:4px"><div class="xs mono muted">本周 3 / 5 天达成</div><div class="xs mono muted">偏离 2 天 · 有证据</div></div>
+          <div class="row between" style="margin-top:4px"><div class="xs mono muted">Hit on 3 / 5 days this week</div><div class="xs mono muted">Deviated 2 days · backed by evidence</div></div>
         </div>
         <div class="goal">
-          <div class="row between"><b style="font-size:12.5px">输出 1 篇学习笔记</b><span class="badge b-unk">不可量化</span></div>
-          <div class="xs muted" style="margin-top:2px">Why：把输入变成创造 · 关联 Purpose</div>
-          <div class="xs muted" style="margin-top:6px;border-top:1px dashed var(--line);padding-top:6px">无可核验记录，不生成伪精确进度或偏离判断。</div>
+          <div class="row between"><b style="font-size:12.5px">Publish 1 study note</b><span class="badge b-unk">Not quantifiable</span></div>
+          <div class="xs muted" style="margin-top:2px">Why: turn input into creation · linked to Purpose</div>
+          <div class="xs muted" style="margin-top:6px;border-top:1px dashed var(--line);padding-top:6px">No verifiable records — no pseudo-precise progress or deviation judgment is generated.</div>
         </div>
       </div>
 
-      <div class="footnote">五维影响不是零和分配 · 不求和、不平均、不排名</div>
+      <div class="footnote">Five-dimension impacts are not zero-sum · no summing, no averaging, no ranking</div>
     </section>
 
     <!-- ================= 4. REVIEW ================= -->
     <section class="screen" id="s-review">
       <div class="sec">
         <div class="sec-head">
-          <div class="sec-title">Review · 仅你主动打开时生成</div>
-          <div class="sec-note">无提醒 · 无自动触发</div>
+          <div class="sec-title">Review · generated only when you open it</div>
+          <div class="sec-note">No reminders · no automatic triggers</div>
         </div>
         <div class="card" style="padding:9px 11px">
           <div class="row between">
             <div class="periods">
               <div class="period on">10.06–10.12</div>
-              <div class="period" onclick="toast('历史 Review 周期（原型仅展示当前周）')">上一周</div>
-              <div class="period" onclick="toast('历史 Review 周期（原型仅展示当前周）')">更早</div>
+              <div class="period" onclick="toast('Historical Review periods (this prototype shows only the current week)')">Previous week</div>
+              <div class="period" onclick="toast('Historical Review periods (this prototype shows only the current week)')">Earlier</div>
             </div>
-            <span class="badge b-ai">依据 11 条已确认事实</span>
+            <span class="badge b-ai">Based on 11 confirmed facts</span>
           </div>
         </div>
       </div>
 
-      <!-- 1 发生了什么 -->
+      <!-- 1 What happened -->
       <div class="rv-sec">
-        <div class="rv-h"><span class="n">01</span><span class="t">发生了什么</span><span class="type-tag tag">事实</span></div>
-        <div class="fact"><div>完成 3 次晨跑，每次 30 分钟；其中一次配速提升。</div><button class="evbtn" onclick="openEv('c1')">证据 #c1</button></div>
-        <div class="fact"><div>与妈妈通话 1 次，20 分钟，谈到体检安排。</div><button class="evbtn" onclick="openEv('c2')">证据 #c2</button></div>
-        <div class="fact"><div>2 个晚上刷手机至 0:30 以后，其中一晚到凌晨 1 点。</div><button class="evbtn" onclick="openEv('c3')">证据 #c3</button></div>
-        <div class="fact"><div>项目周报按时提交，用时 2 小时，比预期久。</div><button class="evbtn" onclick="openEv('c4')">证据 #c4</button></div>
+        <div class="rv-h"><span class="n">01</span><span class="t">What happened</span><span class="type-tag tag">Fact</span></div>
+        <div class="fact"><div>Completed 3 morning runs, 30 minutes each; pace improved on one of them.</div><button class="evbtn" onclick="openEv('c1')">Evidence #c1</button></div>
+        <div class="fact"><div>One 20-minute call with mom, talking about scheduling a health checkup.</div><button class="evbtn" onclick="openEv('c2')">Evidence #c2</button></div>
+        <div class="fact"><div>Scrolled my phone past 0:30 on 2 nights, until 1 a.m. on one of them.</div><button class="evbtn" onclick="openEv('c3')">Evidence #c3</button></div>
+        <div class="fact"><div>Project weekly report submitted on time, took 2 hours — longer than expected.</div><button class="evbtn" onclick="openEv('c4')">Evidence #c4</button></div>
       </div>
 
-      <!-- 2 进展与偏离 -->
+      <!-- 2 Progress and deviations -->
       <div class="rv-sec">
-        <div class="rv-h"><span class="n">02</span><span class="t">进展与偏离</span><span class="type-tag tag">可核验计算</span></div>
-        <div class="fact"><div><b>每周运动 3 次</b>：本周 3 次，与当前目标一致。</div><button class="evbtn" onclick="openEv('c1')">3 条记录</button></div>
-        <div class="fact"><div><b>11 点前睡觉</b>：5 天中 2 天存在张力（10.09、10.11）。</div><button class="evbtn" onclick="openEv('c3')">2 条记录</button></div>
-        <div class="fact"><div><b>输出 1 篇学习笔记</b>：<span class="badge b-unk">无法判断</span> 无可核验记录，不显示进度。</div><span class="type-tag gap">数据不足</span></div>
+        <div class="rv-h"><span class="n">02</span><span class="t">Progress & deviations</span><span class="type-tag tag">Verifiable computation</span></div>
+        <div class="fact"><div><b>Exercise 3× per week</b>: 3 times this week, consistent with the current goal.</div><button class="evbtn" onclick="openEv('c1')">3 entries</button></div>
+        <div class="fact"><div><b>Sleep before 11 p.m.</b>: tension on 2 of 5 days (10.09, 10.11).</div><button class="evbtn" onclick="openEv('c3')">2 entries</button></div>
+        <div class="fact"><div><b>Publish 1 study note</b>: <span class="badge b-unk">Cannot tell</span> no verifiable records, no progress shown.</div><span class="type-tag gap">Insufficient data</span></div>
       </div>
 
-      <!-- 3 可能的模式 -->
+      <!-- 3 Possible patterns -->
       <div class="rv-sec">
-        <div class="rv-h"><span class="n">03</span><span class="t">可能的模式</span><span class="type-tag spec tag">推测 · 非事实</span></div>
-        <div class="fact"><div>晚睡似乎多发生在「当天有未收尾的工作」的晚上（样本仅 2 条，属推测，可能不成立）。</div><button class="evbtn" onclick="openEv('c3')">证据 2 条</button></div>
-        <div class="fact"><div>运动与当天精力自述方向一致（仅 1 条精力记录，证据不足以支持结论）。</div><span class="type-tag gap">弱证据</span></div>
+        <div class="rv-h"><span class="n">03</span><span class="t">Possible patterns</span><span class="type-tag spec tag">Guess · not a fact</span></div>
+        <div class="fact"><div>Late nights seem to happen mostly on evenings "with unfinished work from the day" (only 2 samples — a guess, may not hold).</div><button class="evbtn" onclick="openEv('c3')">2 evidence entries</button></div>
+        <div class="fact"><div>Exercise lines up with the same-day self-reported energy (only 1 energy record — evidence too thin for a conclusion).</div><span class="type-tag gap">Weak evidence</span></div>
       </div>
 
-      <!-- 4 理论视角 -->
+      <!-- 4 Theory perspective -->
       <div class="rv-sec">
-        <div class="rv-h"><span class="n">04</span><span class="t">理论视角</span><span class="type-tag theory tag">理论观点</span></div>
+        <div class="rv-h"><span class="n">04</span><span class="t">Theory perspective</span><span class="type-tag theory tag">Theory point</span></div>
         <div class="fact">
           <div>
-            <b>执行意图（Implementation Intentions）</b> · Peter Gollwitzer, 1999, <i>American Psychologist</i><br>
-            <span class="small muted">「如果—那么」计划把意图绑定到具体情境线索，可提升习惯执行率。适用边界：需稳定的情境线索；对高波动日程效果有限。</span>
+            <b>Implementation intentions</b> · Peter Gollwitzer, 1999, <i>American Psychologist</i><br>
+            <span class="small muted">"If-then" plans bind intentions to specific situational cues and can improve habit follow-through. Boundary: needs stable situational cues; limited effect on highly variable schedules.</span>
           </div>
-          <button class="evbtn" onclick="openEv('theory')">来源</button>
+          <button class="evbtn" onclick="openEv('theory')">Source</button>
         </div>
-        <div class="xs muted" style="margin-top:6px">这是理论观点，不是你的个人事实，也不构成诊断或因果证明。</div>
+        <div class="xs muted" style="margin-top:6px">This is a theory point, not your personal fact, and it is not a diagnosis or causal proof.</div>
       </div>
 
       <!-- 5 ONE BIG CHANGE -->
       <div class="rv-sec" style="padding:0;border:none;background:none">
         <div class="obc" id="obcCard">
-          <div class="kicker">05 · One Big Change · 零个或一个</div>
-          <h3 id="obcTitle">睡前把手机放到书桌，不在床上刷</h3>
+          <div class="kicker">05 · One Big Change · zero or one</div>
+          <h3 id="obcTitle">Put the phone on the desk before bed — no scrolling in bed</h3>
           <div class="why" id="obcWhy">
-            依据：2 条晚睡记录中有 2 条提到「躺下后继续刷手机」。这是一个可逆的小步骤，可先试一周；这不是必须完成的任务。
+            Basis: 2 of the 2 late-night records mention "kept scrolling after lying down". This is a small, reversible step — try it for a week; it is not a must-do task.
           </div>
           <div class="row" style="gap:6px;margin-top:10px;flex-wrap:wrap" id="obcBtns">
-            <button class="btn primary sm" onclick="obcAct('accept')">接受</button>
-            <button class="btn sm" onclick="obcAct('modify')">修改后接受</button>
-            <button class="btn sm" onclick="obcAct('none')">本次不需要改变</button>
+            <button class="btn primary sm" onclick="obcAct('accept')">Accept</button>
+            <button class="btn sm" onclick="obcAct('modify')">Accept with edits</button>
+            <button class="btn sm" onclick="obcAct('none')">No change needed this time</button>
           </div>
-          <textarea class="obc-input" id="obcInput" style="display:none" placeholder="改成你的版本…">睡前把手机放到书桌，不在床上刷</textarea>
-          <button class="btn primary sm" id="obcSave" style="display:none" onclick="obcSave()">保存我的版本</button>
-          <div class="xs muted" id="obcState" style="margin-top:8px">可拒绝 · 拒绝后本次 Review 保持零建议，不生成隐形待办。</div>
+          <textarea class="obc-input" id="obcInput" style="display:none" placeholder="Rewrite it your way…">Put the phone on the desk before bed — no scrolling in bed</textarea>
+          <button class="btn primary sm" id="obcSave" style="display:none" onclick="obcSave()">Save my version</button>
+          <div class="xs muted" id="obcState" style="margin-top:8px">Declinable · if declined, this Review keeps zero suggestions and creates no hidden to-dos.</div>
         </div>
       </div>
 
-      <!-- 6 数据不足 -->
+      <!-- 6 Insufficient data -->
       <div class="rv-sec">
-        <div class="rv-h"><span class="n">06</span><span class="t">数据不足</span><span class="type-tag gap tag">无法判断</span></div>
-        <div class="fact"><div>财富维度本周 0 条已确认记录，无法判断收支方向或趋势。</div><span class="type-tag gap">缺 3+ 条</span></div>
-        <div class="fact"><div>精力与情绪仅 1 条自述，不足以做任何趋势结论。</div><span class="type-tag gap">缺 3+ 条</span></div>
-        <div class="fact"><div>「学习笔记」目标无过程记录，不推断进度。</div><span class="type-tag gap">缺记录</span></div>
+        <div class="rv-h"><span class="n">06</span><span class="t">Insufficient data</span><span class="type-tag gap tag">Cannot tell</span></div>
+        <div class="fact"><div>0 confirmed records in Wealth this week — cannot judge spending/income direction or trend.</div><span class="type-tag gap">3+ missing</span></div>
+        <div class="fact"><div>Only 1 self-report for energy and mood — not enough for any trend conclusion.</div><span class="type-tag gap">3+ missing</span></div>
+        <div class="fact"><div>The "study note" goal has no process records — no progress is inferred.</div><span class="type-tag gap">Missing records</span></div>
       </div>
 
-      <!-- 7 证据 -->
+      <!-- 7 Evidence -->
       <div class="rv-sec">
-        <div class="rv-h"><span class="n">07</span><span class="t">证据集</span><span class="type-tag tag">可追溯</span></div>
+        <div class="rv-h"><span class="n">07</span><span class="t">Evidence set</span><span class="type-tag tag">Traceable</span></div>
         <div class="row" style="flex-wrap:wrap;gap:6px">
-          <button class="evbtn" onclick="openEv('c1')">#c1 晨跑 · 10-12</button>
-          <button class="evbtn" onclick="openEv('c2')">#c2 通话 · 10-12</button>
-          <button class="evbtn" onclick="openEv('c3')">#c3 刷手机 · 10-12</button>
-          <button class="evbtn" onclick="openEv('c4')">#c4 周报 · 10-11</button>
-          <button class="evbtn" onclick="openEv('c5')">#c5 健身卡 · 10-10</button>
+          <button class="evbtn" onclick="openEv('c1')">#c1 Morning run · 10-12</button>
+          <button class="evbtn" onclick="openEv('c2')">#c2 Call · 10-12</button>
+          <button class="evbtn" onclick="openEv('c3')">#c3 Phone · 10-12</button>
+          <button class="evbtn" onclick="openEv('c4')">#c4 Weekly report · 10-11</button>
+          <button class="evbtn" onclick="openEv('c5')">#c5 Gym card · 10-10</button>
         </div>
-        <div class="xs muted" style="margin-top:7px">每条事实都可回到原始 Capture 或结构化记录 · 全链路可追溯</div>
+        <div class="xs muted" style="margin-top:7px">Every fact traces back to the original Capture or structured record · fully traceable</div>
       </div>
 
       <!-- feedback -->
       <div class="rv-sec">
-        <div class="rv-h"><span class="n">08</span><span class="t">反馈（可跳过）</span></div>
+        <div class="rv-h"><span class="n">08</span><span class="t">Feedback (skippable)</span></div>
         <div class="fbrow" id="fbRow">
-          <div class="fb" onclick="fbToggle(this)">准确</div>
-          <div class="fb" onclick="fbToggle(this)">不准确</div>
-          <div class="fb" onclick="fbToggle(this)">有帮助</div>
-          <div class="fb" onclick="fbToggle(this)">没帮助</div>
-          <div class="fb" onclick="fbToggle(this)">有依据</div>
-          <div class="fb" onclick="fbToggle(this)">无依据</div>
-          <div class="fb" onclick="fbToggle(this)">停止本次指导</div>
+          <div class="fb" onclick="fbToggle(this)">Accurate</div>
+          <div class="fb" onclick="fbToggle(this)">Inaccurate</div>
+          <div class="fb" onclick="fbToggle(this)">Helpful</div>
+          <div class="fb" onclick="fbToggle(this)">Not helpful</div>
+          <div class="fb" onclick="fbToggle(this)">Grounded</div>
+          <div class="fb" onclick="fbToggle(this)">Not grounded</div>
+          <div class="fb" onclick="fbToggle(this)">Stop this guidance</div>
         </div>
-        <textarea class="obc-input" placeholder="可选：写一句纠正或不同意见（也可以什么都不写）"></textarea>
-        <button class="btn block" onclick="toast('反馈已保存 · 不评分也可以直接结束 Review')">提交反馈并结束</button>
+        <textarea class="obc-input" placeholder="Optional: write one correction or disagreement (or write nothing at all)"></textarea>
+        <button class="btn block" onclick="toast('Feedback saved · you can finish Review without rating')">Submit feedback and finish</button>
       </div>
 
       <details>
-        <summary>为什么这样指导？</summary>
+        <summary>Why this guidance?</summary>
         <div class="body">
-          本次展示的直接程度：平实。依据：你本次打开了周复盘、目标含明确障碍记录、无停止指令。<br>
-          采用证据：#c1 #c2 #c3（已确认）、目标「11 点前睡觉」v2。<br>
-          策略版本：conservative-0.3 · 模型：llm-x · Prompt：review-v0.6。<br>
-          不确定性：晚睡模式样本仅 2 条，已标记为推测；财富维度无证据，未生成建议。<br>
-          不保存隐藏推理链；历史依据变化不会改写这份快照。
+          Directness shown this time: plain. Basis: you opened the weekly review, the goal has explicit obstacle records, no stop instruction.<br>
+          Evidence used: #c1 #c2 #c3 (confirmed), goal "sleep before 11 p.m." v2.<br>
+          Strategy version: conservative-0.3 · model: llm-x · prompt: review-v0.6.<br>
+          Uncertainty: only 2 samples for the late-night pattern, marked as a guess; no Wealth evidence, so no suggestion was generated.<br>
+          No hidden reasoning chains are saved; changes to historical evidence will not rewrite this snapshot.
         </div>
       </details>
 
-      <div class="footnote" style="margin-top:10px">Review 由你主动打开 · 无提醒 · 不用于模型训练</div>
+      <div class="footnote" style="margin-top:10px">Review is opened by you · no reminders · not used for model training</div>
     </section>
   </main>
 
@@ -645,19 +645,19 @@
   <nav class="tabbar">
     <button class="tab on" data-s="capture" onclick="switchScreen('capture',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20h16"/><path d="M14.5 4.5l5 5L9 20H4v-5z"/></svg>
-      <span class="lb">记录</span>
+      <span class="lb">Capture</span>
     </button>
     <button class="tab" data-s="confirm" onclick="switchScreen('confirm',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/></svg>
-      <span class="lb">确认</span><span class="cnt" id="tabCnt">2</span>
+      <span class="lb">Confirm</span><span class="cnt" id="tabCnt">2</span>
     </button>
     <button class="tab" data-s="dims" onclick="switchScreen('dims',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>
-      <span class="lb">五维</span>
+      <span class="lb">Five Dims</span>
     </button>
     <button class="tab" data-s="review" onclick="switchScreen('review',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M3.5 9.5h17M8 3v3M16 3v3M8 14h4"/></svg>
-      <span class="lb">复盘</span>
+      <span class="lb">Review</span>
     </button>
   </nav>
 </div>
@@ -667,83 +667,83 @@
   <div class="sheet" id="sheet" onclick="event.stopPropagation()">
     <div class="grab"></div>
     <div id="sheetBody"></div>
-    <button class="btn block" style="margin-top:12px" onclick="closeSheet()">关闭</button>
+    <button class="btn block" style="margin-top:12px" onclick="closeSheet()">Close</button>
   </div>
 </div>
 
 <div id="toast" style="position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:#17171A;color:#fff;font-size:11.5px;padding:8px 14px;border-radius:9px;z-index:80;display:none;max-width:340px;text-align:center;line-height:1.5"></div>
 
 <script>
-/* ============================ 数据 ============================ */
+/* ============================ Data ============================ */
 const DIMS = {
-  time:{name:'时间', color:'var(--time)'},
-  health:{name:'健康', color:'var(--health)'},
-  wealth:{name:'财富', color:'var(--wealth)'},
-  relationship:{name:'关系', color:'var(--rel)'},
-  purpose:{name:'目的', color:'var(--purpose)'}
+  time:{name:'Time', color:'var(--time)'},
+  health:{name:'Health', color:'var(--health)'},
+  wealth:{name:'Wealth', color:'var(--wealth)'},
+  relationship:{name:'Relationship', color:'var(--rel)'},
+  purpose:{name:'Purpose', color:'var(--purpose)'}
 };
 
 const captures = [
-  {id:'c1', time:'10-12 07:40', text:'早上跑步 30 分钟，配速比上周快，跑完精神不错。', status:'ok'},
-  {id:'c2', time:'10-12 12:15', text:'和妈妈通话 20 分钟，聊了她体检的事，心情有点担心。', status:'pending'},
-  {id:'c3', time:'10-12 23:40', text:'刷手机到凌晨 1 点，本来打算 11 点睡。', status:'pending'},
-  {id:'c4', time:'10-11 16:20', text:'今天写周报花了 2 小时，比预期久，但按时交了。', status:'ok'},
-  {id:'c5', time:'10-10 19:05', text:'这周办了健身卡，花了 1200 元，有点犹豫值不值。', status:'pending'}
+  {id:'c1', time:'10-12 07:40', text:'Ran 30 minutes this morning, pace faster than last week, felt good afterward.', status:'ok'},
+  {id:'c2', time:'10-12 12:15', text:'Called mom for 20 minutes, talked about her health checkup, feeling a bit worried.', status:'pending'},
+  {id:'c3', time:'10-12 23:40', text:'Scrolled my phone until 1 a.m., meant to sleep by 11.', status:'pending'},
+  {id:'c4', time:'10-11 16:20', text:'Spent 2 hours writing the weekly report today, longer than expected, but submitted on time.', status:'ok'},
+  {id:'c5', time:'10-10 19:05', text:'Got a gym membership this week, spent 1200 yuan, a bit unsure if it is worth it.', status:'pending'}
 ];
 
-/* 影响候选：dir = pos | neg | mix | neu | unk；degree 可为 null（程度无可靠依据） */
+/* Impact candidates: dir = pos | neg | mix | neu | unk; degree can be null (no reliable basis for the degree) */
 let items = [
   {
-    id:'b1', title:'晨跑 30 分钟', capId:'c1', window:'10-12 07:10–07:45',
-    conf:'高', episteme:'AI 推断影响', status:'confirmed', editing:false,
-    quote:'早上跑步 30 分钟，<mark>配速比上周快</mark>，跑完精神不错。',
-    goal:'关联目标：每周运动 3 次（一致）',
+    id:'b1', title:'Morning run 30 minutes', capId:'c1', window:'10-12 07:10–07:45',
+    conf:'High', episteme:'AI-inferred impact', status:'confirmed', editing:false,
+    quote:'Ran 30 minutes this morning, <mark>pace faster than last week</mark>, felt good afterward.',
+    goal:'Linked goal: exercise 3× per week (consistent)',
     impacts:[
-      {dim:'health', dir:'pos', degree:3, ev:'「跑步 30 分钟…跑完精神不错」', conf:'高'},
-      {dim:'time', dir:'neg', degree:1, ev:'「早上」占用早间时段', conf:'低'},
-      {dim:'purpose', dir:'pos', degree:null, ev:'「配速比上周快」→ 成长感', conf:'低'},
-      {dim:'wealth', dir:'unk', degree:null, ev:'无直接证据', conf:'—'},
-      {dim:'relationship', dir:'unk', degree:null, ev:'无直接证据', conf:'—'}
+      {dim:'health', dir:'pos', degree:3, ev:'"Ran 30 minutes… felt good afterward"', conf:'High'},
+      {dim:'time', dir:'neg', degree:1, ev:'"this morning" takes the morning slot', conf:'Low'},
+      {dim:'purpose', dir:'pos', degree:null, ev:'"pace faster than last week" → sense of growth', conf:'Low'},
+      {dim:'wealth', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'},
+      {dim:'relationship', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'}
     ]
   },
   {
-    id:'b2', title:'与妈妈通话 20 分钟', capId:'c2', window:'10-12 12:15–12:35',
-    conf:'中', episteme:'AI 推断影响', status:'pending', editing:false,
-    quote:'和妈妈通话 20 分钟，<mark>聊了她体检的事</mark>，心情有点担心。',
-    goal:'无关联目标',
+    id:'b2', title:'20-minute call with mom', capId:'c2', window:'10-12 12:15–12:35',
+    conf:'Medium', episteme:'AI-inferred impact', status:'pending', editing:false,
+    quote:'Called mom for 20 minutes, <mark>talked about her health checkup</mark>, feeling a bit worried.',
+    goal:'No linked goal',
     impacts:[
-      {dim:'relationship', dir:'pos', degree:3, ev:'「和妈妈通话 20 分钟」', conf:'高'},
-      {dim:'health', dir:'mix', posDeg:1, negDeg:2, ev:'疏解「通话」/ 消耗「心情有点担心」', conf:'中'},
-      {dim:'time', dir:'neg', degree:1, ev:'「20 分钟」时段占用', conf:'低'},
-      {dim:'wealth', dir:'unk', degree:null, ev:'无直接证据', conf:'—'},
-      {dim:'purpose', dir:'unk', degree:null, ev:'无直接证据', conf:'—'}
+      {dim:'relationship', dir:'pos', degree:3, ev:'"Called mom for 20 minutes"', conf:'High'},
+      {dim:'health', dir:'mix', posDeg:1, negDeg:2, ev:'relief "the call" / drain "feeling a bit worried"', conf:'Medium'},
+      {dim:'time', dir:'neg', degree:1, ev:'"20 minutes" of time taken', conf:'Low'},
+      {dim:'wealth', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'},
+      {dim:'purpose', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'}
     ]
   },
   {
-    id:'b3', title:'睡前刷手机至凌晨 1 点', capId:'c3', window:'10-12 23:20–01:00',
-    conf:'高', episteme:'AI 推断影响', status:'pending', editing:false,
-    quote:'<mark>刷手机到凌晨 1 点</mark>，本来打算 11 点睡。',
-    goal:'关联目标：11 点前睡觉（存在张力）',
+    id:'b3', title:'Phone scrolling until 1 a.m. before bed', capId:'c3', window:'10-12 23:20–01:00',
+    conf:'High', episteme:'AI-inferred impact', status:'pending', editing:false,
+    quote:'<mark>Scrolled my phone until 1 a.m.</mark>, meant to sleep by 11.',
+    goal:'Linked goal: sleep before 11 p.m. (in tension)',
     impacts:[
-      {dim:'time', dir:'neg', degree:4, ev:'「刷手机到凌晨 1 点」', conf:'高'},
-      {dim:'health', dir:'neg', degree:3, ev:'「本来打算 11 点睡」→ 睡眠不足', conf:'中'},
-      {dim:'purpose', dir:'neg', degree:1, ev:'与原计划不一致', conf:'低'},
-      {dim:'wealth', dir:'unk', degree:null, ev:'无直接证据', conf:'—'},
-      {dim:'relationship', dir:'unk', degree:null, ev:'无直接证据', conf:'—'}
+      {dim:'time', dir:'neg', degree:4, ev:'"Scrolled my phone until 1 a.m."', conf:'High'},
+      {dim:'health', dir:'neg', degree:3, ev:'"meant to sleep by 11" → insufficient sleep', conf:'Medium'},
+      {dim:'purpose', dir:'neg', degree:1, ev:'inconsistent with the original plan', conf:'Low'},
+      {dim:'wealth', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'},
+      {dim:'relationship', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'}
     ]
   }
 ];
 
 const evidence = {
-  c1:{t:'原始 Capture #c1', time:'2026-10-12 07:40', text:'早上跑步 30 分钟，配速比上周快，跑完精神不错。', items:'提取项：晨跑 30 分钟（已确认 · 保留 AI 原始值）', note:'原文独立保存，不被 AI 或修订覆盖。'},
-  c2:{t:'原始 Capture #c2', time:'2026-10-12 12:15', text:'和妈妈通话 20 分钟，聊了她体检的事，心情有点担心。', items:'提取项：与妈妈通话 20 分钟（待确认）', note:'健康维度为 mixed：正/负程度分别记录，不作净值。'},
-  c3:{t:'原始 Capture #c3', time:'2026-10-12 23:40', text:'刷手机到凌晨 1 点，本来打算 11 点睡。', items:'提取项：睡前刷手机至凌晨 1 点（待确认）', note:'关联目标「11 点前睡觉」，构成可核验偏离。'},
-  c4:{t:'原始 Capture #c4', time:'2026-10-11 16:20', text:'今天写周报花了 2 小时，比预期久，但按时交了。', items:'提取项：周报 2 小时（已确认）', note:'时间消耗 −2（已修改：用户把 AI 的 −3 改为 −2）。'},
-  c5:{t:'原始 Capture #c5', time:'2026-10-10 19:05', text:'这周办了健身卡，花了 1200 元，有点犹豫值不值。', items:'提取项：健身卡支出 1200 元（未确认 · 不计入长期分析）', note:'用户选择「稍后处理」，候选保持待确认。'},
-  theory:{t:'理论引用来源', time:'可核验来源', text:'Gollwitzer, P. M. (1999). Implementation Intentions: Strong Effects of Simple Plans. American Psychologist, 54(7), 493–503.', items:'doi:10.1037/0003-066X.54.7.493', note:'类型：理论观点。适用边界：需要稳定情境线索；不构成对个人情况的因果证明。'}
+  c1:{t:'Original Capture #c1', time:'2026-10-12 07:40', text:'Ran 30 minutes this morning, pace faster than last week, felt good afterward.', items:'Extraction: Morning run 30 minutes (confirmed · AI original values kept)', note:'The raw text is saved independently, never overwritten by AI or revisions.'},
+  c2:{t:'Original Capture #c2', time:'2026-10-12 12:15', text:'Called mom for 20 minutes, talked about her health checkup, feeling a bit worried.', items:'Extraction: 20-minute call with mom (pending)', note:'Health dimension is mixed: positive/negative degrees recorded separately, not netted.'},
+  c3:{t:'Original Capture #c3', time:'2026-10-12 23:40', text:'Scrolled my phone until 1 a.m., meant to sleep by 11.', items:'Extraction: Phone scrolling until 1 a.m. before bed (pending)', note:'Linked goal "sleep before 11 p.m." — constitutes a verifiable deviation.'},
+  c4:{t:'Original Capture #c4', time:'2026-10-11 16:20', text:'Spent 2 hours writing the weekly report today, longer than expected, but submitted on time.', items:'Extraction: weekly report 2 hours (confirmed)', note:'Time drain −2 (edited: you changed the AI −3 to −2).'},
+  c5:{t:'Original Capture #c5', time:'2026-10-10 19:05', text:'Got a gym membership this week, spent 1200 yuan, a bit unsure if it is worth it.', items:'Extraction: gym card ¥1200 expense (unconfirmed · not counted in long-term analysis)', note:'You chose "handle later" — the candidate stays pending.'},
+  theory:{t:'Theory citation source', time:'Verifiable source', text:'Gollwitzer, P. M. (1999). Implementation Intentions: Strong Effects of Simple Plans. American Psychologist, 54(7), 493–503.', items:'doi:10.1037/0003-066X.54.7.493', note:'Type: theory point. Boundary: needs stable situational cues; not a causal proof about your situation.'}
 };
 
-/* ============================ 基础交互 ============================ */
+/* ============================ Basic interaction ============================ */
 function switchScreen(name, btn){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-' + name).classList.add('active');
@@ -786,63 +786,63 @@ function renderCaptures(){
   const el = document.getElementById('capList');
   el.innerHTML = captures.map(c=>{
     const map = {
-      ok:['b-ok','已确认'], pending:['b-pending','待确认'], processing:['b-ai','AI 处理中'],
-      saved:['b-ai','原文已保存'], failed:['b-rej','AI 提取失败'], nofact:['b-unk','无可提取事实']
+      ok:['b-ok','Confirmed'], pending:['b-pending','Pending'], processing:['b-ai','AI processing'],
+      saved:['b-ai','Raw saved'], failed:['b-rej','AI extraction failed'], nofact:['b-unk','No extractable fact']
     };
     const [cls, label] = map[c.status] || map.saved;
     return '<div class="entry">' +
       '<div class="t">' + c.time.split(' ')[1] + '</div>' +
       '<div><div class="txt">' + c.text + '</div>' +
       '<div class="sub"><span class="badge ' + cls + '">' + label + '</span>' +
-      '<span class="xs muted mono">' + c.time + ' · 原文保留</span></div></div>' +
-      '<button class="btn sm ghost" onclick="openEv(\'' + c.id + '\')">证据</button>' +
+      '<span class="xs muted mono">' + c.time + ' · raw kept</span></div></div>' +
+      '<button class="btn sm ghost" onclick="openEv(\'' + c.id + '\')">Evidence</button>' +
     '</div>';
   }).join('');
 }
 
 function extractFrom(text){
-  if(/跑步|跑|运动|健身|游泳|瑜伽|锻炼/.test(text) && /分钟|小时|次/.test(text)){
-    return {title:'运动记录', window:'今天', conf:'高', quote:'<mark>' + text.slice(0,14) + '…</mark>', goal:'关联目标：每周运动 3 次',
+  if(/run|ran|jog|exercise|workout|gym|swim|yoga/i.test(text) && /minutes?|hours?|times/i.test(text)){
+    return {title:'Exercise record', window:'today', conf:'High', quote:'<mark>' + text.slice(0,14) + '…</mark>', goal:'Linked goal: exercise 3× per week',
       impacts:[
-        {dim:'health', dir:'pos', degree:3, ev:'运动行为自述', conf:'高'},
-        {dim:'time', dir:'neg', degree:1, ev:'时段占用', conf:'低'},
-        {dim:'wealth', dir:'unk', degree:null, ev:'无直接证据', conf:'—'},
-        {dim:'relationship', dir:'unk', degree:null, ev:'无直接证据', conf:'—'},
-        {dim:'purpose', dir:'unk', degree:null, ev:'无直接证据', conf:'—'}
+        {dim:'health', dir:'pos', degree:3, ev:'self-reported exercise', conf:'High'},
+        {dim:'time', dir:'neg', degree:1, ev:'time slot taken', conf:'Low'},
+        {dim:'wealth', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'},
+        {dim:'relationship', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'},
+        {dim:'purpose', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'}
       ]};
   }
-  if(/妈妈|爸爸|家人|朋友|同事|聊|通话|见面|聚会/.test(text)){
-    return {title:'社交互动', window:'今天', conf:'中', quote:'<mark>' + text.slice(0,14) + '…</mark>', goal:'无关联目标',
+  if(/mom|dad|family|friend|colleague|chat|call|meet|dinner/i.test(text)){
+    return {title:'Social interaction', window:'today', conf:'Medium', quote:'<mark>' + text.slice(0,14) + '…</mark>', goal:'No linked goal',
       impacts:[
-        {dim:'relationship', dir:'pos', degree:2, ev:'互动自述', conf:'中'},
-        {dim:'health', dir:'unk', degree:null, ev:'情绪方向证据不足', conf:'—'},
-        {dim:'time', dir:'neg', degree:1, ev:'时段占用', conf:'低'},
-        {dim:'wealth', dir:'unk', degree:null, ev:'无直接证据', conf:'—'},
-        {dim:'purpose', dir:'unk', degree:null, ev:'无直接证据', conf:'—'}
+        {dim:'relationship', dir:'pos', degree:2, ev:'self-reported interaction', conf:'Medium'},
+        {dim:'health', dir:'unk', degree:null, ev:'insufficient evidence for mood direction', conf:'—'},
+        {dim:'time', dir:'neg', degree:1, ev:'time slot taken', conf:'Low'},
+        {dim:'wealth', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'},
+        {dim:'purpose', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'}
       ]};
   }
-  if(/睡|熬夜|刷手机|凌晨|失眠/.test(text)){
-    return {title:'睡眠相关事件', window:'今天 23:00–01:00', conf:'中', quote:'<mark>' + text.slice(0,14) + '…</mark>', goal:'关联目标：11 点前睡觉',
+  if(/sleep|slept|insomnia|a\.m\.|midnight|scroll|phone/i.test(text)){
+    return {title:'Sleep-related event', window:'today 23:00–01:00', conf:'Medium', quote:'<mark>' + text.slice(0,14) + '…</mark>', goal:'Linked goal: sleep before 11 p.m.',
       impacts:[
-        {dim:'health', dir:'neg', degree:3, ev:'睡眠时间自述', conf:'中'},
-        {dim:'time', dir:'neg', degree:2, ev:'低价值时间', conf:'中'},
-        {dim:'wealth', dir:'unk', degree:null, ev:'无直接证据', conf:'—'},
-        {dim:'relationship', dir:'unk', degree:null, ev:'无直接证据', conf:'—'},
-        {dim:'purpose', dir:'unk', degree:null, ev:'无直接证据', conf:'—'}
+        {dim:'health', dir:'neg', degree:3, ev:'self-reported sleep time', conf:'Medium'},
+        {dim:'time', dir:'neg', degree:2, ev:'low-value time', conf:'Medium'},
+        {dim:'wealth', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'},
+        {dim:'relationship', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'},
+        {dim:'purpose', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'}
       ]};
   }
-  if(/花|元|买|工资|投资|存钱|账|订阅/.test(text)){
-    return {title:'财务事件', window:'今天', conf:'中', quote:'<mark>' + text.slice(0,14) + '…</mark>', goal:'无关联目标',
+  if(/spent|spend|yuan|buy|salary|invest|save|bill|subscri/i.test(text)){
+    return {title:'Financial event', window:'today', conf:'Medium', quote:'<mark>' + text.slice(0,14) + '…</mark>', goal:'No linked goal',
       impacts:[
-        {dim:'wealth', dir:'neg', degree:2, ev:'支出金额自述', conf:'中'},
-        {dim:'health', dir:'unk', degree:null, ev:'无直接证据', conf:'—'},
-        {dim:'time', dir:'unk', degree:null, ev:'无直接证据', conf:'—'},
-        {dim:'relationship', dir:'unk', degree:null, ev:'无直接证据', conf:'—'},
-        {dim:'purpose', dir:'unk', degree:null, ev:'无直接证据', conf:'—'}
+        {dim:'wealth', dir:'neg', degree:2, ev:'self-reported spending', conf:'Medium'},
+        {dim:'health', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'},
+        {dim:'time', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'},
+        {dim:'relationship', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'},
+        {dim:'purpose', dir:'unk', degree:null, ev:'no direct evidence', conf:'—'}
       ]};
   }
-  return {title:'待确认事件', window:'今天', conf:'低', quote:'<mark>' + text.slice(0,14) + '…</mark>', goal:'无关联目标',
-    impacts:['time','health','wealth','relationship','purpose'].map(d=>({dim:d, dir:'unk', degree:null, ev:'无直接证据', conf:'—'}))};
+  return {title:'Pending event', window:'today', conf:'Low', quote:'<mark>' + text.slice(0,14) + '…</mark>', goal:'No linked goal',
+    impacts:['time','health','wealth','relationship','purpose'].map(d=>({dim:d, dir:'unk', degree:null, ev:'no direct evidence', conf:'—'}))};
 }
 
 document.getElementById('btnSave').addEventListener('click', ()=>{
@@ -856,19 +856,19 @@ document.getElementById('btnSave').addEventListener('click', ()=>{
 
   const st = document.getElementById('capStatus');
   st.style.display = 'flex'; st.className = 'statusline busy';
-  document.getElementById('capStatusText').textContent = '原文已保存（不覆盖） · AI 处理中…';
+  document.getElementById('capStatusText').textContent = 'Raw saved (not overwritten) · AI processing…';
   document.getElementById('btnGoConfirm').style.display = 'none';
   capInput.value = ''; document.getElementById('capCount').textContent = '0';
 
   setTimeout(()=>{
-    document.getElementById('capStatusText').textContent = 'AI 提取完成 · 生成 1 个提取项 + 5 个影响候选（全部待确认）';
+    document.getElementById('capStatusText').textContent = 'AI extraction done · 1 extraction + 5 impact candidates generated (all pending)';
     st.className = 'statusline done';
     document.getElementById('btnGoConfirm').style.display = 'inline-block';
     captures[0].status = 'pending';
     const ex = extractFrom(text);
     items.push({
       id:'b' + (items.length + 1), title:ex.title, capId:id, window:ex.window,
-      conf:ex.conf, episteme:'AI 推断影响', status:'pending', editing:false,
+      conf:ex.conf, episteme:'AI-inferred impact', status:'pending', editing:false,
       quote:ex.quote, goal:ex.goal, impacts:ex.impacts
     });
     renderCaptures(); renderConfirm(); updateCounts();
@@ -880,7 +880,7 @@ document.getElementById('btnGoConfirm').addEventListener('click', ()=>{
 });
 
 /* ============================ Confirm ============================ */
-const DIR_LABEL = {pos:'支持', neg:'消耗', mix:'混合', neu:'中性', unk:'未知'};
+const DIR_LABEL = {pos:'Support', neg:'Drain', mix:'Mixed', neu:'Neutral', unk:'Unknown'};
 const DIR_CLS   = {pos:'d-pos', neg:'d-neg', mix:'d-mix', neu:'d-neu', unk:'d-unk'};
 
 function pips(n, tone){
@@ -891,12 +891,12 @@ function pips(n, tone){
 function impactLine(im){
   let val = '<span class="dir ' + DIR_CLS[im.dir] + '">' + DIR_LABEL[im.dir] + '</span>';
   if(im.dir === 'mix'){
-    val += pips(im.posDeg, 'pos') + '<span class="mono xs muted">正 ' + (im.posDeg ?? '—') + '</span>' +
-           pips(im.negDeg, 'neg') + '<span class="mono xs muted">负 ' + (im.negDeg ?? '—') + '</span>';
+    val += pips(im.posDeg, 'pos') + '<span class="mono xs muted">Pos ' + (im.posDeg ?? '—') + '</span>' +
+           pips(im.negDeg, 'neg') + '<span class="mono xs muted">Neg ' + (im.negDeg ?? '—') + '</span>';
   } else if(im.dir === 'unk' || im.dir === 'neu'){
-    val += '<span class="mono xs muted">程度：空</span>';
+    val += '<span class="mono xs muted">Degree: blank</span>';
   } else if(im.degree == null){
-    val += '<span class="mono xs muted">程度待定（方向有依据，程度无可靠依据）</span>';
+    val += '<span class="mono xs muted">Degree pending (direction grounded, degree has no reliable basis)</span>';
   } else {
     val += pips(im.degree, im.dir === 'pos' ? 'pos' : 'neg') + '<span class="mono xs muted">' + im.degree + '</span>';
   }
@@ -907,7 +907,7 @@ function impactLine(im){
 function editBlock(it){
   let h = '<div class="editbox">';
   it.impacts.forEach((im, idx)=>{
-    h += '<div class="editrow"><div class="lab">' + DIMS[im.dim].name + ' · 方向</div><div class="seg">';
+    h += '<div class="editrow"><div class="lab">' + DIMS[im.dim].name + ' · direction</div><div class="seg">';
     ['pos','neg','mix','neu','unk'].forEach(d=>{
       h += '<button class="' + (im.dir===d ? 'on ' + (d==='pos'?'pos':d==='neg'?'neg':d==='mix'?'mix':'') : '') + '" onclick="setDir(\'' + it.id + '\',' + idx + ',\'' + d + '\')">' + DIR_LABEL[d] + '</button>';
     });
@@ -915,66 +915,66 @@ function editBlock(it){
     if(im.dir === 'pos' || im.dir === 'neg' || im.dir === 'mix'){
       const tone = im.dir === 'neg' ? 'neg' : 'pos';
       if(im.dir === 'mix'){
-        h += '<div class="lab" style="margin-top:6px">正向程度</div><div class="seg">';
+        h += '<div class="lab" style="margin-top:6px">Positive degree</div><div class="seg">';
         for(let n=1;n<=5;n++) h += '<button class="' + (im.posDeg===n?'on pos':'') + '" onclick="setDeg(\'' + it.id + '\',' + idx + ',\'posDeg\',' + n + ')">' + n + '</button>';
-        h += '<button class="' + (im.posDeg==null?'on':'') + '" onclick="setDeg(\'' + it.id + '\',' + idx + ',\'posDeg\',null)">留空</button></div>';
-        h += '<div class="lab" style="margin-top:6px">负向程度</div><div class="seg">';
+        h += '<button class="' + (im.posDeg==null?'on':'') + '" onclick="setDeg(\'' + it.id + '\',' + idx + ',\'posDeg\',null)">Leave blank</button></div>';
+        h += '<div class="lab" style="margin-top:6px">Negative degree</div><div class="seg">';
         for(let n=1;n<=5;n++) h += '<button class="' + (im.negDeg===n?'on neg':'') + '" onclick="setDeg(\'' + it.id + '\',' + idx + ',\'negDeg\',' + n + ')">' + n + '</button>';
-        h += '<button class="' + (im.negDeg==null?'on':'') + '" onclick="setDeg(\'' + it.id + '\',' + idx + ',\'negDeg\',null)">留空</button></div>';
+        h += '<button class="' + (im.negDeg==null?'on':'') + '" onclick="setDeg(\'' + it.id + '\',' + idx + ',\'negDeg\',null)">Leave blank</button></div>';
       } else {
-        h += '<div class="lab" style="margin-top:6px">程度 1–5（可留空）</div><div class="seg">';
+        h += '<div class="lab" style="margin-top:6px">Degree 1–5 (can be left blank)</div><div class="seg">';
         for(let n=1;n<=5;n++) h += '<button class="' + (im.degree===n?'on ' + tone:'') + '" onclick="setDeg(\'' + it.id + '\',' + idx + ',\'degree\',' + n + ')">' + n + '</button>';
-        h += '<button class="' + (im.degree==null?'on':'') + '" onclick="setDeg(\'' + it.id + '\',' + idx + ',\'degree\',null)">留空</button></div>';
+        h += '<button class="' + (im.degree==null?'on':'') + '" onclick="setDeg(\'' + it.id + '\',' + idx + ',\'degree\',null)">Leave blank</button></div>';
       }
     }
     h += '</div>';
   });
-  h += '<div class="row" style="gap:6px"><button class="btn primary sm" onclick="saveEdit(\'' + it.id + '\')">保存修订</button>' +
-       '<button class="btn sm" onclick="cancelEdit(\'' + it.id + '\')">取消</button>' +
-       '<span class="xs muted">保存后仍保留 AI 原始值</span></div></div>';
+  h += '<div class="row" style="gap:6px"><button class="btn primary sm" onclick="saveEdit(\'' + it.id + '\')">Save revision</button>' +
+       '<button class="btn sm" onclick="cancelEdit(\'' + it.id + '\')">Cancel</button>' +
+       '<span class="xs muted">AI original values are still kept after saving</span></div></div>';
   return h;
 }
 function renderConfirm(){
   const el = document.getElementById('confirmList');
   el.innerHTML = items.map(it=>{
     const stMap = {
-      confirmed:['b-ok','已确认'], modified:['b-mod','已修改'],
-      rejected:['b-rej','已删除'], deferred:['b-pending','稍后处理'], pending:['b-pending','待确认']
+      confirmed:['b-ok','Confirmed'], modified:['b-mod','Edited'],
+      rejected:['b-rej','Deleted'], deferred:['b-pending','Handle later'], pending:['b-pending','Pending']
     };
     const [bcls, blabel] = stMap[it.status] || stMap.pending;
-    const confTone = it.conf === '高' ? 'b-ok' : it.conf === '中' ? 'b-pending' : 'b-unk';
+    const confTone = it.conf === 'High' ? 'b-ok' : it.conf === 'Medium' ? 'b-pending' : 'b-unk';
     return '<div class="xcard ' + (it.status==='rejected'?'rejected':'') + '">' +
       '<div class="xhead">' +
         '<div class="xtitle">' + it.title + '<span class="badge ' + bcls + '">' + blabel + '</span>' +
-        (it.edited ? '<span class="ai-orig">AI 原始值已保留</span>' : '') + '</div>' +
+        (it.edited ? '<span class="ai-orig">AI original values kept</span>' : '') + '</div>' +
         '<div class="xmeta">' +
-          '<span class="badge ' + confTIE(it.conf) + '">置信 ' + it.conf + '</span>' +
+          '<span class="badge ' + confTIE(it.conf) + '">Confidence ' + it.conf + '</span>' +
           '<span class="badge b-ai">' + it.episteme + '</span>' +
           '<span class="badge b-goal">' + it.goal + '</span>' +
-          '<span class="xs mono muted">' + it.window + ' · 证据 ' + it.capId.toUpperCase() + '</span>' +
+          '<span class="xs mono muted">' + it.window + ' · evidence ' + it.capId.toUpperCase() + '</span>' +
         '</div>' +
       '</div>' +
       '<div class="quote">' + it.quote + '</div>' +
       '<div class="imptable">' + it.impacts.map(impactLine).join('') + '</div>' +
       (it.editing ? editBlock(it) :
         '<div class="xfoot">' +
-          '<button class="btn primary sm" onclick="setStatus(\'' + it.id + '\',\'confirmed\')">确认</button>' +
-          '<button class="btn sm" onclick="startEdit(\'' + it.id + '\')">编辑</button>' +
-          '<button class="btn sm danger" onclick="setStatus(\'' + it.id + '\',\'rejected\')">删除</button>' +
-          '<button class="btn sm" onclick="setStatus(\'' + it.id + '\',\'deferred\')">稍后处理</button>' +
-          '<div class="note">确认后进入长期分析 · 确认只改变确认状态，不把 AI 推断变成客观事实</div>' +
+          '<button class="btn primary sm" onclick="setStatus(\'' + it.id + '\',\'confirmed\')">Confirm</button>' +
+          '<button class="btn sm" onclick="startEdit(\'' + it.id + '\')">Edit</button>' +
+          '<button class="btn sm danger" onclick="setStatus(\'' + it.id + '\',\'rejected\')">Delete</button>' +
+          '<button class="btn sm" onclick="setStatus(\'' + it.id + '\',\'deferred\')">Handle later</button>' +
+          '<div class="note">Enters long-term analysis after confirmation · confirming only changes the confirmation state; it does not turn AI inference into objective fact</div>' +
         '</div>') +
     '</div>';
   }).join('');
 }
-function confTIE(c){ return c === '高' ? 'b-ok' : c === '中' ? 'b-pending' : 'b-unk'; }
+function confTIE(c){ return c === 'High' ? 'b-ok' : c === 'Medium' ? 'b-pending' : 'b-unk'; }
 
 function setStatus(id, st){
   const it = items.find(x=>x.id===id); if(!it) return;
   it.status = st;
-  if(st === 'confirmed' && !it.editing) toast('已确认 · 将进入长期分析');
-  if(st === 'rejected') toast('已删除 · 不进入 Review 与长期分析');
-  if(st === 'deferred') toast('已标记稍后处理 · 不催促，不计为失败');
+  if(st === 'confirmed' && !it.editing) toast('Confirmed · will enter long-term analysis');
+  if(st === 'rejected') toast('Deleted · will not enter Review or long-term analysis');
+  if(st === 'deferred') toast('Marked to handle later · no nudging, not counted as a failure');
   renderConfirm(); updateCounts();
 }
 function startEdit(id){ const it = items.find(x=>x.id===id); it.editing = true; renderConfirm(); }
@@ -992,25 +992,25 @@ function setDeg(id, idx, field, n){
 function saveEdit(id){
   const it = items.find(x=>x.id===id);
   it.editing = false; it.edited = true; it.status = 'modified';
-  toast('修订已保存 · 再次查看将显示你的保存值（AI 原始值另行保留）');
+  toast('Revision saved · reopening will show your saved values (AI original values kept separately)');
   renderConfirm(); updateCounts();
 }
 function batchDefer(){
   items.forEach(i=>{ if(i.status === 'pending') i.status = 'deferred'; });
-  toast('全部待确认项已标记稍后处理'); renderConfirm(); updateCounts();
+  toast('All pending items marked to handle later'); renderConfirm(); updateCounts();
 }
 function batchReject(){
   items.forEach(i=>{ if(i.status === 'pending') i.status = 'rejected'; });
-  toast('已批量删除 · 被删除项不进入 Review'); renderConfirm(); updateCounts();
+  toast('Batch-deleted · deleted items do not enter Review'); renderConfirm(); updateCounts();
 }
 function updateCounts(){
   const pending = items.filter(i=>i.status === 'pending' || i.status === 'deferred').length;
   const done = items.length - items.filter(i=>i.status === 'pending').length;
   document.getElementById('tabCnt').textContent = pending;
   document.getElementById('tabCnt').style.display = pending ? 'inline-block' : 'none';
-  document.getElementById('tbPending').textContent = '待确认 ' + pending;
+  document.getElementById('tbPending').textContent = 'Pending ' + pending;
   document.getElementById('stPending').textContent = pending;
-  document.getElementById('confProgress').textContent = '已处理 ' + Math.max(0, items.length - pending) + ' / ' + items.length;
+  document.getElementById('confProgress').textContent = 'Processed ' + Math.max(0, items.length - pending) + ' / ' + items.length;
 }
 
 /* ============================ Dims ============================ */
@@ -1025,28 +1025,28 @@ function obcAct(kind){
   const input = document.getElementById('obcInput');
   const save = document.getElementById('obcSave');
   if(kind === 'accept'){
-    document.getElementById('obcState').innerHTML = '<span class="badge b-ok">已接受</span> 本周只做这一步：睡前把手机放到书桌。未产生其他隐形待办。';
+    document.getElementById('obcState').innerHTML = '<span class="badge b-ok">Accepted</span> Just this one step this week: put the phone on the desk before bed. No other hidden to-dos created.';
     document.getElementById('obcBtns').style.display = 'none';
-    toast('已接受 ONE BIG CHANGE');
+    toast('ONE BIG CHANGE accepted');
   } else if(kind === 'modify'){
     input.style.display = 'block'; save.style.display = 'inline-block'; input.focus();
   } else {
-    document.getElementById('obcTitle').textContent = '本次复盘零建议';
-    document.getElementById('obcWhy').textContent = '你选择不需要改变。本周 Review 到此为止，不会生成待办、提醒或后续追问。';
+    document.getElementById('obcTitle').textContent = 'Zero suggestions this review';
+    document.getElementById('obcWhy').textContent = 'You chose no change. This week's Review ends here — no to-dos, reminders, or follow-up pings will be generated.';
     document.getElementById('obcBtns').style.display = 'none';
-    document.getElementById('obcState').innerHTML = '<span class="badge b-ai">零建议 · 已保存</span>';
-    toast('已记录：本次不需要改变');
+    document.getElementById('obcState').innerHTML = '<span class="badge b-ai">Zero suggestions · saved</span>';
+    toast('Noted: no change needed this time');
   }
 }
 function obcSave(){
-  const v = document.getElementById('obcInput').value.trim() || '（空）';
+  const v = document.getElementById('obcInput').value.trim() || '(empty)';
   document.getElementById('obcTitle').textContent = v;
-  document.getElementById('obcWhy').textContent = '这是你修改后的版本，已保存为你的承诺候选；AI 原始建议一并保留可追溯。';
+  document.getElementById('obcWhy').textContent = 'This is your edited version, saved as your commitment candidate; the AI original suggestion is kept and traceable.';
   document.getElementById('obcInput').style.display = 'none';
   document.getElementById('obcSave').style.display = 'none';
   document.getElementById('obcBtns').style.display = 'none';
-  document.getElementById('obcState').innerHTML = '<span class="badge b-mod">已修改并接受</span> 用户修订值：' + v;
-  toast('已保存你的版本');
+  document.getElementById('obcState').innerHTML = '<span class="badge b-mod">Edited & accepted</span> Your revised value: ' + v;
+  toast('Your version saved');
 }
 function fbToggle(el){ el.classList.toggle('on'); }
 

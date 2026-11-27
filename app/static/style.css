@@ -1,5 +1,5 @@
-/* 皮肤层 = 变体 2 设计稿原样搬运（docs/03-design/prototypes/variant-2/index.html）
-   视觉零改动；只做产品化微调的样式必须追加在文件末尾并注明。 */
+/* Skin layer = variant 2 design mockup copied as-is (docs/03-design/prototypes/variant-2/index.html)
+   Zero visual changes; productization tweaks must be appended at the end of the file and annotated. */
 :root{
     --bg:#F6F2EC;
     --paper:#FFFFFF;
@@ -391,63 +391,63 @@
   .divider-soft{height:1px;background:var(--line);margin:16px 2px}
   .foot-note{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;padding:6px 12px 2px}
 
-/* ===== 产品化补充（非设计稿原样式，逐条注明）===== */
-/* 复盘反馈的具体输入框（设计稿为单行演示，产品需要多行） */
+/* ===== Productization additions (not from the design mockup; each item annotated) ===== */
+/* Review feedback free-text box (the mockup shows a single-line demo; the product needs multiple lines) */
 .fb-text{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;font-family:inherit;resize:none;margin:6px 0}
-/* 修改面板里的原生下拉/输入，贴设计稿输入风格 */
+/* Native dropdown/inputs in the edit panel, styled to match the mockup's input style */
 .edit-row select,.edit-row input{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;background:var(--bg);font-family:inherit}
 .edit-row input{flex:1}
 
-/* ===== 无痛记录 v0.2 交互组件（产品化补充，非设计稿原样式）===== */
-/* 人话总结：AI 按感觉给的结论，优先于硬指标 */
+/* ===== Frictionless capture v0.2 interaction components (productization additions, not from the design mockup) ===== */
+/* Plain-language summary: AI's feel-based conclusion, takes precedence over hard metrics */
 .human-summary{font-size:15px;line-height:1.6;margin:2px 0 10px}
-/* 折叠的「AI 是怎么拆的」细节区 */
+/* Collapsed "how AI broke it down" details area */
 .details{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}
 .mini-item{margin-bottom:12px;padding-bottom:10px;border-bottom:1px dashed var(--line)}
 .mini-item .impact-row{opacity:.95}
 .mini-item .impact-row:last-of-type{margin-bottom:4px}
-/* 纠错：用说的，不是下拉框 */
+/* Correction: spoken, not dropdowns */
 .correct-box{display:flex;gap:8px;margin-top:10px}
 .correct-box input{flex:1;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13.5px;font-family:inherit;background:var(--bg)}
 .correct-box input:focus{outline:none;border-color:var(--violet);background:#fff}
-/* 主操作：对/不对 */
+/* Main actions: Yes / No */
 .actions.big{margin:10px 0 2px}
 .actions.big .btn{padding:11px 18px;font-size:14.5px}
 .badge-row{margin:8px 0}
 
-/* ===== PWA App 体验包（产品化补充，非设计稿原样式，逐条注明）===== */
-/* 1. 消息/卡片入场动画（克制：只用于状态过渡） */
+/* ===== PWA app experience pack (productization additions, not from the design mockup; each item annotated) ===== */
+/* 1. Message/card entrance animation (restrained: only for state transitions) */
 @keyframes msg-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .msg.enter{animation:msg-in .25s ease both}
 
-/* 2. 骨架屏（加载占位，shimmer 微光，不画伪进度） */
+/* 2. Skeleton screen (loading placeholder with a subtle shimmer, no fake progress) */
 .sk-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
 .sk-bar{height:12px;border-radius:6px;margin:8px 0;background:linear-gradient(90deg,#EDE8DF 25%,#F7F4EE 50%,#EDE8DF 75%);background-size:200% 100%;animation:shimmer 1.3s infinite linear}
 .sk-bar.w40{width:40%}.sk-bar.w60{width:60%}.sk-bar.w80{width:80%}
 @keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
 
-/* 3. 一键「对/不对」大按钮：44px+ 触达区 */
+/* 3. One-tap "Yes / No" big buttons: 44px+ touch target */
 .actions.big .btn{min-height:44px;padding:12px 20px;font-size:15px}
 .actions.big .btn-primary{flex:1 1 58%}
 .actions.big .btn-ghost{flex:1 1 34%}
 
-/* 4. 按钮按压反馈 + 去掉点按延迟/双击缩放 */
+/* 4. Button press feedback + removal of tap delay / double-tap zoom */
 button,.chip,.fb,.cite{touch-action:manipulation}
 .send-btn,.tabbar button,.fb,.seg button,.period-row button,.onboard-go,.onboard-skip{transition:transform .06s ease,opacity .15s ease}
 .send-btn:active,.tabbar button:active,.fb:active,.seg button:active,.period-row button:active,.onboard-go:active,.onboard-skip:active{transform:scale(.94)}
 .send-btn.busy{opacity:.55;cursor:default;animation:busy-pulse 1s infinite ease-in-out}
 @keyframes busy-pulse{0%,100%{opacity:.55}50%{opacity:.85}}
 
-/* 5. 输入框 ≥16px：防 iOS 聚焦自动放大；纠错框/反馈框一并处理 */
+/* 5. Inputs ≥16px: prevents iOS focus auto-zoom; correction/feedback boxes handled the same way */
 .composer textarea{font-size:16px}
 .correct-box input{font-size:16px}
 .fb-text{font-size:16px}
 .edit-row select,.edit-row input{font-size:16px}
 
-/* 6. 键盘不遮输入框（visualViewport：键盘弹出时整体上移露出 composer） */
+/* 6. Keep the keyboard from covering the input (visualViewport: shift everything up when the keyboard appears so the composer stays visible) */
 body.kb-open .phone{transform:translateY(calc(-1 * var(--kb-h, 0px)))}
 
-/* 7. 首访一次性引导（3 步开始用） */
+/* 7. One-time first-visit onboarding (get started in 3 steps) */
 .onboard{position:fixed;inset:0;z-index:80;background:rgba(23,23,26,.42);display:flex;align-items:flex-end;justify-content:center}
 .onboard.hidden{display:none}
 .onboard-sheet{width:100%;max-width:420px;background:var(--paper);border-radius:22px 22px 0 0;padding:22px 20px max(24px, env(safe-area-inset-bottom));animation:sheet-in .28s ease both}
@@ -462,14 +462,16 @@ body.kb-open .phone{transform:translateY(calc(-1 * var(--kb-h, 0px)))}
 .onboard-go{width:100%;min-height:46px;font-size:15px;margin-top:16px}
 .onboard-skip{width:100%;min-height:44px;background:none;border:none;color:var(--muted);font-size:13px;font-family:inherit;cursor:pointer;margin-top:4px}
 
-/* ===== 产品化补充 8（2026-11-18 · Fold/宽屏 100% 全宽）=====
-   Max 反馈：Fold 7 内屏未占满宽度。不改原稿：解除 .phone / 引导卡 420px 上限，
-   任意屏宽 100% 占满；≤420px 手机上视觉与原稿完全一致。 */
+/* ===== Productization addition 8 (2026-11-18 · Fold/wide screens at 100% full width) =====
+   Max's feedback: the Fold 7 inner screen doesn't use the full width. Without touching the mockup:
+   remove the 420px cap on .phone / the onboarding card so any screen width fills 100%;
+   on phones ≤420px the visuals stay identical to the mockup. */
 .phone{max-width:none;box-shadow:none;min-height:100dvh}
 .onboard-sheet{max-width:none}
 
-/* ===== 产品化补充 9（2026-11-18 · App 壳：底部四按钮固定）=====
-   Max 反馈：底部按钮要整页下拉才看到。根因：.phone 用 min-height 被内容撑高后
-   整页滚动，.phone 的 overflow:hidden 又令 sticky 失效。改为定高 App 壳：
-   只有 .screen 内部滚动，composer/tabbar 永驻屏幕底部（设计稿原意）。 */
+/* ===== Productization addition 9 (2026-11-18 · App shell: four bottom buttons pinned) =====
+   Max's feedback: the bottom buttons only appear after scrolling the whole page. Root cause:
+   .phone used min-height and got stretched by content, so the whole page scrolled, and
+   .phone's overflow:hidden broke sticky. Switched to a fixed-height app shell:
+   only .screen scrolls internally, and the composer/tabbar stay pinned at the bottom (the mockup's original intent). */
 .phone{height:100dvh}

@@ -1,11 +1,11 @@
-"""登录/密码层（AI Life OS 云端部署用）。
+"""Login/password layer (for AI Life OS cloud deployment).
 
-仅当环境变量 AI_LIFE_OS_AUTH=1 时由 server.py 挂载：
-- 首次访问 /setup 自设密码（密码只存 PBKDF2 哈希，明文不落盘）
-- 之后 /login 登录，签名 Cookie 保持会话
-- 未登录访问任何页面/接口一律拒之门外
+Mounted by server.py only when the env var AI_LIFE_OS_AUTH=1:
+- On first visit, /setup sets a password (only a PBKDF2 hash is stored; plaintext never touches disk)
+- Afterwards, log in at /login; a signed cookie keeps the session
+- Any page/API accessed without a session is refused
 
-本地开发与测试不启用，行为与 v0.2 完全一致。
+Not enabled for local development and testing; behavior is exactly the same as v0.2.
 """
 import hashlib
 import hmac
@@ -28,10 +28,10 @@ PUBLIC_PATHS = {"/setup", "/login", "/style.css", "/app.js",
 
 
 def _is_public(path: str) -> bool:
-    """公开路径：静态壳资源 + PWA 资源（图标/manifest 无隐私数据，主屏添加与 SW 注册需要放行）。"""
+    """Public paths: static shell assets + PWA assets (icons/manifest hold no private data; home-screen install and SW registration need them allowed)."""
     return path in PUBLIC_PATHS or path.startswith("/icons/")
 
-_PAGE = """<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+_PAGE = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title><link rel="stylesheet" href="/style.css"></head>
 <body><main class="feed">
@@ -96,27 +96,28 @@ def _session_ok(request: Request, state) -> bool:
     return hmac.compare_digest(sig, _sign(f"{uid}.{exp}", state["secret"]))
 
 
-# ---------- 页面路由 ----------
+# ---------- Page routes ----------
 
 def setup_page():
     return HTMLResponse(_PAGE.format(
-        title="设置你的密码", hint="首次使用：设一个密码保护你的记录（只需这一次）。",
-        action="/setup", placeholder="至少 6 位", submit="设好，进入",
-        extra='<p class="muted" style="margin-top:10px">密码只存在服务器上（哈希），不经过任何聊天记录。</p>'))
+        title="Set your password",
+        hint="First-time setup: choose a password to protect your entries (only needed once).",
+        action="/setup", placeholder="At least 6 characters", submit="Set and enter",
+        extra='<p class="muted" style="margin-top:10px">Your password is stored only on the server (as a hash); it never passes through any chat log.</p>'))
 
 
 def login_page():
     return HTMLResponse(_PAGE.format(
-        title="登录 AI Life OS", hint="输入你的密码。",
-        action="/login", placeholder="密码", submit="进入",
-        extra='<p class="muted" style="margin-top:10px">忘记密码？到服务器删除 auth_state.json 重设。</p>'))
+        title="Log in to AI Life OS", hint="Enter your password.",
+        action="/login", placeholder="Password", submit="Enter",
+        extra='<p class="muted" style="margin-top:10px">Forgot your password? Delete auth_state.json on the server and set it up again.</p>'))
 
 
 def unauthorized():
-    return JSONResponse({"detail": "未登录"}, status_code=401)
+    return JSONResponse({"detail": "Not logged in"}, status_code=401)
 
 
-# ---------- 中间件 ----------
+# ---------- Middleware ----------
 
 async def gate(request: Request, call_next):
     state = _load()

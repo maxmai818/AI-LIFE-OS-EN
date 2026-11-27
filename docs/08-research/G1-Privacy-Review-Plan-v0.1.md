@@ -1,91 +1,91 @@
-# AI Life OS G1 隐私专项审查方案 v0.1
+# AI Life OS G1 Privacy Specialist Review Plan v0.1
 
-- **状态**：In Review
-- **阶段**：G1 Requirements / Specialist Review
-- **审查性质**：非法律、隐私与数据治理产品边界审查
-- **适用范围**：POC-01 自适应 Review 的产品原则、需求、Data/AI 语义和拟议验收
-- **授权来源**：Max 已授权开展独立隐私专项审查
-- **不构成**：法律意见、法规合规认证、DPIA、供应商尽调、渗透测试、实际删除证明、实现/测试、真实数据处理、合并、发布或 Gate 放行授权
+- **Status**: In Review
+- **Stage**: G1 Requirements / Specialist Review
+- **Review nature**: non-legal privacy and data-governance product boundary review
+- **Scope**: POC-01 Adaptive Review product principles, requirements, Data/AI semantics, and proposed acceptance criteria
+- **Authorization source**: Max has authorized an independent privacy specialist review
+- **Does not constitute**: legal opinion, regulatory compliance certification, DPIA, vendor due diligence, penetration testing, proof of actual deletion, implementation/testing, real data processing, merge, release, or Gate clearance authorization
 
-## 1. 目的与边界
+## 1. Purpose and boundaries
 
-本审查确认当前 G1 文档是否完整、无矛盾地表达用户的数据控制、最小化、用途限制、同用户隔离与删除优先原则，并检查这些原则是否在 [Product](../02-requirements/POC-01-Product-UX-Spec-v0.6.md)、[Data/AI](../04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md)、[Test](../06-testing/POC-01-Test-Acceptance-Spec-v0.6.md)、[Decision 006](../09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md) 与 [Delta](G1-v0.6-Adaptive-Review-Delta-v0.1.md) 中形成可审计三联。
+This review confirms whether the current G1 documents express the principles of user data control, minimization, purpose limitation, same-user isolation, and deletion-first completely and without contradiction, and checks whether these principles form an auditable triplet across [Product](../02-requirements/POC-01-Product-UX-Spec-v0.6.md), [Data/AI](../04-data-ai/Capture-Data-AI-Output-Contract-v0.6.md), [Test](../06-testing/POC-01-Test-Acceptance-Spec-v0.6.md), [Decision 006](../09-decisions/G1-Decision-006-Adaptive-Review-v0.1.md), and [Delta](G1-v0.6-Adaptive-Review-Delta-v0.1.md).
 
-### 1.1 已确认的 G1 产品原则
+### 1.1 Confirmed G1 product principles
 
-| 决定 | 已确认原则 | 审查核对重点 |
+| Decision | Confirmed principle | Review checkpoints |
 |---|---|---|
-| P6-02 | 只有用户明确确认内容和适用情境的长期模式可跨 Review 使用；一次反馈默认只影响当前 Review；用户可查看、纠正、撤销和删除。 | 不允许未确认推断、沉默、一次反馈或一次接受建议长期化、扩展用途或绕过撤回。 |
-| P6-03 | 用户可纠正 AI；AI 结论可追溯至用户记录；证据不足说明“不知道”；用户可停止或拒绝建议；不得跨用户使用数据。 | 所有权、最少上下文、停止/删除传播和跨用户隔离必须有可失败的 G1 验收语义。 |
-| 已确认边界 | “持续学习”仅为获许可的情境记忆、检索和规则使用；不授权训练、微调、在线 RL 或秘密心理画像。 | 不得将 Review、反馈、模式或模型请求默认扩展为训练、行为画像或新敏感用途。 |
+| P6-02 | Only long-term patterns whose content and applicable context the user has explicitly confirmed may be used across Reviews; one feedback item by default affects only the current Review; users can view, correct, revoke, and delete. | Unconfirmed inferences, silence, one feedback item, or one accepted suggestion must not be long-termized, extended to new purposes, or bypass revocation. |
+| P6-03 | Users can correct the AI; AI conclusions are traceable to user records; say "don't know" when evidence is insufficient; users can stop or refuse suggestions; data must not be used across users. | Ownership, least context, stop/deletion propagation, and cross-user isolation must have falsifiable G1 acceptance semantics. |
+| Confirmed boundary | "Continuous learning" means only licensed contextual memory, retrieval, and rule use; no authorization for training, fine-tuning, online RL, or covert psychological profiling. | Reviews, feedback, patterns, or model requests must not be silently extended to training, behavioral profiling, or new sensitive uses. |
 
-### 1.2 G1 与 G2/G3 分层
+### 1.2 G1 versus G2/G3 layering
 
-G1 只审查用户可见的目的、控制权、用途限制和最低验收原则。以下仅能标为 G2/G3 前置条件，不能被本审查误称为完成：字段/状态/API/数据库；认证和授权机制；检索、存储、缓存、备份、删除和跨设备实现；加密和安全测试；供应商合同、数据区域、保留与删除能力；法律适用、风险接受、DPIA；真实数据或真实用户验证。
+G1 reviews only user-visible purposes, control rights, purpose limitations, and minimum acceptance principles. The following can only be marked as G2/G3 preconditions and must not be misclaimed as completed by this review: fields/state/API/database; authentication and authorization mechanisms; retrieval, storage, caching, backup, deletion, and cross-device implementation; encryption and security testing; vendor contracts, data regions, retention and deletion capabilities; legal applicability, risk acceptance, DPIA; real data or real user validation.
 
-## 2. 审查清单与硬性标准
+## 2. Review checklist and hard criteria
 
-| 项目 | 通过标准 | 阻断级问题示例 |
+| Item | Pass criteria | Blocking-level issue examples |
 |---|---|---|
-| 用户控制与透明度 | 用户可查看、纠正、撤回、删除其反馈和确认模式；撤回/停止立即影响未来使用；不能将未保存说成已跨设备持久化。 | 退出、撤回或删除仍需理由，或无法停止后续检索。 |
-| 明确确认与用途限制 | 跨 Review 只使用明确确认且有情境范围的内容；一次反馈默认当前 Review；不得扩大为训练或新敏感用途。 | 沉默、一次接受建议或 AI 推断变成长期画像，或默认读取全部历史。 |
-| 最少必要上下文 | 只在用户主动 Review、当前用户、目的和范围内使用必要有效内容；无匹配须承认不知道。 | 因证据不足自动补采更多历史、无关敏感记录或其他用户资料。 |
-| 用户隔离 | 所有对象、引用、检索、导出和删除均限同一用户；不得跨用户学习、汇总或展示。 | A 用户上下文能进入 B 用户 Review、导出或推断。 |
-| 删除、撤回与派生数据 | 删除/撤回先停止使用，并覆盖引用、摘要、指导、反馈修订、模式和可还原副本；不可因可追溯而永久保留。 | 只断开 ID；引用文本、快照、缓存或新输出仍可重建已删内容。 |
-| 导出与可追溯的边界 | 导出只含当前用户、仍获准保留的内容；解释快照不含隐藏思维链，不复活已删除正文。 | 导出其他用户内容、已删正文或不必要的内部推理。 |
-| 模型与供应商用途边界 | 未经批准不得将真实数据发送给供应商、训练/微调/在线 RL 或扩展敏感用途；供应商能力未知时不得宣称可兑现删除。 | 以“AI 同意”或产品使用同意推定训练、供应商保留或新敏感推断同意。 |
-| 诚实性与不确定性 | 不能把逻辑提案或静态检查表述为物理删除、供应商清除、跨设备同步或合规已经实现。 | 将 G2/G3 技术承诺写成已经证明的用户保证。 |
+| User control and transparency | Users can view, correct, revoke, delete their feedback and confirmed patterns; revocation/stop immediately affects future use; unsaved state must not be described as cross-device persistence. | Exit, revocation, or deletion still requires justification, or subsequent retrieval cannot be stopped. |
+| Explicit confirmation and purpose limitation | Across Reviews use only explicitly confirmed content with contextual scope; one feedback item defaults to the current Review; no expansion to training or new sensitive uses. | Silence, one accepted suggestion, or an AI inference becomes a long-term profile, or all history is read by default. |
+| Least necessary context | Use only necessary valid content when the user actively Reviews, same user, purpose, and scope; admit "don't know" when there is no match. | Automatically fetching more history, irrelevant sensitive records, or other users' data due to insufficient evidence. |
+| User isolation | All objects, references, retrieval, exports, and deletion are limited to the same user; no cross-user learning, aggregation, or display. | User A's context can enter User B's Review, export, or inference. |
+| Deletion, revocation, and derived data | Deletion/revocation stops use first and covers references, summaries, guidance, feedback revisions, patterns, and restorable copies; nothing may be kept permanently for the sake of traceability. | Only IDs are detached; referenced text, snapshots, caches, or new outputs can still reconstruct deleted content. |
+| Export and traceability boundaries | Exports contain only the current user's content still lawfully retained; explanation snapshots contain no hidden chains of thought and do not resurrect deleted text. | Exporting other users' content, deleted text, or unnecessary internal reasoning. |
+| Model and vendor purpose boundaries | No sending real data to vendors, training/fine-tuning/online RL, or expanding sensitive uses without approval; no claim of deletability when vendor capabilities are unknown. | Presuming consent for training, vendor retention, or new sensitive inference from "AI consent" or product usage consent. |
+| Honesty and uncertainty | Logical proposals or static checks must not be presented as physical deletion, vendor purge, cross-device sync, or compliance already achieved. | Writing G2/G3 technical commitments as proven user guarantees. |
 
-**判定规则**：跨用户使用、未确认内容长期化或扩展敏感用途、删除/撤回仍被继续检索或再生成、将真实数据交给未批准供应商/训练用途，均为阻断。任何缺少 Product → Data/AI → Test 可失败三联的已确认 G1 原则，至少为 `REVISE`。
+**Decision rule**: cross-user use, long-termizing unconfirmed content or expanding sensitive uses, deletion/revocation items still being retrieved or regenerated, or handing real data to unapproved vendors/training uses are all blocking. Any confirmed G1 principle lacking a falsifiable Product → Data/AI → Test triplet is at least `REVISE`.
 
-## 3. 审查方法
+## 3. Review method
 
-### 3.1 文档三联走查
+### 3.1 Document triplet walkthrough
 
-逐项检查 Product 是否给出用户可见权利与限制、Data/AI 是否表达最少必要和用途限制语义、Test 是否含可观察的失败 oracle。对 P6-02/P6-03 标记为“已传播 / 缺失 / 矛盾 / G2/G3 待决”。无法由文档证明的技术或法律问题须标为 `INSUFFICIENT_EVIDENCE` 或 `DEFER TO G2/G3`，不得标为通过。
+Check item by item whether Product states user-visible rights and limitations, whether Data/AI expresses least-necessary and purpose-limitation semantics, and whether Test contains observable failure oracles. Mark P6-02/P6-03 as "propagated / missing / contradictory / G2/G3 pending". Technical or legal questions that cannot be proven by documents must be marked `INSUFFICIENT_EVIDENCE` or `DEFER TO G2/G3`, never pass.
 
-### 3.2 合成情境走查
+### 3.2 Synthetic scenario walkthrough
 
-不使用真实数据，至少覆盖：
+Without using real data, cover at least:
 
-1. A 用户的当前 Review 与 B 用户 ID/记录混入；
-2. 一次“好”、沉默或接受建议，却没有明确长期确认；
-3. 用户确认一个仅限情境 X 的模式，随后目标变化、撤回或到期；
-4. 用户删除 Capture、反馈、模式、Review/账号，且存在引用、摘要、缓存与备份恢复；
-5. 用户撤回 AI 使用，但已有模型请求或供应商保留能力未知；
-6. 用户导出数据，且含有效版本、已删正文、不可用证据和其他用户对象；
-7. 无记录或上下文不足，系统试图查询全历史或生成结论；
-8. 存储失败后用户停止指导，系统是否误称已保存或继续跨 Review 使用。
+1. User A's current Review mixed with User B's ID/records;
+2. One "good", silence, or accepted suggestion, without explicit long-term confirmation;
+3. User confirms a pattern scoped only to context X, then goals change, the user revokes, or it expires;
+4. User deletes a Capture, feedback, pattern, Review/account, with references, summaries, caches, and backup recovery present;
+5. User revokes AI use, but model requests already exist or vendor retention capability is unknown;
+6. User exports data containing valid versions, deleted text, unusable evidence, and other users' objects;
+7. No records or insufficient context, and the system attempts to query full history or generate conclusions;
+8. After a storage failure the user stops guidance; does the system falsely claim it was saved or continue cross-Review use?
 
-每个情境记录允许结果、禁止结果、文档依据及 G2/G3 依赖。
+For each scenario record allowed outcomes, prohibited outcomes, document basis, and G2/G3 dependencies.
 
-### 3.3 红队问题
+### 3.3 Red-team questions
 
-- AI 推断、一次反馈、沉默或一次接受建议会否被固化为人格/长期模式？
-- 撤回或删除后，快照、引用、摘要、缓存、索引、备份或新生成文本会否继续泄露？
-- “可追溯”会否变为永久保留已删个人正文的借口？
-- 是否存在从 A 到 B 的检索、导出、评估或模型学习路径？
-- 供应商、训练、微调、在线 RL、日志或新敏感用途是否被默认允许？
-- 系统会否把提议的 30/90 天、缓存或备份参数伪装为 Max 的批准或已经实现？
+- Will AI inferences, one feedback item, silence, or one accepted suggestion be frozen into a personality/long-term pattern?
+- After revocation or deletion, will snapshots, references, summaries, caches, indexes, backups, or newly generated text continue to leak?
+- Will "traceability" become an excuse for permanent retention of deleted personal text?
+- Is there any retrieval, export, evaluation, or model-learning path from A to B?
+- Are vendors, training, fine-tuning, online RL, logs, or new sensitive uses allowed by default?
+- Will the system pass off proposed 30/90-day, cache, or backup parameters as Max's approval or as already implemented?
 
-### 3.4 不可作为通过证据的材料
+### 3.4 Materials that cannot serve as passing evidence
 
-作者自评、Markdown/链接检查、JSON 解析、无投诉、一次好评、产品使用率、供应商宣传、未运行测试或没有真实数据，均不能单独证明实际隔离、删除、供应商清除、跨设备一致性、法律合规或真实用户隐私保护。
+Author self-assessments, Markdown/link checks, JSON parsing, absence of complaints, one favorable review, product usage rates, vendor marketing, unrun tests, or the absence of real data cannot alone prove actual isolation, deletion, vendor purge, cross-device consistency, legal compliance, or real user privacy protection.
 
-## 4. 交付物与结论词汇
+## 4. Deliverables and conclusion vocabulary
 
-审查者交付：审查记录；八项清单结果表；P6 传播矩阵；合成情境结果；阻断项及最小修订/关闭证据；面向 Max 的 G1 隐私建议 memo。
+The reviewer delivers: a review record; an eight-item checklist results table; a P6 propagation matrix; synthetic scenario results; blocking items with minimal revision/closure evidence; a G1 privacy recommendation memo for Max.
 
-允许结论：`PASS`、`PASS_WITH_CONDITIONS`、`REVISE`、`BLOCK`、`INSUFFICIENT_EVIDENCE`、`DEFER TO G2/G3`。`PASS_WITH_CONDITIONS` 只适用于明确非阻断的 G2/G3 前置条件；不得把尚无可失败的 G1 文档边界归为条件通过。
+Permitted conclusions: `PASS`, `PASS_WITH_CONDITIONS`, `REVISE`, `BLOCK`, `INSUFFICIENT_EVIDENCE`, `DEFER TO G2/G3`. `PASS_WITH_CONDITIONS` applies only to clearly non-blocking G2/G3 preconditions; G1 document boundaries that are not yet falsifiable must not be classified as conditional pass.
 
-## 5. 责任与 G1 Gate 使用方式
+## 5. Responsibilities and G1 Gate usage
 
-- **隐私审查者**：非作者、独立、只读；审查产品与数据治理文档边界，不作法律或工程保证。
-- **Max**：产品负责人、隐私风险最终决策人及 G1 Gate 决策人；不以作者意见替代独立审查。
-- **G2 设计与安全责任人**：将通过的 G1 原则落实为访问控制、生命周期、供应商与跨设备设计，并给出可验证证据。
+- **Privacy reviewer**: non-author, independent, read-only; reviews product and data-governance document boundaries, making no legal or engineering guarantees.
+- **Max**: product owner, final decision-maker for privacy risk, and G1 Gate decision-maker; does not substitute author opinion for independent review.
+- **G2 design and security owner**: implements passed G1 principles as access control, lifecycle, vendor and cross-device design, with verifiable evidence.
 
-只有隐私专项审查没有未关闭的 G1 文档阻断项，心理安全专项审查结论仍有效，且其余 Gate 材料齐备时，Max 才可考虑 G1 文档层面的最终批准。任何结论均不授权真实数据、供应商接入、训练、编码、合并、发布或真实用户试用。
+Only when the privacy specialist review has no open G1 document blocking items, the psychological safety specialist review conclusion remains valid, and the remaining Gate materials are complete may Max consider final approval at the G1 document level. No conclusion authorizes real data, vendor integration, training, coding, merge, release, or real user trials.
 
-## 6. 当前状态
+## 6. Current status
 
-本文件定义独立审查方法，**不是审查结论**。审查将由非作者在只读、合成情境范围内执行。
+This document defines the independent review method; **it is not a review conclusion**. The review will be performed by a non-author within a read-only, synthetic-scenario scope.

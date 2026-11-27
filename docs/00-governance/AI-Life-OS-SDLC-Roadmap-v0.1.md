@@ -1,204 +1,204 @@
-# AI Life OS SDLC Roadmap 与首个 POC 计划
+# AI Life OS SDLC Roadmap and First POC Plan
 
-> **For Hermes:** 本文仅用于产品与项目规划。在需求、设计及 POC 退出标准经用户评审批准前，不进入编码阶段。
+> **For Hermes:** This document is for product and project planning only. Do not enter the coding phase until the requirements, design, and POC exit criteria have been reviewed and approved by the user.
 
-**Goal:** 以风险驱动、阶段评审和可追溯交付物为基础，把 AI Life OS 从产品理念推进到可验证 POC、MVP、私测版和正式版本。
+**Goal:** Based on risk-driven development, phase reviews, and traceable deliverables, advance AI Life OS from a product idea to a verifiable POC, MVP, private beta, and official release.
 
-**Architecture:** 系统最终由人生事实账本、个人语义记忆、外部知识库、确定性指标/偏离引擎和有证据的 AI 解释层组成。首个 POC 只验证“自然记录 → 结构化 → 用户纠正 → 趋势/偏离计算 → 有依据的周期复盘”这一核心闭环，不提前建设完整小程序、大规模 RAG 或多 Agent。
+**Architecture:** The system will ultimately consist of a life fact ledger, personal semantic memory, an external knowledge base, a deterministic metrics/deviation engine, and an evidence-backed AI interpretation layer. The first POC validates only the core loop of "natural capture → structuring → user correction → trend/deviation calculation → evidence-based periodic review" — no full Mini Program, large-scale retrieval-augmented generation (RAG), or multi-agent systems up front.
 
-**Initial delivery form:** POC 推荐采用单用户、响应式 Web 原型；MVP 再以微信小程序作为主要客户端。这样可以先验证产品内核，避免把微信登录、审核、授权和发布流程误当成核心产品验证。
+**Initial delivery form:** For the POC, a single-user responsive web prototype is recommended; the MVP will then use a WeChat Mini Program as the primary client. This validates the product kernel first, and avoids mistaking WeChat login, review, authorization, and release processes for core product validation.
 
 ---
 
-## 1. 产品北极星与边界
+## 1. Product North Star and Boundaries
 
-### 1.1 产品使命
+### 1.1 Product Mission
 
-帮助用户回答四个长期问题：
+Help users answer four long-term questions:
 
-1. 我想成为什么样的人？
-2. 我实际上把时间和精力花在了哪里？
-3. 我正在接近还是偏离目标？
-4. 下一步最值得改变的一件事是什么？
+1. What kind of person do I want to become?
+2. Where am I actually spending my time and energy?
+3. Am I approaching or deviating from my goals?
+4. What is the single most worthwhile thing to change next?
 
-### 1.2 核心闭环
+### 1.2 Core Loop
 
 ```text
 Life Blueprint
     ↓
-Capture（自然语言记录）
+Capture (natural-language logging)
     ↓
-AI 结构化 + 用户确认/纠正
+AI structuring + user confirmation/correction
     ↓
-结构化事实与个人记忆
+Structured facts and personal memory
     ↓
-目标进度、趋势与偏离计算
+Goal progress, trend, and deviation calculation
     ↓
 Today / Weekly Review
     ↓
 ONE BIG CHANGE
     ↓
-下一周期的行动与反馈
+Actions and feedback for the next cycle
 ```
 
-### 1.3 设计原则
+### 1.3 Design Principles
 
-1. **事实优先于观点**：结构化数据和用户原始记录优先于模型推测。
-2. **算法负责算，检索负责找，AI 负责解释**。
-3. **个人证据优先于外部知识**：用户历史高于书籍中的一般理论。
-4. **可追溯**：重要结论必须能回到原始记录、指标或来源。
-5. **可纠正**：用户可以修正 AI 的提取，且保留原始值和修订记录。
-6. **不过度量化**：Life Score、Goal Progress、Deviation/Gap 明确分离。
-7. **少而有效**：建议聚焦 ONE BIG CHANGE，不堆叠二十条建议。
-8. **不替用户做重大决定**：系统提供证据、矛盾和选项，不扮演人生裁判。
-9. **隐私默认保护**：最少采集、明确用途、可导出、可删除。
-10. **YAGNI**：V1 不因为未来想象提前加入复杂基础设施。
+1. **Facts over opinions**: structured data and the user's original records take precedence over model speculation.
+2. **Algorithms compute, retrieval finds, AI explains**.
+3. **Personal evidence over external knowledge**: the user's history outranks general theories from books.
+4. **Traceability**: important conclusions must lead back to the original records, metrics, or sources.
+5. **Correctability**: users can fix the AI's extraction, with the original values and revision history preserved.
+6. **No over-quantification**: Life Score, Goal Progress, and Deviation/Gap are kept explicitly separate.
+7. **Few but effective**: recommendations focus on ONE BIG CHANGE, not a pile of twenty suggestions.
+8. **No major decisions on the user's behalf**: the system provides evidence, contradictions, and options; it does not act as the judge of the user's life.
+9. **Privacy protected by default**: minimal collection, explicit purposes, exportable, deletable.
+10. **YAGNI**: V1 does not add complex infrastructure ahead of time for imagined futures.
 
-### 1.4 V1 明确不做
+### 1.4 Explicitly Out of Scope for V1
 
-- 银行账户同步与完整财务系统
-- Apple Health、智能手表同步
-- 社区、排行榜和好友功能
-- 大规模电子书导入
-- 多 Agent 编排
-- 自动浏览器操作和外部任务执行
-- 智能家居/环境自动控制
-- AI 对关系对象作“好人/坏人”判断
-- 黑箱式、不可解释的单一人生总分
+- Bank account synchronization and full financial systems
+- Apple Health and smartwatch sync
+- Community, leaderboards, and friend features
+- Large-scale e-book import
+- Multi-agent orchestration
+- Automated browser operation and external task execution
+- Smart home / ambient automation
+- AI making "good person / bad person" judgments about people in the user's relationships
+- Black-box, unexplainable single life scores
 
 ---
 
-## 2. SDLC 管理框架
+## 2. SDLC Management Framework
 
-### 2.1 生命周期阶段
+### 2.1 Lifecycle Phases
 
 ```text
-立项/发现
-→ 需求分析
-→ 方案与架构设计
+Initiation / Discovery
+→ Requirements Analysis
+→ Solution & Architecture Design
 → POC
-→ MVP 开发
-→ 系统验证
-→ 用户验收/私测
-→ 发布
-→ 运营与持续改进
+→ MVP Development
+→ System Validation
+→ User Acceptance / Private Beta
+→ Release
+→ Operations & Continuous Improvement
 ```
 
-每一阶段都有输入、交付物、评审人和退出标准。阶段完成不等于自动进入下一阶段，必须通过对应 Gate Review。
+Every phase has inputs, deliverables, reviewers, and exit criteria. Completing a phase does not automatically grant entry to the next one; the corresponding Gate Review must be passed.
 
-### 2.2 阶段门禁（Stage Gates）
+### 2.2 Stage Gates
 
-| Gate | 评审内容 | 通过条件 |
+| Gate | Review Content | Pass Criteria |
 |---|---|---|
-| G0：理念确认 | 愿景、目标用户、核心问题 | 明确“为谁解决什么问题”，且不是功能清单 |
-| G1：需求基线 | PRD、用户旅程、范围、非功能需求 | Must/Should/Could/Won't 已确认，关键术语无歧义 |
-| G2：设计基线 | 数据模型、AI 行为、隐私、安全、原型 | 关键流程可走通，数据可追溯，风险有控制方案 |
-| G3：POC 退出 | 技术可行性、数据质量、用户价值 | POC 验收指标达到阈值，决定继续/调整/停止 |
-| G4：MVP 发布准备 | 功能、测试、监控、回滚、隐私 | 无阻断缺陷，UAT 通过，发布清单签署 |
-| G5：私测退出 | 留存、使用质量、建议有效性 | 达到预设产品指标，重大风险可控 |
-| G6：正式发布 | 稳定性、合规、支持能力 | SLO、数据治理、用户支持和事故响应准备完成 |
+| G0: Concept Confirmation | Vision, target users, core problem | Clearly states "for whom, solving what problem", and is not a feature list |
+| G1: Requirements Baseline | PRD, user journeys, scope, non-functional requirements | Must/Should/Could/Won't confirmed; key terms unambiguous |
+| G2: Design Baseline | Data model, AI behavior, privacy, security, prototypes | Key flows work end to end; data is traceable; risks have control plans |
+| G3: POC Exit | Technical feasibility, data quality, user value | POC acceptance metrics reach thresholds; decide continue / adjust / stop |
+| G4: MVP Release Readiness | Features, testing, monitoring, rollback, privacy | No blocking defects; UAT passed; release checklist signed |
+| G5: Private Beta Exit | Retention, usage quality, recommendation effectiveness | Preset product metrics met; major risks controllable |
+| G6: General Release | Stability, compliance, support capability | SLO, data governance, user support, and incident response readiness complete |
 
-### 2.3 需求可追溯
+### 2.3 Requirements Traceability
 
-建议为每项需求建立唯一 ID，例如：
+It is recommended to assign each requirement a unique ID, for example:
 
-- `FR-CAP-001`：用户可输入一段自然语言生活记录
-- `FR-STR-001`：系统保存原始输入和结构化提取结果
-- `FR-REV-001`：周报中的结论可追溯到证据
-- `NFR-PRV-001`：用户可删除自己的全部数据
-- `AI-SAF-001`：资料不足时不得生成确定性结论
+- `FR-CAP-001`: the user can input a passage of natural-language life logging
+- `FR-STR-001`: the system saves the raw input and the structured extraction results
+- `FR-REV-001`: conclusions in the weekly report are traceable to evidence
+- `NFR-PRV-001`: the user can delete all of their own data
+- `AI-SAF-001`: definite conclusions must not be generated when evidence is insufficient
 
-每个需求必须关联：
+Every requirement must be linked through:
 
 ```text
-需求 → 设计 → 实现任务 → 测试用例 → 验收结果 → 发布版本
+Requirement → Design → Implementation Task → Test Case → Acceptance Result → Release Version
 ```
 
-### 2.4 变更控制
+### 2.4 Change Control
 
-- 评审通过的需求形成 Baseline。
-- 新想法进入 Product Backlog，不直接插入当前迭代。
-- 影响范围、数据模型、隐私或交付时间的变更需要 Change Request。
-- 每个 Change Request 至少说明：原因、收益、成本、风险、受影响需求和是否推迟其他内容。
-- 每个阶段坚持 Won't Do List，防止范围膨胀。
+- Requirements that pass review form the Baseline.
+- New ideas go into the Product Backlog; they are not inserted directly into the current iteration.
+- Changes affecting scope, the data model, privacy, or delivery timelines require a Change Request.
+- Each Change Request must state at least: reason, benefit, cost, risk, affected requirements, and whether anything else will be deferred.
+- Maintain a Won't Do List in every phase to prevent scope creep.
 
 ---
 
-## 3. 产品 Roadmap 总览
+## 3. Product Roadmap Overview
 
-> 时间仅作为初始估算。完成需求和设计评审后再建立正式项目排期。
+> Timings are initial estimates only. A formal project schedule is established after the requirements and design reviews.
 
-| 阶段 | 建议周期 | 核心目标 | 主要 Gate |
+| Phase | Suggested Duration | Core Objective | Primary Gate |
 |---|---:|---|---|
-| Phase 0：Product Discovery | 1–2 周 | 确认用户、问题、价值假设和范围 | G0 |
-| Phase 1：Requirements & Design | 2–3 周 | 建立 PRD、数据字典、AI 行为规范和原型 | G1、G2 |
-| Phase 2：POC-01 Capture-to-Review | 2–4 周 | 验证自然记录到有证据复盘的垂直闭环 | G3 |
-| Phase 3：MVP Build | 6–10 周 | 构建可供真实用户连续使用的微信小程序 MVP | G4 |
-| Phase 4：Private Beta | 4–8 周 | 验证使用习惯、建议价值、信任与留存 | G5 |
-| Phase 5：V1 Launch | 6–8 周 | 稳定发布、数据治理、运维和支持 | G6 |
-| Phase 6：Memory & RAG Expansion | 8–12 周 | 决策档案、原则库、个人语义记忆、少量知识资料 | 独立评审 |
-| Phase 7：Life Flywheel | 持续 | 跨维度关联、上游变量识别、个性化实验 | 模型治理评审 |
-| Phase 8：Agent Capability | 远期 | 经授权的规划和有限执行 | 安全/权限专项评审 |
+| Phase 0: Product Discovery | 1–2 weeks | Confirm users, problem, value hypotheses, and scope | G0 |
+| Phase 1: Requirements & Design | 2–3 weeks | Establish the PRD, data dictionary, AI behavior specification, and prototypes | G1, G2 |
+| Phase 2: POC-01 Capture-to-Review | 2–4 weeks | Validate the vertical loop from natural capture to evidence-based review | G3 |
+| Phase 3: MVP Build | 6–10 weeks | Build a WeChat Mini Program MVP that real users can use continuously | G4 |
+| Phase 4: Private Beta | 4–8 weeks | Validate usage habits, recommendation value, trust, and retention | G5 |
+| Phase 5: V1 Launch | 6–8 weeks | Stable release, data governance, operations, and support | G6 |
+| Phase 6: Memory & RAG Expansion | 8–12 weeks | Decision archive, principle library, personal semantic memory, a small amount of knowledge material | Independent review |
+| Phase 7: Life Flywheel | Ongoing | Cross-dimension correlation, upstream variable identification, personalized experiments | Model governance review |
+| Phase 8: Agent Capability | Long term | Authorized planning and limited execution | Security/permission special review |
 
 ---
 
-## 4. Phase 0：Product Discovery
+## 4. Phase 0: Product Discovery
 
-### 4.1 目标
+### 4.1 Objective
 
-把宏大的“人生操作系统”压缩为一个可被验证的产品假设，避免先验证错误的问题。
+Compress the grand "life operating system" into a verifiable product hypothesis, avoiding validation of the wrong problem first.
 
-### 4.2 关键活动
+### 4.2 Key Activities
 
-1. 定义首批目标用户画像。
-2. 使用 Jobs-to-be-Done 描述核心场景。
-3. 访谈 5–8 位潜在用户，验证记录、复盘和建议方面的真实痛点。
-4. 梳理现有替代方案：Todo、习惯 App、日记、Notion、ChatGPT、健康/财务工具。
-5. 建立假设清单并按风险排序。
-6. 明确产品成功和失败分别意味着什么。
+1. Define the first target user personas.
+2. Describe core scenarios using Jobs-to-be-Done.
+3. Interview 5–8 potential users to validate real pain points around capture, review, and recommendations.
+4. Map existing alternatives: to-do apps, habit apps, journals, Notion, ChatGPT, health/finance tools.
+5. Build a hypothesis list and prioritize it by risk.
+6. Define what product success and failure each mean.
 
-### 4.3 初始产品假设
+### 4.3 Initial Product Hypotheses
 
-- H1：用户愿意每天用不超过 60 秒记录生活。
-- H2：AI 可以把自然语言稳定转为用户认可的结构化事实。
-- H3：带证据的周期复盘比一般 AI 建议更可信、更有价值。
-- H4：只给一个关键改变，比提供长建议清单更容易执行。
-- H5：用户愿意因系统越来越理解自己而持续记录。
+- H1: Users are willing to spend no more than 60 seconds a day logging their life.
+- H2: AI can reliably convert natural language into structured facts the user accepts.
+- H3: Evidence-backed periodic reviews are more trusted and more valuable than generic AI advice.
+- H4: Giving one key change is easier to act on than a long list of suggestions.
+- H5: Users are willing to keep logging because the system understands them better over time.
 
-### 4.4 交付物
+### 4.4 Deliverables
 
 - Product Vision
 - Lean Canvas
-- 目标用户与 JTBD
-- 用户访谈记录与洞察
-- 问题陈述和价值主张
-- 假设/风险登记册
-- 初始产品 KPI
-- G0 评审记录
+- Target users and JTBD
+- User interview notes and insights
+- Problem statement and value proposition
+- Hypothesis/risk register
+- Initial product KPIs
+- G0 review record
 
-### 4.5 G0 退出标准
+### 4.5 G0 Exit Criteria
 
-- 能用一句话描述目标用户、核心痛点和产品价值。
-- 至少确认一个高频且真实存在的使用场景。
-- 首个 POC 对应最高风险假设，而不是最吸引人的功能。
-- 用户同意 V1 Won't Do List。
+- The target user, core pain point, and product value can be described in one sentence.
+- At least one high-frequency, genuinely existing usage scenario is confirmed.
+- The first POC addresses the highest-risk hypothesis, not the most attractive feature.
+- The user agrees to the V1 Won't Do List.
 
 ---
 
-## 5. Phase 1：Requirements & Design
+## 5. Phase 1: Requirements & Design
 
-### 5.1 产品需求工作流
+### 5.1 Product Requirements Workflow
 
-1. 编写 V1 PRD。
-2. 定义 Life Blueprint、Capture、Goal、Review 的完整用户旅程。
-3. 建立功能需求、非功能需求和 AI 专项需求。
-4. 定义权限、数据保存、导出和删除规则。
-5. 建立术语表，避免“目标、指标、任务、事件、状态、分数、偏离”混用。
-6. 输出低保真原型并做可用性评审。
+1. Write the V1 PRD.
+2. Define the complete user journeys for Life Blueprint, Capture, Goal, and Review.
+3. Establish functional requirements, non-functional requirements, and AI-specific requirements.
+4. Define permissions, data retention, export, and deletion rules.
+5. Establish a glossary to avoid mixing up "goal, metric, task, event, status, score, deviation".
+6. Produce low-fidelity prototypes and run usability reviews.
 
-### 5.2 数据设计工作流
+### 5.2 Data Design Workflow
 
-优先定义概念模型，而不是直接建表：
+Define the conceptual model first rather than jumping straight to tables:
 
 - User / Profile
 - Life Area
@@ -216,116 +216,116 @@ ONE BIG CHANGE
 - Recommendation
 - Evidence Reference
 - User Correction
-- Decision（先保留概念）
-- Principle（先保留概念）
+- Decision (keep as a concept for now)
+- Principle (keep as a concept for now)
 
-关键原则：
+Key principles:
 
-- 原始 Capture 永不被 AI 结果覆盖。
-- AI 提取结果带模型版本、Schema 版本和置信度。
-- 用户修订形成独立版本和审计记录。
-- 分数结果保存计算版本和输入快照。
-- AI 结论保存证据引用，允许回放。
+- Raw Capture is never overwritten by AI results.
+- AI extraction results carry model version, schema version, and confidence.
+- User revisions form separate versions and audit records.
+- Score results store the calculation version and an input snapshot.
+- AI conclusions store evidence references and allow replay.
 
-### 5.3 计分和偏离设计工作流
+### 5.3 Scoring and Deviation Design Workflow
 
-分别定义：
+Define these separately:
 
-1. **Life State / Dimension Status**：一段时间内的状态。
-2. **Goal Progress**：目标完成比例或阶段。
-3. **Deviation**：按计划和当前趋势预计的偏离。
-4. **Data Confidence**：数据是否足够支持判断。
+1. **Life State / Dimension Status**: the state over a period of time.
+2. **Goal Progress**: the completion ratio or stage of a goal.
+3. **Deviation**: the projected deviation from plan given the current trend.
+4. **Data Confidence**: whether the data is sufficient to support a judgment.
 
-在 POC 前不建议确认一个永久的 0–100 Life Score 公式。先验证分维度状态、目标进度、趋势和证据是否有用，再决定是否需要总分。
+Before the POC, do not commit to a permanent 0–100 Life Score formula. First validate whether per-dimension status, goal progress, trends, and evidence are useful; then decide whether a total score is needed at all.
 
-### 5.4 AI 行为规范
+### 5.4 AI Behavior Specification
 
-AI 必须：
+The AI must:
 
-- 区分事实、相关性、推测和建议。
-- 优先引用用户数据。
-- 对关键结论提供证据。
-- 资料不足时明确说明。
-- 不虚构用户经历、数字或因果关系。
-- 不作医疗、法律、投资等高风险确定性判断。
-- 不替用户决定分手、辞职等重大事项。
-- 输出可被用户纠正和反馈。
+- Distinguish facts, correlations, speculation, and recommendations.
+- Prefer citing the user's own data.
+- Provide evidence for key conclusions.
+- State explicitly when evidence is insufficient.
+- Never fabricate user experiences, numbers, or causal relationships.
+- Never make definite high-risk judgments on medical, legal, or investment matters.
+- Never decide major matters such as breakups or resignations on the user's behalf.
+- Produce outputs that the user can correct and give feedback on.
 
-### 5.5 隐私与安全设计
+### 5.5 Privacy and Security Design
 
-- 数据分类：身份信息、健康、财务、关系、情绪、一般记录。
-- 最少采集原则。
-- 传输和静态加密要求。
-- 环境隔离与最小权限。
-- 数据导出和完全删除。
-- 模型服务商数据使用与保留策略。
-- 日志脱敏。
-- Prompt Injection 与恶意文档防护（RAG 阶段）。
-- 敏感数据泄露与账号被盗场景的 Threat Model。
+- Data classification: identity information, health, finance, relationships, emotions, general records.
+- Data minimization principle.
+- Encryption in transit and at rest requirements.
+- Environment isolation and least privilege.
+- Data export and complete deletion.
+- Model provider data use and retention policies.
+- Log redaction.
+- Prompt injection and malicious document protection (RAG phase).
+- Threat model for sensitive data leaks and account takeover scenarios.
 
-### 5.6 交付物
+### 5.6 Deliverables
 
 - V1 PRD
 - User Journey / User Flow
-- MoSCoW 范围表
+- MoSCoW scope table
 - Conceptual Data Model
-- 数据字典与事件 Schema 草案
-- Life Score/Progress/Deviation 设计说明
+- Data dictionary and event schema draft
+- Life Score/Progress/Deviation design notes
 - AI Behavior Specification
-- 非功能需求 NFR
+- Non-functional requirements (NFR)
 - Privacy Impact Assessment
 - Threat Model
-- 低保真交互原型
+- Low-fidelity interactive prototype
 - Acceptance Criteria
 - Requirements Traceability Matrix
-- G1/G2 评审记录
+- G1/G2 review records
 
 ---
 
-## 6. 首个 POC：POC-01 Capture-to-Review
+## 6. First POC: POC-01 Capture-to-Review
 
-### 6.1 为什么先做这个 POC
+### 6.1 Why This POC First
 
-当前最大的未知风险不是“小程序能不能写出来”，也不是“向量数据库能不能部署”，而是：
+The biggest unknown risk right now is not "whether the Mini Program can be built", nor "whether a vector database can be deployed", but:
 
-> 用户的一段自然语言生活记录，能否稳定变成可信、可纠正、可计算的数据，并最终产生一份有证据、真正有用的复盘？
+> Can a passage of natural-language life logging from a user reliably become trustworthy, correctable, computable data, and ultimately produce an evidence-based, genuinely useful review?
 
-如果这一闭环不成立，即使接入几百本书、做出漂亮界面或加入 Agent，也不会形成有效产品。
+If this loop does not hold, even connecting hundreds of books, building a beautiful UI, or adding agents will not produce an effective product.
 
-### 6.2 POC 目标
+### 6.2 POC Objectives
 
-验证以下技术与产品假设：
+Validate the following technical and product hypotheses:
 
-1. 自然语言 Capture 可以稳定提取核心人生事件和指标。
-2. 用户可以低成本确认和纠正提取结果。
-3. 结构化数据可以确定性计算目标进度和偏离。
-4. AI 可以基于真实证据生成简洁、有用的周期复盘。
-5. 用户能够区分系统事实、推测和建议，并愿意信任这种表达方式。
+1. Natural-language Capture can reliably extract core life events and metrics.
+2. Users can confirm and correct extraction results at low cost.
+3. Structured data can deterministically compute goal progress and deviation.
+4. AI can generate concise, useful periodic reviews grounded in real evidence.
+5. Users can distinguish system facts, speculation, and recommendations, and are willing to trust this way of expressing them.
 
-### 6.3 POC 用户与时间范围
+### 6.3 POC Users and Time Frame
 
-- 单用户开始，最多扩展到 3–5 名内部测试用户。
-- 用一批预先准备并人工标注的测试语句验证提取质量。
-- 再进行至少 7 天真实使用；理想情况下为 14 天。
-- 可导入少量历史记录补足周报样本，但必须标识为导入数据。
+- Start with a single user, expanding to at most 3–5 internal test users.
+- Validate extraction quality with a batch of prepared, manually annotated test statements.
+- Then conduct at least 7 days of real usage; ideally 14 days.
+- A small amount of historical records may be imported to round out weekly report samples, but must be marked as imported data.
 
-### 6.4 POC 功能范围
+### 6.4 POC Feature Scope
 
-#### A. 简化版 Life Blueprint
+#### A. Simplified Life Blueprint
 
-- 五个人生维度都可描述愿景。
-- 最多选择 3 个当前重点目标。
-- 每个目标包含：Why、指标、当前值、目标值、目标日期、行动系统。
+- All Five Life Dimensions can describe a vision.
+- Choose at most 3 current focus goals.
+- Each goal contains: Why, metric, current value, target value, target date, action system.
 
-#### B. 文字 Capture
+#### B. Text Capture
 
-- 用户输入一段自然语言。
-- 保存原始文本和时间。
-- POC 暂不加入语音、图片、账单或 OCR。
+- The user inputs a passage of natural language.
+- The raw text and timestamp are saved.
+- No voice, images, bills, or OCR in the POC for now.
 
-#### C. AI 结构化
+#### C. AI Structuring
 
-建议最小输出包括：
+The recommended minimal output includes:
 
 - `life_area`
 - `event_type`
@@ -337,455 +337,455 @@ AI 必须：
 - `energy`
 - `goal_links`
 - `confidence`
-- `evidence_span`（原文中支持该字段的片段）
+- `evidence_span` (the span in the original text supporting this field)
 - `needs_confirmation`
 
-#### D. 用户确认与纠正
+#### D. User Confirmation and Correction
 
-- 显示 AI 提取的结构化结果。
-- 用户可以确认、编辑或删除单条提取结果。
-- 保留原始提取值和用户修订值。
-- 修订数据进入评估集，用于后续改进 Prompt/Schema。
+- Display the AI-extracted structured results.
+- The user can confirm, edit, or delete individual extraction results.
+- Preserve both the original extracted values and the user-revised values.
+- Revision data enters an evaluation set for later improvements to Prompts/Schema.
 
-#### E. 目标进度与偏离
+#### E. Goal Progress and Deviation
 
-- 仅对可测量目标进行确定性计算。
-- 显示当前进度、目标时间和简单趋势。
-- 数据不足时显示“暂时无法判断”，不得生成伪精确数字。
-- POC 不生成永久性的单一 Life Score。
+- Deterministic calculations only for measurable goals.
+- Show current progress, target time, and a simple trend.
+- When data is insufficient, show "Cannot determine for now"; never generate pseudo-precise numbers.
+- The POC does not generate a permanent single Life Score.
 
-#### F. 周期复盘
+#### F. Periodic Review
 
-输出固定为：
+The output is fixed as:
 
-1. 本周期发生了什么（事实）
-2. 哪些方面有进步（事实 + 证据）
-3. 哪些目标可能偏离（计算 + 证据）
-4. 可能的影响因素（明确标识为推测）
-5. ONE BIG CHANGE（一个建议）
-6. 支撑以上结论的记录列表
-7. 数据不足说明
+1. What happened this period (facts)
+2. Which areas improved (facts + evidence)
+3. Which goals may be deviating (calculation + evidence)
+4. Possible contributing factors (explicitly labeled as speculation)
+5. ONE BIG CHANGE (one recommendation)
+6. The list of records supporting the above conclusions
+7. Insufficient-data statement
 
-#### G. 反馈
+#### G. Feedback
 
-- 用户为复盘打分：准确性、帮助程度、信任度。
-- 用户可以标记“不准确”“无依据”“建议不可执行”。
-- 用户可以接受、修改或拒绝 ONE BIG CHANGE。
+- Users rate the review: accuracy, helpfulness, trustworthiness.
+- Users can flag "inaccurate", "unfounded", or "recommendation not actionable".
+- Users can accept, modify, or reject the ONE BIG CHANGE.
 
-### 6.5 POC 明确不做
+### 6.5 Explicitly Out of Scope for the POC
 
-- 微信登录和正式小程序发布
-- 语音、照片、账单和文档上传
-- 外部书籍 RAG
-- 决策档案完整 UI
-- 个人原则库完整 UI
-- 多人协作
-- 通知系统
-- 支付与订阅
-- 总 Life Score 排名
-- 跨维度因果关系自动判断
-- 自动执行任务
+- WeChat login and official Mini Program release
+- Voice, photos, bills, and document uploads
+- External book RAG
+- Full decision archive UI
+- Full personal principle library UI
+- Multi-user collaboration
+- Notification system
+- Payments and subscriptions
+- Total Life Score ranking
+- Automatic cross-dimension causal inference
+- Automatic task execution
 
-### 6.6 POC 推荐逻辑架构
+### 6.6 POC Recommended Logical Architecture
 
 ```text
-响应式单用户界面
+Responsive single-user UI
         ↓
 Capture / Blueprint / Review API
         ↓
-原始数据与结构化事实存储
+Raw data and structured-fact storage
         ↓
-AI Structured Output 服务
+AI Structured Output service
         ↓
-用户纠正与审计记录
+User corrections and audit records
         ↓
-确定性 Progress / Deviation 计算
+Deterministic Progress / Deviation calculation
         ↓
 Evidence Builder
         ↓
 AI Weekly Review Generator
         ↓
-用户反馈与评估记录
+User feedback and evaluation records
 ```
 
-POC 可暂不使用独立向量数据库。周报先通过用户、日期、目标和维度查询近期记录。只有当 POC-01 证明核心闭环成立后，再通过 POC-02 验证个人语义记忆与混合检索。
+The POC may skip a standalone vector database for now. The weekly report first queries recent records by user, date, goal, and dimension. Only after POC-01 proves the core loop holds does POC-02 validate personal semantic memory and hybrid retrieval.
 
-### 6.7 POC 测试数据集
+### 6.7 POC Test Dataset
 
-至少建立 40–60 条人工标注的中文 Capture，覆盖：
+Build at least 40–60 manually annotated Chinese Captures, covering:
 
-- 一句话包含一个事件
-- 一句话包含多个维度
-- 模糊时间：“昨晚”“今天下午”“这周”
-- 缺少数值
-- 否定：“今天没运动”
-- 修正：“不是一小时，是四十分钟”
-- 主观情绪与客观事实混合
-- 与目标相关但未明确提及目标名称
-- 无关闲聊
-- 敏感健康、财务和关系内容
-- 自相矛盾或无法判断的内容
+- One sentence containing one event
+- One sentence containing multiple dimensions
+- Vague time references: "last night", "this afternoon", "this week"
+- Missing numeric values
+- Negation: "I didn't exercise today"
+- Correction: "not one hour, forty minutes"
+- A mix of subjective emotion and objective facts
+- Related to a goal but without naming the goal
+- Irrelevant chit-chat
+- Sensitive health, finance, and relationship content
+- Self-contradictory or indeterminable content
 
-每条测试数据包含人工期望结构和允许的可接受变体。
+Each test data item includes the manually expected structure and acceptable variants.
 
-### 6.8 POC 验收指标
+### 6.8 POC Acceptance Metrics
 
-#### AI 结构化质量
+#### AI Structuring Quality
 
-- 关键事实字段准确率目标：≥ 85%。
-- 数值、单位和否定语义不得出现高风险错误。
-- 低置信度或歧义输入应触发确认，而不是猜测。
-- 用户修订后，保存和展示结果必须 100% 一致。
+- Target accuracy on key fact fields: ≥ 85%.
+- Numeric values, units, and negation semantics must have no high-risk errors.
+- Low-confidence or ambiguous inputs should trigger confirmation, not guessing.
+- After user revision, the saved and displayed results must be 100% consistent.
 
-#### 计算正确性
+#### Calculation Correctness
 
-- Goal Progress 和 Deviation 对标准测试数据必须 100% 可重复。
-- 同样输入和相同算法版本必须产生相同计算结果。
-- 数据不足时不得输出伪精确偏离。
+- Goal Progress and Deviation must be 100% reproducible on the standard test data.
+- The same inputs and the same algorithm version must produce the same calculation results.
+- No pseudo-precise deviation may be output when data is insufficient.
 
-#### 复盘可信度
+#### Review Trustworthiness
 
-- 每个重要事实结论都有至少一个 Evidence Reference。
-- 测试集中不得出现严重无依据事实。
-- 推测必须以“可能、相关、现有数据提示”等方式标识。
-- 用户可从结论回到原始 Capture。
+- Every important factual conclusion has at least one Evidence Reference.
+- The test set must contain no seriously unfounded facts.
+- Speculation must be marked with wording such as "possible", "correlated", or "existing data suggests".
+- Users can go from a conclusion back to the original Capture.
 
-#### 用户体验
+#### User Experience
 
-- 日常记录中位用时目标：≤ 60 秒。
-- 结构化确认/纠正中位用时目标：≤ 30 秒。
-- 复盘准确性平均评分目标：≥ 4/5。
-- 复盘帮助程度平均评分目标：≥ 4/5。
-- ONE BIG CHANGE 至少有一半被用户接受或修改后接受。
+- Target median time for daily capture: ≤ 60 seconds.
+- Target median time for structured confirmation/correction: ≤ 30 seconds.
+- Target average review accuracy rating: ≥ 4/5.
+- Target average review helpfulness rating: ≥ 4/5.
+- At least half of ONE BIG CHANGEs are accepted or accepted after modification.
 
-#### 系统质量
+#### System Quality
 
-- 原始记录、提取结果、修订和算法版本均可追溯。
-- 单个用户可导出全部 POC 数据。
-- 单个用户可删除全部 POC 数据。
-- 错误不得静默吞掉；需要可诊断日志且日志不泄露完整敏感内容。
+- Raw records, extraction results, revisions, and algorithm versions are all traceable.
+- A single user can export all POC data.
+- A single user can delete all POC data.
+- Errors must never be swallowed silently; diagnosable logs are required, and logs must not leak full sensitive content.
 
-### 6.9 POC 退出决策
+### 6.9 POC Exit Decision
 
 #### GO
 
-- 核心验收指标达到或接近目标。
-- 用户认为复盘比普通聊天总结更可信、更有用。
-- 主要问题可通过 Prompt、Schema、交互或规则修复。
+- Core acceptance metrics reach or approach their targets.
+- Users find the review more trustworthy and useful than an ordinary chat summary.
+- The main problems can be fixed via Prompts, Schema, interaction, or rules.
 
 #### PIVOT
 
-- Capture 有价值但计分/偏离无价值：先做 AI 日记与复盘产品。
-- 复盘有价值但每日记录负担高：改变输入方式或降低频率。
-- AI 提取质量不足：缩小支持的指标和场景。
-- 用户不接受“人生评分”：保留趋势、状态和偏离，不做总分。
+- Capture is valuable but scoring/deviation is not: build an AI journal and review product first.
+- The review is valuable but daily capture is too burdensome: change the input method or lower the frequency.
+- AI extraction quality is insufficient: narrow the supported metrics and scenarios.
+- Users reject a "life score": keep trends, status, and deviation, without a total score.
 
 #### STOP / REASSESS
 
-- 用户不愿持续记录。
-- AI 纠错成本高于手工记录。
-- 有依据的复盘依然不能产生可感知价值。
-- 隐私风险无法在目标成本内得到合理控制。
+- Users are unwilling to keep logging.
+- AI correction costs more than manual entry.
+- Evidence-based reviews still cannot produce perceivable value.
+- Privacy risks cannot be reasonably controlled within the target cost.
 
-### 6.10 POC 交付物
+### 6.10 POC Deliverables
 
 - POC Scope Statement
 - POC Requirements
-- 数据 Schema v0.1
-- 人工标注测试集及标注规范
-- Progress/Deviation 规则说明 v0.1
+- Data Schema v0.1
+- Manually annotated test set and annotation guidelines
+- Progress/Deviation rules v0.1
 - AI Prompt/Output Contract v0.1
-- 测试计划与测试报告
+- Test plan and test report
 - AI Evaluation Report
-- 用户试用日志和访谈结果
-- 风险登记册更新
+- User trial logs and interview results
+- Risk register update
 - POC Exit Report
-- G3 决策记录
+- G3 decision record
 
 ---
 
-## 7. POC-02：Personal Memory Retrieval（仅在 POC-01 通过后）
+## 7. POC-02: Personal Memory Retrieval (only after POC-01 passes)
 
-### 7.1 目标
+### 7.1 Objective
 
-验证个人语义记忆和混合检索是否能显著提升回答质量，而不是为了使用 RAG 而使用 RAG。
+Validate whether personal semantic memory and hybrid retrieval meaningfully improve answer quality — not to use retrieval-augmented generation (RAG) for its own sake.
 
-### 7.2 范围
+### 7.2 Scope
 
-- 仅索引用户自己的 Capture、日记和周复盘。
-- 支持问题：“过去什么时候出现过类似情况？”
-- 结构化过滤：用户、日期、人生维度、目标。
-- 语义检索：相似经历和表达。
-- 用户近期数据优先。
-- 输出包含原始记录引用。
+- Index only the user's own Captures, journal entries, and weekly reviews.
+- Support questions like: "When has a similar situation appeared before?"
+- Structured filtering: user, date, life dimension, goal.
+- Semantic retrieval: similar experiences and expressions.
+- The user's recent data takes priority.
+- Outputs include references to the original records.
 
-### 7.3 暂不加入
+### 7.3 Not Included Yet
 
-- 几百本电子书
-- 自动 OCR 管道
-- 自训练 Embedding 模型
-- 多路复杂 Agent 检索
+- Hundreds of e-books
+- Automated OCR pipelines
+- Self-trained embedding models
+- Complex multi-route agent retrieval
 
-### 7.4 成功标准
+### 7.4 Success Criteria
 
-与“只使用最近记录”的基线对比，语义检索在人工评估中显著提高：
+Compared against a "recent records only" baseline, semantic retrieval shows significant improvement in human evaluation on:
 
-- 相关性
-- 证据覆盖
-- 个人化程度
-- 用户信任度
+- Relevance
+- Evidence coverage
+- Degree of personalization
+- User trust
 
-如果没有显著提升，则不把向量检索升级为核心依赖。
+If there is no significant improvement, vector retrieval is not promoted to a core dependency.
 
 ---
 
-## 8. Phase 3：MVP Build
+## 8. Phase 3: MVP Build
 
-### 8.1 MVP 目标
+### 8.1 MVP Objective
 
-把通过验证的 POC 核心闭环产品化为可供少量真实用户连续使用的微信小程序。
+Productize the validated POC core loop into a WeChat Mini Program that a small number of real users can use continuously.
 
-### 8.2 MVP 功能
+### 8.2 MVP Features
 
-- 注册、登录和用户隔离
+- Registration, login, and user isolation
 - Life Blueprint
-- 文字与语音 Capture
-- AI 结构化确认
+- Text and voice Capture
+- AI structuring confirmation
 - Today
-- 最多 3 个核心 Goals
+- Up to 3 core Goals
 - Goal Progress / Deviation
 - Weekly Review
 - ONE BIG CHANGE
-- 基础 Ask Life（个人记录）
-- 用户反馈
-- 数据导出与删除
-- 审计、错误处理和基础监控
+- Basic Ask Life (personal records)
+- User feedback
+- Data export and deletion
+- Auditing, error handling, and basic monitoring
 
-### 8.3 工程与质量要求
+### 8.3 Engineering and Quality Requirements
 
-- 分环境：Development / Test / Production
-- 数据库迁移和回滚策略
-- CI 检查
-- 单元、集成、契约、端到端测试
-- AI 固定评估集回归测试
-- Schema 和 Prompt 版本管理
-- 隐私和安全评审
-- 备份恢复演练
-- 发布和回滚 Runbook
+- Separate environments: Development / Test / Production
+- Database migration and rollback strategy
+- CI checks
+- Unit, integration, contract, and end-to-end tests
+- Regression tests on the AI fixed evaluation set
+- Schema and Prompt versioning
+- Privacy and security review
+- Backup and restore drills
+- Release and rollback Runbook
 
-### 8.4 G4 发布标准
+### 8.4 G4 Release Criteria
 
-- 所有 Must Have 需求通过验收。
-- 无 P0/P1 未解决缺陷。
-- AI 回归评估不低于 POC 基线。
-- 数据导出、删除、恢复和隔离验证通过。
-- 监控、告警、回滚和事故响应准备完成。
-
----
-
-## 9. Phase 4：Private Beta
-
-### 9.1 目标用户
-
-建议 20–50 名愿意持续记录和提供反馈的种子用户，而不是追求大规模拉新。
-
-### 9.2 重点验证
-
-- 第一天是否理解产品价值
-- Capture 是否足够低摩擦
-- 用户是否会纠正 AI
-- 周报是否成为期待事件
-- ONE BIG CHANGE 是否被执行
-- 记录越多是否真的带来更准的建议
-- 隐私顾虑是否阻碍使用
-
-### 9.3 产品指标候选
-
-- 首日完成 Blueprint 的比例
-- 首周至少 4 天 Capture 的比例
-- 周报打开率
-- 周报证据点击率
-- 建议接受/修改/拒绝比例
-- 第 2 周和第 4 周留存
-- 用户修订率及随时间变化
-- 无依据结论报告率
-- 用户主动提问频率
-
-不要把 DAU 当成唯一核心指标。更适合的北极星候选是：
-
-> 每周完成“记录 → 复盘 → 接受/修改下一步行动”闭环的活跃用户数。
+- All Must Have requirements pass acceptance.
+- No unresolved P0/P1 defects.
+- AI regression evaluation is no lower than the POC baseline.
+- Data export, deletion, restore, and isolation verified.
+- Monitoring, alerting, rollback, and incident response readiness complete.
 
 ---
 
-## 10. Phase 5–8：后续演进
+## 9. Phase 4: Private Beta
 
-### Phase 5：V1 Launch
+### 9.1 Target Users
 
-- 性能和稳定性优化
-- 用户帮助与支持流程
-- 隐私政策和服务条款
-- 订阅/商业模式验证（如需要）
-- 运营指标和事故响应
+Aim for 20–50 seed users willing to log continuously and give feedback, rather than chasing large-scale user acquisition.
 
-### Phase 6：Memory & RAG Expansion
+### 9.2 Key Validations
 
-- 决策档案
-- 决策到期复盘
-- 个人原则库
-- 读书笔记导入
-- 少量合法资料导入
-- SQL + 向量混合检索
-- 引用、来源和权限治理
-- 文档 Prompt Injection 防护
+- Whether users understand the product's value on day one
+- Whether Capture is low-friction enough
+- Whether users correct the AI
+- Whether the weekly report becomes something to look forward to
+- Whether ONE BIG CHANGEs get acted on
+- Whether more logging genuinely yields more accurate recommendations
+- Whether privacy concerns hinder usage
 
-### Phase 7：Life Flywheel
+### 9.3 Candidate Product Metrics
 
-- 跨维度相关性分析
-- 上游变量识别
-- 个性化行为实验
-- 基线与趋势分离
-- 反事实和因果措辞治理
+- Percentage completing the Blueprint on day one
+- Percentage Capturing on at least 4 days in week one
+- Weekly report open rate
+- Weekly report evidence click-through rate
+- Recommendation accept / modify / reject ratios
+- Week 2 and week 4 retention
+- User revision rate and how it changes over time
+- Rate of reported unfounded conclusions
+- Frequency of users asking questions on their own initiative
 
-注意：系统只能先报告相关性，除非有严格实验设计，否则不得声称因果关系。
+Do not treat DAU as the sole core metric. A better North Star candidate is:
 
-### Phase 8：Agent Capability
+> The number of active users who complete the "capture → review → accept/modify the next action" loop each week.
+
+---
+
+## 10. Phases 5–8: Subsequent Evolution
+
+### Phase 5: V1 Launch
+
+- Performance and stability optimization
+- User help and support processes
+- Privacy policy and terms of service
+- Subscription/business model validation (if needed)
+- Operational metrics and incident response
+
+### Phase 6: Memory & RAG Expansion
+
+- Decision archive
+- Decision due-date reviews
+- Personal principle library
+- Reading notes import
+- A small amount of licensed material import
+- SQL + vector hybrid retrieval
+- Citation, source, and permission governance
+- Document prompt-injection protection
+
+### Phase 7: Life Flywheel
+
+- Cross-dimension correlation analysis
+- Upstream variable identification
+- Personalized behavioral experiments
+- Separating baseline from trend
+- Counterfactual and causal wording governance
+
+Note: the system may only report correlations first; causal claims are prohibited without rigorous experimental design.
+
+### Phase 8: Agent Capability
 
 - Goal Planner
 - Research Assistant
 - Plan Decomposer
 - Review Agent
-- 经用户逐项授权的有限执行
+- Limited execution authorized item by item by the user
 
-每个自动执行能力必须具备：权限范围、预览、确认、审计、撤销或补救机制。
-
----
-
-## 11. 测试与验证战略
-
-### 11.1 传统软件测试
-
-- 单元测试：规则、计算、校验、权限
-- 集成测试：数据库、模型 API、任务调度
-- 契约测试：AI Structured Output Schema
-- 端到端测试：Blueprint → Capture → Review
-- 安全测试：越权、数据隔离、敏感日志
-- 恢复测试：备份、迁移、回滚
-- 性能测试：Capture 和 Review 响应时间
-
-### 11.2 AI 专项评估
-
-- 字段提取准确率
-- 数值和否定语义准确率
-- 证据忠实度
-- 无依据结论率
-- 不确定性表达
-- 建议可执行性
-- 敏感场景安全性
-- Prompt/模型变更前后回归
-
-### 11.3 用户验证
-
-- 任务型可用性测试
-- 7–14 天 Diary Study
-- 周报访谈
-- 建议接受/执行回访
-- 用户对“被理解”与“被评判”的感受区分
+Every automated execution capability must have: a permission scope, preview, confirmation, audit, and revocation or remediation mechanisms.
 
 ---
 
-## 12. 风险登记册（初版）
+## 11. Testing and Validation Strategy
 
-| 风险 | 影响 | 初始应对 |
+### 11.1 Traditional Software Testing
+
+- Unit tests: rules, calculations, validation, permissions
+- Integration tests: database, model API, task scheduling
+- Contract tests: AI Structured Output Schema
+- End-to-end tests: Blueprint → Capture → Review
+- Security tests: privilege escalation, data isolation, sensitive logs
+- Recovery tests: backup, migration, rollback
+- Performance tests: Capture and Review response times
+
+### 11.2 AI-Specific Evaluation
+
+- Field extraction accuracy
+- Numeric value and negation semantics accuracy
+- Evidence faithfulness
+- Unfounded-conclusion rate
+- Uncertainty expression
+- Recommendation actionability
+- Safety in sensitive scenarios
+- Regression before/after Prompt/model changes
+
+### 11.3 User Validation
+
+- Task-based usability testing
+- 7–14 day Diary Study
+- Weekly report interviews
+- Follow-ups on recommendation acceptance/execution
+- Distinguishing how users feel "understood" versus "judged"
+
+---
+
+## 12. Risk Register (Initial Version)
+
+| Risk | Impact | Initial Mitigation |
 |---|---|---|
-| 用户不愿持续记录 | 核心数据飞轮无法形成 | POC 测量输入时间和连续使用意愿 |
-| AI 提取错误 | 数据污染并损害信任 | 原文证据、置信度、用户确认、回归集 |
-| 单一 Life Score 造成压力或误导 | 产品伤害和流失 | POC 先不用总分，分离状态/进度/偏离 |
-| AI 把相关性说成因果 | 错误建议 | AI 行为规范、措辞分类、人工评估 |
-| 复盘建议泛化 | 无产品差异 | 强制引用个人事实，只给 ONE BIG CHANGE |
-| 敏感人生数据泄露 | 高严重度安全/信任风险 | 最少采集、隔离、加密、删除、脱敏日志 |
-| RAG 范围膨胀 | 延误核心闭环 | RAG 放在 POC-02 和 Phase 6 |
-| 电子书版权问题 | 法务和商业风险 | 只处理合法、私有资料；不对外分发全文 |
-| 模型升级导致行为漂移 | 质量不可控 | 模型/Prompt/Schema 版本化与固定评估集 |
-| 用户把 AI 当重大决策裁判 | 潜在伤害 | 显示证据和选择，不给确定性人生裁决 |
+| Users unwilling to keep logging | The core data flywheel cannot form | POC measures input time and willingness to continue |
+| AI extraction errors | Data pollution and damaged trust | Source-text evidence, confidence, user confirmation, regression set |
+| A single Life Score causes stress or misleads | Product harm and churn | No total score in the POC; separate status/progress/deviation |
+| AI states correlation as causation | Wrong recommendations | AI behavior specification, wording classification, human evaluation |
+| Review recommendations are generic | No product differentiation | Mandate citing personal facts; give only ONE BIG CHANGE |
+| Sensitive life data leaks | High-severity security/trust risk | Data minimization, isolation, encryption, deletion, redacted logs |
+| RAG scope creep | Delays the core loop | Keep RAG in POC-02 and Phase 6 |
+| E-book copyright issues | Legal and business risk | Only handle licensed, private material; never distribute full texts externally |
+| Model upgrades cause behavior drift | Uncontrollable quality | Version models/Prompts/Schema and use a fixed evaluation set |
+| Users treat the AI as the judge of major decisions | Potential harm | Show evidence and options; never give definitive life verdicts |
 
 ---
 
-## 13. 项目治理与节奏
+## 13. Project Governance and Cadence
 
-### 13.1 建议会议/评审节奏
+### 13.1 Recommended Meeting/Review Cadence
 
-- 每周 Product Review：范围、用户反馈、优先级
-- 每周 Delivery Review：进度、依赖、风险、缺陷
-- 每个阶段结束 Gate Review
-- 每个模型或 Prompt 变更触发 AI Evaluation Review
-- 每个涉及敏感数据的新能力触发 Privacy/Security Review
+- Weekly Product Review: scope, user feedback, priorities
+- Weekly Delivery Review: progress, dependencies, risks, defects
+- Gate Review at the end of every phase
+- Every model or Prompt change triggers an AI Evaluation Review
+- Every new capability involving sensitive data triggers a Privacy/Security Review
 
-### 13.2 决策记录
+### 13.2 Decision Records
 
-重要设计决策使用 ADR/Decision Log 记录：
+Important design decisions are recorded with an ADR/Decision Log:
 
-- 问题
-- 可选方案
-- 选择
-- 理由
-- 权衡
-- 后续复查日期
+- Problem
+- Options
+- Choice
+- Rationale
+- Trade-offs
+- Follow-up review date
 
-首批需要记录的决策包括：
+The first decisions to record include:
 
-1. POC 使用 Web 而不是微信小程序。
-2. POC 不建立永久总 Life Score。
-3. POC-01 不引入外部书籍 RAG。
-4. 个人原始记录不可被 AI 输出覆盖。
-5. AI 结论必须可追溯到证据。
-
----
-
-## 14. 需要用户 Review 的关键决策
-
-在进入 Phase 0/1 之前，请确认或修改以下内容：
-
-1. **首批目标用户**：先为你本人构建，还是从一开始面向一类明确用户？
-2. **POC 客户端**：是否接受先做响应式 Web，而不是直接做微信小程序？
-3. **POC 周期**：是否接受至少 7 天真实使用验证？
-4. **目标数量**：是否同意 POC 最多同时推进 3 个核心目标？
-5. **人生总分**：是否同意 POC 暂不提供永久性的 0–100 总 Life Score？
-6. **首个 POC 范围**：是否同意先验证 Capture-to-Review，而把 RAG 放到第二个 POC？
-7. **数据处理**：是否接受 POC 可能调用云端 LLM API，或是否要求个人数据完全本地化？
-8. **重点维度**：五个维度全部开放记录，但是否先选择 2–3 个维度做可量化验证？
-9. **成功标准**：准确率、帮助程度和记录负担的阈值是否合理？
-10. **项目角色**：产品决策、需求批准、隐私风险接受和最终验收分别由谁负责？
+1. The POC uses Web rather than a WeChat Mini Program.
+2. The POC does not establish a permanent total Life Score.
+3. POC-01 does not bring in external book RAG.
+4. Personal raw records can never be overwritten by AI output.
+5. AI conclusions must be traceable to evidence.
 
 ---
 
-## 15. Review 后的下一步（仍不编码）
+## 14. Key Decisions Requiring the User's Review
 
-Roadmap 评审通过后，下一轮只产出以下设计文档：
+Before entering Phase 0/1, please confirm or amend the following:
+
+1. **First target users**: build for yourself first, or target a clearly defined user group from the start?
+2. **POC client**: acceptable to do responsive Web first, rather than a WeChat Mini Program directly?
+3. **POC duration**: acceptable to require at least 7 days of real usage validation?
+4. **Number of goals**: agree that the POC works on at most 3 core goals simultaneously?
+5. **Life total score**: agree that the POC does not offer a permanent 0–100 total Life Score for now?
+6. **First POC scope**: agree to validate Capture-to-Review first, with RAG deferred to the second POC?
+7. **Data handling**: accept that the POC may call cloud LLM APIs, or require personal data to be fully local?
+8. **Focus dimensions**: all Five Life Dimensions are open for capture, but should 2–3 dimensions be chosen first for quantifiable validation?
+9. **Success criteria**: are the thresholds for accuracy, helpfulness, and capture burden reasonable?
+10. **Project roles**: who is responsible for product decisions, requirements approval, privacy risk acceptance, and final acceptance, respectively?
+
+---
+
+## 15. Next Steps After Review (Still No Coding)
+
+Once the Roadmap review passes, the next round produces only the following design documents:
 
 1. Product Vision v1
-2. 目标用户与 JTBD v1
+2. Target Users and JTBD v1
 3. POC-01 Scope Statement
 4. POC-01 PRD
-5. 术语表
+5. Glossary
 6. Conceptual Data Model
 7. Capture Structured Output Schema v0.1
 8. AI Behavior Specification v0.1
-9. POC Test Plan 与标注规范
+9. POC Test Plan and annotation guidelines
 10. Requirements Traceability Matrix
 
-以上文档通过 G1/G2 Review 后，才拆分开发任务、建立代码仓库、确定技术栈并进入实施。
+Only after the above documents pass the G1/G2 Review will development tasks be broken down, a code repository be created, the tech stack be decided, and implementation begin.
 
 ---
 
 ## 16. Roadmap Review Checklist
 
-- [ ] 产品使命与目标用户清晰
-- [ ] 核心问题而非功能数量驱动 Roadmap
-- [ ] POC 验证最高风险假设
-- [ ] Life Score、Progress、Deviation 已分离
-- [ ] RAG 没有挤占首个 POC
-- [ ] AI 结论可追溯并可纠正
-- [ ] 隐私和安全从设计阶段开始
-- [ ] 每一阶段有明确交付物和退出标准
-- [ ] MVP 和 Won't Do List 边界清晰
-- [ ] 没有在评审前进入编码
+- [ ] Product mission and target users are clear
+- [ ] The Roadmap is driven by the core problem, not feature count
+- [ ] The POC validates the highest-risk hypothesis
+- [ ] Life Score, Progress, and Deviation are separated
+- [ ] RAG has not crowded out the first POC
+- [ ] AI conclusions are traceable and correctable
+- [ ] Privacy and security start at the design phase
+- [ ] Every phase has explicit deliverables and exit criteria
+- [ ] MVP and Won't Do List boundaries are clear
+- [ ] No coding started before the review

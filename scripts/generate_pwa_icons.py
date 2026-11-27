@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
-"""PWA 图标生成器 — 五维色环（Design-Language v1.0 语义 token），零第三方依赖。
+"""PWA icon generator — five-dimension color ring (Design-Language v1.0 semantic tokens), zero third-party dependencies.
 
-设计：浅中性底（#F4F4F6）+ 五段色环（time/health/wealth/rel/purpose，按 Design
-Language 顺序，4 度小间隙），超采样 3x 抗锯齿。stdlib only（zlib/struct/math）。
+Design: light neutral background (#F4F4F6) + five-segment color ring (time/health/wealth/rel/purpose, in
+Design Language order, 5-degree gaps), 3x supersampling for anti-aliasing. Stdlib only (zlib/struct/math).
 
-输出（app/static/）：
-  icons/icon-512.png          512  any（圆角方底）
-  icons/icon-192.png          192  any（圆角方底）
-  icons/icon-512-maskable.png 512  maskable（满幅方底，色环在 80% 安全区内）
-  icons/icon-32.png           32   favicon（圆角方底）
-  apple-touch-icon.png        180  iOS 主屏（满幅不透明方底，防黑角）
+Output (app/static/):
+  icons/icon-512.png          512  any (rounded square background)
+  icons/icon-192.png          192  any (rounded square background)
+  icons/icon-512-maskable.png 512  maskable (full-bleed square background, ring inside the 80% safe zone)
+  icons/icon-32.png           32   favicon (rounded square background)
+  apple-touch-icon.png        180  iOS home screen (full-bleed opaque square background, no black corners)
 
-重新生成：python3 scripts/generate_pwa_icons.py
+Regenerate: python3 scripts/generate_pwa_icons.py
 """
 import math
 import struct
 import zlib
 from pathlib import Path
 
-# Design-Language v1.0 五维识别色（顺序：time, health, wealth, rel, purpose）
+# Design-Language v1.0 five-dimension identity colors (order: time, health, wealth, rel, purpose)
 DIM_COLORS = [
     (0x3E, 0x6D, 0xE0),  # --time
     (0x15, 0x8A, 0x4C),  # --health
@@ -26,19 +26,19 @@ DIM_COLORS = [
     (0xD4, 0x24, 0x4E),  # --rel
     (0x71, 0x35, 0xCE),  # --purpose
 ]
-BG = (0xF4, 0xF4, 0xF6)  # Design Language 中性底
+BG = (0xF4, 0xF4, 0xF6)  # Design Language neutral background
 
-OUTER_FRAC = 0.38  # 色环外半径（maskable 80% 安全区 = 0.40 之内）
-INNER_FRAC = 0.245  # 色环内半径
-GAP = math.radians(5)  # 段间间隙
-CORNER_FRAC = 0.22  # 圆角方底的角半径
+OUTER_FRAC = 0.38  # ring outer radius (inside the maskable 80% safe zone = 0.40)
+INNER_FRAC = 0.245  # ring inner radius
+GAP = math.radians(5)  # gap between segments
+CORNER_FRAC = 0.22  # corner radius of the rounded square background
 
 ROOT = Path(__file__).resolve().parent.parent
 STATIC = ROOT / "app" / "static"
 
 
 def png_bytes(w, h, rows):
-    """rows: list of bytearray（每行 RGBA 4*w 字节）→ PNG bytes。"""
+    """rows: list of bytearray (each row is 4*w RGBA bytes) → PNG bytes."""
     raw = b"".join(b"\x00" + bytes(r) for r in rows)
 
     def chunk(tag, data):
@@ -51,20 +51,20 @@ def png_bytes(w, h, rows):
 
 
 def render(size, rounded, ss=3):
-    """返回 PNG bytes。rounded=True 圆角方底（透明角），False 满幅方底。"""
+    """Return PNG bytes. rounded=True gives a rounded square background (transparent corners), False a full-bleed square."""
     w = size * ss
     cx = cy = w / 2.0
     outer, inner = OUTER_FRAC * w, INNER_FRAC * w
     corner = CORNER_FRAC * w
     seg = (2 * math.pi - 5 * GAP) / 5
     arcs = []
-    a0 = -math.pi / 2  # 从正上方开始
+    a0 = -math.pi / 2  # start at the top
     for i, col in enumerate(DIM_COLORS):
         s = a0 + i * (seg + GAP)
         arcs.append((s, s + seg, col))
 
     def subpixel(px, py):
-        # 圆角方底裁切
+        # clip to the rounded square background
         if rounded:
             dx = max(abs(px - cx) - (w / 2 - corner), 0.0)
             dy = max(abs(py - cy) - (w / 2 - corner), 0.0)

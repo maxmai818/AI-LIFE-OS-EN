@@ -1,9 +1,9 @@
-# 变体 1 · 信息密度型 — 定位与取舍
+# Variant 1 · Information-Dense Type — Positioning and Trade-offs
 
-一句话定位：以 Linear/Things 式精密密度呈现「可核验的人生数据」——五维一屏总览、结构化条目流、带证据链与置信度标注的复盘，把 AI 输出严格压成「可纠正的候选」。
+One-line positioning: present "verifiable life data" with Linear/Things-grade precision density — a one-screen overview of the Five Life Dimensions, a structured entry stream, and reviews annotated with evidence chains and confidence, strictly compressing AI output into "correctable candidates".
 
-- 优点 1：强信息层级 + 紧凑排版，五维状态、目标进展、待确认量一屏可扫完，适合每日高频使用。
-- 优点 2：证据链贯穿全图——每条事实带 #证据 按钮回溯原文，方向/程度/置信度/认识论类型逐项标注，天然满足可追溯与「不猜、可留空」规则。
-- 优点 3：把 spec 的安全约束直接做成界面语言：批量接受被降为非默认、mixed 双向程度分列不净值、ONE BIG CHANGE 支持零建议且不留隐形待办。
-- 取舍/风险 1：密度对新用户有认知负荷，小字号（9.5–12px）在小屏或视力不佳时可读性下降，需实机校验。
-- 取舍/风险 2：数据面板感可能强化「量化人生」错觉，需保留「无法判断/程度待定」的可见空状态来对抗（已内置但须长期验证感知）。
+- Advantage 1: strong information hierarchy + compact layout — dimension status, goal progress, and pending-confirmation counts are all scannable on one screen; suited to high-frequency daily use.
+- Advantage 2: the evidence chain runs through the whole view — every fact carries an #Evidence button to trace back to the original text, and direction / impact degree / confidence / epistemic type are annotated item by item, naturally satisfying the traceability and "don't guess, may leave blank" rules.
+- Advantage 3: turns the spec's safety constraints directly into UI language: bulk accept is demoted to non-default, mixed direction/degree is split out rather than netted into one value, and ONE BIG CHANGE supports zero suggestions with no hidden to-dos left behind.
+- Trade-off/risk 1: density creates cognitive load for new users; the small type sizes (9.5–12px) reduce readability on small screens or for weak eyesight — needs on-device verification.
+- Trade-off/risk 2: the data-dashboard feel may reinforce the "quantifying life" illusion; the visible empty state of "cannot determine / impact degree pending" must be kept as a counterweight (built in, but perception needs long-term verification).

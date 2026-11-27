@@ -1,4 +1,4 @@
-"""不变量验收测试（INV-01～12 逐条对应用层行为）。mock provider，零网络。"""
+"""Invariant acceptance tests (INV-01..12, one per application-layer behavior). mock provider, zero network."""
 import os
 import sys
 
@@ -30,16 +30,16 @@ def extract(cid, uid=1):
 
 
 def test_inv01_raw_text_never_overwritten():
-    cid = mk_capture("今天跑了 30 分钟")
+    cid = mk_capture("Went running for 30 minutes today")
     extract(cid)
     rows = database.connect().execute("SELECT raw_text, status FROM captures WHERE id=?", (cid,)).fetchone()
-    assert rows["raw_text"] == "今天跑了 30 分钟"
+    assert rows["raw_text"] == "Went running for 30 minutes today"
     assert rows["status"] == "processed"
 
 
 def test_inv02b_impact_revise_keeps_dual_value():
-    """影响修订（方向/程度）也必须双值：原值入 user_revisions，不丢。"""
-    cid = mk_capture("跑步 30 分钟")
+    """Impact revisions (direction/degree) must also be dual-value: the original goes into user_revisions and is never lost."""
+    cid = mk_capture("Went running for 30 minutes")
     extract(cid)
     items = client.get(f"/api/captures/{cid}/items").json()["items"]
     imp = items[0]["impacts"][0]
@@ -60,18 +60,18 @@ def test_inv02b_impact_revise_keeps_dual_value():
 
 
 def test_correct_by_language_preserves_dual_value():
-    """自然语言纠错：用户说一句「程度没那么强」，AI 修订；原值入 user_revisions（INV-02）。"""
-    cid = mk_capture("今天跑步了 30 分钟")
+    """Natural-language correction: the user says one sentence like 'the degree isn't that strong', the AI revises; the original goes into user_revisions (INV-02)."""
+    cid = mk_capture("Went running for 30 minutes today")
     extract(cid)
     items = client.get(f"/api/captures/{cid}/items").json()["items"]
     it = items[0]
     imp = next(i for i in it["impacts"] if i["direction"] != "unknown")
     before_deg = imp["degree"]
     r = client.post(f"/api/items/{it['id']}/correct",
-                    json={"feedback": "程度没那么强，低一点"},
+                    json={"feedback": "the degree is not that strong, a bit lower"},
                     headers={"X-User-Id": "1"})
     assert r.status_code == 200
-    assert r.json()["changed"]  # mock 关键词可解析
+    assert r.json()["changed"]  # mock keywords are parseable
     revs = database.connect().execute(
         "SELECT field_name, original_value, corrected_value FROM user_revisions"
         " WHERE target_type='dimension_impact'").fetchall()
@@ -83,17 +83,17 @@ def test_correct_by_language_preserves_dual_value():
 
 
 def test_extract_produces_proposed_items_with_five_dims():
-    cid = mk_capture("今天跑步了 30 分钟，晚上和妈妈通电话")
+    cid = mk_capture("Went running for 30 minutes today, and made a phone call to mom in the evening")
     r = extract(cid)
     assert r["item_ids"]
     items = client.get(f"/api/captures/{cid}/items").json()["items"]
     for it in items:
         assert it["status"] == "proposed" and it["needs_confirmation"] == 1
-        assert len(it["impacts"]) == 5  # 五维全覆盖
+        assert len(it["impacts"]) == 5  # full five-dimension coverage
 
 
 def test_inv03_no_basis_means_unknown():
-    cid = mk_capture("今天跑步了")
+    cid = mk_capture("Went running today")
     items = client.get(f"/api/captures/{cid}/items").json()["items"] if extract(cid) else []
     for it in items:
         for imp in it["impacts"]:
@@ -102,7 +102,7 @@ def test_inv03_no_basis_means_unknown():
 
 
 def test_inv04_only_confirmed_non_unknown_count():
-    cid = mk_capture("今天跑步了")
+    cid = mk_capture("Went running today")
     extract(cid)
     before = client.get("/api/dimensions").json()["dimensions"]
     assert all(d["positive"] + d["negative"] + d["mixed"] == 0 for d in before)
@@ -113,29 +113,29 @@ def test_inv04_only_confirmed_non_unknown_count():
 
 
 def test_inv02_revision_stored_and_dual_value():
-    cid = mk_capture("今天跑步了")
+    cid = mk_capture("Went running today")
     extract(cid)
     item_id = client.get("/api/pending").json()["items"][0]["id"]
     client.post(f"/api/items/{item_id}/revise",
-                json={"field_name": "text_value", "corrected_value": "今天跑步 45 分钟"})
+                json={"field_name": "text_value", "corrected_value": "Ran 45 minutes today"})
     items = client.get(f"/api/captures/{cid}/items").json()["items"]
     it = [i for i in items if i["id"] == item_id][0]
     assert it["status"] == "modified"
     assert it["revisions"][0]["original_value"] != it["revisions"][0]["corrected_value"]
-    # 原文仍在
+    # the original text is still there
     caps = client.get("/api/captures").json()["captures"]
-    assert any(c["raw_text"] == "今天跑步了" for c in caps)
+    assert any(c["raw_text"] == "Went running today" for c in caps)
 
 
 def test_goals_max_three():
     for i in range(3):
         assert client.post("/api/goals", json={"title": f"g{i}"}).status_code == 200
     r = client.post("/api/goals", json={"title": "g4"})
-    assert r.status_code == 422  # 产品范围约束
+    assert r.status_code == 422  # product scope constraint
 
 
 def test_inv06_recommendation_zero_or_one():
-    cid = mk_capture("今天跑步了")
+    cid = mk_capture("Went running today")
     extract(cid)
     for it in client.get("/api/pending").json()["items"]:
         client.post(f"/api/items/{it['id']}/confirm")
@@ -154,7 +154,7 @@ def test_review_no_data_gives_limitation_no_rec():
 
 
 def test_inv08_extraction_provenance():
-    cid = mk_capture("今天跑步了")
+    cid = mk_capture("Went running today")
     r = extract(cid)
     row = database.connect().execute(
         "SELECT provider, model, prompt_version, schema_version FROM extraction_runs WHERE id=?",
@@ -163,8 +163,8 @@ def test_inv08_extraction_provenance():
 
 
 def test_inv10_multi_user_isolation():
-    cid1 = mk_capture("今天跑步了", uid=1)
-    cid2 = mk_capture("今天开会了一整天", uid=2)
+    cid1 = mk_capture("Went running today", uid=1)
+    cid2 = mk_capture("was in meetings all day today", uid=2)
     caps1 = client.get("/api/captures", headers={"X-User-Id": "1"}).json()["captures"]
     caps2 = client.get("/api/captures", headers={"X-User-Id": "2"}).json()["captures"]
     assert all(c["id"] != cid2 for c in caps1)
@@ -172,13 +172,13 @@ def test_inv10_multi_user_isolation():
 
 
 def test_feedback_and_rec_status():
-    cid = mk_capture("今天跑步了")
+    cid = mk_capture("Went running today")
     extract(cid)
     for it in client.get("/api/pending").json()["items"]:
         client.post(f"/api/items/{it['id']}/confirm")
     r = client.post("/api/reviews/generate", json={"review_type": "weekly"}).json()
     assert client.post(f"/api/reviews/{r['review_id']}/feedback",
-                       json={"changed": False, "feedback_text": "本次不需要改变"}).status_code == 200
+                       json={"changed": False, "feedback_text": "no change needed this time"}).status_code == 200
     recs = client.get(f"/api/reviews/{r['review_id']}").json()["recommendations"]
     if recs:
         assert client.post(f"/api/recommendations/{recs[0]['id']}/status",

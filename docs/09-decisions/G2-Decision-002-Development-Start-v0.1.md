@@ -1,27 +1,27 @@
-# G2 Decision 002：开发启动（第一张皮 v0.1）
+# G2 Decision 002: Development Start (First Skin v0.1)
 
-- **日期**：2026-10-17
-- **决策人**：Max（回复原文："开始开发"）
-- **类型**：里程碑决策
-- **状态**：已决定（2026-10-17 补充：技术架构基线经 Max 确认为 A；过程中先行后补确认，已记流程教训）
+- **Date**: 2026-10-17
+- **Decision maker**: Max (original reply: "Start development")
+- **Type**: milestone decision
+- **Status**: Decided (2026-10-17 addendum: the technical architecture baseline was confirmed by Max as A; during the process, work went first and confirmation came after — recorded as a process lesson)
 
-## 决策内容
+## Decision content
 
-批准 G2 进入开发：按「内核/皮肤分层」路线实现**第一张皮 v0.1 — 能自用的可用产品**（变体 2 对话引导型交互 + Product Core v0.1 内核）。
+Approve G2 entering development: implement **First Skin v0.1 — a usable product good enough for self-use** along the kernel/skin layering route (Variant 2 Conversational-Guided interaction + Product Core v0.1 kernel).
 
-## 范围（v0.1 自用闭环）
+## Scope (v0.1 self-use loop)
 
-- Capture → AI 结构化（云 LLM）→ 确认/纠正 → 五维视图 → Review（零或一建议）→ 反馈
-- 固定五维、目标 ≤3、INV-01～12 不变量全量生效
-- 移动优先（375px）、中文 UI、单机自用部署（Mac 本地运行）
+- Capture → AI structuring (cloud LLM) → confirmation/correction → Five-Dimension view → Review (zero or one suggestion) → feedback
+- Fixed Five Life Dimensions, goals ≤3, INV-01–12 invariants fully in force
+- Mobile-first (375px), Chinese UI, single-machine self-use deployment (running locally on a Mac)
 
-## 技术基线（已确认 — Max 2026-10-17 回复 A：确认现状）
+## Technical baseline (confirmed — Max replied A on 2026-10-17: confirm current state)
 
-- 后端 Python / FastAPI + SQLite（数据模型按 Capture-Data-AI-Output-Contract v0.6）；数据带 user_id（多账号就绪）
-- 前端单页（变体 2 皮肤），零构建链
-- 云 LLM：OpenAI 兼容接口，密钥仅经环境变量注入，永不入仓；测试用 mock provider
-- 验收：不变量测试 + 冒烟流程 + lifeosqa 检查
+- Backend Python / FastAPI + SQLite (data model per Capture-Data-AI-Output-Contract v0.6); data carries `user_id` (multi-account ready)
+- Single-page frontend (Variant 2 skin), zero build chain
+- Cloud LLM: OpenAI-compatible API, keys injected only via environment variables, never committed to the repo; tests use a mock provider
+- Acceptance: invariant tests + smoke flow + lifeosqa checks
 
-## 不可逆边界
+## Irreversible boundary
 
-生产部署、破坏性迁移、新敏感数据用途仍须 Max 明示批准；本次仅本地自用运行。
+Production deployment, destructive migrations, and new uses of sensitive data still require Max's explicit approval; this approval covers local self-use running only.

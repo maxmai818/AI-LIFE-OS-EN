@@ -1,119 +1,119 @@
-# G0/G1 Amendment 002：五大人生维度与当前关注点分层
+# G0/G1 Amendment 002: The Five Life Dimensions and Layering of Current Focus Areas
 
-- **状态**：Approved as Product Direction; pending merge into G1 drafts
-- **决策人**：Max
-- **日期**：2026-09-01
-- **变更类型**：领域模型纠正
-- **影响文档**：Roadmap Review 决策记录、G1 Review Pack v0.1
+- **Status**: Approved as Product Direction; pending merge into G1 drafts
+- **Decision maker**: Max
+- **Date**: 2026-09-01
+- **Change type**: domain model correction
+- **Affected documents**: Roadmap Review decision record, G1 Review Pack v0.1
 
-## 1. 背景
+## 1. Background
 
-G1 v0.1 草案将“健康、主业工作、副业”作为三个 Focus Area，容易把 Max 当前关心的主题误当成系统固定的人生维度。Max 现明确：系统仍应按五大人生维度设计；健康、主业和副业是当前关注点，需要分析它们如何关联并影响五大维度。
+The G1 v0.1 draft treated "health, primary job, side project" as three Focus Areas, which risks mistaking the topics Max currently cares about for fixed life dimensions of the system. Max now clarifies: the system should still be designed around the Five Life Dimensions; health, primary job, and side project are current focus areas, and we need to analyze how they relate to and impact the Five Dimensions.
 
-## 2. 正式决定
+## 2. Formal decision
 
-### 2.1 固定顶层人生维度
+### 2.1 Fixed top-level life dimensions
 
-AI Life OS 的顶层 Life Dimension 为：
+The top-level Life Dimensions of AI Life OS are:
 
-1. **Time（时间）**
-2. **Health（健康）**
-3. **Wealth（财富）**
-4. **Relationship（关系）**
-5. **Purpose（目的/意义）**
+1. **Time**
+2. **Health**
+3. **Wealth**
+4. **Relationship**
+5. **Purpose**
 
-五大维度用于 Life Blueprint、长期状态观察、目标影响分析和周期 Review。
+The Five Life Dimensions are used for the Life Blueprint, long-term state observation, goal impact analysis, and periodic Review.
 
-### 2.2 当前关注点
+### 2.2 Current focus areas
 
-健康、主业工作、副业属于 `Current Focus / Concern / Project`，不是固定维度。POC 首轮关注：
+Health, primary job, and side project belong to `Current Focus / Concern / Project`; they are not fixed dimensions. The first POC round focuses on:
 
-- 健康
-- 主业工作
-- 副业
+- Health
+- Primary job
+- Side project
 
-当前关注点可以随阶段改变，不应修改五大维度本身。
+Current focus areas may change from phase to phase and should not modify the Five Life Dimensions themselves.
 
-### 2.3 多对多映射
+### 2.3 Many-to-many mapping
 
-一个 Current Focus 可关联多个 Life Dimension；一个 Life Dimension 也可被多个 Current Focus 影响。映射必须允许：
+One Current Focus can relate to multiple Life Dimensions; one Life Dimension can also be impacted by multiple Current Focus areas. The mapping must allow:
 
-- 主要影响维度
-- 次要影响维度
-- 影响方向：正向、负向、混合或未知
-- 关联理由
-- 数据证据
-- 用户确认状态
+- Primary impact dimension
+- Secondary impact dimension
+- Impact direction: positive, negative, mixed, or unknown
+- Rationale for the association
+- Data evidence
+- User confirmation status
 
-POC 初始不强制永久权重或百分比分配，以免制造伪精确。
+The POC initially does not enforce permanent weights or percentage allocations, to avoid manufacturing false precision.
 
-## 3. 示例映射
+## 3. Example mappings
 
-### 健康关注点
+### Health focus area
 
-- 主要：Health
-- 常见关联：Time（睡眠/运动时间）、Purpose（身份与长期生活愿景）、Relationship（健康对陪伴和互动的影响）、Wealth（医疗和工作能力）
+- Primary: Health
+- Common associations: Time (sleep/exercise time), Purpose (identity and long-term life vision), Relationship (the impact of health on companionship and interaction), Wealth (medical care and work capacity)
 
-### 主业工作关注点
+### Primary job focus area
 
-- Time：工作时长、可支配时间、加班
-- Wealth：收入和职业安全
-- Purpose：成长、成就与意义
-- Relationship：同事、管理者、家庭时间
-- Health：压力、睡眠和精力
+- Time: working hours, discretionary time, overtime
+- Wealth: income and job security
+- Purpose: growth, achievement, and meaning
+- Relationship: colleagues, managers, family time
+- Health: stress, sleep, and energy
 
-### 副业关注点
+### Side project focus area
 
-- Wealth：收入验证与资产积累
-- Purpose：创造、独立性和职业转型
-- Time：投入和机会成本
-- Health：疲劳与恢复
-- Relationship：陪伴时间和支持/冲突
+- Wealth: revenue validation and asset building
+- Purpose: creation, independence, and career transition
+- Time: invested time and opportunity cost
+- Health: fatigue and recovery
+- Relationship: companionship time and support/conflict
 
-这些是候选关系，不是系统替用户作出的固定结论。实际映射需结合具体 Goal、Capture 和用户确认。
+These are candidate relationships, not fixed conclusions the system makes on the user's behalf. Actual mappings must be grounded in specific Goals, Captures, and user confirmation.
 
-## 4. 修订后的领域模型
+## 4. Revised domain model
 
 ```text
-Life Dimension（固定五维）
-        ↕ 多对多
-Current Focus / Concern / Project（阶段关注点）
+Life Dimension (the fixed Five Life Dimensions)
+        ↕ many-to-many
+Current Focus / Concern / Project (phase-level focus areas)
         ↓
 Goal
         ↓
 Metric / Action / Capture
 ```
 
-Capture 可同时关联：
+A Capture can be associated with any of the following simultaneously:
 
-- 一个或多个 Life Dimension
-- 零个或多个 Current Focus
-- 零个或多个 Goal
+- One or more Life Dimensions
+- Zero or more Current Focus areas
+- Zero or more Goals
 
-## 5. Review 视图要求
+## 5. Review view requirements
 
-Review 至少应支持两个互补视角：
+Review should support at least two complementary perspectives:
 
-1. **按五大维度**：Time、Health、Wealth、Relationship、Purpose 当前有什么证据和变化。
-2. **按当前关注点**：健康、主业、副业分别取得什么进展，并如何影响五大维度。
+1. **By the Five Life Dimensions**: what evidence and changes currently exist for Time, Health, Wealth, Relationship, and Purpose.
+2. **By current focus areas**: what progress health, primary job, and side project have each made, and how they impact the Five Life Dimensions.
 
-系统可展示“关注点 × 人生维度”的影响矩阵，但无证据时必须标记未知，不得自动填满。
+The system may display a "focus area × life dimension" impact matrix, but where there is no evidence it must be marked unknown and must not be auto-filled.
 
-## 6. 对原决策的修订
+## 6. Revision to previous decisions
 
-本 Amendment 修订 `Roadmap-Review-Decisions-v0.1.md` 中 DEC-008 及“领域模型澄清”部分：
+This Amendment revises DEC-008 and the "domain model clarification" section in `Roadmap-Review-Decisions-v0.1.md`:
 
-- 保留健康、主业、副业为首轮当前关注点。
-- 撤销将它们作为顶层 Focus Area/Life Area 的解释。
-- 恢复五大人生维度为固定顶层模型。
-- 采用当前关注点与五维多对多关联。
+- Health, primary job, and side project are retained as the first-round current focus areas.
+- The interpretation of them as top-level Focus Areas/Life Areas is revoked.
+- The Five Life Dimensions are restored as the fixed top-level model.
+- The current focus areas are associated with the Five Dimensions via many-to-many mapping.
 
-## 7. 对 G1/G2 的影响
+## 7. Impact on G1/G2
 
-- Product & UX Spec 增加五维 Blueprint 和关注点映射流程。
-- Data Contract 分离 `LifeDimension` 与 `CurrentFocus`，增加映射实体。
-- Capture AI 输出同时给出维度候选、关注点候选和 Goal 候选。
-- 用户可确认或纠正维度关联。
-- Test Spec 增加多标签映射、跨维度影响及未知关系测试。
-- 当前仍不生成单一 Life Score。
-- 当前仍不开始编码。
+- The Product & UX Spec gains a Five-Dimension Blueprint and a focus-area mapping flow.
+- The Data Contract separates `LifeDimension` from `CurrentFocus` and adds a mapping entity.
+- Capture AI output simultaneously proposes dimension candidates, focus-area candidates, and Goal candidates.
+- Users can confirm or correct dimension associations.
+- The Test Spec adds tests for multi-label mapping, cross-dimension impacts, and unknown relationships.
+- No single Life Score is generated at this time.
+- Coding still does not begin at this time.

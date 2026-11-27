@@ -1,41 +1,41 @@
-# DQ-006：产品埋点采用自建极简版（产品分析/埋点技术路线）
+# DQ-006: Product analytics instrumentation uses a self-built minimal solution (product analytics / instrumentation technical route)
 
-- 日期：2026-11-17（PR #24 合并 01:05 CST）
-- 状态：✅ 已批准（Max 飞书批复「采纳」，2026-11-17 凌晨）
-- Owner：lifeospm
-- 关联：`Commercialization-Validation-Design-v0.2.md` §4.3（OQ-03 硬约束）、G2-Decision-003 修正②（隐私一级卖点）、v0.2 §4.1（事件清单）
-- 销项：OQ-03（埋点第三方 vs 自建）→ 已决，本记录即结论
+- Date: 2026-11-17 (PR #24 merged 01:05 CST)
+- Status: ✅ Approved (Max approved "Adopted" via Feishu, early morning 2026-11-17)
+- Owner: lifeospm
+- Related: `Commercialization-Validation-Design-v0.2.md` §4.3 (OQ-03 hard constraint), G2-Decision-003 Amendment ② (privacy as a top-tier selling point), v0.2 §4.1 (event list)
+- Closed item: OQ-03 (instrumentation: third-party vs self-built) → resolved; this record is the conclusion
 
-## 决策（DQ-006）
+## Decision (DQ-006)
 
-**埋点采用自建极简版**，不接入第三方分析 SDK（PostHog/Mixpanel/Amplitude 云版等）。
+**Instrumentation uses a self-built minimal solution**, with no third-party analytics SDK integration (PostHog / Mixpanel / Amplitude cloud editions, etc.).
 
-### 实现要点
+### Implementation points
 
-- 一个匿名事件表（事件名、时间、匿名 ID、必要元数据），**绝不含内容文本**（红线继承）
-- **统计默认本地**；上传聚合统计需 **opt-in、可随时撤回**（v0.2 管理口径继承：opt-in 率与撤回率单列）
-- 事件清单 = v0.2 §4.1（打开、记录、Review 完成、付费流程等约 10 项）
-- 报表 = 统计 SQL + 轻量页面（留存/活跃/转化三类够用），开发量约 1~3 天（估算，非承诺）
+- One anonymous event table (event name, timestamp, anonymous ID, necessary metadata) that **never contains content text** (inherited red line)
+- **Statistics are local by default**; uploading aggregate statistics requires **opt-in and can be withdrawn at any time** (inherited v0.2 management policy: opt-in rate and withdrawal rate are tracked as separate line items)
+- Event list = v0.2 §4.1 (approximately 10 items: open, capture, Review completion, payment flow, etc.)
+- Reporting = aggregate SQL + a lightweight page (retention / active usage / conversion — three categories are sufficient); estimated development effort of about 1–3 days (estimate, not a commitment)
 
-### 排除第三方云版的理由（定价数据 2026-11 检索）
+### Reasons for excluding third-party cloud editions (pricing data retrieved 2026-11)
 
-- 云分析 SDK 默认上报，与「统计默认本地 + opt-in + 可撤回」承诺冲突；数据出境另有合规负担
-- 隐私是产品一级卖点（G2-Decision-003 修正②），埋点口径必须说到做到
-- 「第三方太贵」不成立、但不是选择理由：我们的体量远低于各家免费额度（PostHog 每月 100 万事件免费 [1]、Amplitude 每月 200 万事件免费 [2]、Mixpanel 每月 100 万事件免费 [3]）；排除它们是因为隐私承诺而非费用
+- Cloud analytics SDKs report by default, which conflicts with the promise of "statistics local by default + opt-in + withdrawable"; cross-border data transfer adds further compliance burdens
+- Privacy is a top-tier product selling point (G2-Decision-003 Amendment ②), so the instrumentation policy must do exactly what it says
+- "Third parties are too expensive" is not a valid claim — but it is not the reason for our choice either: our volume is far below each vendor's free tier (PostHog 1M events/month free [1], Amplitude 2M events/month free [2], Mixpanel 1M events/month free [3]); they are excluded because of the privacy promise, not cost
 
-### 费用
+### Cost
 
-- 自建：¥0 授权费（仅一次性开发时间）
+- Self-built: ¥0 license fees (one-off development time only)
 
-### 后门（留待未来另行决策）
+### Escape hatch (left for a separate future decision)
 
-- 用户量大、漏斗/留存图维护觉得麻烦时，可评估 **PostHog 自托管**（开源版部署在自己服务器，数据不出域）；届时出决策包另行批准
+- If user volume grows large and maintaining funnel/retention charts becomes burdensome, we may evaluate **self-hosted PostHog** (open-source edition deployed on our own servers, data never leaves our domain); a decision packet will be produced for separate approval at that time
 
-## 批准边界
+## Approval boundary
 
-本决策 = 埋点技术路线选定；**不等于埋点上线批准**（埋点实施、G3 启动仍须 Max 明示批准；v0.2 残余条件原样继承）。
+This decision = selection of the instrumentation technical route; **it does not constitute approval to launch instrumentation** (instrumentation implementation and G3 kickoff still require Max's explicit approval; v0.2 residual conditions are inherited unchanged).
 ## Sources
 
-[1] https://posthog.com/pricing — PostHog Pricing（Free 每月 1M 事件）
-[2] https://amplitude.com/pricing — Amplitude Pricing（Free 每月 2M 事件）
-[3] https://docs.mixpanel.com/docs/pricing — Mixpanel Pricing（Free 每月 1M 事件）
+[1] https://posthog.com/pricing — PostHog Pricing (Free: 1M events/month)
+[2] https://amplitude.com/pricing — Amplitude Pricing (Free: 2M events/month)
+[3] https://docs.mixpanel.com/docs/pricing — Mixpanel Pricing (Free: 1M events/month)

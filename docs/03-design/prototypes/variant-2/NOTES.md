@@ -1,12 +1,12 @@
-# 变体 2 · 对话引导型 — 定位与评估
+# Variant 2 · Conversation-Guided Type — Positioning and Evaluation
 
-**一句话定位**：整个系统就是一场和信任教练的对话——Capture 是聊天、AI 结构化以气泡内卡片呈现并就地修改确认、五维与 Review 都是对话中可展开的一轮引导。
+**One-line positioning**: the whole system is a conversation with a trusted coach — Capture is chat, AI structuring appears as in-bubble cards edited and confirmed in place, and both the Five Life Dimensions and the Review are expandable guided rounds within the conversation.
 
-**3 个优点**
-1. 记录零门槛：像发消息一样随手写，结构化卡片出现在气泡里就地确认/修改/删除，不跳页、不填表。
-2. 语气即产品：温和留白的对话节奏 + 每张卡附「为什么这样指导」理由摘要，AI 可纠正、可追溯、可拒绝，降低被评判感。
-3. 规则内建于体验：证据不足一律「未知」、mixed 正负分开记、ONE BIG CHANGE 零个或一个（「只回顾」被立刻尊重）、事实/推测/理论/建议四类标签分明。
+**3 advantages**
+1. Zero barrier to capture: jot things down like sending a message; structured cards appear in the bubble for in-place confirm/edit/delete — no page jumps, no forms.
+2. Tone is the product: a gentle, whitespace-rich conversational pace + a "why this guidance" rationale summary on every card; the AI is correctable, traceable, and rejectable, reducing the feeling of being judged.
+3. Rules are built into the experience: insufficient evidence is always "unknown", mixed positives and negatives are recorded separately, ONE BIG CHANGE is zero or one ("review only" is respected immediately), and the four labels fact / speculation / theory / recommendation are kept distinct.
 
-**2 个取舍/风险**
-1. 对话流里历史卡片会变长，长周期回看效率低于列表/表格形态（可折叠缓解，但本质取舍）。
-2. 聊天语气可能让用户低估确认动作的权重——「已确认才进入长期分析」这类关键规则需要额外视觉锚点，否则易被当作闲聊。
+**2 trade-offs/risks**
+1. History cards grow long in the conversation flow; looking back over long periods is less efficient than list/table forms (collapsing helps, but it is an essential trade-off).
+2. The chat tone may cause users to underweight the act of confirming — key rules like "only confirmed entries enter long-term analysis" need extra visual anchors, or they are easily treated as chit-chat.

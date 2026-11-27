@@ -1,70 +1,70 @@
-# G0 Amendment 001：用户范围与朋友独立使用
+# G0 Amendment 001: User Scope and Independent Use by Friends
 
-- **状态**：Approved
-- **决策人**：Max
-- **日期**：2026-09-01
-- **变更类型**：G0 范围澄清
-- **影响决策**：`DEC-001`
-- **关联文档**：`Roadmap-Review-Decisions-v0.1.md`
+- **Status**: Approved
+- **Decision maker**: Max
+- **Date**: 2026-09-01
+- **Change type**: G0 scope clarification
+- **Affected decision**: `DEC-001`
+- **Related document**: `Roadmap-Review-Decisions-v0.1.md`
 
-## 1. 背景
+## 1. Background
 
-原 `DEC-001` 将首批用户定义为只为 Max 本人构建。进一步澄清后，Max 希望未来可以邀请朋友使用，但每位朋友独立使用，彼此不能看到数据。
+The original `DEC-001` defined the first users as being built for Max alone. After further clarification, Max wants to be able to invite friends to use the product in the future, but each friend uses it independently and none of them can see each other's data.
 
-## 2. 正式决定
+## 2. Formal decision
 
-采用以下产品与系统边界：
+Adopt the following product and system boundary:
 
-> AI Life OS 是“单人私密体验、支持多个独立用户”的系统。每位用户拥有自己的账号、目标、Capture、Review 和个人数据，默认完全隔离。
+> AI Life OS is a "single-player private experience, supporting multiple independent users" system. Each user has their own account, goals, Capture, Review, and personal data, fully isolated by default.
 
-具体决定：
+Specific decisions:
 
-1. POC-01 仍以 Max 为主要验证用户，以减少核心闭环验证成本。
-2. 产品和数据设计不得把 Max 写死为唯一用户；核心记录从设计阶段归属于明确的 `user_id`。
-3. 在邀请朋友保存真实数据之前，必须完成身份认证、用户数据隔离、授权校验、个人数据导出和删除验证。
-4. 朋友使用自己的独立账号，默认看不到 Max 或其他朋友的数据。
-5. 当前不做好友关系、排行榜、共同目标、记录共享、社交动态或协作空间。
-6. “允许多个独立用户”不等于“多人协作”。任何共享功能未来必须单独提出需求、隐私设计和授权模型。
+1. POC-01 still takes Max as the primary validation user, to reduce the cost of validating the core loop.
+2. Product and data design must not hard-code Max as the only user; core records belong to an explicit `user_id` from the design stage onward.
+3. Before inviting friends to save real data, identity authentication, user data isolation, authorization checks, and personal data export and deletion must be verified.
+4. Friends use their own independent accounts and cannot see Max's or other friends' data by default.
+5. No friend relationships, leaderboards, shared goals, record sharing, social feeds, or collaborative spaces will be built at this time.
+6. "Allowing multiple independent users" does not equal "multi-person collaboration". Any sharing feature must in the future come with its own requirements, privacy design, and authorization model.
 
-## 3. 对 DEC-001 的修订
+## 3. Revision to DEC-001
 
-`DEC-001` 修订为：
+`DEC-001` is revised to:
 
-> 首个 POC 以 Max 本人为主要验证用户；系统按多个独立私密账号可扩展的方式设计。核心闭环通过且数据隔离验证完成后，可邀请少量朋友进行独立账号私测。
+> The first POC takes Max as the primary validation user; the system is designed to be extensible to multiple independent private accounts. Once the core loop passes and data isolation is verified, a small number of friends may be invited for independent-account private beta.
 
-本修订取代原 `DEC-001` 中“只为 Max 本人构建；暂不以多人通用产品为前提”的绝对表述。其他 G0 决策保持不变。
+This revision supersedes the absolute wording in the original `DEC-001` ("built for Max only; not premised on a multi-user general-purpose product for now"). All other G0 decisions remain unchanged.
 
-## 4. 对 SDLC 的影响
+## 4. Impact on the SDLC
 
-### G1 需求基线新增
+### Additions to the G1 requirements baseline
 
-- 用户注册/登录的阶段边界
-- 所有个人数据的所有权定义
-- 用户只能访问自己的数据
-- 个人导出和删除要求
-- 朋友私测的进入条件
-- 明确排除社交和协作功能
+- Phase boundaries for user registration/login
+- Ownership definition for all personal data
+- Users can only access their own data
+- Personal export and deletion requirements
+- Entry conditions for the friends' private beta
+- Explicit exclusion of social and collaboration features
 
-### G2 设计基线新增
+### Additions to the G2 design baseline
 
-- `User` / `Profile` 概念模型
-- 所有核心实体的 `user_id` 或等效所有权字段
-- 服务端授权校验
-- 数据库层隔离策略
-- 测试账号与测试数据隔离
-- 越权访问 Threat Model
+- `User` / `Profile` conceptual model
+- `user_id` or equivalent ownership field on all core entities
+- Server-side authorization checks
+- Database-level isolation strategy
+- Test account and test data isolation
+- Threat model for privilege escalation / unauthorized access
 
-### 朋友私测前必须通过
+### Must pass before the friends' private beta
 
-1. 两个不同测试账号之间的读取、修改和删除隔离测试。
-2. 数据导出只能包含当前用户的数据。
-3. 账号删除不会影响其他用户。
-4. 日志和 AI 请求链路不会错误混入其他用户上下文。
-5. 管理和调试工具不会默认暴露用户原始敏感记录。
+1. Isolation tests for read, modify, and delete between two different test accounts.
+2. Data export can only contain the current user's data.
+3. Account deletion does not affect other users.
+4. Logs and AI request chains do not incorrectly mix in other users' contexts.
+5. Admin and debug tools do not expose users' raw sensitive records by default.
 
-## 5. 不改变的内容
+## 5. What does not change
 
-- POC-01 仍优先验证 Capture → AI 结构化/确认 → Review。
-- 当前仍不建设社交功能。
-- 当前仍不建设共享目标或共同复盘。
-- 当前仍不开始编码；先完成 G1/G2 文档评审。
+- POC-01 still prioritizes validating Capture → AI structuring/correction → Review.
+- No social features are built at this time.
+- No shared goals or joint reviews are built at this time.
+- Coding still does not begin; G1/G2 document reviews are completed first.

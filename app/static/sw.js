@@ -1,6 +1,6 @@
-/* AI Life OS · PWA 壳缓存 service worker
-   目的：加速二次打开（壳资源离线可用）；API 永不缓存（数据实时、隐私）。
-   降级：注册失败（自签证书等场景被浏览器拒绝）由 app.js 静默容忍，不影响使用。 */
+/* AI Life OS · PWA shell-caching service worker
+   Purpose: faster repeat opens (shell assets work offline); the API is never cached (data is live and private).
+   Degradation: registration failures (e.g. rejected by the browser with self-signed certs) are silently tolerated by app.js, without affecting use. */
 const CACHE = 'lifeos-shell-v2';
 const SHELL = [
   '/',
@@ -17,7 +17,7 @@ const SHELL = [
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE)
-      .then((c) => Promise.allSettled(SHELL.map((u) => c.add(u)))) // 单个失败不阻塞安装
+      .then((c) => Promise.allSettled(SHELL.map((u) => c.add(u)))) // one failure doesn't block installation
       .then(() => self.skipWaiting())
   );
 });
@@ -35,9 +35,9 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
-  if (url.pathname.startsWith('/api/')) return; // API 不缓存
+  if (url.pathname.startsWith('/api/')) return; // never cache the API
 
-  // 页面导航：网络优先（登录态/最新壳），失败回退缓存（离线可开）
+  // Page navigation: network first (login state / latest shell), fall back to cache on failure (opens offline)
   if (req.mode === 'navigate') {
     e.respondWith(
       fetch(req)
@@ -48,14 +48,14 @@ self.addEventListener('fetch', (e) => {
           }
           return res;
         })
-        .catch(() => caches.match('/').then((m) => m || new Response('离线', {
+        .catch(() => caches.match('/').then((m) => m || new Response('Offline', {
           status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' },
         })))
     );
     return;
   }
 
-  // 壳静态资源：缓存优先 + 后台更新（二次打开秒开）
+  // Shell static assets: cache first + background update (repeat opens are instant)
   e.respondWith(
     caches.match(req).then((hit) => {
       const refresh = fetch(req).then((res) => {

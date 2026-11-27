@@ -1,117 +1,117 @@
 # POC-01 Product & UX Spec v0.1
 
-- **项目**：AI Life OS
-- **文档状态**：Draft — Awaiting Max Review
-- **SDLC 阶段**：G1 Requirements Baseline
-- **产品负责人 / 批准人**：Max
-- **作者**：Hermes
-- **日期**：2026-09-01
-- **关联决策**：`Roadmap-Review-Decisions-v0.1.md`、`G0-Amendment-001-User-Scope-v0.1.md`
-- **实现状态**：未开始；本文不授权编码
+- **Project**: AI Life OS
+- **Document Status**: Draft — Awaiting Max Review
+- **SDLC Stage**: G1 Requirements Baseline
+- **Product Owner / Approver**: Max
+- **Author**: Hermes
+- **Date**: 2026-09-01
+- **Related Decisions**: `Roadmap-Review-Decisions-v0.1.md`, `G0-Amendment-001-User-Scope-v0.1.md`
+- **Implementation Status**: Not started; this document does not authorize coding
 
 ---
 
-## 1. 文档目的
+## 1. Document Purpose
 
-本文定义 POC-01 的产品范围、用户体验、功能需求和验收边界。评审通过后，它将成为 POC-01 的产品需求基线；数据字段、AI 输出和测试细节分别由配套 Contract 与 Test Spec 定义。
+This document defines the product scope, user experience, functional requirements, and acceptance boundaries of POC-01. Once approved through review, it becomes the product requirements baseline for POC-01; data fields, AI outputs, and test details are defined separately by the accompanying Contract and Test Spec.
 
-## 2. 产品定义
+## 2. Product Definition
 
-AI Life OS 是一个手机优先的响应式 Web 人生管理系统。用户通过自然语言记录生活，系统将记录转化为可确认、可纠正、可计算的个人事实，并生成能够回到原始证据的周期复盘。
+AI Life OS is a mobile-first responsive web life management system. Users record their lives in natural language, and the system turns those records into personal facts that can be confirmed, corrected, and computed — and generates periodic reviews that can trace back to the original evidence.
 
-### 2.1 第一闭环
+### 2.1 First Closed Loop
 
 ```text
-设定重点领域与目标
-→ 输入 Capture
-→ AI 提取结构化内容
-→ 用户确认/纠正
-→ 保存可信事实
-→ 形成周期 Review
-→ 给出 ONE BIG CHANGE
+Set focus areas and goals
+→ Enter a Capture
+→ AI extracts structured content
+→ User confirms/corrects
+→ Save trusted facts
+→ Produce a periodic Review
+→ Deliver ONE BIG CHANGE
 ```
 
-### 2.2 POC-01 要验证的问题
+### 2.2 Questions POC-01 Must Validate
 
-> 自然语言生活记录能否以可接受的成本转化为可信数据，并产生比直接把记录发给通用聊天模型更可追溯、更有帮助的复盘？
+> Can natural-language life records be converted into trusted data at an acceptable cost, and produce reviews that are more traceable and more helpful than simply sending the records to a general-purpose chat model?
 
-### 2.3 目标用户
+### 2.3 Target Users
 
-- POC-01 主要验证用户：Max。
-- 系统体验是单人私密的，但数据模型不得写死为唯一用户。
-- 核心闭环通过且账号隔离验证完成后，可邀请少量朋友使用独立账号。
-- 当前不设计社交、共享或协作功能。
+- POC-01's primary validation user: Max.
+- The system experience is single-user and private, but the data model must not be hard-coded to a single user.
+- After the core loop passes and account isolation is validated, a small number of friends may be invited to use their own separate accounts.
+- No social, sharing, or collaboration features are designed at this stage.
 
 ## 3. Jobs-to-be-Done
 
-### JTBD-01：低摩擦记录
+### JTBD-01: Low-friction capture
 
-当一天中发生与健康、主业或副业有关的事情时，我希望用一段自然语言快速记录，而不是填写复杂表格，以便系统保留可复盘的事实。
+When something happens during the day related to health, my primary job, or my side project, I want to record it quickly in a paragraph of natural language instead of filling out complex forms, so that the system retains reviewable facts.
 
-### JTBD-02：纠正 AI 理解
+### JTBD-02: Correct AI understanding
 
-当 AI 对我的记录进行分类和提取时，我希望看见它从哪里得出结论，并能快速纠正，以免错误数据进入长期分析。
+When AI classifies and extracts from my records, I want to see where it drew its conclusions from and be able to correct them quickly, so that bad data does not enter long-term analysis.
 
-### JTBD-03：理解周期变化
+### JTBD-03: Understand changes over a period
 
-当我回顾一段时间时，我希望看到发生了什么、哪些目标有进展或偏离、依据是什么，以及下一步最值得改变什么。
+When I look back over a stretch of time, I want to see what happened, which goals progressed or deviated, what the evidence is, and what is most worth changing next.
 
-### JTBD-04：获得理论视角
+### JTBD-04: Gain theoretical perspectives
 
-当系统用理论解释我的情况时，我希望看到作者、理论、资料和可核验来源，并明确区分个人事实、AI 推测、理论观点和建议。
+When the system explains my situation with theory, I want to see the author, the theory, the material, and verifiable sources — with clear separation between personal facts, AI speculation, theoretical viewpoints, and recommendations.
 
-## 4. POC 范围
+## 4. POC Scope
 
 ### 4.1 Must Have
 
-1. 手机优先的响应式 Web 体验。
-2. 简化版个人设置与三个 Focus Area：健康、主业工作、副业。
-3. 最多三个同时进行的核心目标。
-4. 文字 Capture。
-5. 原始 Capture 永久独立保存，不被 AI 输出覆盖。
-6. AI 提取结构化内容并显示原文证据片段。
-7. 用户逐项确认、修改或删除提取结果。
-8. 保存 AI 原始提取值和用户修订值。
-9. 按周期生成 Review。
-10. Review 明确区分事实、推测、理论引用和建议。
-11. 每条 Review 事实可以回到 Capture 或结构化记录。
-12. 只给一个 ONE BIG CHANGE。
-13. 数据不足时明确表示无法判断。
-14. 用户可导出和删除自己的全部数据。
+1. Mobile-first responsive web experience.
+2. Simplified personal setup with three Focus Areas: Health, Primary Job, Side Project.
+3. At most three concurrent core goals.
+4. Text Capture.
+5. The raw Capture is stored permanently and independently, never overwritten by AI output.
+6. AI extracts structured content and displays evidence snippets from the original text.
+7. The user can confirm, edit, or delete extraction results item by item.
+8. Both the AI's original extracted values and the user's revisions are saved.
+9. Reviews are generated per period.
+10. Reviews clearly distinguish facts, speculation, theoretical citations, and recommendations.
+11. Every Review fact can trace back to a Capture or structured record.
+12. Only one ONE BIG CHANGE is given.
+13. When data is insufficient, the system explicitly states that it cannot conclude.
+14. Users can export and delete all of their own data.
 
 ### 4.2 Should Have
 
-1. Capture 历史列表。
-2. Review 历史列表。
-3. 目标关联的简单进展和趋势。
-4. 用户对 Review 的准确性、帮助程度和可执行性反馈。
-5. 少量人工筛选、可核验的理论引用样例。
-6. AI 失败后允许重新处理，但不重复保存原始 Capture。
+1. Capture history list.
+2. Review history list.
+3. Simple progress and trends linked to goals.
+4. User feedback on Review accuracy, helpfulness, and actionability.
+5. A small set of manually curated, verifiable theoretical citation samples.
+6. Re-processing is allowed after an AI failure, but the raw Capture is not saved twice.
 
 ### 4.3 Could Have
 
-1. Capture 标签筛选。
-2. 简单趋势图。
-3. 目标暂停和恢复。
-4. Review 中对证据的折叠/展开。
-5. 用模拟历史数据快速形成周期样本。
+1. Capture tag filtering.
+2. Simple trend charts.
+3. Goal pause and resume.
+4. Collapsing/expanding evidence within Reviews.
+5. Quickly generating period samples from simulated historical data.
 
-### 4.4 Won’t Have（POC-01）
+### 4.4 Won't Have (POC-01)
 
-- 单一 0–100 Life Score
-- 语音、图片、账单、OCR 或文档上传
-- 海量电子书导入
-- 复杂向量检索管道
-- Apple Health、银行或日历同步
-- 社区、好友、排行榜、共同目标或共享记录
-- 多 Agent
-- 自动执行外部任务
-- 支付与订阅
-- 正式公开注册和规模化运营
+- A single 0–100 Life Score
+- Voice, images, bills, OCR, or document uploads
+- Bulk e-book import
+- Complex vector retrieval pipelines
+- Apple Health, bank, or calendar sync
+- Communities, friends, leaderboards, shared goals, or shared records
+- Multi-agent
+- Automatic execution of external tasks
+- Payments and subscriptions
+- Official public registration and scaled operations
 
-## 5. 领域与目标模型
+## 5. Domain and Goal Model
 
-POC-01 不强制采用固定的五维人生模型，使用三层结构：
+POC-01 does not mandate a fixed five-dimension life model; it uses a three-layer structure:
 
 ```text
 Life Area / Focus Area
@@ -119,235 +119,235 @@ Life Area / Focus Area
 → Metric / Action / Capture
 ```
 
-首轮 Focus Area：
+First-round Focus Areas:
 
-1. **健康**：睡眠、运动、饮食、精力及具体健康目标。
-2. **主业工作**：职责、成果、能力、工作负荷及满意度。
-3. **副业**：投入时间、里程碑、收入验证及机会成本。
+1. **Health**: sleep, exercise, diet, energy, and specific health goals.
+2. **Primary Job**: responsibilities, outcomes, capabilities, workload, and satisfaction.
+3. **Side Project**: time invested, milestones, revenue validation, and opportunity cost.
 
-规则：
+Rules:
 
-- 一个 Capture 可关联多个 Area。
-- 一个 Goal 可关联一个主要 Area 和可选的次要 Area。
-- 副业可以关联财富或事业语义，但不必被固定在唯一维度。
-- 同期处于 Active 状态的核心目标最多三个。
-- POC 不强制所有目标量化；不可量化目标不得生成伪精确进度。
+- One Capture can link to multiple Areas.
+- One Goal can link to one primary Area and an optional secondary Area.
+- A side project may carry wealth or career semantics, but need not be pinned to a single dimension.
+- No more than three core goals in Active status at the same time.
+- The POC does not force all goals to be quantified; non-quantifiable goals must not generate pseudo-precise progress.
 
-## 6. 信息架构
+## 6. Information Architecture
 
-POC-01 建议五个主要页面：
+POC-01 recommends five main pages:
 
-1. **Setup**：Focus Area、目标和基本偏好。
-2. **Capture**：输入记录、查看 AI 处理状态。
-3. **Confirm**：逐项确认或纠正提取结果。
-4. **Review**：查看周期事实、偏离、理论与建议。
-5. **History & Settings**：历史记录、导出、删除及隐私设置。
+1. **Setup**: Focus Areas, goals, and basic preferences.
+2. **Capture**: enter records, view AI processing status.
+3. **Confirm**: confirm or correct extraction results item by item.
+4. **Review**: view periodic facts, deviations, theory, and recommendations.
+5. **History & Settings**: history, export, deletion, and privacy settings.
 
-POC 可将 Capture 与 Confirm 设计为同一页面的连续状态，不要求五个独立路由。
+The POC may design Capture and Confirm as consecutive states of the same page; five separate routes are not required.
 
-## 7. 核心用户流程
+## 7. Core User Flows
 
-### 7.1 首次设置
-
-```text
-进入系统
-→ 阅读隐私与 AI 边界说明
-→ 设置三个 Focus Area（默认已提供）
-→ 创建 0–3 个核心目标
-→ 确认设置
-→ 进入 Capture
-```
-
-#### 验收要求
-
-- 用户可以跳过暂时无法回答的目标字段。
-- 系统不得要求建立 Life Score。
-- 系统必须提示云端 LLM 可能处理 Capture 内容。
-- 未完成目标设置也可以开始 Capture。
-
-### 7.2 创建 Capture
+### 7.1 First-time Setup
 
 ```text
-打开 Capture
-→ 输入自然语言
-→ 点击保存并分析
-→ 原始文本立即保存
-→ AI 异步处理
-→ 进入 Confirm
+Enter the system
+→ Read the privacy and AI boundary explanations
+→ Set three Focus Areas (provided by default)
+→ Create 0–3 core goals
+→ Confirm setup
+→ Enter Capture
 ```
 
-#### 验收要求
+#### Acceptance Requirements
 
-- 空输入不可提交。
-- AI 服务失败不影响原始 Capture 保存。
-- 同一次提交不得因重试产生重复原始记录。
-- 用户可看到保存成功与 AI 处理状态是两个不同状态。
+- The user can skip goal fields they cannot answer yet.
+- The system must not require creating a Life Score.
+- The system must warn that a cloud LLM may process Capture content.
+- Capture can begin even if goal setup is incomplete.
 
-### 7.3 确认和纠正
+### 7.2 Create a Capture
 
 ```text
-显示原始文本
-→ 显示结构化提取项
-→ 每项显示证据片段与置信/待确认状态
-→ 用户确认、编辑或删除
-→ 保存为用户确认版本
+Open Capture
+→ Enter natural language
+→ Click save and analyze
+→ Raw text is saved immediately
+→ AI processes asynchronously
+→ Enter Confirm
 ```
 
-#### 验收要求
+#### Acceptance Requirements
 
-- 用户可以逐项操作，不必一次接受全部结果。
-- 编辑后再次查看必须与用户保存值一致。
-- 被删除的 AI 提取项不作为事实参与 Review。
-- 不确定内容允许保持“未确认”，不得默认为事实。
+- Empty input cannot be submitted.
+- An AI service failure does not affect raw Capture storage.
+- A single submission must not create duplicate raw records due to retries.
+- The user can see that save success and AI processing status are two distinct states.
 
-### 7.4 生成 Review
+### 7.3 Confirm and Correct
 
 ```text
-选择或到达周期
-→ 系统读取该用户、该周期的已确认事实
-→ 计算可确定的进展/趋势/偏离
-→ 建立证据集合
-→ 可选检索少量理论资料
-→ AI 生成 Review
-→ 用户查看并反馈
+Show the raw text
+→ Show structured extraction items
+→ Each item shows an evidence snippet and a confidence/pending-confirmation status
+→ The user confirms, edits, or deletes
+→ Save as the user-confirmed version
 ```
 
-Review 固定包含：
+#### Acceptance Requirements
 
-1. **发生了什么**：已确认事实。
-2. **进展与偏离**：只呈现可计算或有充分记录支持的内容。
-3. **可能的模式**：明确标记为推测。
-4. **理论视角**：作者、理论、资料和来源；说明适用边界。
-5. **ONE BIG CHANGE**：一个建议。
-6. **数据不足**：缺少哪些信息以及哪些结论无法得出。
-7. **证据**：支持事实和分析的 Capture/记录引用。
+- The user can act item by item; they need not accept all results at once.
+- After editing, viewing again must show the same value the user saved.
+- Deleted AI extraction items do not participate in Reviews as facts.
+- Uncertain content may remain "unconfirmed" and must not default to fact.
 
-### 7.5 Review 反馈
+### 7.4 Generate a Review
 
-用户可以：
+```text
+Select or reach a period
+→ The system reads that user's confirmed facts for that period
+→ Computes determinable progress/trends/deviations
+→ Builds the evidence set
+→ Optionally retrieves a small amount of theoretical material
+→ AI generates the Review
+→ The user views and gives feedback
+```
 
-- 标记“准确 / 不准确”；
-- 标记“有帮助 / 没帮助”；
-- 标记“有依据 / 无依据”；
-- 接受、修改或拒绝 ONE BIG CHANGE；
-- 填写自由文本反馈。
+A Review always contains:
 
-## 8. 功能需求
+1. **What happened**: confirmed facts.
+2. **Progress and deviations**: only content that is computable or well supported by records.
+3. **Possible patterns**: explicitly marked as speculation.
+4. **Theoretical perspectives**: author, theory, material, and sources; applicability boundaries stated.
+5. **ONE BIG CHANGE**: one recommendation.
+6. **Insufficient data**: what information is missing and which conclusions cannot be drawn.
+7. **Evidence**: Capture/record references supporting the facts and analysis.
 
-### 8.1 用户与数据所有权
+### 7.5 Review Feedback
 
-- **FR-USR-001**：所有个人数据必须归属于明确用户。
-- **FR-USR-002**：用户只能读取、修改、导出或删除自己的数据。
-- **FR-USR-003**：POC 可以限制为 Max 使用，但实现不得依赖硬编码的唯一用户。
-- **FR-USR-004**：朋友私测前必须完成账号身份和数据隔离验收。
+The user can:
 
-### 8.2 Focus Area 与目标
+- Mark "Accurate / Inaccurate";
+- Mark "Helpful / Not helpful";
+- Mark "Grounded / Ungrounded";
+- Accept, modify, or reject the ONE BIG CHANGE;
+- Fill in free-text feedback.
 
-- **FR-GOL-001**：用户可以查看和编辑健康、主业工作、副业三个 Focus Area。
-- **FR-GOL-002**：用户可以创建、编辑、暂停和归档目标。
-- **FR-GOL-003**：Active 核心目标不得超过三个。
-- **FR-GOL-004**：目标至少包含标题；Why、指标、当前值、目标值和日期为可选。
-- **FR-GOL-005**：数据不足时不显示伪精确 Progress 或 Deviation。
+## 8. Functional Requirements
+
+### 8.1 Users and Data Ownership
+
+- **FR-USR-001**: All personal data must belong to a defined user.
+- **FR-USR-002**: Users can only read, modify, export, or delete their own data.
+- **FR-USR-003**: The POC may be limited to Max's use, but the implementation must not depend on a hard-coded single user.
+- **FR-USR-004**: Account identity and data isolation acceptance must be completed before private testing with friends.
+
+### 8.2 Focus Areas and Goals
+
+- **FR-GOL-001**: Users can view and edit the three Focus Areas: Health, Primary Job, Side Project.
+- **FR-GOL-002**: Users can create, edit, pause, and archive goals.
+- **FR-GOL-003**: No more than three Active core goals.
+- **FR-GOL-004**: A goal must at least contain a title; Why, metrics, current value, target value, and dates are optional.
+- **FR-GOL-005**: No pseudo-precise Progress or Deviation is displayed when data is insufficient.
 
 ### 8.3 Capture
 
-- **FR-CAP-001**：用户可以保存一段非空文字 Capture。
-- **FR-CAP-002**：原始文本、创建时间和所有者必须保存。
-- **FR-CAP-003**：AI 失败或超时不丢失原始 Capture。
-- **FR-CAP-004**：用户可以查看 Capture 的处理状态。
-- **FR-CAP-005**：用户可以删除自己的 Capture；删除影响需明确提示。
+- **FR-CAP-001**: The user can save a non-empty text Capture.
+- **FR-CAP-002**: The raw text, creation time, and owner must be saved.
+- **FR-CAP-003**: The raw Capture is not lost when AI fails or times out.
+- **FR-CAP-004**: The user can view the Capture's processing status.
+- **FR-CAP-005**: The user can delete their own Captures; the impact of deletion must be clearly prompted.
 
-### 8.4 AI 结构化与纠正
+### 8.4 AI Structuring and Correction
 
-- **FR-AIX-001**：AI 输出必须符合经批准的结构化 Contract。
-- **FR-AIX-002**：每个提取项必须包含原文证据或明确标识“无直接证据”。
-- **FR-AIX-003**：系统保存模型、Prompt 和 Schema 版本。
-- **FR-AIX-004**：用户可以确认、编辑或删除提取项。
-- **FR-AIX-005**：用户修订不得覆盖 AI 原始输出。
-- **FR-AIX-006**：低置信或歧义信息必须标记待确认。
+- **FR-AIX-001**: AI output must conform to the approved structured Contract.
+- **FR-AIX-002**: Every extraction item must include original-text evidence or be explicitly marked "no direct evidence".
+- **FR-AIX-003**: The system saves the model, prompt, and schema versions.
+- **FR-AIX-004**: The user can confirm, edit, or delete extraction items.
+- **FR-AIX-005**: User revisions must not overwrite the AI's original output.
+- **FR-AIX-006**: Low-confidence or ambiguous information must be marked as pending confirmation.
 
 ### 8.5 Review
 
-- **FR-REV-001**：用户可以生成或查看一个周期的 Review。
-- **FR-REV-002**：Review 中的事实必须引用个人记录。
-- **FR-REV-003**：推测必须与事实视觉和语义区分。
-- **FR-REV-004**：理论引用必须包含可核验来源。
-- **FR-REV-005**：建议不得伪装成事实或理论原话。
-- **FR-REV-006**：每份 Review 最多一个主建议 ONE BIG CHANGE。
-- **FR-REV-007**：数据不足时明确列出限制。
-- **FR-REV-008**：用户可以提交 Review 反馈。
+- **FR-REV-001**: The user can generate or view a Review for a period.
+- **FR-REV-002**: Facts in a Review must cite personal records.
+- **FR-REV-003**: Speculation must be visually and semantically distinguished from facts.
+- **FR-REV-004**: Theoretical citations must include verifiable sources.
+- **FR-REV-005**: Recommendations must not masquerade as facts or as the original words of a theory.
+- **FR-REV-006**: Each Review has at most one primary recommendation, the ONE BIG CHANGE.
+- **FR-REV-007**: Limitations are explicitly listed when data is insufficient.
+- **FR-REV-008**: The user can submit Review feedback.
 
-### 8.6 数据控制
+### 8.6 Data Control
 
-- **FR-DAT-001**：用户可以导出自己的全部数据。
-- **FR-DAT-002**：用户可以删除自己的全部数据。
-- **FR-DAT-003**：导出和删除不得影响其他用户。
-- **FR-DAT-004**：删除前显示范围和不可逆提示。
+- **FR-DAT-001**: The user can export all of their own data.
+- **FR-DAT-002**: The user can delete all of their own data.
+- **FR-DAT-003**: Export and deletion must not affect other users.
+- **FR-DAT-004**: Before deletion, show the scope and an irreversibility warning.
 
-## 9. 非功能需求摘要
+## 9. Non-functional Requirements Summary
 
-- **NFR-PRV-001**：云端 LLM 使用方式和数据保留政策必须在 G2 明确。
-- **NFR-SEC-001**：所有服务端数据查询必须受用户所有权约束。
-- **NFR-SEC-002**：日志不得默认记录完整敏感 Capture。
-- **NFR-REL-001**：AI 不可用时，原始数据写入仍可成功。
-- **NFR-TRC-001**：Capture → 提取 → 修订 → Review → Evidence 全链路可追溯。
-- **NFR-AI-001**：同一确定性计算版本和输入必须产生相同结果。
-- **NFR-AI-002**：AI 不得生成无来源的用户事实。
-- **NFR-UX-001**：手机竖屏为主要交互环境。
-- **NFR-UX-002**：记录和确认操作应尽量减少字段填写；具体耗时先建立基线，不预设武断阈值。
+- **NFR-PRV-001**: Cloud LLM usage and data retention policies must be defined at G2.
+- **NFR-SEC-001**: All server-side data queries must be constrained by user ownership.
+- **NFR-SEC-002**: Logs must not record full sensitive Captures by default.
+- **NFR-REL-001**: Raw data writes must still succeed when AI is unavailable.
+- **NFR-TRC-001**: The full chain Capture → extraction → revision → Review → Evidence is traceable.
+- **NFR-AI-001**: The same deterministic computation version and inputs must produce the same result.
+- **NFR-AI-002**: AI must not fabricate user facts without a source.
+- **NFR-UX-001**: Phone portrait orientation is the primary interaction environment.
+- **NFR-UX-002**: Recording and confirmation actions should minimize form-filling; establish a baseline for time costs first instead of presetting arbitrary thresholds.
 
-## 10. 关键空状态与异常状态
+## 10. Key Empty and Exception States
 
-必须定义并在 G2 原型中展示：
+Must be defined and demonstrated in the G2 prototype:
 
-1. 尚无目标。
-2. 尚无 Capture。
-3. Capture 已保存但 AI 处理中。
-4. AI 提取失败。
-5. AI 没有找到可提取事实。
-6. 提取内容全部待确认。
-7. Review 数据不足。
-8. 理论资料不可用或引用无法核验。
-9. 导出处理中或失败。
-10. 删除确认和删除完成。
+1. No goals yet.
+2. No Captures yet.
+3. Capture saved but AI still processing.
+4. AI extraction failed.
+5. AI found no extractable facts.
+6. All extracted content is pending confirmation.
+7. Review has insufficient data.
+8. Theoretical material is unavailable or citations cannot be verified.
+9. Export in progress or failed.
+10. Delete confirmation and delete completion.
 
-## 11. 成功判断
+## 11. Success Criteria
 
-### 必须满足
+### Must Be Satisfied
 
-- 原始 Capture 不被覆盖。
-- 用户修订保存和再次展示一致。
-- 数值、单位、时间、否定和目标关联可逐条核验。
-- Review 事实可回到证据。
-- 事实、推测、理论引用和建议明确分开。
-- 数据不足时不生成伪精确结论。
-- 用户可导出和删除个人数据。
+- Raw Captures are not overwritten.
+- User revisions are saved and displayed consistently on re-view.
+- Values, units, times, negations, and goal associations can be verified item by item.
+- Review facts can trace back to evidence.
+- Facts, speculation, theoretical citations, and recommendations are clearly separated.
+- No pseudo-precise conclusions are generated when data is insufficient.
+- Users can export and delete personal data.
 
-### 由 Max 最终判断
+### Final Judged by Max
 
-1. 是否愿意继续使用？
-2. Review 是否比通用聊天模型更可信、更有帮助？
-3. 系统是否让我更清楚下一步，而不是制造负担或自责？
-4. 错误是否容易发现和纠正？
-5. 理论引用是否真正提高理解和行动质量？
+1. Would you keep using it?
+2. Is the Review more trustworthy and more helpful than a general-purpose chat model?
+3. Does the system make your next step clearer, rather than creating burden or self-blame?
+4. Are errors easy to spot and correct?
+5. Do theoretical citations genuinely improve understanding and quality of action?
 
-## 12. G1 Review 决策项
+## 12. G1 Review Decision Items
 
-请 Max 对以下项目标记 `Approve / Revise / Reject`：
+Please mark each item below with `Approve / Revise / Reject`:
 
-1. POC-01 的第一闭环和目标是否准确？
-2. 三个 Focus Area 是否需要改名或调整？
-3. 五个页面是否足够，是否有必须增加的入口？
-4. Must/Should/Could/Won’t 划分是否合理？
-5. 目标可以缺少量化字段的规则是否接受？
-6. Review 固定结构是否符合预期？
-7. ONE BIG CHANGE 是否始终只保留一个？
-8. POC 阶段是否需要真正的注册登录，还是先使用受限的 Max 账号？
-9. 数据导出需要什么格式：JSON、CSV、Markdown 或全部？
-10. 删除是立即永久删除，还是提供短暂恢复期？
-11. 朋友私测应在 POC 通过后还是 POC 中后段开始？
-12. 还有哪些 Must Have 未被本文覆盖？
+1. Are POC-01's first closed loop and goals accurate?
+2. Do the three Focus Areas need renaming or adjustment?
+3. Are five pages enough, and are there any entry points that must be added?
+4. Is the Must/Should/Could/Won't split reasonable?
+5. Do you accept the rule that goals may lack quantification fields?
+6. Does the fixed Review structure match your expectations?
+7. Should ONE BIG CHANGE always be limited to exactly one?
+8. Does the POC stage need real sign-up/login, or should it first use a restricted Max account?
+9. What format is needed for data export: JSON, CSV, Markdown, or all of them?
+10. Is deletion immediate and permanent, or should a short recovery window be provided?
+11. Should private testing with friends begin after the POC passes, or in the mid-to-late POC phase?
+12. What other Must Have items are not covered by this document?
 
-## 13. Gate 条件
+## 13. Gate Conditions
 
-本文必须经过 Max Review，所有阻断意见关闭后才能标记为 `Approved` 或 `Approved with Conditions`。本文批准不等于授权编码；还需同步批准 Data + AI Contract 与 Test + Acceptance Spec。
+This document must pass Max Review, and all blocking comments must be closed before it can be marked `Approved` or `Approved with Conditions`. Approval of this document does not authorize coding; the Data + AI Contract and the Test + Acceptance Spec must also be approved in parallel.

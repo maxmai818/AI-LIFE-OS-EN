@@ -1,190 +1,190 @@
-# 商业化验证设计 v0.1 独立复核记录 v0.1
+# Commercialization Validation Design v0.1 Independent Review Record v0.1
 
-- **项目**：AI Life OS
-- **文档状态**：Draft（待 Max 批准）
-- **评审日期**：2026-11-12
-- **评审对象**：`docs/02-requirements/Commercialization-Validation-Design-v0.1.md`（商业化验证设计 v0.1 — 付费墙形态 / 定价实验 / 留存埋点，作者 lifeospm + lifeospsych）
-- **评审类型**：独立对抗式需求复核（证据等级与迁移距离核查、暗黑模式与自主性审查、指标有效性、隐私一致性、Product Core/INV 兼容性、引用核查、验收可测性）
-- **作者关系**：独立。lifeosreview 未参与本文档起草，未向作者提供过设计建议；仅审查，未编辑评审对象文档
-- **最终结论**：`PASS_WITH_CHANGES`
-- **批准边界**：**本报告不批准实施**（不授权付费墙开发、计费接入、埋点上线或 G3 实验启动）；**不代表任何阶段批准**（不构成 G2/G3 阶段通行证，DQ-04/DQ-05 已由 Max 批准的商业裁定不受本报告影响，但其实现方式受下述发现约束）；**残余条件保留**：全部 blocking findings 关闭并经 Max 确认前，实施不被允许；Medium findings 须在 G3 实验启动前关闭或由 Max 显式豁免；本报告不豁免任何既有红线与不可逆边界（生产部署、真实付费接入、敏感数据新用途仍须 Max 明示批准）。
-
----
-
-## 0. 核验通过项（对抗审查中未能证伪的部分）
-
-以下各点经证伪尝试后成立，记录以免后续重复审查：
-
-1. **cherry-picking 风险总体受控（评审重点①）**：文档两次拒绝了对自身数据更有利的选项——§2.1 拒绝硬付费墙（尽管 RevenueCat 基准 12.11% vs 2.18% 对其有利）；§1.4 明确 REJECT 打卡 streak（尽管其短期打开率更高）。这与「为已选机制找证据」的模式相反。
-2. **Harkin 2016 效应量处理正确（评审重点②）**：§1.4 辅助证据与附录 B 均声明「效应量未核实，本设计不引用具体数字」，符合 grounded-citations「未核实数字不得从记忆携带」规则；「自我监控与反馈对目标进展有正向作用」的表述保守，与该元分析结论方向一致，未作因果夸大。
-3. **Level E 标注到位（评审重点②）**：付费墙形态（§2.1「无直接基准（Level E 产品假设）」）、定价（§3「属产品假设需实验」）、附录 B（「付费墙与定价形态均为 Level E 产品假设」）三处一致；D30>10% 里程碑如实标注「品类中位 2–3 倍，属进取目标」（§4.4）。
-4. **暗黑模式禁令清单本身合格（评审重点③）**：§2.3 五条禁令（假倒计时、虚假划线、取消流程复杂化、数据人质、羞耻/恐惧文案）覆盖主要暗黑模式形态，且「违反任一条即拒绝发布」是可执行裁决。
-5. **隐私事件表内容边界合格（评审重点⑤）**：§4.1 各事件均标注不含内容文本/字段值/建议内容，§4.3「分析请求不复用为行为统计」正确隔离云 LLM 处理与产品统计边界。
-6. **引用真实性核查通过（评审重点⑦）**：`sources.py verify` 输出 `citations OK`（6 来源全部入台账、1 条原文摘录核验）；抽查 [1] Gollwitzer & Sheeran 2006、[2] Harkin 2016、[3] Nunes & Drèze 2006、[4] Tversky & Kahneman 1974、[5] Lally 2010、[6] Michie 2011 均为真实文献且主题与引用位置对应（[3] 的支撑范围问题见 Medium-1）。
+- **Project**: AI Life OS
+- **Document status**: Draft (pending Max's approval)
+- **Review date**: 2026-11-12
+- **Subject under review**: `docs/02-requirements/Commercialization-Validation-Design-v0.1.md` (Commercialization Validation Design v0.1 — paywall form / pricing experiment / retention analytics instrumentation, authors lifeospm + lifeospsych)
+- **Review type**: independent adversarial requirements review (level-of-evidence and transfer-distance checks, dark-pattern and autonomy audit, metric validity, privacy consistency, Product Core/INV compatibility, citation verification, acceptance testability)
+- **Author relationship**: Independent. lifeosreview did not participate in drafting the reviewed document and never provided design advice to its authors; review only, the reviewed document was not edited
+- **Final verdict**: `PASS_WITH_CHANGES`
+- **Approval boundary**: **This report does not approve implementation** (it does not authorize paywall development, billing integration, analytics instrumentation go-live, or G3 experiment launch); **it does not represent approval at any gate** (it is not a G2/G3 gate pass; the business rulings DQ-04/DQ-05 already approved by Max are not affected by this report, but their implementation is constrained by the findings below); **residual conditions remain**: implementation is not permitted until all blocking findings are closed and confirmed by Max; Medium findings must be closed before G3 experiment launch or explicitly waived by Max; this report waives no existing commercial red lines or irreversible boundaries (production deployment, real payment integration, and new uses of sensitive data still require Max's explicit approval).
 
 ---
 
-## 1. High（blocking findings，关闭前不得实施）
+## 0. Items verified as passing (not falsified under adversarial review)
 
-### High-1：实验成功/停止条件无法客观判定（评审重点⑧）
+The following points held up after falsification attempts, recorded to avoid repeated future review:
 
-**位置**：附录 A Evidence Card `experiment` 字段（`hypothesis` / `minimum_test` / `success_threshold` / `stop_conditions`）；§4.2 guardrail 行。
-
-- `hypothesis` 为「仪式化 Review 的 D30 高于**无仪式对照**」，但 `minimum_test` 只有「G3 首批 ≥50 用户、≥8 周」单臂方案，**无对照组**——假设本身不可被该测试证伪；且与 §3 自述「indie 流量下 A/B 检验功效不足是常态」直接矛盾（作者明知 N≥50 不足以支撑对照检验，却保留了对照式假设）。
-- `success_threshold` 含「完成率>30%」，但 §4.4 的内部引导线只列 D1 40% / D7 20% / 试用→付费 8%，**30% 无出处、无 Level 标注**。
-- `stop_conditions` 的「羞耻/负担反馈**集中**出现」与 §4.2 的「卸载/删除**激增**」均无阈值定义，工程师与实验执行者无法客观判定触发。
-
-**修正标准**（全部满足才关闭）：① 假设改为可由单臂数据判定的阈值式表述，或补充对照设计并自认功效限制；② `success_threshold` 每个数字给出来源与 Level 标注（无来源者标 Level E 管理值）；③ stop 条件量化（例如「≥N 名用户或 ≥X% 反馈出现羞耻/负担主题」「周删除率超过基线 Y 倍」），并明确「guardrail 触发即实验失败，即使 D30/完成率达标」的裁决规则。
-
-### High-2：付费墙触碰 Product Core 核心闭环，降级语义与「数据人质」禁令存在灰区（评审重点⑥）
-
-**位置**：§2.2 Free/Pro 功能列表与「到期」条目；§2.3 第 4 条禁令；对照 `docs/05-technical-architecture/Product-Core-v0.1.md` §3 逻辑主线（四步闭环含「五维视图/**目标**」环节）及 §4 数据结构（Goal，Active 最多 3）。
-
-- Pro 档独占「**目标追踪**」，而 Free 档列表（Capture 无限、五维 1–5 评估、周 Review 每周 1 次）**不含任何目标功能**。Goal 是 Product Core 内核实体且「五维视图/目标」是四步闭环一环，将其整体置于付费墙后是付费墙对核心闭环的实质触碰，文档**完全没有与 Product Core/INV 的兼容性分析**（INV-05「不可量化目标不输出伪精确进度」等条款隐含 Free 用户也需持有目标）。
-- 「到期：温和降级为 Free（保留全部数据、无锁死）」只承诺**数据保留**，未定义试用期已创建目标在降级后的**可见性与可编辑性**（只读？隐藏？可继续更新？）。若降级后既有目标不可见/不可编辑，则构成 §2.3 明令禁止的「试用到期数据当人质」的变体（功能人质），自相矛盾。
-
-**修正标准**：① 明确 Free 档保留目标功能的最小集（至少：查看与更新既有目标，新建可限流），或显式声明修改 Product Core 边界并走内核变更政策；② 写明降级后目标（及月度沉淀、历史趋势）的读/写语义逐项对照表；③ 在 §2.3 增补「功能人质」禁令（不得以既有数据的可见性/可编辑性胁迫转化）。
+1. **Cherry-picking risk is overall controlled (review focus ①)**: the document twice rejected options more favorable to its own data — §2.1 rejected a hard paywall (despite the RevenueCat benchmark 12.11% vs 2.18% favoring it); §1.4 explicitly REJECTed streak check-ins (despite their higher short-term open rate). This is the opposite of the "find evidence for a chosen mechanism" pattern.
+2. **Harkin 2016 effect size handled correctly (review focus ②)**: both the §1.4 supporting evidence and Appendix B state "effect size unverified; this design cites no specific numbers", complying with the grounded-citations rule "unverified numbers must not be carried over from memory"; the statement "self-monitoring and feedback have a positive effect on goal progress" is conservative, consistent in direction with that meta-analysis's conclusion, with no causal inflation.
+3. **Level E labeling in place (review focus ②)**: consistent in three places — paywall form (§2.1 "no direct benchmark (Level E product hypothesis)"), pricing (§3 "a product hypothesis requiring experiment"), and Appendix B ("both paywall and pricing forms are Level E product hypotheses"); the D30>10% milestone is honestly labeled "2–3× the category median, an ambitious target" (§4.4).
+4. **The dark-pattern prohibition list itself is adequate (review focus ③)**: §2.3's five prohibitions (fake countdowns, fake strikethrough prices, cancellation flow friction, data hostage, shame/fear copy) cover the main dark-pattern forms, and "violation of any one rejects release" is an enforceable ruling.
+5. **Privacy event table content boundaries adequate (review focus ⑤)**: each §4.1 event is labeled as excluding content text/field values/suggested content, and §4.3 "analysis requests are not reused as behavioral statistics" correctly isolates cloud LLM processing from product statistics boundaries.
+6. **Citation authenticity check passed (review focus ⑦)**: `sources.py verify` output `citations OK` (all 6 sources in the ledger, 1 original-text excerpt verified); spot checks of [1] Gollwitzer & Sheeran 2006, [2] Harkin 2016, [3] Nunes & Drèze 2006, [4] Tversky & Kahneman 1974, [5] Lally 2010, [6] Michie 2011 all confirm real literature with topics matching their citation positions (the scope-support issue of [3] is covered in Medium-1).
 
 ---
 
-## 2. Medium（G3 实验启动前关闭，或由 Max 显式豁免）
+## 1. High (blocking findings; implementation not permitted until closed)
 
-### Medium-1：endowed progress 引用支撑与机制标签不匹配（评审重点②⑦）
+### High-1: experiment success/stop conditions cannot be objectively determined (review focus ⑧)
 
-**位置**：§2.2 第 3 条「注册即得 7 天 Pro 试用（endowed progress 进度可视化 [3]，证据等级 B，跨产品迁移中等）」；附录 B 第 3 条。
+**Location**: Appendix A Evidence Card `experiment` fields (`hypothesis` / `minimum_test` / `success_threshold` / `stop_conditions`); §4.2 guardrail rows.
 
-Nunes & Drèze [3] 研究的是 **artificial advancement（赠予虚假/人为进度）** 对努力的促进；「试用时间进度条」展示的是真实进度，不是该效应的经典形态。「注册即赠 7 天完整 Pro」可勉强作类比（一注册即获全额权益），但「进度可视化」作为设计要点由 [3] 支撑是迁移过度，「证据等级 B」高估了该具体用法。应将「试用进度条」拆出标注为类比迁移（Level D/E 产品假设），或改引真实进度反馈（feedback of progress）的证据线。
+- `hypothesis` states "the D30 of ritualized Review is higher than **the no-ritual control**", but `minimum_test` is only a single-arm plan of "G3 first batch ≥50 users, ≥8 weeks" with **no control group** — the hypothesis itself cannot be falsified by this test; and it directly contradicts §3's own statement that "under indie traffic, insufficient A/B statistical power is the norm" (the authors know N≥50 cannot support a control comparison yet kept a control-style hypothesis).
+- `success_threshold` includes "completion rate >30%", but §4.4's internal guidance lines list only D1 40% / D7 20% / trial→paid 8%; **30% has no source and no Level label**.
+- `stop_conditions`' "shame/burden feedback appears **in clusters**" and §4.2's "uninstalls/deletions **surge**" both lack threshold definitions, so engineers and experiment operators cannot objectively determine when they trigger.
 
-### Medium-2：D30>10% 之外缺用户受益直接测量，guardrail 裁决口径不足（评审重点④）
+**Correction criteria** (all must be satisfied to close): ① change the hypothesis to a threshold-style statement decidable from single-arm data, or add a control design and acknowledge power limitations; ② give a source and Level label for every number in `success_threshold` (those without a source labeled Level E management value); ③ quantify stop conditions (e.g., "≥N users or ≥X% of feedback showing shame/burden themes", "weekly deletion rate exceeds baseline by Y times") and state the ruling rule "guardrail trigger means experiment failure, even if D30/completion targets are met".
 
-**位置**：§4.2、§4.4；附录 A `measurement` / `experiment` 字段。
+### High-2: the paywall touches the Product Core core loop; downgrade semantics and the "data hostage" prohibition have gray areas (review focus ⑥)
 
-guardrail 清单（退款率、提醒关闭率、卸载/删除激增、负担/羞耻词、隐私事件）已覆盖伤害面，未把 D30 裸当受益——但 evidence-based-psychology-design 第 7 步要求的**用户自报自主感/胜任感/负担/信任**无结构化测量，仅 `qualitative_questions` 两个非结构问题。「Review 让你感觉被推进还是被审判？」方向正确但不可汇总分析。应补最小结构化短量表（或等价半结构访谈提纲 + 编码规则），并把「guardrail 恶化即失败」写成可判定规则（见 High-1 修正标准③）。
+**Location**: §2.2 Free/Pro feature lists and the "expiry" item; §2.3 prohibition #4; compared against `docs/05-technical-architecture/Product-Core-v0.1.md` §3 logical backbone (the four-step loop includes the "the Five Life Dimensions (Time / Health / Wealth / Relationship / Purpose) view/**goals**" step) and §4 data structures (Goal, max 3 Active).
 
-### Medium-3：埋点隐私承诺与留存指标口径矛盾，OQ-03 未锁定（评审重点⑤）
+- The Pro tier exclusively holds "**goal tracking**", while the Free tier list (unlimited Capture, Five Life Dimensions 1–5 assessment, weekly Review 1×/week) **contains no goal features at all**. Goal is a Product Core kernel entity and "Five Life Dimensions view/goals" is one step of the four-step loop; placing it entirely behind the paywall is a substantive paywall encroachment on the core loop, and the document has **no compatibility analysis with Product Core/INV whatsoever** (INV-05 "unquantifiable goals output no pseudo-precise progress" and similar clauses imply Free users also need to hold goals).
+- "Expiry: gentle downgrade to Free (all data retained, nothing locked)" promises only **data retention**, without defining the **visibility and editability** of goals created during the trial after downgrade (read-only? hidden? updatable?). If existing goals become invisible/uneditable after downgrade, that is a variant of the "trial-expiry data as hostage" expressly forbidden by §2.3 (feature hostage) — self-contradictory.
 
-**位置**：§4.3 第 2 条「统计默认本地；上传聚合统计需 opt-in」与 §4.2「D1/D7/D30 留存」定义；§5 OQ-03。
+**Correction criteria**: ① specify the minimal set of goal features retained in the Free tier (at least: view and update existing goals; new creation may be rate-limited), or explicitly declare a change to the Product Core boundary and follow the kernel change policy; ② write an item-by-item read/write semantics table for goals (and monthly digests, historical trends) after downgrade; ③ add a "feature hostage" prohibition to §2.3 (visibility/editability of existing data must not be used to coerce conversion).
 
-统计默认本地、上传 opt-in 意味着 D1/D7/D30、完成率等指标只覆盖 opt-in 群体，存在系统性选择偏差（愿意上传者可能恰是高参与用户），文档未声明指标口径与偏差方向。且 OQ-03（第三方统计 vs 自建聚合）未决：若最终选第三方 SDK，与「匿名聚合 + opt-in + 可撤回」承诺的兼容性未经锁定。应：① 声明全部留存/转化指标以 opt-in 队列为准并披露偏差方向；② 把 OQ-03 决策约束写为「第三方方案必须支持本地默认 + opt-in + 可撤回，否则排除」，使隐私一级卖点（G2-Decision-003 修正②）不因未决项被掏空。
+---
 
-### Medium-4：候选机制对比不完整，证据等级标注在机制组合上（评审重点①②）
+## 2. Medium (close before G3 experiment launch, or explicitly waive via Max)
 
-**位置**：§1.4 候选机制表「证据等级」列；附录 A `candidate_mechanisms[0].evidence_level: A/B`。
+### Medium-1: endowed progress citation support does not match the mechanism label (review focus ②⑦)
 
-- 对比只列 3 条路径（仪式、streak、推送），未对比其他可辩护的留存机制（onboarding 价值时刻前置、生命周期邮件、习惯叠加等），也未说明排除理由——「周 Review 仪式」既由 G2-Decision-003 修正①先行钦定，机制对比存在事后合理化外观（虽未发现数字 cherry-picking，见核验通过项 1）。
-- 「A/B」等级实际只支撑「实施意向」构件（[1]）；**周 Review 仪式作为整体是 Level E**（§1.1 UNKNOWN 与附录 A `unknowns` 已承认完成率/负担感未知），但表格与 Evidence Card 把 A/B 标在整个机制组合上，易被下游读作机制整体获 A/B 背书。
+**Location**: §2.2 item 3 "register and get a 7-day Pro trial (endowed progress visualization [3], level of evidence B, medium cross-product transfer)"; Appendix B item 3.
 
-应：① 补至少一条替代机制对比或写明排除理由；② 证据等级拆分标注到构件（实施意向 A/B、自我监控 A、仪式整体 Level E）。
+Nunes & Drèze [3] study **artificial advancement (granting false/constructed progress)** as a boost to effort; a "trial time progress bar" shows real progress, not the classic form of that effect. "Register and get full 7-day Pro" can serve as a rough analogy (full benefits granted at signup), but "progress visualization" as a design point supported by [3] is over-transfer, and "level of evidence B" overestimates this specific use. Split out the "trial progress bar" and label it an analogical transfer (Level D/E product hypothesis), or switch the citation to the evidence line for true progress feedback (feedback of progress).
 
-### Medium-5：反向试用到期链路缺可验收的正向约束（评审重点③）
+### Medium-2: no direct user-benefit measurement beyond D30>10%; guardrail adjudication criteria insufficient (review focus ④)
 
-**位置**：§2.2「到期」条目；§2.3。
+**Location**: §4.2, §4.4; Appendix A `measurement` / `experiment` fields.
 
-反向试用 + 进度可视化 + 降级损失的组合在禁令之外仍需要频次与时点约束才不会滑向压力转化：到期**前**是否通知、何时通知（透明度要求）未定义；「一封说明邮件即可」的时机（到期前/后）与内容未规格化；降级**后**促销/催付触达频次无上限。应写入验收：到期前 ≥48h 一封中性说明通知（非稀缺/恐惧文案）；降级后 14 天内促销触达 ≤1 次且不随时间增强；通知可一键关闭。
+The guardrail list (refund rate, reminder-off rate, uninstall/deletion surge, burden/shame words, privacy incidents) covers the harm surface and does not take D30 raw as benefit — but the **user self-reported autonomy/competence/burden/trust** required by evidence-based-psychology-design step 7 has no structured measurement, only two unstructured `qualitative_questions`. "Did Review make you feel pushed or judged?" is the right direction but cannot be aggregated for analysis. Add a minimal structured short scale (or an equivalent semi-structured interview guide + coding rules), and write "guardrail deterioration means failure" as a decidable rule (see High-1 correction criteria ③).
+
+### Medium-3: instrumentation privacy promise contradicts retention metric definitions; OQ-03 not locked (review focus ⑤)
+
+**Location**: §4.3 item 2 "statistics local by default; uploading aggregate statistics requires opt-in" versus §4.2's "D1/D7/D30 retention" definitions; §5 OQ-03.
+
+Statistics local by default with upload opt-in means D1/D7/D30, completion rate, and similar metrics cover only the opt-in population, with systematic selection bias (those willing to upload may be exactly the highly engaged users); the document does not declare the metric scope and bias direction. And OQ-03 (third-party analytics vs self-built aggregation) is undecided: if a third-party SDK is ultimately chosen, compatibility with the "anonymous aggregation + opt-in + revocable" promise is not locked. Should: ① declare all retention/conversion metrics scoped to the opt-in cohort and disclose the bias direction; ② write the OQ-03 decision constraint as "third-party options must support local by default + opt-in + revocable, otherwise excluded", so that the tier-1 privacy selling point (G2-Decision-003 amendment ②) is not hollowed out by an open question.
+
+### Medium-4: candidate mechanism comparison incomplete; level-of-evidence label applied to the mechanism combination (review focus ①②)
+
+**Location**: §1.4 candidate mechanism table "level of evidence" column; Appendix A `candidate_mechanisms[0].evidence_level: A/B`.
+
+- The comparison lists only 3 paths (ritual, streak, push), without comparing other defensible retention mechanisms (front-loading the onboarding value moment, lifecycle emails, habit stacking, etc.) and without stating exclusion reasons — the "weekly Review ritual" was pre-ordained by G2-Decision-003 amendment ①, giving the mechanism comparison the appearance of post-hoc rationalization (though no numeric cherry-picking was found, see verified item 1).
+- The "A/B" level actually supports only the "implementation intention" component ([1]); **the weekly Review ritual as a whole is Level E** (§1.1 UNKNOWN and Appendix A `unknowns` already admit completion rate/burden are unknown), but the table and Evidence Card put A/B on the whole mechanism combination, easily read downstream as the mechanism overall having A/B endorsement.
+
+Should: ① add at least one alternative mechanism comparison or state exclusion reasons; ② split the level-of-evidence labels down to components (implementation intention A/B, self-monitoring A, ritual as a whole Level E).
+
+### Medium-5: the reverse-trial expiry chain lacks enforceable positive constraints (review focus ③)
+
+**Location**: §2.2 "expiry" item; §2.3.
+
+The combination of reverse trial + progress visualization + downgrade loss still needs frequency and timing constraints beyond the prohibitions to avoid sliding into pressure conversion: whether to notify **before** expiry and when (transparency requirement) is undefined; the timing (before/after expiry) and content of "one explanatory email suffices" is unspecified; post-downgrade promo/dunning outreach frequency is uncapped. Write into acceptance: ≥48h before expiry, one neutral explanatory notification (non-scarcity/non-fear copy); within 14 days after downgrade, ≤1 promo touch and copy must not intensify over time; notifications one-click dismissible.
 
 ---
 
 ## 3. Low
 
-### Low-1：引用年份不一致（评审重点⑦）
+### Low-1: citation year inconsistency (review focus ⑦)
 
-**位置**：§2.1 表「Market-Research 附录 17，RevenueCat **2026** 基准」。Market-Research 附录 A [17][18] 实为 **RevenueCat State of Subscription Apps 2025**。数字 12.11% / 2.18% 与 Market-Research 一致，仅年份标注错误，应改为 2025。
+**Location**: §2.1 table "Market-Research Appendix 17, RevenueCat **2026** benchmark". Market-Research Appendix A [17][18] is in fact **RevenueCat State of Subscription Apps 2025**. The numbers 12.11% / 2.18% match Market-Research; only the year label is wrong and should read 2025.
 
-### Low-2：引用定位表述含糊（评审重点⑦）
+### Low-2: vague citation location wording (review focus ⑦)
 
-**位置**：§1.1、§1.4、§2.1、§3 中「Market-Research 附录 17/18/19/20」实指「附录 A 来源清单 [17]–[20]」。建议统一为「附录 A [n]」，避免被读作独立附录编号。
+**Location**: "Market-Research Appendix 17/18/19/20" in §1.1, §1.4, §2.1, §3 actually means "Appendix A source list [17]–[20]". Recommend standardizing to "Appendix A [n]" to avoid being read as independent appendix numbers.
 
-### Low-3：guardrail 反馈文本缺事件与隐私级别定义（评审重点⑤）
+### Low-3: guardrail feedback text lacks event and privacy-level definitions (review focus ⑤)
 
-**位置**：§4.2「用户反馈中的负担/羞耻词」与 §4.1 事件表。事件表无 feedback 事件条目及其隐私级别，而该 guardrail 依赖反馈文本内容分析（词面判定「羞耻」亦不可靠）。应补 feedback 事件的隐私级别与处理方式，或改为人工编码并说明数据留存/删除策略（对齐 INV-12 删除可传播）。
+**Location**: §4.2 "burden/shame words in user feedback" and §4.1 event table. The event table has no feedback event entry or its privacy level, while this guardrail relies on feedback text content analysis (word-level detection of "shame" is also unreliable). Add the privacy level and handling for the feedback event, or switch to manual coding with stated data retention/deletion policy (aligned with INV-12 deletion propagates).
 
-### Low-4：留存口径与首要行为指标错位（评审重点④）
+### Low-4: retention definition misaligned with primary behavioral metric (review focus ④)
 
-**位置**：§4.2「D1/D7/D30 留存：对应窗口内出现任一核心事件（capture_created / **review_opened**）」与 §4.1「review_completed … **首要行为指标**」。留存用 opened（打开即计）会高于真实参与，与首要指标错位。建议口径注明 opened/completed 双轨披露，里程碑判定用哪一轨需明示。
+**Location**: §4.2 "D1/D7/D30 retention: any core event within the window (capture_created / **review_opened**)" versus §4.1 "review_completed … **primary behavioral metric**". Using opened (counted on open) for retention will exceed real engagement and misaligns with the primary metric. Recommend a dual-track disclosure of opened/completed in the definition, with explicit statement of which track milestone determinations use.
 
-### Low-5：「本地优先」与云 LLM 的对外口径未说明（评审重点⑤）
+### Low-5: "local-first" versus cloud LLM external messaging not stated (review focus ⑤)
 
-**位置**：§4.3 与红线继承行（「隐私优先（本地优先/可导出/可删除）」）。统计侧本地优先已明确，但 AI 分析走云 LLM 与「本地优先」一级卖点并存时的对外表述口径（本地优先指数据存储与统计，非 AI 推理）未在本文档界定，存在宣传一致性风险。建议补一句口径声明，营销表述不得暗示「全部处理不出端」。
+**Location**: §4.3 and the inherited red-line row ("privacy-first (local-first/exportable/deletable)"). Local-first on the statistics side is clear, but the external wording when AI analysis runs through cloud LLMs coexists with the tier-1 "local-first" selling point (local-first means data storage and statistics, not AI inference) is not defined in this document — a marketing consistency risk. Recommend adding a one-sentence messaging statement; marketing wording must not imply "no processing ever leaves the device".
 
 ---
 
-## 4. 按评审重点的结论索引
+## 4. Conclusion index by review focus
 
-| # | 评审重点 | 结论 | 对应发现 |
+| # | Review focus | Conclusion | Related findings |
 |---|---|---|---|
-| ① | 确认偏误/cherry-picking/替代机制 | 数字层面未发现 cherry-picking（两次拒绝对己有利选项）；机制对比不完整、存在事后合理化外观 | Medium-4 |
-| ② | 证据等级与迁移距离诚实度 | Level E 标注到位、Harkin 处理正确；endowed progress 标注偏高、机制组合等级标注过粗 | Medium-1、Medium-4（通过项 2/3） |
-| ③ | 暗黑模式边界与自主性 | 禁令清单合格、试用到期降级设计温和；缺到期/降级触达的频次与时点正向约束 | Medium-5（通过项 4） |
-| ④ | 指标有效性与 guardrail | guardrail 面基本够、未把 D30 裸当受益；缺用户受益直接测量，阈值/裁决口径不足 | High-1、Medium-2、Low-4 |
-| ⑤ | 隐私一致性 | 事件内容边界与 LLM/统计隔离合格；opt-in 口径偏差、OQ-03 未锁定、feedback 事件缺位 | Medium-3、Low-3、Low-5（通过项 5） |
-| ⑥ | 与 Product Core/INV 兼容性 | 不合格：目标追踪入 Pro 触碰核心闭环，降级语义未定义 | High-2 |
-| ⑦ | 引用核查 | verify 通过、来源真实且对应；年份与定位小错 | Low-1、Low-2（通过项 6） |
-| ⑧ | 验收可测性 | 不合格：假设与测试不匹配、阈值无出处、stop 条件不可判定 | High-1 |
+| ① | Confirmation bias / cherry-picking / alternative mechanisms | No numeric cherry-picking found (twice rejected self-favorable options); mechanism comparison incomplete, with post-hoc rationalization appearance | Medium-4 |
+| ② | Honesty of level of evidence and transfer distance | Level E labeling in place, Harkin handled correctly; endowed progress label inflated, mechanism-combination labeling too coarse | Medium-1, Medium-4 (verified items 2/3) |
+| ③ | Dark-pattern boundaries and autonomy | Prohibition list adequate, trial-expiry downgrade design gentle; missing positive frequency/timing constraints on expiry/downgrade outreach | Medium-5 (verified item 4) |
+| ④ | Metric validity and guardrails | Guardrail surface basically sufficient, D30 not taken raw as benefit; missing direct user-benefit measurement, thresholds/adjudication criteria insufficient | High-1, Medium-2, Low-4 |
+| ⑤ | Privacy consistency | Event content boundaries and LLM/statistics isolation adequate; opt-in scope bias, OQ-03 unlocked, feedback event missing | Medium-3, Low-3, Low-5 (verified item 5) |
+| ⑥ | Product Core/INV compatibility | Inadequate: goal tracking in Pro touches the core loop, downgrade semantics undefined | High-2 |
+| ⑦ | Citation verification | verify passed, sources real and matching; minor year and location errors | Low-1, Low-2 (verified item 6) |
+| ⑧ | Acceptance testability | Inadequate: hypothesis mismatched with test, thresholds without sources, stop conditions indeterminable | High-1 |
 
 ## 5. Verdict
 
 ```yaml
 verdict: PASS_WITH_CHANGES
-confidence: 中高（文档内部一致性核查充分；真实用户行为只能由 G3 实验回答）
-blocking_findings: 2      # High-1、High-2
-major_findings: 5         # Medium-1 ～ Medium-5
-minor_findings: 5         # Low-1 ～ Low-5
+confidence: medium-high (document-internal consistency checks sufficient; real user behavior can only be answered by the G3 experiment)
+blocking_findings: 2      # High-1, High-2
+major_findings: 5         # Medium-1 ~ Medium-5
+minor_findings: 5         # Low-1 ~ Low-5
 implementation_permitted: false
-experiment_launch_permitted: false   # High-1 关闭后方可启动 G3 实验
+experiment_launch_permitted: false   # G3 experiment may launch only after High-1 is closed
 required_changes:
-  - High-1 与 High-2 全部修正标准满足
-  - Medium-1 ～ Medium-5 在 G3 实验启动前关闭或由 Max 显式豁免
+  - All correction criteria of High-1 and High-2 satisfied
+  - Medium-1 ~ Medium-5 closed before G3 experiment launch or explicitly waived by Max
 residual_conditions:
-  - 本报告不批准实施、不代表阶段批准
-  - 生产部署、真实付费/计费接入、敏感数据新用途仍须 Max 明示批准
-  - 未解假设（真实完成率、负担感、付费转化）只能由 G3 真实用户实验解决
-next_owner: lifeospm + lifeospsych（修订设计文档）→ lifeosreview 复核关闭 → Max 终审
+  - This report does not approve implementation and does not represent gate approval
+  - Production deployment, real payment/billing integration, new uses of sensitive data still require Max's explicit approval
+  - Unresolved assumptions (real completion rate, burden perception, paid conversion) can only be resolved by the G3 real-user experiment
+next_owner: lifeospm + lifeospsych (revise the design document) → lifeosreview re-review closure → Max final review
 ```
 
 ---
 
-## 6. 整改核查（2026-11-15，lifeosreview）
+## 6. Remediation check (2026-11-15, lifeosreview)
 
-- **核查对象**：`docs/02-requirements/Commercialization-Validation-Design-v0.2.md`（v0.2，2026-11-15）
-- **核查方法**：不采信附录 D 整改对照表自称，逐条到 v0.2 正文定位实际内容，与本记录 §1–§3 各条修正标准（三项 High 标准逐项、Medium/Low 标准逐条）比对。
-- **核查结论**：12/12 CLOSED。
+- **Subject checked**: `docs/02-requirements/Commercialization-Validation-Design-v0.2.md` (v0.2, 2026-11-15)
+- **Method**: the Appendix D remediation mapping's self-report was not taken at face value; each item was located in the v0.2 main text and compared against this record §1–§3 correction criteria (the three High criteria item by item, Medium/Low criteria one by one).
+- **Check conclusion**: 12/12 CLOSED.
 
-| 发现 | 结论 | v0.2 核验位置 | 核验说明（对照修正标准） |
+| Finding | Conclusion | v0.2 verification location | Verification notes (against correction criteria) |
 |---|---|---|---|
-| High-1 实验判定不可客观执行 | CLOSED | §4.5、§4.4 阈值表、附录 A `experiment` | ① 假设已改单臂阈值式（附录 A `hypothesis`「达到 §4.4 全部阈值且 guardrail 无恶化」），可由单臂数据判定；② §4.4 四项阈值逐项给出出处与 Level 标注（>30% 明确「Level E 管理值（无外部来源）」）；③ §4.5 四条量化停止规则（羞耻/负担反馈 ≥5 条且 ≥20%、周删除率 >基线 2 倍、隐私事件、退款率 >5%×2 月）且明文「出现任一情形即判定实验失败/停止，**即使 D30/完成率达标**」。注：①类规则用「且」为合取触发，较修正标准示例的「或」更窄，属 Level E 管理值设计选择，§4.5 已留 M6 复盘调整通道，不构成未关闭项 |
-| High-2 目标入 Pro 触碰核心闭环、降级语义缺失 | CLOSED | §2.2 付费墙原则 + Free/Pro 列表 + 降级语义对照表、§2.3 | ① Free 档保留目标**完整闭环**（创建/查看/更新，Active ≤3，与 Product Core §4 Goal 数据结构一致），超出「最小集（查看与更新，新建可限流）」要求，且未修改 Product Core 边界；② §2.2 降级语义逐项对照表覆盖目标/月度沉淀/历史趋势/RAG 深析的读写语义——目标「完整不变」（读写均保留），月度沉淀「已生成保留只读可导出、不生成新的」，历史趋势「Pro 分析视图停用、底层数据全部只读可见可导出」；③ §2.3 已增补「功能人质」禁令（不得以既有数据或既有目标的可见性/可编辑性胁迫转化） |
-| Medium-1 endowed progress 迁移过度 | CLOSED | §2.2「新用户」条、附录 B 第 3 条 | 已拆分：「一注册即获全额权益」类比 [3] 标 **Level D 类比迁移**；「试用进度条可视化」标 **Level E 产品假设**，真实进度反馈成分改弱引 [2]，明文不以 [3] 作 Level B 支撑。两处（正文+附录 B）一致 |
-| Medium-2 缺用户受益直接测量 | CLOSED | §4.2「用户受益直接测量」、§4.5 | ① 4 题 5 点结构化自报微量表（自主感/胜任感/负担/信任——正是 evidence-based-psychology-design 第 7 步四域），每 4 周一次，诚实标注「非标准化量表、Level E 管理工具、不作研究级结论」；② guardrail 一票否决规则已量化可判定（见 High-1 ③），§5 补「与商业里程碑无关、优先执行」 |
-| Medium-3 opt-in 口径偏差 / OQ-03 未锁定 | CLOSED | §4.2「指标口径声明」、§4.3 第 6 条 | ① 全部留存/转化指标以 opt-in 队列为口径，披露偏差方向（愿意上报者偏高参与→可能高估、不外推全量）；② OQ-03 硬约束已写死「本地默认 + opt-in + 可撤回 + 不含内容文本，否则排除」，隐私卖点不再受未决项掏空 |
-| Medium-4 机制对比不全 / 等级标注过粗 | CLOSED | §1.4 候选机制表、附录 A `candidate_mechanisms` | ① 增补两条替代路径并留档理由：④ onboarding 价值时刻前置（组合辅助，互补而非替代）⑤ 生命周期邮件/社交问责（REJECT，邮件=骚扰边界、社交对比违反红线 §1.6）；② 证据等级拆分到构件：「实施意向 A/B [1]；自我监控 A [2]；仪式整体 Level E」，与修正标准要求的拆分完全一致，附录 A 同步 |
-| Medium-5 试用到期链路无正向约束 | CLOSED | §2.4（三条均标「验收标准，违反即拒绝发布」） | 到期前 ≥48h 中性说明通知（非稀缺/非恐惧）；降级后 14 天促销触达 ≤1 次且文案不随时间增强；商业化通知一键关闭（仅留账户/安全类）。三条与修正标准的验收要求逐字对应 |
-| Low-1 RevenueCat 年份误标 | CLOSED | §2.1 表 | 已改「RevenueCat State of Subscription Apps 2025」，数字 12.11%/2.18% 未动 |
-| Low-2 引用定位含糊 | CLOSED | 全文 + 文档头「依据」行 | 已统一为「Market-Research 附录 A 来源 n」（§1.1、§1.4、§2.1、§3、附录 A/B 一致），文首注明该格式「避免与文末 Sources 编号混淆」。格式与建议的「附录 A [n]」措辞略异，但唯一指向附录 A 来源清单、无独立附录误读风险，实质达标 |
-| Low-3 feedback 事件缺位 | CLOSED | §4.1 `feedback_submitted` 行 | 事件隐私级别定义完整：元数据（有无/时间/渠道）不含文本；反馈文本默认仅本地；opt-in 明示同意后匿名上送（不含 ID）供**人工编码**；90 天删除、删除可传播（显式对齐 INV-12） |
-| Low-4 留存口径错位 | CLOSED | §4.2 双轨披露、§5 | completed 轨（判定用，与首要行为指标 review_completed 一致）/ opened 轨（参考用，不作判定），明文「里程碑判定用本轨」；§5 里程碑「D30 > 10%（completed 轨）」衔接一致 |
-| Low-5 本地优先口径未说明 | CLOSED | §4.3 第 5 条 | 对外口径声明完整：「本地优先」指数据存储与产品统计；AI 分析经云 LLM 处理；「营销表述不得暗示『全部处理不出端』」 |
+| High-1 experiment determination not objectively executable | CLOSED | §4.5, §4.4 threshold table, Appendix A `experiment` | ① Hypothesis changed to single-arm threshold style (Appendix A `hypothesis` "meeting all §4.4 thresholds with no guardrail deterioration"), decidable from single-arm data; ② §4.4's four thresholds each give source and Level label (>30% explicitly "Level E management value (no external source)"); ③ §4.5's four quantified stop rules (shame/burden feedback ≥5 items and ≥20%, weekly deletion rate >2× baseline, privacy incident, refund rate >5% for 2 months) with explicit text "any of these occurring means the experiment is judged failed/stopped, **even if D30/completion targets are met**". Note: rules of type ① use "and" as a conjunctive trigger, narrower than the "or" of the correction-criteria example; this is a Level E management-value design choice and §4.5 has left an M6 retrospective-adjustment channel, so it does not constitute an open item |
+| High-2 goals in Pro touch the core loop, downgrade semantics missing | CLOSED | §2.2 paywall principles + Free/Pro list + downgrade semantics mapping table, §2.3 | ① The Free tier retains the **complete goal loop** (create/view/update, Active ≤3, consistent with Product Core §4 Goal data structure), exceeding the "minimal set (view and update, new creation may be rate-limited)" requirement, and without modifying Product Core boundaries; ② §2.2's item-by-item downgrade semantics table covers read/write semantics for goals/monthly digests/historical trends/RAG deep analysis — goals "fully unchanged" (read and write both retained), monthly digests "generated ones retained read-only exportable, no new ones generated", historical trends "Pro analysis views disabled, underlying data fully read-only visible exportable"; ③ §2.3 has added the "feature hostage" prohibition (existing data or existing goals' visibility/editability must not be used to coerce conversion) |
+| Medium-1 endowed progress over-transfer | CLOSED | §2.2 "new user" item, Appendix B item 3 | Split as required: "full benefits granted at signup" analogized to [3] labeled **Level D analogical transfer**; "trial progress bar visualization" labeled **Level E product hypothesis**, the real progress feedback component downgraded to a weak citation of [2], with explicit text that [3] is not used as Level B support. Consistent in both places (main text + Appendix B) |
+| Medium-2 missing direct user-benefit measurement | CLOSED | §4.2 "direct user-benefit measurement", §4.5 | ① 4-item 5-point structured self-report micro-scale (autonomy/competence/burden/trust — exactly the four domains of evidence-based-psychology-design step 7), every 4 weeks, honestly labeled "non-standardized scale, Level E management tool, no research-grade conclusions"; ② the guardrail one-vote-veto rule is quantified and decidable (see High-1 ③), §5 adds "independent of business milestones, executed with priority" |
+| Medium-3 opt-in scope bias / OQ-03 unlocked | CLOSED | §4.2 "metric scope statement", §4.3 item 6 | ① All retention/conversion metrics use the opt-in cohort as scope, with bias direction disclosed (those willing to report skew to high engagement → possible overestimation, no extrapolation to the full population); ② OQ-03 hard constraint written as "local by default + opt-in + revocable + no content text, otherwise excluded"; the privacy selling point is no longer hollowed out by an open question |
+| Medium-4 incomplete mechanism comparison / coarse level labeling | CLOSED | §1.4 candidate mechanism table, Appendix A `candidate_mechanisms` | ① Two alternative paths added with documented reasons: ④ onboarding value-moment front-loading (combinatorial aid, complementary not substitutive) ⑤ lifecycle email/social accountability (REJECT, email = harassment boundary, social comparison violates red line §1.6); ② level of evidence split to components: "implementation intention A/B [1]; self-monitoring A [2]; ritual as a whole Level E", exactly matching the split required by the correction criteria, with Appendix A synced |
+| Medium-5 no positive constraints on the trial-expiry chain | CLOSED | §2.4 (all three marked "acceptance criteria; violation rejects release") | ≥48h before expiry, one neutral explanatory notification (non-scarcity/non-fear); ≤1 promo touch within 14 days after downgrade with copy that does not intensify over time; commercial notifications one-click dismissible (account/security only). The three correspond verbatim to the correction criteria's acceptance requirements |
+| Low-1 RevenueCat year mislabeled | CLOSED | §2.1 table | Changed to "RevenueCat State of Subscription Apps 2025"; numbers 12.11%/2.18% untouched |
+| Low-2 vague citation location | CLOSED | Whole document + document header "basis" line | Standardized to "Market-Research Appendix A source n" (consistent across §1.1, §1.4, §2.1, §3, Appendices A/B); the header notes this format "avoids confusion with the Sources numbering at the end". The wording differs slightly from the suggested "Appendix A [n]", but it points solely to the Appendix A source list with no risk of being misread as an independent appendix — substantially compliant |
+| Low-3 feedback event missing | CLOSED | §4.1 `feedback_submitted` row | Event privacy level fully defined: metadata (presence/time/channel) excludes text; feedback text local-only by default; opt-in explicit consent then anonymous upload (no ID) for **manual coding**; 90-day deletion, deletion propagates (explicitly aligned with INV-12) |
+| Low-4 retention definition misaligned | CLOSED | §4.2 dual-track disclosure, §5 | completed track (for determination, consistent with primary behavioral metric review_completed) / opened track (for reference only, not for determination), with explicit "milestone determination uses this track"; §5 milestone "D30 > 10% (completed track)" is coherent |
+| Low-5 local-first messaging unstated | CLOSED | §4.3 item 5 | External messaging statement complete: "local-first" refers to data storage and product statistics; AI analysis processed via cloud LLM; "marketing wording must not imply 'no processing ever leaves the device'" |
 
-### 6.1 专项核验（任务指定）
+### 6.1 Targeted verification (as assigned)
 
-1. **High-1 单臂阈值式判定的自认**：已如实自认。§4.5「设计自认（如实声明）：单臂设计、无对照组；结论只能为『达到/未达到阈值』，**不作机制因果归因**；如需机制归因须另行设计对照实验并自认功效限制」；附录 A `experiment.hypothesis` 内嵌「（无对照组，不作因果归因）」。与 §3「indie 流量下 A/B 检验功效不足」不再矛盾。✅
-2. **High-2 降级语义表对目标功能读写语义的定义**：已定义。§2.2 对照表「目标（≤3）| 试用/Pro 期间：完整 | 降级后 Free：**完整不变（核心闭环**）」，与 Free 档「目标完整闭环（创建/查看/更新）」互相印证——降级后既有目标**可读、可编辑、可更新、可新建（≤3）**，不存在只读/隐藏/功能人质灰区。✅
+1. **High-1 single-arm threshold determination acknowledgment**: honestly acknowledged. §4.5 "design acknowledgment (stated truthfully): single-arm design, no control group; conclusions can only be 'threshold met/not met', **no causal mechanism attribution**; if mechanism attribution is needed, a separate controlled experiment must be designed with acknowledged power limitations"; Appendix A `experiment.hypothesis` embeds "(no control group, no causal attribution)". No longer in conflict with §3 "insufficient A/B statistical power under indie traffic". ✅
+2. **High-2 downgrade semantics table's definition of goal read/write semantics**: defined. §2.2 mapping table "Goals (≤3) | During trial/Pro: complete | After downgrade to Free: **fully unchanged (core loop)**", cross-confirming the Free tier's "complete goal loop (create/view/update)" — after downgrade, existing goals **readable, editable, updatable, new ones creatable (≤3)**; no read-only/hidden/feature-hostage gray area. ✅
 
-### 6.2 Verdict（更新，2026-11-15 整改关闭）
+### 6.2 Verdict (updated, 2026-11-15 remediation closed)
 
 ```yaml
-verdict: PASS（整改关闭）        # 12/12 CLOSED：High 2/2、Medium 5/5、Low 5/5
-confidence: 中高（整改落点逐条在 v0.2 正文核验；真实用户行为只能由 G3 实验回答）
-closure_check: 2026-11-15（lifeosreview）— 逐条核验于 v0.2 正文，非采信附录 D 自述
-blocking_findings: 0            # High-1、High-2 已关闭（2026-11-15）
-major_findings: 0               # Medium-1 ～ Medium-5 已关闭
-minor_findings: 0               # Low-1 ～ Low-5 已关闭
-implementation_permitted: false   # 本报告不批准实施；实施仍须 Max 明示批准
-experiment_launch_permitted: false   # G3 启动仍须 Max 明示批准（残余条件）
-required_changes: []            # 全部关闭（核查表见 §6）
+verdict: PASS (remediation closed)        # 12/12 CLOSED: High 2/2, Medium 5/5, Low 5/5
+confidence: medium-high (remediation landing points verified item by item in v0.2 main text; real user behavior can only be answered by the G3 experiment)
+closure_check: 2026-11-15 (lifeosreview) — verified item by item in v0.2 main text, not taking Appendix D's self-report at face value
+blocking_findings: 0            # High-1, High-2 closed (2026-11-15)
+major_findings: 0               # Medium-1 ~ Medium-5 closed
+minor_findings: 0               # Low-1 ~ Low-5 closed
+implementation_permitted: false   # This report does not approve implementation; implementation still requires Max's explicit approval
+experiment_launch_permitted: false   # G3 launch still requires Max's explicit approval (residual condition)
+required_changes: []            # All closed (see §6 for the check table)
 residual_conditions:
-  - 本报告不批准实施、不代表阶段批准
-  - 生产部署、真实付费/计费接入、敏感数据新用途仍须 Max 明示批准
-  - 真实付费/计费接入/埋点上线/G3 启动仍须 Max 明示批准
-  - 未解假设（真实完成率、负担感、付费转化）只能由 G3 真实用户实验解决
-next_owner: Max 终审（OQ-04 关闭）→ G3 真实用户验证
+  - This report does not approve implementation and does not represent gate approval
+  - Production deployment, real payment/billing integration, new uses of sensitive data still require Max's explicit approval
+  - Real payment/billing integration/analytics instrumentation go-live/G3 launch still require Max's explicit approval
+  - Unresolved assumptions (real completion rate, burden perception, paid conversion) can only be resolved by the G3 real-user experiment
+next_owner: Max final review (OQ-04 closure) → G3 real-user validation
 ```

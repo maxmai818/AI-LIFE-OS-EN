@@ -1,40 +1,40 @@
-# G2 Decision 003：产品定位修正案（市场调研后三项裁定）
+# G2 Decision 003: Product Positioning Amendment (Three Rulings After Market Research)
 
-- **日期**：2026-11-09
-- **决策人**：Max（回复原文："DQ-01: A DQ-02: A DQ-03: A"）
-- **类型**：产品定位决策（商业口径 / 市场优先级 / 定价）
-- **状态**：已决定
-- **依据**：`docs/08-research/Market-Research-AI-Life-OS-v0.1.md`（市场调研 v0.1，PR #13，§8 决策点）
+- **Date**: 2026-11-09
+- **Decision maker**: Max (original reply: "DQ-01: A DQ-02: A DQ-03: A")
+- **Type**: product positioning decision (commercial framing / market priority / pricing)
+- **Status**: Decided
+- **Basis**: `docs/08-research/Market-Research-AI-Life-OS-v0.1.md` (market research v0.1, PR #13, §8 decision points)
 
-## 决策内容
+## Decision content
 
-市场调研结论：产品值得做，但仅「小而美」路线成立（indie 线有 Heptabase / Daylio 收入样板，风投式增长不成立：品类赢家通吃、wellness 大盘 2025 年 -6.2%）。Max 据此裁定三项：
+Market research conclusion: the product is worth building, but only a "small and beautiful" route is viable (the indie line has revenue exemplars in Heptabase / Daylio, while venture-style growth does not hold: the category is winner-take-all, and the overall wellness market was -6.2% in 2025). On this basis Max issued three rulings:
 
-| 决策点 | 裁定 | 内容 |
+| Decision point | Ruling | Content |
 |---|---|---|
-| DQ-01 商业口径 | **A** | indie 线：商业目标 $10K–$200K MRR（月经常性收入）的独立产品线；不走风投式增长 |
-| DQ-02 市场优先级 | **A** | 中英双语并行 |
-| DQ-03 定价 | **A** | $8–15/月 + $60–100/年付 |
+| DQ-01 commercial framing | **A** | Indie line: a standalone product line with a business target of $10K–$200K MRR (monthly recurring revenue); no venture-style growth |
+| DQ-02 market priority | **A** | Chinese-English bilingual in parallel |
+| DQ-03 pricing | **A** | $8–15/month + $60–100/yearly plan |
 
-## 产品定位修正（自市场调研 §7 落地为约束）
+## Product positioning corrections (from market research §7, landed as constraints)
 
-1. **留存以「周/月 Review 仪式」为核心**，不采用每日打卡式设计（品类 D30 留存约 3%，打卡式基本死于 30 天）。
-2. **隐私（本地优先 / 可导出 / 可删除）升格为一级卖点**（付费验证：Daylio 靠本地隐私约 $10 万/月）。
-3. **红线：无诊断声称。** 产品边界为 wellness / 自我反思，不做抑郁焦虑等疾病诊断或治疗声称（FDA General Wellness 边界，合规成本一个数量级差异）。
-4. **验证里程碑（可核验）**：上线 12 个月内达成 $3–5K MRR 且 D30 留存 >10%（品类中位 2–3 倍）；不达标触发定位复盘。
-5. **增长方式**：口碑 niche，不烧钱买量（消费订阅 CAC 回本 1–3 个月基准下，投放型增长不可行）。
+1. **Retention centers on a "weekly/monthly Review ritual"**, not a daily check-in style design (category D30 retention is about 3%; check-in style products basically die within 30 days).
+2. **Privacy (local-first / exportable / deletable) is elevated to a top-tier selling point** (payment-validated: Daylio earns roughly $100K/month on local privacy).
+3. **Red line: no diagnostic claims.** The product boundary is wellness / self-reflection; no diagnosis or treatment claims for depression, anxiety, or similar conditions (FDA General Wellness boundary — an order-of-magnitude difference in compliance cost).
+4. **Validation milestones (verifiable)**: reach $3–5K MRR and D30 retention >10% within 12 months of launch (2–3× the category median); missing the target triggers a positioning review.
+5. **Growth method**: word-of-mouth niche, no burning money on paid acquisition (given a consumer-subscription CAC payback baseline of 1–3 months, ad-driven growth is not viable).
 
-## 对既有基线的影响
+## Impact on existing baselines
 
-- 既有不变量 INV-01～12 与 Product Core v0.1 内核**不变**；本决策只新增产品定位与商业化约束。
-- 后续 POC-01 Product & UX Spec 新版本吸收上述修正（留存仪式、隐私卖点、无诊断红线）。
-- 商业化验证设计（付费墙形态、定价实验、留存埋点）为后续立项项，另行审批。
+- The existing invariants INV-01–12 and the Product Core v0.1 kernel are **unchanged**; this decision only adds product positioning and commercialization constraints.
+- Subsequent new versions of the POC-01 Product & UX Spec absorb the above corrections (retention ritual, privacy selling point, no-diagnosis red line).
+- Commercialization validation design (paywall form, pricing experiments, retention analytics instrumentation) is a follow-up work item, to be approved separately.
 
-## 未决项
+## Open items
 
-- **OQ-01**：中国 C 端付费意愿缺定量数据（调研 R5，[unverified]）——列入 backlog，立项后补调研。
-- **OQ-02**：付费墙形态（硬付费墙 vs freemium 限流）待商业化验证设计阶段决策（调研基准：硬墙转化 12.11% vs freemium 2.18%，35 天口径）。
+- **OQ-01**: lack of quantitative data on Chinese consumer willingness to pay (research R5, [unverified]) — placed in the backlog, supplementary research after work is initiated.
+- **OQ-02**: paywall form (hard paywall vs freemium rate limiting) to be decided during the commercialization validation design stage (research baseline: hard-wall conversion 12.11% vs freemium 2.18%, on a 35-day basis).
 
-## 不可逆边界
+## Irreversible boundary
 
-生产部署、真实付费/计费接入、敏感数据新用途仍须 Max 明示批准。
+Production deployment, real payment/billing integration, and new uses of sensitive data still require Max's explicit approval.
