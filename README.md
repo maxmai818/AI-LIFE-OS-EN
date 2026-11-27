@@ -33,6 +33,46 @@ All three: [demo picker page](https://42.193.174.212/demo/) · The demos run on 
 
 ---
 
+
+---
+
+## Design thinking & business outline
+
+> **Design thesis — measurement design *is* product design.** In life management the hard part is not logging; it is defining *what a valid observation is, what a number is allowed to mean, and what it must never be used for*. Get that wrong and the product manufactures false certainty. This project treats dimension and measurement governance as its core product asset — the part that creates durable business value.
+
+### Managing dimensions: a closed, versioned ontology
+
+- **Five Life Dimensions — a closed set**: Time · Health · Wealth · Relationship · Purpose. Habits, projects, a job, a side business, "current focus" — all of them are *views or context over the same five-dimension records*, never new top-level categories. The dimension table is deliberately closed and small: a stable measurement axis is a precondition for longitudinal insight (uncontrolled taxonomy growth destroys comparability — the classic data-warehouse lesson applied to personal data).
+- **Goals provide context, not new axes** (≤ 3 active core goals). Non-quantifiable goals are allowed and are never forced into pseudo-precise progress bars.
+- **Versioned measurement context**: every impact record carries its `blueprint_version_id`, `goal_context_version_ids`, `scale_anchor_version` and assessment window. A number is only interpretable in the context it was made in — so the system stores the context and forbids comparisons when the context changed.
+
+### Managing measurement: rules that prevent self-deception
+
+| Naive-design trap | Rule in this system |
+|---|---|
+| False precision | Impact uses a fixed **1–5 discrete ordinal scale** — explicitly *an ordered subjective estimate, not a measurement*. It is never averaged, ranked, netted, differenced across dimensions, or converted to percentages. |
+| Missing data read as "no effect" | **`unknown` ≠ `neutral`**, enforced at schema level: `neutral` requires an explicit user statement or an approved deterministic rule; "not mentioned in the text" can never become `neutral`. |
+| AI inference laundered into fact | `epistemic_type` (user-reported fact / user-reported impact / AI-inferred impact / deterministic calculation) is tracked *separately* from confirmation status. User confirmation changes status only — a confirmed AI inference stays "a user-endorsed inference", never a direct observation. |
+| Zero-sum scoring | Impact allocation is **non-zero-sum**: one behavior can hit several dimensions hard at once; degrees are judged independently per dimension and never sum-normalized. |
+| Metric gaming (Goodhart) | Success metrics are **observation-only: no thresholds, no composite scores** — reported as per-item distributions with missingness. Negative signals (felt judged/anxious/dependent; wanted something deleted) are counted separately, never netted against benefits. |
+| Pseudo-precision on goals | No forced quantification; `mixed` impacts record positive and negative degrees separately but compute **no ratio and no net value**. |
+
+### Trust & evidence loop
+
+- AI proposes → user confirms / modifies / rejects → **only confirmed or modified records enter long-term trends, dimension state and Reviews**; rejected candidates never participate. Every Review statement traces back to the user's own records, and insufficient evidence is stated as "unknown" rather than smoothed over.
+- Feature design itself is evidence-graded: core mechanisms (e.g. implementation intentions, self-regulation loops) are grounded in psychology / behavioral-science sources with explicit evidence levels, applicability boundaries and risks.
+
+### Business outline
+
+- **The validation question (POC-01)**: *can natural-language life logging be converted into trustworthy data at acceptable cost, and produce reviews that are more traceable and more helpful than just sending the log to a general-purpose chat model?* — **trust is the differentiator**, not feature count.
+- **Jobs to be done**: ① low-friction capture ② correcting AI understanding ③ understanding periodic change ④ gaining theoretical perspectives.
+- **Commercial red lines (locked as product law)**: the core loop (Capture / Confirm / Review / 0–3 goal tracking) is free forever — paid only adds, never subtracts; export & delete are always free and one tap away (no "feature-hostage" tactics); paywall outreach is frequency-capped.
+- **Trust boundaries**: single-user and private by design; account isolation is verified before any expansion; AI candidates never silently become long-term facts.
+
+Every claim above is enforced in approved specs and the actual data model, not just prose: [POC-01 Product & UX Spec v0.7](docs/02-requirements/POC-01-Product-UX-Spec-v0.7.md) · [Capture Data + AI Output Contract v0.7](docs/04-data-ai/Capture-Data-AI-Output-Contract-v0.7.md) · [Design Language v1.0](docs/03-design/Design-Language-v1.0.md)
+
+---
+
 ## Why
 
 Personal life data (habits, time, money, relationships, purpose) usually lives in scattered notes and trackers that can't talk to each other. Life OS treats every behavior/event as a first-class record and evaluates it against **five fixed top-level dimensions** — no arbitrary custom taxonomies, no single vanity "life score".
