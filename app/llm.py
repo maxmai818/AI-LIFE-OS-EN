@@ -11,7 +11,7 @@ import urllib.request
 
 PROMPT_VERSION = "extract-v1"
 SCHEMA_VERSION = "extracted_item@contract-v0.6"
-REVIEW_PROMPT_VERSION = "review-v1"
+REVIEW_PROMPT_VERSION = "review-v2"
 
 ALLOWED_ITEM_TYPES = {"behavior", "thought", "emotion", "event", "plan", "constraint", "question", "summary"}
 DIMS = ["time", "health", "wealth", "relationship", "purpose"]
@@ -86,7 +86,8 @@ EXTRACT_SYSTEM = (
     "Never invent facts that are not in the original text. Output JSON: "
     "{items:[{item_type,text_value,normalized_value,quantity,unit,"
     "item_date,confidence,ai_reason,impacts:[{dimension_key,direction,degree,degree_positive,"
-    "degree_negative,confidence,basis}]}]}"
+    "degree_negative,confidence,basis}]}]} "
+    "Write text_value, normalized_value and ai_reason in the same language as the input sentence."
 )
 
 
@@ -163,7 +164,7 @@ def extract(raw_text):
     """Returns a list of items (each with 5-dimension impacts, all basis-validated)."""
     if provider_name() == "mock":
         return _mock_extract(raw_text)
-    content = _call_openai_compatible(EXTRACT_SYSTEM, raw_text, 4000)
+    content = _call_openai_compatible(EXTRACT_SYSTEM, raw_text + _lang_anchor(raw_text), 4000)
     data = _extract_json(content)
     return [_normalize_item(i) for i in (data.get("items") or [])]
 
@@ -176,6 +177,7 @@ CORRECT_SYSTEM = (
     "mentions; leave everything else untouched. "
     "Output JSON: {text_value: string|null, impacts: [{dimension_key, direction, degree,"
     " degree_positive, degree_negative, note}]} (list only the impacts that changed)."
+    " Write the changed text and notes in the same language as the user's feedback."
 )
 
 
@@ -220,7 +222,7 @@ def correct(item, impacts, feedback):
     user = json.dumps({"item": {k: item[k] for k in ("text_value", "item_type")},
                        "impacts": [dict(i) for i in impacts], "feedback": feedback},
                       ensure_ascii=False)
-    content = _call_openai_compatible(CORRECT_SYSTEM, user, 2000)
+    content = _call_openai_compatible(CORRECT_SYSTEM, user + _lang_anchor(feedback), 2000)
     data = _extract_json(content)
     updates = []
     for u in (data.get("impacts") or []):
@@ -240,8 +242,20 @@ REVIEW_SYSTEM = (
     "data. Output JSON: "
     "{statements:[{statement_type,text,confidence,uncertain_points,theory:{author,source_title,year,"
     "citation,verifiability,assumption_boundary}}], recommendation: {text, action_type,"
-    "target_dimension_keys, reason, expected_effect, unknowns} | null}"
+    "target_dimension_keys, reason, expected_effect, unknowns} | null} "
+    "Write statement text, recommendation text, reason and unknowns in the same language as the "
+    "confirmed facts."
 )
+
+
+def _lang_anchor(text):
+    """Deterministic output-language pin for the end of the user turn —
+    soft wording in system prompts is ignored by some models."""
+    if any("\u4e00" <= ch <= "\u9fff" for ch in text):
+        return ("\n\nOUTPUT LANGUAGE: the input above is written in Chinese. "
+                "Write ALL output in Chinese.")
+    return ("\n\nOUTPUT LANGUAGE: the input above is written in English. "
+            "Write ALL output in English. Do not translate the input.")
 
 
 def generate_review(facts_text, review_type):
@@ -264,8 +278,19 @@ def generate_review(facts_text, review_type):
                 "recommendation": {"text": "Keep the current pace; no change is needed this time.", "action_type": "maintain",
                                    "target_dimension_keys": [], "reason": "The confirmed entries look positive and show no evidence of imbalance",
                                    "expected_effect": "Stay steady", "unknowns": "Long-term effects unknown"}}
-    content = _call_openai_compatible(
-        REVIEW_SYSTEM, json.dumps({"review_type": review_type, **facts_text}, ensure_ascii=False), 3000)
+    # Pin the output language deterministically at the end of the user turn —
+    # soft "same language as the facts" wording in the system prompt is ignored
+    # by some models (e.g. zh-tuned ones answer zh even for English facts).
+    user_payload = json.dumps({"review_type": review_type, **facts_text}, ensure_ascii=False)
+    has_cjk = any("\u4e00" <= ch <= "\u9fff" for ch in user_payload)
+    user_payload += (
+        "\n\nOUTPUT LANGUAGE: the confirmed facts above are written in "
+        + ("Chinese. Write ALL output (statement text, recommendation text, reason, unknowns) in Chinese."
+           if has_cjk else
+           "English. Write ALL output (statement text, recommendation text, reason, unknowns) in English. "
+           "Do not translate the facts.")
+    )
+    content = _call_openai_compatible(REVIEW_SYSTEM, user_payload, 3000)
     data = _extract_json(content)
     statements = []
     for s in (data.get("statements") or [])[:20]:
