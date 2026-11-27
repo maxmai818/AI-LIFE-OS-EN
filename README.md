@@ -1,3 +1,15 @@
+<div align="center">
+
+<a href="https://42.193.174.212/demo/"><img src="https://img.shields.io/badge/%E2%96%B6_LIVE_DEMO-try_the_real_AI_now-2ea44f?style=for-the-badge" alt="Live demo — try the real AI now"></a>
+
+### ▶ [Variant 1 · Information-Dense](https://42.193.174.212/demo/v1/) &nbsp;·&nbsp; [Variant 2 · Conversational](https://42.193.174.212/demo/v2/) ★ &nbsp;·&nbsp; [Variant 3 · Card-Stack](https://42.193.174.212/demo/v3/)
+
+**▲ This banner is the demo entry point** — each link opens a live, interactive app with a real LLM inside (shared fictional demo data). &nbsp; [Open the demo picker →](https://42.193.174.212/demo/)
+
+</div>
+
+---
+
 # Life OS — An AI-Powered Personal Life Operating System
 
 **Capture → AI structuring & correction → Review**, across five core life dimensions.
