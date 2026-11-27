@@ -182,3 +182,5 @@ Log one entry per completed work item, so Max can see how the virtual agent team
 - Security: passwords stored only as hashes and never in chat; LLM key .env 600 on the server only; SSH key-only (password auth disabled)
 - Lesson: Starlette middleware must await call_next; request.form() needs python-multipart, so switched to manually parsing urlencoded with zero dependencies
 - **2026-11-27** · hermes-agent · README: 新增「Design thinking & business outline」章节（Live demos 之后、main 首页 `c953afb` / feat `2604a6d`）——设计理念（封闭五维本体、版本化量度上下文、反自欺量度规则、信任证据闭环）+ 业务 outline（JTBD、验证问题、商业红线）。内容取材自已批准的 POC-01 Spec v0.7 / Data Contract v0.7 / Design Language v1.0，非凭空发挥。验证：raw main 关键字全 FOUND、两分支 README 一致、无 interview/面试字样。
+
+- **2026-11-27** · hermes-agent · README banner: 三个 demo 入口从单行改为三行（每行一个 `###` 入口行，★ 标注 v2 选定方向），避免手机折行后第三个入口被误读为第二行续行。feat `66c0dd5` / main `ecfb14a`。验证：raw main 三条 `### [▶ Variant` 齐全、两分支 README 一致、浏览器渲染三行等距、vision 确认每行一个入口。
