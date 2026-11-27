@@ -1,9 +1,35 @@
+<div align="center">
+
+<a href="https://42.193.174.212/demo/"><img src="https://img.shields.io/badge/%E2%96%B6_LIVE_DEMO-try_the_real_AI_now-2ea44f?style=for-the-badge" alt="Live demo — try the real AI now"></a>
+
+### ▶ [Variant 1 · Information-Dense](https://42.193.174.212/demo/v1/) &nbsp;·&nbsp; [Variant 2 · Conversational](https://42.193.174.212/demo/v2/) ★ &nbsp;·&nbsp; [Variant 3 · Card-Stack](https://42.193.174.212/demo/v3/)
+
+**▲ This banner is the demo entry point** — each link opens a live, interactive app with a real LLM inside (shared fictional demo data). &nbsp; [Open the demo picker →](https://42.193.174.212/demo/)
+
+</div>
+
+---
+
 # Life OS — An AI-Powered Personal Life Operating System
 
 **Capture → AI structuring & correction → Review**, across five core life dimensions.
 A self-hosted, mobile-first web app (FastAPI + SQLite + PWA) built with a disciplined, evidence-based product process — from requirements v0.1 to v0.7, SDLC phase gates, formal decision records, and independent design reviews.
 
 > Development history is fully preserved in this repository's commit log: **37 commits from 2026-09-04 to 2026-11-23**, including PR discussions, gate closures, and versioned spec iterations. (This repo is the full English translation of the original Chinese-language project.)
+
+---
+
+## ▶ Live demos (live · interactive · real AI)
+
+The three UI style variants below are **live, interactive apps** deployed on my cloud server — each one calls a **real LLM API** (type a sentence and watch it get structured in real time), with a fixed bottom four-button shell and shared synthetic demo data:
+
+| Variant | Style | Live link |
+|---|---|---|
+| **Variant 1** | Information-Dense dashboard | **[https://42.193.174.212/demo/v1/](https://42.193.174.212/demo/v1/)** |
+| **Variant 2** *(chosen direction)* | Conversational · Guided | **[https://42.193.174.212/demo/v2/](https://42.193.174.212/demo/v2/)** |
+| **Variant 3** | Card-Stack | **[https://42.193.174.212/demo/v3/](https://42.193.174.212/demo/v3/)** |
+
+All three: [demo picker page](https://42.193.174.212/demo/) · The demos run on shared fictional accounts (anyone can explore them; AI calls are rate-limited; data may reset). HTTPS uses a trusted Let's Encrypt certificate (bare-IP, short-lived, auto-renewed) — the links open without warnings.
 
 ---
 
