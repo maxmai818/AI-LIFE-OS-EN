@@ -184,3 +184,5 @@ Log one entry per completed work item, so Max can see how the virtual agent team
 - **2026-11-27** · hermes-agent · README: 新增「Design thinking & business outline」章节（Live demos 之后、main 首页 `c953afb` / feat `2604a6d`）——设计理念（封闭五维本体、版本化量度上下文、反自欺量度规则、信任证据闭环）+ 业务 outline（JTBD、验证问题、商业红线）。内容取材自已批准的 POC-01 Spec v0.7 / Data Contract v0.7 / Design Language v1.0，非凭空发挥。验证：raw main 关键字全 FOUND、两分支 README 一致、无 interview/面试字样。
 
 - **2026-11-27** · hermes-agent · README banner: 三个 demo 入口从单行改为三行（每行一个 `###` 入口行，★ 标注 v2 选定方向），避免手机折行后第三个入口被误读为第二行续行。feat `66c0dd5` / main `ecfb14a`。验证：raw main 三条 `### [▶ Variant` 齐全、两分支 README 一致、浏览器渲染三行等距、vision 确认每行一个入口。
+
+- **2026-11-27** · hermes-agent · demo 门槛核查（用户红线：三个版本不设密码、谁都能看）：实测 /demo/、/demo/v1|v2|v3/ 零 cookie 直开 200，页面源码与 JS 无任何 password/login 门，/demo-api/* 交互全链路免登录（captures/dimensions/goals GET 200、reviews/generate POST 200 真实 LLM 出 review_id 12），demo 页无指向根地址/login 的链接。登录墙仅守 / 与 /api/*（真实私密数据）。未做任何改动——现状已符合红线；已把「demo 入口零门槛」写入 ai-life-os skill 固化。
